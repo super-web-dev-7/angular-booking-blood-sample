@@ -1,0 +1,17 @@
+<div class="header-container" [ngClass]="{'web-height': !isMobile, 'mobile-height': isMobile} ">
+  <div class="logo-container">
+    <button *ngIf="isMobile" class="ml-3" mat-icon-button aria-label="more" (click)="openSidebar()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <img *ngIf="isMobile" src="assets/images/logo.png" alt="logo">
+  </div>
+  <div class="d-flex align-items-center">
+    <div class="user-info">
+      <img src="/assets/images/avatar.png" alt="user-avatar">
+      <span *ngIf="!isMobile" class="ml-2">Superadmin</span>
+    </div>
+    <button *ngIf="!isMobile" class="ml-3" mat-icon-button aria-label="more">
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+  </div>
+</div>

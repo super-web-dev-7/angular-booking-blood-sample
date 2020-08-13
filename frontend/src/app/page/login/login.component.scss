@@ -1,0 +1,25 @@
+:host {
+  padding: 100px 10px;
+  display: flex;
+  justify-content: center;
+}
+.login-form {
+  min-width: 300px;
+  //height: 300px;
+  //align-items: center;
+  justify-content: center;
+}
+
+button {
+  margin-top: 20px;
+}
+
+mat-form-field {
+  margin: 10px 0 5px;
+}
+
+mat-card-title, mat-card-header {
+  display: flex;
+  justify-content: center;
+}
+

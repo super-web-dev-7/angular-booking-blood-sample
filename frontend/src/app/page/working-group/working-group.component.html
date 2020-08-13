@@ -1,0 +1,60 @@
+<h3 class="header-title">Arbeitsgruppen</h3>
+<div class="main-container mt-5">
+  <div class="table-toolbar">
+    <div class="search-field-container">
+      <input type="text" placeholder="Search...">
+      <mat-icon>search</mat-icon>
+    </div>
+    <button class="custom-button" mat-stroked-button>Neue Arbeitsgruppe anlegen</button>
+  </div>
+  <div class="table-container mt-5">
+    <mat-card class="table-card">
+      <div>
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="no">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+            <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="group_name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Arbeitsgruppenname </th>
+            <td mat-cell *matCellDef="let element"> {{element.group_name}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="group_admin">
+            <th mat-header-cell *matHeaderCellDef> Arbeitsgruppen-Administrator </th>
+            <td mat-cell *matCellDef="let element"> {{element.group_admin}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="calendar_resource">
+            <th mat-header-cell *matHeaderCellDef> Kalenderressourcen </th>
+            <td mat-cell *matCellDef="let element"> {{element.calendar_resource}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="active">
+            <th mat-header-cell *matHeaderCellDef> Aktiv </th>
+            <td mat-cell *matCellDef="let element"> <mat-slide-toggle [checked]="element.active"></mat-slide-toggle> </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef> Aktionen </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button aria-label="more">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button aria-label="more">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator (page)="onPaginateChange($event)" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card>
+  </div>
+</div>
