@@ -5,7 +5,7 @@
       <input type="text" placeholder="Search...">
       <mat-icon>search</mat-icon>
     </div>
-    <button class="custom-button" mat-stroked-button>Neue Arbeitsgruppe anlegen</button>
+    <button class="custom-button" mat-stroked-button [routerLink]="'/working-group/new'">Neue Arbeitsgruppe anlegen</button>
   </div>
   <div class="table-container mt-5">
     <mat-card class="table-card">
@@ -23,29 +23,39 @@
           </ng-container>
 
           <ng-container matColumnDef="group_admin">
-            <th mat-header-cell *matHeaderCellDef> Arbeitsgruppen-Administrator </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Arbeitsgruppen-Administrator </th>
             <td mat-cell *matCellDef="let element"> {{element.group_admin}} </td>
           </ng-container>
 
           <ng-container matColumnDef="calendar_resource">
-            <th mat-header-cell *matHeaderCellDef> Kalenderressourcen </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Kalenderressourcen </th>
             <td mat-cell *matCellDef="let element"> {{element.calendar_resource}} </td>
           </ng-container>
 
           <ng-container matColumnDef="active">
             <th mat-header-cell *matHeaderCellDef> Aktiv </th>
-            <td mat-cell *matCellDef="let element"> <mat-slide-toggle [checked]="element.active"></mat-slide-toggle> </td>
+            <td mat-cell *matCellDef="let element">
+              <div class="d-flex">
+                <mat-slide-toggle [checked]="element.active"></mat-slide-toggle>
+              </div>
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Aktionen </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef style="text-align: right"> Aktionen </th>
+            <td mat-cell *matCellDef="let element" style="text-align: right" class="position-relative">
               <button mat-icon-button aria-label="more">
-                <mat-icon>edit</mat-icon>
+                <mat-icon color="primary">edit</mat-icon>
               </button>
-              <button mat-icon-button aria-label="more">
-                <mat-icon>delete</mat-icon>
+              <button (click)="delete(element.id)" aria-label="more"
+                      mat-icon-button>
+                <mat-icon [color]="selectedDeleteItem === element.id ? 'warn' : 'primary'">delete</mat-icon>
               </button>
+              <div class="d-flex align-items-center delete-dialog" *ngIf="selectedDeleteItem === element.id">
+                <span>Wirklich löschen?</span>
+                <button mat-button class="ja-button" (click)="deleteItem()">JA</button>
+                <button mat-button class="nein-button" (click)="selectedDeleteItem = null">NEIN</button>
+              </div>
             </td>
           </ng-container>
 

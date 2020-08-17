@@ -8,6 +8,10 @@ const routes: Routes = [
   {
     path: 'overview',
     component: WorkingGroupComponent
+  },
+  {
+    path: 'new',
+    component: WorkingGroupComponent
   }
 ];
 

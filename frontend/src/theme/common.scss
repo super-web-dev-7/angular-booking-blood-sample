@@ -35,7 +35,7 @@ table {
 
 .custom-button {
   background-color: #E1EAF1;
-  border-radius: 25px;
+  border-radius: 25px!important;
   height: 50px;
 }
 
@@ -49,26 +49,161 @@ table {
 }
 
 .main-container {
-  padding-right: 150px;
+  padding-right: 14vw;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: #F5A623!important;
+}
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: white!important;
+}
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb-container {
+  transform: translate3d(20px, 0, 0) !important;
 }
 
 mat-slide-toggle {
   .mat-slide-toggle-thumb {
     width: 26px;
     height: 26px;
+    position: absolute;
+    top: 50%;
+    transform: translate(4px, -3px);
   }
+
   .mat-slide-toggle-bar {
     width: 54px;
     height: 34px;
     border-radius: 17px;
-    background-color: #F5A623!important;
+    background-color: #E1EAF1!important;
   }
-  .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-    background-color: #F5A623!important;
-  }
-  .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-    background-color: white!important;
-  }
-
 }
 
+.delete-dialog {
+  position: absolute;
+  background-color: #384c61;
+  justify-content: center;
+  //box-shadow: 0 1px 10px #E87C607A;
+  border-radius: 5px;
+  height: 100%;
+  left: calc(100% + 17px);
+  top: 0;
+  width: 14vw;
+  color: white;
+
+  .ja-button {
+    color: #E87C60!important;
+    padding: 0;
+    min-width: 40px;
+  }
+
+  .nein-button {
+    color: white;
+    padding: 0;
+    min-width: 40px;
+  }
+}
+
+.add-button {
+  width: 60px;
+  height: 60px;
+  background-color: #E1EAF1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50% !important;
+  z-index: 1050;
+  overflow: visible;
+}
+
+button {
+  border: none!important;
+}
+
+.mat-dialog-container {
+  overflow: visible!important;
+}
+
+.input-pink {
+  mat-label {
+    color: #F389CC;
+  }
+  input {
+    color: #fff;
+    caret-color: #ffffff;
+  }
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+  height: 1.5px!important;
+}
+
+.input-pink .mat-form-field-underline {
+  background-color: #F389CC;
+  span {
+    background-color: #F389CC!important;
+  }
+}
+
+.input-pink .mat-form-field-ripple {
+  background-color: #F389CC;
+}
+
+.avatar {
+  align-items: center;
+  font-size: 16px;
+  width: 100%;
+  color: black;
+  .round {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 16px;
+  }
+}
+
+.pink {
+  .round {
+    background-color: #FEF0F9;
+    mat-icon {
+      color: #F389CC;
+    }
+  }
+}
+
+.yellow {
+  .round {
+    background-color: #FEEACA;
+    mat-icon {
+      color: #F5A623;
+    }
+  }
+}
+
+.green {
+  .round {
+    background-color: #E1F7F2;
+    mat-icon {
+      color: #50E3C2;
+    }
+  }
+}
+
+.mat-expansion-panel-header {
+  height: 80px;
+}
+
+.expansion-panel-container {
+  button {
+    margin: 5px;
+  }
+}
+
+.primary {
+  margin-left: 16px;
+  background-color: var(--primary-color);
+  color: white;
+}

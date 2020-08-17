@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'overview',
     component: UserOverviewComponent
+  },
+  {
+    path: 'new',
+    component: UserOverviewComponent
   }
 ];
 

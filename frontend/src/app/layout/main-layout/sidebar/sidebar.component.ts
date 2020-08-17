@@ -23,7 +23,6 @@ export class SidebarComponent implements OnInit {
   }
 
   changeRoute = (link) => {
-    console.log(link);
     this.selected = link;
   }
 }

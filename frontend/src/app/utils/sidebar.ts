@@ -18,7 +18,7 @@ export const Sidebar = [
       },
       {
         name: 'Neue Arbeitsgruppe',
-        link: ''
+        link: '/new'
       }
     ]
   },
@@ -34,7 +34,7 @@ export const Sidebar = [
       },
       {
         name: 'Neuer Benutzer',
-        link: ''
+        link: '/new'
       }
     ]
   },
