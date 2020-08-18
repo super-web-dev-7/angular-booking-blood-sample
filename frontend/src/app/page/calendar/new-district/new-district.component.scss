@@ -1,0 +1,15 @@
+h1 {
+  font-size: 36px;
+}
+
+.custom-button {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.add-button {
+  position: absolute;
+  left: calc(100% + 2px);
+  top: 120px;
+  transform: translateY(-50%);
+}

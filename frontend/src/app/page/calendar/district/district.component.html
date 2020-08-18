@@ -1,11 +1,11 @@
-<h3 class="header-title">Benutzer</h3>
+<h3 class="header-title">Bezirke</h3>
 <div class="main-container mt-5">
   <div class="table-toolbar">
     <div class="search-field-container">
       <input type="text" placeholder="Search...">
       <mat-icon>search</mat-icon>
     </div>
-    <button class="custom-button" [routerLink]="'/user/new'" mat-stroked-button>Neuen Benutzer anlegen</button>
+    <button class="custom-button" mat-stroked-button [routerLink]="'/calendar/district/new'">Neue Arbeitsgruppe anlegen</button>
   </div>
   <div class="table-container mt-5">
     <mat-card class="table-card">
@@ -17,34 +17,19 @@
             <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="firstName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Vorname </th>
-            <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Bezirksname </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="lastName">
-            <th mat-header-cell *matHeaderCellDef> Nachname </th>
-            <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef> E-Mail-Adresse </th>
-            <td mat-cell *matCellDef="let element"> {{element.email}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="phoneNumber">
-            <th mat-header-cell *matHeaderCellDef> Mobil </th>
-            <td mat-cell *matCellDef="let element"> {{element.phoneNumber}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="allocation">
-            <th mat-header-cell *matHeaderCellDef> Zuweisung </th>
-            <td mat-cell *matCellDef="let element"> {{element.allocation}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="role">
-            <th mat-header-cell *matHeaderCellDef> Rolle </th>
-            <td mat-cell *matCellDef="let element"> {{element.role}} </td>
+          <ng-container matColumnDef="zip-code">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> PLZ-Bereich von bis </th>
+            <td mat-cell *matCellDef="let element">
+              <span *ngFor="let item of element.zipCode; let i = index">
+                <span>{{item.from}} - {{item.to}}</span>
+                <span *ngIf="i !== element.zipCode.length - 1">, </span>
+              </span>
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="active">

@@ -1,0 +1,50 @@
+<div class="p-2">
+  <h1>Bezirk neu</h1>
+
+  <div class="d-flex flex-wrap position-relative">
+    <mat-form-field class="w-100 mt-4">
+      <mat-label>Bezirksname</mat-label>
+      <input autocomplete="off" matInput>
+    </mat-form-field>
+    <div class="w-100">
+      <mat-form-field class="width-50 mt-4 mr-3">
+        <mat-label>PLZ-Bereich von</mat-label>
+        <input autocomplete="off" matInput>
+      </mat-form-field>
+      <mat-form-field class="width-50 mt-4">
+        <mat-label>PLZ-Bereich bis</mat-label>
+        <input autocomplete="off" matInput>
+      </mat-form-field>
+    </div>
+    <div class="w-100" *ngFor="let item of additionalZipCodeCount">
+      <mat-form-field class="width-50 mt-4 mr-3">
+        <mat-label>PLZ-Bereich von</mat-label>
+        <input autocomplete="off" matInput>
+      </mat-form-field>
+      <mat-form-field class="width-50 mt-4">
+        <mat-label>PLZ-Bereich bis</mat-label>
+        <input autocomplete="off" matInput>
+      </mat-form-field>
+    </div>
+    <button (click)="addZipCode()" mat-stroked-button class="add-button">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <div class="d-flex avatar yellow justify-content-between">
+    <div class="d-flex align-items-center">
+      <div class="round">
+        <mat-icon>stop_circle</mat-icon>
+      </div>
+      <div>Inaktiv</div>
+    </div>
+    <div class="d-flex">
+      <mat-slide-toggle></mat-slide-toggle>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <button class="custom-button mr-3" mat-stroked-button>Abbrechen</button>
+    <button class="custom-button primary" mat-stroked-button>Neuen Bezirk anlegen</button>
+  </div>
+</div>

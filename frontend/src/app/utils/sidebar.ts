@@ -46,19 +46,19 @@ export const Sidebar = [
     children: [
       {
         name: 'Bezirke Übersicht',
-        link: ''
+        link: '/district/overview'
       },
       {
         name: 'Neuer Bezirk',
-        link: ''
+        link: '/district/new'
       },
       {
         name: 'Kalenderressourcen Übersicht',
-        link: ''
+        link: '/overview'
       },
       {
         name: 'Neue Kalenderressource',
-        link: ''
+        link: '/new'
       }
     ]
   },

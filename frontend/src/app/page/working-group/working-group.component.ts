@@ -56,7 +56,6 @@ export class WorkingGroupComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('ddd');
       this.router.navigateByUrl('working-group/overview');
     });
   }

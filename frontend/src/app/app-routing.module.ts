@@ -48,6 +48,10 @@ const routes: Routes = [
       {
         path: 'user',
         loadChildren: () => import('./page/user/user.module').then(m => m.UserModule)
+      },
+      {
+        path: 'calendar',
+        loadChildren: () => import('./page/calendar/calendar.module').then(m => m.CalendarModule)
       }
     ],
     // canActivate: [AuthGuard]
