@@ -41,6 +41,12 @@ export class NewCalendarComponent implements OnInit {
     }
   ];
 
+  values = [
+    {value: '1', viewValue: '10'},
+    {value: '2', viewValue: '20'},
+    {value: '3', viewValue: '30'}
+  ];
+
   constructor() { }
 
   ngOnInit(): void {

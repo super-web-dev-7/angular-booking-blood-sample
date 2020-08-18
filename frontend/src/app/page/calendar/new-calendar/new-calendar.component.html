@@ -65,21 +65,29 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="d-flex flex-wrap w-100">
-        <mat-form-field class="mt-4 width-50 mr-1 ml-1">
-          <mat-label>Kalenderressourcenname</mat-label>
+        <mat-form-field class="mt-4 width-50 mr-3">
+          <mat-label>Dauer der Termine (Min.)</mat-label>
           <input autocomplete="off" matInput>
         </mat-form-field>
-        <mat-form-field class="mt-4 width-50 mr-1 ml-1">
-          <mat-label>Kalenderressourcenname</mat-label>
+        <mat-form-field class="mt-4 width-50">
+          <mat-label>Ruhezeit (Min.)</mat-label>
           <input autocomplete="off" matInput>
         </mat-form-field>
-        <mat-form-field class="mt-4 width-50 mr-1 ml-1">
-          <mat-label>Kalenderressourcenname</mat-label>
-          <input autocomplete="off" matInput>
+        <mat-form-field class="mt-4 width-50 mr-3">
+          <mat-label>Arbeitszeit von</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let value of values" [value]="value.value">
+              {{value.viewValue}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
-        <mat-form-field class="mt-4 width-50 mr-1 ml-1">
-          <mat-label>Kalenderressourcenname</mat-label>
-          <input autocomplete="off" matInput>
+        <mat-form-field class="mt-4 width-50">
+          <mat-label>Arbeitszeit bis</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let value of values" [value]="value.value">
+              {{value.viewValue}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </mat-expansion-panel>
