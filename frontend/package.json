@@ -24,6 +24,7 @@
     "@ckeditor/ckeditor5-angular": "^1.2.3",
     "@ckeditor/ckeditor5-build-classic": "^21.0.0",
     "bootstrap": "^4.5.2",
+    "jwt-decode": "^2.2.0",
     "node-sass": "^4.14.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",

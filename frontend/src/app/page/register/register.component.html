@@ -3,7 +3,7 @@
     <mat-card-title>Register</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form [formGroup]="registerForm" class="d-flex flex-column login-form">
+    <form [formGroup]="registerForm" (ngSubmit)="register()" class="d-flex flex-column login-form">
       <mat-form-field>
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" placeholder="Email">
@@ -22,6 +22,7 @@
         </mat-error>
       </mat-form-field>
       <button mat-raised-button color="primary" class="w-100">Register</button>
+      <p class="mat-error" *ngIf="error">{{error}}</p>
     </form>
     <div class="mt-4 text-center">
       <div class="text-secondary mb-1">
