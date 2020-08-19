@@ -16,7 +16,8 @@ export class AuthService {
   constructor(
     public http: HttpClient
   ) {
-    this.currentUserSubject = new BehaviorSubject<any>((jwt_decode(localStorage.getItem('previmo_user'))));
+    const token = localStorage.getItem('previmo_user');
+    this.currentUserSubject = new BehaviorSubject<any>(token ? jwt_decode(token) : null);
     this.currentUser = this.currentUserSubject.asObservable();
   }
 

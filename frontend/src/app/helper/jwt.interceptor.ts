@@ -12,7 +12,7 @@ export class JwtInterceptor implements HttpInterceptor {
     // add authorization header with jwt token if available
     const currentUser = this.authService.currentUserValue;
     const token = localStorage.getItem('previmo_user');
-    if (currentUser && localStorage.getItem('previmo_user')) {
+    if (currentUser && token) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
