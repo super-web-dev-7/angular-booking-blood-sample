@@ -6,7 +6,7 @@
         <button mat-icon-button aria-label="more">
           <mat-icon>lens</mat-icon>
         </button>
-        <button [matMenuTriggerFor]="menu" mat-icon-button aria-label="more">
+        <button [matMenuTriggerFor]="workingGroup" mat-icon-button aria-label="more">
           <mat-icon>more_horiz</mat-icon>
         </button>
       </div>
@@ -21,7 +21,7 @@
         <button mat-icon-button aria-label="more">
           <img src="assets/images/dashboard/calendar.svg" alt="icon">
         </button>
-        <button [matMenuTriggerFor]="menu" mat-icon-button aria-label="more">
+        <button [matMenuTriggerFor]="calendar" mat-icon-button aria-label="more">
           <mat-icon>more_horiz</mat-icon>
         </button>
       </div>
@@ -38,7 +38,7 @@
         <button mat-icon-button aria-label="more">
           <img src="assets/images/dashboard/user.svg" alt="icon">
         </button>
-        <button [matMenuTriggerFor]="menu" mat-icon-button aria-label="more">
+        <button [matMenuTriggerFor]="user" mat-icon-button aria-label="more">
           <mat-icon>more_horiz</mat-icon>
         </button>
       </div>
@@ -53,7 +53,7 @@
         <button mat-icon-button aria-label="more">
           <img src="assets/images/dashboard/language.svg" alt="icon">
         </button>
-        <button [matMenuTriggerFor]="menu" mat-icon-button aria-label="more">
+        <button [matMenuTriggerFor]="text" mat-icon-button aria-label="more">
           <mat-icon>more_horiz</mat-icon>
         </button>
       </div>
@@ -86,7 +86,7 @@
         <button class="" mat-icon-button aria-label="more">
           <mat-icon style="color: #89DF8C; font-size: 35px;">watch_later</mat-icon>
         </button>
-        <button [matMenuTriggerFor]="menu" mat-icon-button aria-label="more">
+        <button [matMenuTriggerFor]="termine" mat-icon-button aria-label="more">
           <mat-icon>more_horiz</mat-icon>
         </button>
       </div>
@@ -101,7 +101,7 @@
         <button mat-icon-button aria-label="more">
           <img src="assets/images/dashboard/package.svg" alt="icon">
         </button>
-        <button [matMenuTriggerFor]="menu" mat-icon-button aria-label="more">
+        <button [matMenuTriggerFor]="packages" mat-icon-button aria-label="more">
           <mat-icon>more_horiz</mat-icon>
         </button>
       </div>
@@ -111,13 +111,52 @@
       </div>
     </div>
   </div>
-  <mat-menu #menu="matMenu">
+  <mat-menu #workingGroup="matMenu">
+    <button [routerLink]="'/working-group/overview'" mat-menu-item>
+      <span>Übersicht</span>
+    </button>
+    <button [routerLink]="'/working-group/new'" mat-menu-item>
+      <span>Neue Arbeitsgruppe</span>
+    </button>
+  </mat-menu>
+  <mat-menu #user="matMenu">
+    <button [routerLink]="'/user/overview'" mat-menu-item>
+      <span>Übersicht</span>
+    </button>
+    <button [routerLink]="'/user/new'" mat-menu-item>
+      <span>Neue Benutzer</span>
+    </button>
+  </mat-menu>
+  <mat-menu #calendar="matMenu">
+    <button [routerLink]="'/calendar/overview'" mat-menu-item>
+      <span>Übersicht</span>
+    </button>
+    <button [routerLink]="'/calendar/new'" mat-menu-item>
+      <span>Neue Kalenderverwaltung</span>
+    </button>
+  </mat-menu>
+  <mat-menu #text="matMenu">
+    <button [routerLink]="'/text/overview'" mat-menu-item>
+      <span>Übersicht</span>
+    </button>
+    <button [routerLink]="'/text/new'" mat-menu-item>
+      <span>Neue Textvorlagen</span>
+    </button>
+  </mat-menu>
+  <mat-menu #packages="matMenu">
+    <button [routerLink]="'/package/overview'" mat-menu-item>
+      <span>Übersicht</span>
+    </button>
+    <button [routerLink]="'/package/new'" mat-menu-item>
+      <span>Neue Pakete</span>
+    </button>
+  </mat-menu>
+  <mat-menu #termine="matMenu">
     <button mat-menu-item>
       <span>Übersicht</span>
     </button>
     <button mat-menu-item>
-      <span>Neue Arbeitsgruppe</span>
+      <span>Neue Termine</span>
     </button>
   </mat-menu>
-
 </div>
