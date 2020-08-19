@@ -70,11 +70,11 @@ export const Sidebar = [
     children: [
       {
         name: 'Textvorlagen Übersicht',
-        link: ''
+        link: '/overview'
       },
       {
         name: 'Neue Textvorlage',
-        link: ''
+        link: '/new'
       }
     ]
   },
@@ -93,11 +93,11 @@ export const Sidebar = [
     children: [
       {
         name: 'Paketübersicht',
-        link: ''
+        link: '/overview'
       },
       {
         name: 'Neues Paket',
-        link: ''
+        link: '/new'
       }
     ]
   },
@@ -106,7 +106,7 @@ export const Sidebar = [
     icon: 'notification.svg',
     role: '',
     children: [],
-    link: '/independence'
+    link: '/interface'
   },
   {
     name: 'Credentials der Schnittstellen',

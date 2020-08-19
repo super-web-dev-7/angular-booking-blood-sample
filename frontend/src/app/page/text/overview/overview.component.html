@@ -1,0 +1,66 @@
+<h3 class="header-title">Textvorlagen</h3>
+<div class="main-container mt-5">
+  <div class="table-toolbar">
+    <div class="search-field-container">
+      <input type="text" placeholder="Search...">
+      <mat-icon>search</mat-icon>
+    </div>
+    <button class="custom-button" mat-stroked-button [routerLink]="'/text/new'">Neue Textvorlage anlegen</button>
+  </div>
+  <div class="table-container mt-5">
+    <mat-card class="table-card">
+      <div>
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="no">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+            <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="subject">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Betreff </th>
+            <td mat-cell *matCellDef="let element"> {{element.subject}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="art">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Art </th>
+            <td mat-cell *matCellDef="let element"> {{element.art}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="receiver">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Empfänger </th>
+            <td mat-cell *matCellDef="let element"> {{element.receiver}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="assign">
+            <th mat-header-cell *matHeaderCellDef> Zuweisen </th>
+            <td mat-cell *matCellDef="let element"> {{element.assign}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef style="text-align: right"> Aktionen </th>
+            <td mat-cell *matCellDef="let element" style="text-align: right" class="position-relative">
+              <button mat-icon-button aria-label="more">
+                <mat-icon color="primary">edit</mat-icon>
+              </button>
+              <button (click)="delete(element.id)" aria-label="more"
+                      mat-icon-button>
+                <mat-icon [color]="selectedDeleteItem === element.id ? 'warn' : 'primary'">delete</mat-icon>
+              </button>
+              <div class="d-flex align-items-center delete-dialog" *ngIf="selectedDeleteItem === element.id">
+                <span>Wirklich löschen?</span>
+                <button mat-button class="ja-button" (click)="deleteItem()">JA</button>
+                <button mat-button class="nein-button" (click)="selectedDeleteItem = null">NEIN</button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator (page)="onPaginateChange($event)" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card>
+  </div>
+</div>

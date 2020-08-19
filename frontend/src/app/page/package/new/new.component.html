@@ -1,0 +1,93 @@
+<div class="p-2">
+  <h1>Paket neu</h1>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="d-flex flex-wrap">
+        <mat-form-field class="mt-4 w-100">
+          <mat-label>Paketbezeichnung</mat-label>
+          <input autocomplete="off" matInput>
+        </mat-form-field>
+        <mat-form-field class="mt-4 w-100">
+          <mat-label>Paket-Labornummer</mat-label>
+          <input autocomplete="off" matInput>
+        </mat-form-field>
+        <mat-form-field class="mt-4 w-100">
+          <mat-label>Paket-Preis</mat-label>
+          <input autocomplete="off" matInput>
+        </mat-form-field>
+        <mat-form-field class="mt-4 width-50">
+          <mat-label>Sonder-Preis</mat-label>
+          <input autocomplete="off" matInput>
+        </mat-form-field>
+        <div class="width-50 ml-3 d-flex align-items-center">
+          <div class="checkbox-container" (click)="isActive = !isActive">
+            <div *ngIf="isActive" class="check-mark"></div>
+          </div>
+          <span>Sonderpreis aktivieren</span>
+        </div>
+      </div>
+
+      <mat-accordion class="position-relative">
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="d-flex avatar pink">
+                <div class="round">
+                  <mat-icon>group</mat-icon>
+                </div>
+                <div>Arbeitsgruppe</div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="d-flex flex-wrap expansion-panel-container">
+            <button
+              mat-stroked-button
+              *ngFor="let group of groups"
+              [ngClass]="{'primary': selectedGroup===group.id}"
+              (click)="selectGroup(group.id)">
+              {{group.name}}
+            </button>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="d-flex avatar green">
+                <div class="round">
+                  <mat-icon>stop_circle</mat-icon>
+                </div>
+                <div>Status</div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="d-flex flex-wrap expansion-panel-container">
+            <button
+              mat-stroked-button
+              *ngFor="let status of statuses"
+              [ngClass]="{'primary': selectedStatus===status.id}"
+              (click)="selectStatus(status.id)">
+              {{status.name}}
+            </button>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <div class="col-md-6">
+      <div class="mt-4">Paketinhalt</div>
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label></mat-label>
+        <textarea matInput rows="25"></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-5">
+    <div class="d-flex align-items-center" style="width: 50%;">
+    </div>
+    <div class="d-flex align-items-center">
+      <button class="custom-button mr-3" mat-stroked-button>Abbrechen</button>
+      <button class="custom-button primary" mat-stroked-button>Neues Paket anlegen</button>
+    </div>
+  </div>
+</div>

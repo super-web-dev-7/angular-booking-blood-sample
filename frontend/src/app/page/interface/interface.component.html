@@ -1,0 +1,42 @@
+<h3 class="header-title">Schnittstellenverwaltung</h3>
+<button class="custom-button" mat-stroked-button>Neue Schnittstelle anlegen</button>
+<div class="mt-5 d-flex package-group">
+  <div class="package-container" *ngFor="let element of elements">
+    <div class="d-flex avatar" [ngClass]="{'sms': element.id === 1, 'paypal': element.id === 2, 'labor': element.id === 3}">
+      <div class="round">
+        <img *ngIf="element.id === 1" src="/assets/images/sms.png" [alt]="element.name">
+        <img *ngIf="element.id === 2" src="/assets/images/paypal-white.png" [alt]="element.name">
+        <img *ngIf="element.id === 3" src="/assets/images/labor.png" [alt]="element.name">
+      </div>
+    </div>
+    <h1 class="package-title">{{element.name}}</h1>
+    <div class="w-100">
+      <mat-form-field class="mt-2 w-100">
+        <mat-label>API URL</mat-label>
+        <input autocomplete="off" matInput>
+      </mat-form-field>
+      <mat-form-field class="mt-2 w-100">
+        <mat-label>Benutzername</mat-label>
+        <input autocomplete="off" matInput>
+      </mat-form-field>
+      <mat-form-field class="mt-2 w-100">
+        <mat-label>Passwort</mat-label>
+        <input autocomplete="off" matInput>
+      </mat-form-field>
+    </div>
+    <button class="custom-button primary" mat-stroked-button>Speichern</button>
+    <button (click)="delete(element.id)" aria-label="more"
+            mat-icon-button>
+      <mat-icon
+        [ngClass]="{'delete-icon': selectedDeleteItem !== element.id}"
+        [color]="selectedDeleteItem === element.id ? 'warn' : 'primary'">
+        delete
+      </mat-icon>
+    </button>
+    <div class="d-flex align-items-center delete-dialog" *ngIf="selectedDeleteItem === element.id">
+      <span>Wirklich löschen?</span>
+      <button mat-button class="ja-button" (click)="deleteItem()">JA</button>
+      <button mat-button class="nein-button" (click)="selectedDeleteItem = null">NEIN</button>
+    </div>
+  </div>
+</div>

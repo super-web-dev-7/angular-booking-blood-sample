@@ -49,7 +49,7 @@ table {
 }
 
 .main-container {
-  padding-right: 14vw;
+  padding-right: 10vw;
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
@@ -135,7 +135,7 @@ button {
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-underline {
-  height: 1.5px!important;
+  height: 1px!important;
 }
 
 .input-pink .mat-form-field-underline {
@@ -211,3 +211,7 @@ button {
 .width-50 {
   width: calc(50% - 8px);
 }
+
+//table tbody tr td:last-child {
+//  width: 80px;
+//}

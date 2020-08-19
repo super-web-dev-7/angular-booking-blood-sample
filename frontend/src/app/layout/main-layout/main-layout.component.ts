@@ -15,9 +15,10 @@ export class MainLayoutComponent implements OnInit {
     breakpointObserver: BreakpointObserver
   ) {
     breakpointObserver.observe([
-      Breakpoints.Handset,
-      Breakpoints.Tablet
+      Breakpoints.HandsetPortrait,
+      Breakpoints.TabletPortrait
     ]).subscribe(result => {
+      console.log(result);
       this.isOpen = !result.matches;
       this.isMobile = result.matches;
     });

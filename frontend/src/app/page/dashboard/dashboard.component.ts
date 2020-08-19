@@ -14,7 +14,6 @@ export class DashboardComponent implements OnInit {
   ) {
     breakpointObserver.observe([
       Breakpoints.Handset,
-      Breakpoints.Tablet
     ]).subscribe(result => {
       this.isMobile = result.matches;
     });

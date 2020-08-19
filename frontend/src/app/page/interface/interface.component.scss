@@ -1,0 +1,73 @@
+.custom-button {
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-top: 2rem;
+}
+
+.package-container {
+  position: relative;
+  background-color: white;
+  border-radius: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  padding: 70px 40px 0;
+  width: 30%;
+  margin-bottom: 100px;
+}
+
+.package-group {
+  justify-content: space-between;
+}
+
+@media only screen and (max-width: 600px) {
+  .package-container {
+    width: 100%;
+  }
+  .package-group {
+    flex-direction: column;
+  }
+}
+
+.sms {
+  .round {
+    background-color: #89DF8C;
+  }
+}
+
+.paypal {
+  .round {
+    background-color: #50E3C2;
+  }
+}
+
+.labor {
+  .round {
+    background-color: #F389CC;
+  }
+}
+
+.avatar {
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  .round {
+    margin-right: 0;
+  }
+}
+
+.package-title {
+  font-size: 41px;
+}
+
+.delete-dialog {
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 60px;
+}
+
+.delete-icon {
+  opacity: 0.5;
+}
