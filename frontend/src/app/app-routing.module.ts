@@ -66,7 +66,7 @@ const routes: Routes = [
         loadChildren: () => import('./page/interface/interface.module').then(m => m.InterfaceModule)
       }
     ],
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   }
 ];
 

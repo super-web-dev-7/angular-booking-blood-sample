@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-new-district',
@@ -9,9 +10,14 @@ export class NewDistrictComponent implements OnInit {
 
   additionalZipCodeCount = [];
   additionalZipCode = [];
-  constructor() { }
+  newDistrictForm: FormGroup;
+  constructor(
+    public formBuilder: FormBuilder
+  ) { }
 
   ngOnInit(): void {
+    this.newDistrictForm = this.formBuilder.group({
+    });
   }
 
   addZipCode = () => {

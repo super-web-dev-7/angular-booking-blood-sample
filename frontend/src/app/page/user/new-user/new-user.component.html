@@ -1,22 +1,22 @@
-<div class="p-2">
+<form [formGroup]="newUserForm" class="p-2">
   <h1>Benutzer neu</h1>
 
   <div class="d-flex flex-wrap user-form">
     <mat-form-field class="mt-4">
-      <mat-label>Karl-Benjamin</mat-label>
-      <input autocomplete="off" matInput>
+      <mat-label>Vorname</mat-label>
+      <input formControlName="firstName" autocomplete="off" matInput>
     </mat-form-field>
     <mat-form-field class="mt-4">
-      <mat-label>Schulz</mat-label>
-      <input autocomplete="off" matInput>
+      <mat-label>Nachname</mat-label>
+      <input formControlName="lastName" autocomplete="off" matInput>
     </mat-form-field>
     <mat-form-field class="mt-4">
-      <mat-label>schulz@previmo.de</mat-label>
-      <input autocomplete="off" matInput>
+      <mat-label>E-Mail-Adresse</mat-label>
+      <input formControlName="email" autocomplete="off" matInput>
     </mat-form-field>
     <mat-form-field class="mt-4">
-      <mat-label>016245487221</mat-label>
-      <input autocomplete="off" matInput>
+      <mat-label>Mobilnummer</mat-label>
+      <input formControlName="phoneNumber" autocomplete="off" matInput>
     </mat-form-field>
   </div>
 
@@ -89,7 +89,7 @@
     <div class="d-flex align-items-center" style="width: 50%;">
       <mat-form-field class="mt-4" style="width: 60%;">
         <mat-label>Passwort</mat-label>
-        <input autocomplete="off" [(ngModel)]="password" matInput>
+        <input formControlName="password" autocomplete="off" [(ngModel)]="password" matInput>
       </mat-form-field>
       <button class="custom-button mr-3" (click)="generateRandomPassword()" mat-stroked-button>Generieren</button>
     </div>
@@ -98,4 +98,4 @@
       <button class="custom-button primary" mat-stroked-button>Neue Arbeitsgruppe anlegen</button>
     </div>
   </div>
-</div>
+</form>

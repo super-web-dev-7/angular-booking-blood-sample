@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-new-user',
@@ -46,10 +47,21 @@ export class NewUserComponent implements OnInit {
     }
   ];
 
+  newUserForm: FormGroup;
+
   password;
-  constructor() { }
+  constructor(
+    public formBuilder: FormBuilder
+  ) { }
 
   ngOnInit(): void {
+    this.newUserForm = this.formBuilder.group({
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
+      email: [null, Validators.required],
+      phoneNumber: [null, Validators.required],
+      password: [null, Validators.required]
+    });
   }
 
   selectAllocation = (id) => {
@@ -61,7 +73,8 @@ export class NewUserComponent implements OnInit {
   }
 
   generateRandomPassword = () => {
-    this.password = Math.random().toString(36).slice(-8);
+    const password = Math.random().toString(36).slice(-8);
+    this.newUserForm.controls.password.setValue(password);
   }
 
 }
