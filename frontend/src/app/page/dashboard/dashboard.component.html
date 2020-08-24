@@ -112,49 +112,79 @@
     </div>
   </div>
   <mat-menu #workingGroup="matMenu">
-    <button [routerLink]="'/working-group/overview'" mat-menu-item>
-      <span>Übersicht</span>
-    </button>
+    <div class="d-flex flex-row">
+      <button class="panel-width" [routerLink]="'/working-group/overview'" mat-menu-item>
+        <span>Übersicht</span>
+      </button>
+      <button class="ml-1" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
     <button [routerLink]="'/working-group/new'" mat-menu-item>
       <span>Neue Arbeitsgruppe</span>
     </button>
   </mat-menu>
   <mat-menu #user="matMenu">
-    <button [routerLink]="'/user/overview'" mat-menu-item>
-      <span>Übersicht</span>
-    </button>
+    <div class="d-flex flex-row">
+      <button class="panel-width" [routerLink]="'/user/overview'" mat-menu-item>
+        <span>Übersicht</span>
+      </button>
+      <button class="ml-1" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
     <button [routerLink]="'/user/new'" mat-menu-item>
       <span>Neue Benutzer</span>
     </button>
   </mat-menu>
   <mat-menu #calendar="matMenu">
-    <button [routerLink]="'/calendar/overview'" mat-menu-item>
-      <span>Übersicht</span>
-    </button>
+    <div class="d-flex flex-row">
+      <button class="panel-width" [routerLink]="'/calendar/overview'" mat-menu-item>
+        <span>Übersicht</span>
+      </button>
+      <button class="ml-1" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
     <button [routerLink]="'/calendar/new'" mat-menu-item>
       <span>Neue Kalenderverwaltung</span>
     </button>
   </mat-menu>
   <mat-menu #text="matMenu">
-    <button [routerLink]="'/text/overview'" mat-menu-item>
-      <span>Übersicht</span>
-    </button>
+    <div class="d-flex flex-row">
+      <button class="panel-width" [routerLink]="'/text/overview'" mat-menu-item>
+        <span>Übersicht</span>
+      </button>
+      <button class="ml-1" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
     <button [routerLink]="'/text/new'" mat-menu-item>
       <span>Neue Textvorlagen</span>
     </button>
   </mat-menu>
   <mat-menu #packages="matMenu">
-    <button [routerLink]="'/package/overview'" mat-menu-item>
-      <span>Übersicht</span>
-    </button>
+    <div class="d-flex flex-row">
+      <button class="panel-width" [routerLink]="'/package/overview'" mat-menu-item>
+        <span>Übersicht</span>
+      </button>
+      <button class="ml-1" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
     <button [routerLink]="'/package/new'" mat-menu-item>
       <span>Neue Pakete</span>
     </button>
   </mat-menu>
   <mat-menu #termine="matMenu">
-    <button mat-menu-item>
-      <span>Übersicht</span>
-    </button>
+    <div class="d-flex flex-row">
+      <button class="panel-width" mat-menu-item>
+        <span>Übersicht</span>
+      </button>
+      <button class="ml-1" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
     <button mat-menu-item>
       <span>Neue Termine</span>
     </button>
