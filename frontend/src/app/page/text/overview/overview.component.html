@@ -8,7 +8,7 @@
     <button class="custom-button" mat-stroked-button [routerLink]="'/text/new'">Neue Textvorlage anlegen</button>
   </div>
   <div class="table-container mt-5">
-    <mat-card class="table-card">
+    <mat-card class="table-card mat-card-radius">
       <div>
         <table mat-table [dataSource]="dataSource" matSort>
 
@@ -41,11 +41,11 @@
             <th mat-header-cell *matHeaderCellDef style="text-align: right"> Aktionen </th>
             <td mat-cell *matCellDef="let element" style="text-align: right" class="position-relative">
               <button mat-icon-button aria-label="more">
-                <mat-icon color="primary">edit</mat-icon>
+                <img src="/assets/images/edit.svg" alt="edit">
               </button>
               <button (click)="delete(element.id)" aria-label="more"
                       mat-icon-button>
-                <mat-icon [color]="selectedDeleteItem === element.id ? 'warn' : 'primary'">delete</mat-icon>
+                <mat-icon class="delete-icon" [ngClass]="{'warning-color': selectedDeleteItem === element.id}">delete</mat-icon>
               </button>
               <div class="d-flex align-items-center delete-dialog" *ngIf="selectedDeleteItem === element.id">
                 <span>Wirklich löschen?</span>
