@@ -2,7 +2,7 @@
 <div class="main-container mt-5">
   <div class="table-toolbar">
     <div class="search-field-container">
-      <input type="text" placeholder="Search...">
+      <input type="text" placeholder="Search..." [(ngModel)]="filterValue" (ngModelChange)="filter()">
       <mat-icon>search</mat-icon>
     </div>
     <button class="custom-button" [routerLink]="'/user/new'" mat-stroked-button>Neuen Benutzer anlegen</button>
@@ -39,7 +39,7 @@
 
           <ng-container matColumnDef="allocation">
             <th mat-header-cell *matHeaderCellDef> Zuweisung </th>
-            <td mat-cell *matCellDef="let element"> {{element.allocation}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.allocation === 0 ? 'Keine' : element.working_group?.name}} </td>
           </ng-container>
 
           <ng-container matColumnDef="role">
@@ -51,7 +51,7 @@
             <th mat-header-cell *matHeaderCellDef> Aktiv </th>
             <td mat-cell *matCellDef="let element">
               <div class="d-flex">
-                <mat-slide-toggle [checked]="element.active"></mat-slide-toggle>
+                <mat-slide-toggle [checked]="element.isActive"></mat-slide-toggle>
               </div>
             </td>
           </ng-container>
@@ -60,7 +60,7 @@
             <th mat-header-cell *matHeaderCellDef style="text-align: right"> Aktionen </th>
             <td mat-cell *matCellDef="let element" style="text-align: right" class="position-relative">
               <button mat-icon-button aria-label="more">
-                <mat-icon color="primary">edit</mat-icon>
+                <mat-icon color="primary" (click)="editItem(element.id)">edit</mat-icon>
               </button>
               <button (click)="delete(element.id)" aria-label="more"
                       mat-icon-button>

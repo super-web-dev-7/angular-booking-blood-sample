@@ -5,6 +5,8 @@ import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {NewUserComponent} from '../new-user/new-user.component';
+import {HttpService} from '../../../service/http/http.service';
+import {URL_JSON} from '../../../utils/url_json';
 
 @Component({
   selector: 'app-user-overview',
@@ -14,16 +16,20 @@ import {NewUserComponent} from '../new-user/new-user.component';
 export class UserOverviewComponent implements OnInit {
 
   displayedColumns: string[] = ['no', 'firstName', 'lastName', 'email', 'phoneNumber', 'allocation', 'role', 'active', 'actions'];
-  dataSource = new MatTableDataSource<any>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<any>();
   currentPage = 0;
   pageSize = 5;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   selectedDeleteItem: number = null;
+  filterValue = null;
+  allUser: any;
+
   constructor(
     public router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public httpService: HttpService
   ) { }
 
   ngOnInit(): void {
@@ -32,22 +38,61 @@ export class UserOverviewComponent implements OnInit {
     const url = this.router.url.split('/');
     if (url[2] === 'new') {
       this.openDialog();
+    } else {
+      this.httpService.get(URL_JSON.USER + '/get').subscribe((res: any) => {
+        this.dataSource.data = res;
+        this.allUser = res;
+      });
     }
   }
 
   onPaginateChange = ($event: PageEvent) => {
-    console.log($event);
     this.currentPage = $event.pageIndex;
     this.pageSize = $event.pageSize;
   }
 
+  filter = () => {
+    this.dataSource.data = this.allUser.filter(item => {
+      return item.email.includes(this.filterValue)
+        || item.firstName.includes(this.filterValue)
+        || item.lastName.includes(this.filterValue);
+    });
+  }
+
   delete = (id) => {
-    console.log(id);
     this.selectedDeleteItem = id;
   }
 
   deleteItem = () => {
-    this.selectedDeleteItem = null;
+    this.httpService.delete(URL_JSON.USER + '/delete/' + this.selectedDeleteItem).subscribe(res => {
+      const dataSource = this.dataSource.data;
+      const removedIndex = dataSource.findIndex(item => {
+        return item.id === this.selectedDeleteItem;
+      });
+      dataSource.splice(removedIndex, 1);
+      this.dataSource.data = dataSource;
+    });
+  }
+
+  editItem = (id) => {
+    console.log(id);
+    const dataSource = this.dataSource.data;
+    const data = dataSource.find(item => {
+      return item.id === id;
+    });
+    const dialogRef = this.dialog.open(NewUserComponent, {
+      width: '900px',
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const index = this.allUser.findIndex(item => item.id === result.id);
+        const user = this.allUser[index];
+        this.allUser[index] = {...user, ...result};
+        this.dataSource.data = this.allUser;
+      }
+    });
   }
 
   openDialog = () => {
@@ -56,50 +101,8 @@ export class UserOverviewComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log('result>>>>> ', result);
       this.router.navigateByUrl('user/overview');
     });
   }
 }
-
-const ELEMENT_DATA: any[] = [
-  {
-    id: 1,
-    firstName: 'Karsten',
-    lastName: 'Birkenstamm',
-    email: 'birkenstamm@previmo.de',
-    phoneNumber: '015123598744',
-    allocation: 'Agentur 1',
-    role: 'Superadmin',
-    active: true
-  },
-  {
-    id: 2,
-    firstName: 'Karsten',
-    lastName: 'Birkenstamm',
-    email: 'birkenstamm@previmo.de',
-    phoneNumber: '015123598744',
-    allocation: 'Agentur 1',
-    role: 'Superadmin',
-    active: true
-  },
-  {
-    id: 3,
-    firstName: 'Karsten',
-    lastName: 'Birkenstamm',
-    email: 'birkenstamm@previmo.de',
-    phoneNumber: '015123598744',
-    allocation: 'Agentur 1',
-    role: 'Superadmin',
-    active: true
-  },
-  {
-    id: 4,
-    firstName: 'Karsten',
-    lastName: 'Birkenstamm',
-    email: 'birkenstamm@previmo.de',
-    phoneNumber: '015123598744',
-    allocation: 'Agentur 1',
-    role: 'Superadmin',
-    active: true
-  }
-];

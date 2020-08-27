@@ -1,4 +1,5 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {AuthService} from '../../../service/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,8 +10,13 @@ export class HeaderComponent implements OnInit {
 
   @Input() isMobile;
   @Output() setOpen = new EventEmitter();
+  currentUser: any;
 
-  constructor() { }
+  constructor(
+    public authService: AuthService
+  ) {
+    this.currentUser = this.authService.currentUserValue;
+  }
 
   ngOnInit(): void {
     console.log(this.isMobile);

@@ -21,6 +21,18 @@ export class HttpService {
     return this.http.post(`${url}/create`, newData);
   }
 
+  get = (url) => {
+    return this.http.get(`${url}`);
+  }
+
+  delete = (url) => {
+    return this.http.delete(`${url}`);
+  }
+
+  update = (url, updateData) => {
+    return this.http.put(`${url}`, updateData);
+  }
+
   // working-group
 
   // user

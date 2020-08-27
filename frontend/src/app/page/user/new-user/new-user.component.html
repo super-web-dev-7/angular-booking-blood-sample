@@ -1,4 +1,4 @@
-<form [formGroup]="newUserForm" class="p-2">
+<form [formGroup]="userForm" class="p-2">
   <h1>Benutzer neu</h1>
 
   <div class="d-flex flex-wrap user-form">
@@ -34,6 +34,7 @@
       </mat-expansion-panel-header>
       <div class="d-flex flex-wrap expansion-panel-container">
         <button
+          type="button"
           mat-stroked-button
           *ngFor="let allocation of allocations"
           [ngClass]="{'primary': selectedAllocation===allocation.id}"
@@ -55,6 +56,7 @@
       </mat-expansion-panel-header>
       <div class="d-flex flex-wrap expansion-panel-container">
         <button
+          type="button"
           mat-stroked-button
           *ngFor="let role of roles"
           [ngClass]="{'primary': selectedRole===role.id}"
@@ -74,7 +76,7 @@
               <div>Inaktiv</div>
             </div>
             <div class="d-flex">
-              <mat-slide-toggle></mat-slide-toggle>
+              <mat-slide-toggle formControlName="isActive"></mat-slide-toggle>
             </div>
           </div>
         </mat-panel-title>
@@ -89,13 +91,17 @@
     <div class="d-flex align-items-center" style="width: 50%;">
       <mat-form-field class="mt-4" style="width: 60%;">
         <mat-label>Passwort</mat-label>
-        <input formControlName="password" autocomplete="off" [(ngModel)]="password" matInput>
+        <input formControlName="password" autocomplete="off" matInput>
       </mat-form-field>
-      <button class="custom-button mr-3" (click)="generateRandomPassword()" mat-stroked-button>Generieren</button>
+      <button class="custom-button mr-3" type="button" (click)="generateRandomPassword()" mat-stroked-button>Generieren</button>
     </div>
     <div class="d-flex align-items-center">
-      <button class="custom-button mr-3" mat-stroked-button>Abbrechen</button>
-      <button class="custom-button primary" mat-stroked-button>Neue Arbeitsgruppe anlegen</button>
+      <button class="custom-button mr-3" mat-stroked-button (click)="close()">
+        Abbrechen
+      </button>
+      <button class="custom-button primary" mat-stroked-button (click)="createUser()">
+        Neue Arbeitsgruppe anlegen
+      </button>
     </div>
   </div>
 </form>

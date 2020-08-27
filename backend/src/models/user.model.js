@@ -8,7 +8,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
         role: {
-            type: Sequelize.ENUM('superAdmin', 'groupAdmin', 'doctor', 'nurse', 'patient')
+            type: Sequelize.ENUM('Superadmin', 'AG-Admin', 'Doctor', 'Nurse', 'Patient')
         },
         firstName: {
             type: Sequelize.STRING
@@ -18,6 +18,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         phoneNumber: {
             type: Sequelize.STRING
+        },
+        allocation: {
+            type: Sequelize.INTEGER
         },
         isActive: {
             type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false

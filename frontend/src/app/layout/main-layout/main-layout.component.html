@@ -7,7 +7,7 @@
     <app-header (setOpen)="setOpen($event)" [isMobile]="isMobile"></app-header>
     <div class="main-content-container">
       <div class="subheader">
-        <h1>Willkommen zurück, <b>Superadmin</b>.</h1>
+        <h1>Willkommen zurück, <b>{{currentUser.role}}</b>.</h1>
       </div>
       <router-outlet></router-outlet>
     </div>

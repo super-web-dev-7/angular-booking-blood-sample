@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {AuthService} from '../../service/auth/auth.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -10,9 +11,11 @@ export class MainLayoutComponent implements OnInit {
 
   isOpen = true;
   isMobile = false;
+  currentUser: any;
 
   constructor(
-    breakpointObserver: BreakpointObserver
+    breakpointObserver: BreakpointObserver,
+    public authService: AuthService
   ) {
     breakpointObserver.observe([
       Breakpoints.HandsetPortrait,
@@ -22,6 +25,7 @@ export class MainLayoutComponent implements OnInit {
       this.isOpen = !result.matches;
       this.isMobile = result.matches;
     });
+    this.currentUser = this.authService.currentUserValue;
   }
 
   ngOnInit(): void {

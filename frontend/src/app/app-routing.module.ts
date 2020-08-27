@@ -33,9 +33,14 @@ const routes: Routes = [
     path: '',
     component: MainLayoutComponent,
     children: [
+      // dashboard
       {
         path: 'dashboard',
-        loadChildren: () => import('./page/dashboard/dashboard.module').then(m => m.DashboardModule)
+        loadChildren: () => import('./page/dashboard/dashboard.module').then(m => m.DashboardModule),
+        // canActivate: [RoleGuard],
+        // data: {
+        //   userRole: ['Superadmin']
+        // }
       },
       {
         path: 'paypal',
