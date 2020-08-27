@@ -232,3 +232,12 @@ button {
 .mat-card-radius {
   border-radius: 12px!important;
 }
+
+mat-dialog-container {
+  border-radius: 12px!important;
+}
+
+.mat-form-field-hide-placeholder .mat-form-field-label {
+  top: 10px!important;
+  padding-left: 16px;
+}
