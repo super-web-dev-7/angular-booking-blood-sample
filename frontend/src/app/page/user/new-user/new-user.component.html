@@ -73,7 +73,7 @@
               <div class="round">
                 <mat-icon>stop_circle</mat-icon>
               </div>
-              <div>Inaktiv</div>
+              <div>Aktiv</div>
             </div>
             <div class="d-flex">
               <mat-slide-toggle formControlName="isActive"></mat-slide-toggle>
@@ -100,7 +100,7 @@
         Abbrechen
       </button>
       <button class="custom-button primary" mat-stroked-button (click)="createUser()">
-        Neue Arbeitsgruppe anlegen
+        {{this.data ? 'Edit User' : 'Add New User'}}
       </button>
     </div>
   </div>

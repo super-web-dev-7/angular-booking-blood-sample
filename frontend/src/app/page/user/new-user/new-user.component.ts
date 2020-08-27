@@ -53,7 +53,7 @@ export class NewUserComponent implements OnInit {
       email: [this.data?.email, Validators.required],
       phoneNumber: [this.data?.phoneNumber, Validators.required],
       password: [null, Validators.required],
-      isActive: [!this.data?.isActive, Validators.required]
+      isActive: [this.data ? this.data?.isActive : false, Validators.required]
     });
     this.selectedAllocation = this.data?.working_group ? this.data.working_group.id : 0;
     this.selectedRole = this.data ? this.roles.findIndex(item => item.name === this.data.role) + 1 : null;
@@ -86,9 +86,11 @@ export class NewUserComponent implements OnInit {
 
   createUser = () => {
     if (this.userForm.invalid) {
+      console.log('invalid');
       return;
     }
     if ((!this.selectedAllocation && this.selectedAllocation !== 0) || !this.selectedRole) {
+      console.log('unselect');
       return;
     }
     const data = {
@@ -97,7 +99,7 @@ export class NewUserComponent implements OnInit {
       email: this.f.email.value,
       phoneNumber: this.f.phoneNumber.value,
       password: this.f.password.value,
-      isActive: !this.f.isActive.value,
+      isActive: this.f.isActive.value,
       role: this.roles[this.selectedRole - 1].name,
       allocation: this.selectedAllocation
     };
