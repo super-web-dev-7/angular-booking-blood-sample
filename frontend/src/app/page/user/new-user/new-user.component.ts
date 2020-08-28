@@ -43,7 +43,6 @@ export class NewUserComponent implements OnInit {
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log('share data >>>> ', data);
   }
 
   ngOnInit(): void {

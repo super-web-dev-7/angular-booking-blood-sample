@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
+import {FormsModule} from '@angular/forms';
 
 import {MaterialModule} from '../../material/material.module';
 import {CalendarComponent} from './overview/calendar.component';
 import {DistrictComponent} from './district/district.component';
+
 
 const routes: Routes = [
   {
@@ -30,10 +32,11 @@ const routes: Routes = [
     CalendarComponent,
     DistrictComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    MaterialModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        MaterialModule,
+        FormsModule
+    ]
 })
 export class CalendarRoutingModule { }

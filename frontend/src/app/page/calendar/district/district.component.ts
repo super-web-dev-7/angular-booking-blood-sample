@@ -5,6 +5,8 @@ import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {NewDistrictComponent} from '../new-district/new-district.component';
+import {URL_JSON} from '../../../utils/url_json';
+import {HttpService} from '../../../service/http/http.service';
 
 @Component({
   selector: 'app-district',
@@ -14,18 +16,22 @@ import {NewDistrictComponent} from '../new-district/new-district.component';
 export class DistrictComponent implements OnInit {
 
   displayedColumns: string[] = ['no', 'name', 'zip-code', 'active', 'actions'];
-  dataSource = new MatTableDataSource<any>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<any>([]);
   currentPage = 0;
   pageSize = 5;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   selectedDeleteItem: number = null;
+  allDistrict: any;
+  filterValue = null;
 
   constructor(
     public router: Router,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    public httpService: HttpService
+  ) {
+  }
 
   ngOnInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -35,6 +41,14 @@ export class DistrictComponent implements OnInit {
     if (url[3] === 'new') {
       this.openDialog();
     }
+    this.httpService.get(URL_JSON.DISTRICT + '/get').subscribe((res: any) => {
+      // this.dataSource.data = res;
+      for (const item of res) {
+        item.zipcode = JSON.parse(item.zipcode);
+      }
+      this.dataSource.data = res;
+      this.allDistrict = res;
+    });
   }
 
   onPaginateChange = ($event: PageEvent) => {
@@ -42,12 +56,26 @@ export class DistrictComponent implements OnInit {
     this.pageSize = $event.pageSize;
   }
 
+  filter = () => {
+    this.dataSource.data = this.allDistrict.filter(item => {
+      return item.name.includes(this.filterValue)
+        || JSON.stringify(item.zipcode).includes(this.filterValue);
+    });
+  }
+
   delete = (id) => {
     this.selectedDeleteItem = id;
   }
 
   deleteItem = () => {
-    this.selectedDeleteItem = null;
+    this.httpService.delete(URL_JSON.DISTRICT + '/delete/' + this.selectedDeleteItem).subscribe(res => {
+      const dataSource = this.dataSource.data;
+      const removedIndex = dataSource.findIndex(item => {
+        return item.id === this.selectedDeleteItem;
+      });
+      dataSource.splice(removedIndex, 1);
+      this.dataSource.data = dataSource;
+    });
   }
 
   openDialog = () => {
@@ -59,55 +87,33 @@ export class DistrictComponent implements OnInit {
       this.router.navigateByUrl('calendar/district/overview');
     });
   }
-}
 
-const ELEMENT_DATA: any[] = [
-  {
-    id: 1,
-    name: 'Bezirk 1',
-    zipCode: [
-      {
-        from: 12000,
-        to: 12999
-      }
-    ],
-    active: true
-  },
-  {
-    id: 2,
-    name: 'Wilmersdorf',
-    zipCode: [
-      {
-        from: 10700,
-        to: 10999
-      },
-      {
-        from: 14055,
-        to: 14199
-      }
-    ],
-    active: false
-  },
-  {
-    id: 3,
-    name: 'Spandau',
-    zipCode: [
-      {
-        from: 13000,
-        to: 13999
-      }
-    ],
-    active: true
-  },
-  {
-    id: 4,
-    name: 'Mitte',
-    zipCode: [
-      {
-        from: 10000,
-        to: 10700
-      }
-    ],
-    active: false
+  setActive = (event, id) => {
+    const data = {
+      isActive: event.checked
+    };
+    this.httpService.update(URL_JSON.DISTRICT + '/update/' + id, data).subscribe(res => {
+    });
   }
-];
+
+  editItem = (id) => {
+    const dataSource = this.dataSource.data;
+    const data = dataSource.find(item => {
+      return item.id === id;
+    });
+    const dialogRef = this.dialog.open(NewDistrictComponent, {
+      width: '900px',
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        result.zipcode = JSON.parse(result.zipcode);
+        const index = this.allDistrict.findIndex(item => item.id === result.id);
+        const district = this.allDistrict[index];
+        this.allDistrict[index] = {...district, ...result};
+        this.dataSource.data = this.allDistrict;
+      }
+    });
+  }
+}

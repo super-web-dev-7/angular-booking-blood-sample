@@ -5,6 +5,7 @@ import dashboardRouter from './dashboard.router';
 import packageRouter from './package.router';
 import workingGroupRouter from './working-group.router';
 import userRouter from './user.router';
+import districtRouter from './district.router';
 
 
 const router = Router();
@@ -15,6 +16,7 @@ router.use('/dashboard', dashboardRouter);
 router.use('/package', packageRouter);
 router.use('/group', workingGroupRouter);
 router.use('/user', userRouter);
+router.use('/district', districtRouter);
 
 
 export default router;

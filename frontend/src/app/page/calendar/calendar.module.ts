@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {MaterialModule} from '../../material/material.module';
 import {CalendarRoutingModule} from './calendar-routing.module';
@@ -15,7 +16,9 @@ import {NewDistrictComponent} from './new-district/new-district.component';
   imports: [
     CommonModule,
     CalendarRoutingModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class CalendarModule { }
