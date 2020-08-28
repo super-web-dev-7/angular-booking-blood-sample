@@ -105,4 +105,12 @@ export class UserOverviewComponent implements OnInit {
       this.router.navigateByUrl('user/overview');
     });
   }
+
+  setActive = (event, id) => {
+    const data = {
+      isActive: event.checked
+    };
+    this.httpService.update(URL_JSON.USER + '/update/' + id, data).subscribe(res => {
+    });
+  }
 }

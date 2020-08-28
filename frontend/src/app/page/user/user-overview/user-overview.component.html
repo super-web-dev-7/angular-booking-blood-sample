@@ -51,7 +51,7 @@
             <th mat-header-cell *matHeaderCellDef> Aktiv </th>
             <td mat-cell *matCellDef="let element">
               <div class="d-flex">
-                <mat-slide-toggle [checked]="element.isActive"></mat-slide-toggle>
+                <mat-slide-toggle (change)="setActive($event, element.id)" [checked]="element.isActive"></mat-slide-toggle>
               </div>
             </td>
           </ng-container>
