@@ -25,6 +25,10 @@ export class UserOverviewComponent implements OnInit {
   selectedDeleteItem: number = null;
   filterValue = null;
   allUser: any;
+  orderStatus = {
+    active: '',
+    direction: ''
+  };
 
   constructor(
     public router: Router,
@@ -112,5 +116,26 @@ export class UserOverviewComponent implements OnInit {
     };
     this.httpService.update(URL_JSON.USER + '/update/' + id, data).subscribe(res => {
     });
+  }
+
+  onSort = (event) => {
+    this.orderStatus = event;
+    if (event.active === 'active') {
+      const users = [...this.allUser];
+      users.sort((a, b) => {
+        const x = a.isActive;
+        const y = b.isActive;
+        if (event.direction === 'asc') {
+          return x < y ? 1 : -1;
+        } else if (event.direction === 'desc') {
+          return x > y ? 1 : -1;
+        }
+      });
+      if (event.direction === '') {
+        this.dataSource.data = this.allUser;
+      } else {
+        this.dataSource.data = users;
+      }
+    }
   }
 }
