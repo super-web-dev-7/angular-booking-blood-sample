@@ -25,6 +25,10 @@ export class DistrictComponent implements OnInit {
   selectedDeleteItem: number = null;
   allDistrict: any;
   filterValue = null;
+  orderStatus = {
+    active: '',
+    direction: ''
+  };
 
   constructor(
     public router: Router,
@@ -42,7 +46,6 @@ export class DistrictComponent implements OnInit {
       this.openDialog();
     }
     this.httpService.get(URL_JSON.DISTRICT + '/get').subscribe((res: any) => {
-      // this.dataSource.data = res;
       for (const item of res) {
         item.zipcode = JSON.parse(item.zipcode);
       }
@@ -115,5 +118,41 @@ export class DistrictComponent implements OnInit {
         this.dataSource.data = this.allDistrict;
       }
     });
+  }
+
+  onSort = (event) => {
+    this.orderStatus = event;
+    const districts = [...this.allDistrict];
+    if (event.active === 'active') {
+      districts.sort((a, b) => {
+        const x = a.isActive;
+        const y = b.isActive;
+        if (event.direction === 'asc') {
+          return x < y ? 1 : -1;
+        } else if (event.direction === 'desc') {
+          return x > y ? 1 : -1;
+        }
+      });
+      if (event.direction === '') {
+        this.dataSource.data = this.allDistrict;
+      } else {
+        this.dataSource.data = districts;
+      }
+    } else if (event.active === 'zip-code') {
+      districts.sort((a, b) => {
+        const x = JSON.stringify(a.zipcode);
+        const y = JSON.stringify(b.zipcode);
+        if (event.direction === 'desc') {
+          return x < y ? 1 : -1;
+        } else if (event.direction === 'asc') {
+          return x > y ? 1 : -1;
+        }
+      });
+      if (event.direction === '') {
+        this.dataSource.data = this.allDistrict;
+      } else {
+        this.dataSource.data = districts;
+      }
+    }
   }
 }

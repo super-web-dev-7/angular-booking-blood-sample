@@ -19,29 +19,3 @@ table td {
     }
   }
 }
-//
-//// My custom ascending arrow
-//[aria-sort="ascending"] {
-//  ::ng-deep .mat-sort-header-arrow {
-//    .mat-sort-header-indicator {
-//      &::before {
-//        content: "\2191";
-//        top: -1.6em;
-//        position: absolute;
-//      }
-//    }
-//  }
-//}
-//
-//// My custom descending arrow
-//[aria-sort="descending"] {
-//  ::ng-deep .mat-sort-header-arrow {
-//    .mat-sort-header-indicator {
-//      &::before {
-//        content: "\2193";
-//        top: -2.4em;
-//        position: absolute;
-//      }
-//    }
-//  }
-//}
