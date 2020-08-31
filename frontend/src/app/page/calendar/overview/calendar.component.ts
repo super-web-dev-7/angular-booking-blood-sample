@@ -101,23 +101,53 @@ export class CalendarComponent implements OnInit {
 
   onSort = (event) => {
     this.orderStatus = event;
-    // if (event.active === 'active') {
-    //   const users = [...this.allUser];
-    //   users.sort((a, b) => {
-    //     const x = a.isActive;
-    //     const y = b.isActive;
-    //     if (event.direction === 'asc') {
-    //       return x < y ? 1 : -1;
-    //     } else if (event.direction === 'desc') {
-    //       return x > y ? 1 : -1;
-    //     }
-    //   });
-    //   if (event.direction === '') {
-    //     this.dataSource.data = this.allUser;
-    //   } else {
-    //     this.dataSource.data = users;
-    //   }
-    // }
+    const calendars = [...this.allCalendar];
+    if (event.active === 'calendarName') {
+      calendars.sort((a, b) => {
+        const x = a.name;
+        const y = b.name;
+        if (event.direction === 'asc') {
+          return x > y ? 1 : -1;
+        } else if (event.direction === 'desc') {
+          return x < y ? 1 : -1;
+        }
+      });
+      if (event.direction === '') {
+        this.dataSource.data = this.allCalendar;
+      } else {
+        this.dataSource.data = calendars;
+      }
+    } else if (event.active === 'district') {
+      calendars.sort((a, b) => {
+        const x = a.district.name;
+        const y = b.district.name;
+        if (event.direction === 'asc') {
+          return x > y ? 1 : -1;
+        } else if (event.direction === 'desc') {
+          return x < y ? 1 : -1;
+        }
+      });
+      if (event.direction === '') {
+        this.dataSource.data = this.allCalendar;
+      } else {
+        this.dataSource.data = calendars;
+      }
+    } else if (event.active === 'interval') {
+      calendars.sort((a, b) => {
+        const x = a.duration_appointment;
+        const y = b.duration_appointment;
+        if (event.direction === 'asc') {
+          return x > y ? 1 : -1;
+        } else if (event.direction === 'desc') {
+          return x < y ? 1 : -1;
+        }
+      });
+      if (event.direction === '') {
+        this.dataSource.data = this.allCalendar;
+      } else {
+        this.dataSource.data = calendars;
+      }
+    }
   }
 
   editItem = (data) => {
