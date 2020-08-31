@@ -23,13 +23,11 @@ exports.create = (req, res) => {
 exports.get = async (req, res) => {
     WorkingGroup.hasMany(User, {foreignKey: 'allocation'});
     User.belongsTo(WorkingGroup, {foreignKey: 'allocation'});
-    const allUsers = await User.findAll({where: {}, include: [WorkingGroup]});
+    const allUsers = await User.findAll({where: req.query, include: [WorkingGroup]});
     res.status(200).json(allUsers);
 }
 
-
 exports.delete = async (req, res) => {
-    console.log(req.params.id);
     User.destroy({where: {id: req.params.id}}).then(result => {
         res.status(204).json({});
     })

@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {newArray} from '@angular/compiler/src/util';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+
+import {HttpService} from '../../../service/http/http.service';
+import {URL_JSON} from '../../../utils/url_json';
+
 
 @Component({
   selector: 'app-new-calendar',
@@ -8,48 +15,44 @@ import { Component, OnInit } from '@angular/core';
 export class NewCalendarComponent implements OnInit {
   selectedDistrict = null;
   selectedNurse = null;
-  districts = [
-    {
-      id: 1,
-      name: 'Steglitz'
-    },
-    {
-      id: 2,
-      name: 'Charlottenburg'
-    },
-    {
-      id: 3,
-      name: 'Wilmersdorf'
-    },
-    {
-      id: 4,
-      name: 'Tempelhof'
-    }
-  ];
-  nurses = [
-    {
-      id: 1,
-      name: 'Maria Synowzik'
-    },
-    {
-      id: 2,
-      name: 'Karin Blattip'
-    },
-    {
-      id: 3,
-      name: 'Ernst Waltersdorf'
-    }
-  ];
+  districts = [];
+  nurses = [];
 
-  values = [
-    {value: '1', viewValue: '10'},
-    {value: '2', viewValue: '20'},
-    {value: '3', viewValue: '30'}
-  ];
+  values = newArray(48);
+  scheduleForm: FormGroup;
 
-  constructor() { }
+  constructor(
+    public httpService: HttpService,
+    public formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
   ngOnInit(): void {
+    console.log(this.data);
+    this.httpService.get(URL_JSON.DISTRICT + '/get').subscribe((res: any) => {
+      this.districts = res;
+    });
+    this.httpService.get(URL_JSON.USER + '/get?role=Nurse').subscribe((res: any) => {
+      this.nurses = res;
+    });
+    this.scheduleForm = this.formBuilder.group({
+      name: [this.data?.name, Validators.required],
+      duration_appointment: [this.data?.duration_appointment, Validators.required],
+      rest_time: [this.data?.rest_time, Validators.required],
+      working_time_until: [this.data?.working_time_until, Validators.required],
+      working_time_from: [this.data?.working_time_from, Validators.required]
+    });
+    this.selectedDistrict = this.data?.district_id;
+    this.selectedNurse = this.data?.nurse;
+  }
+
+  getFloor = (value) => {
+    return Math.floor(value);
+  }
+
+  get f() {
+    return this.scheduleForm.controls;
   }
 
   selectDistrict = (id) => {
@@ -60,4 +63,35 @@ export class NewCalendarComponent implements OnInit {
     this.selectedNurse = id;
   }
 
+  onCloseDialog = () => {
+    this.dialogRef.close();
+  }
+
+  onSubmitForm = () => {
+    if (this.scheduleForm.invalid) {
+      return;
+    }
+    if (!this.selectedDistrict || !this.selectedNurse) {
+      return;
+    }
+
+    const data = {
+      name: this.f.name.value,
+      duration_appointment: this.f.duration_appointment.value,
+      rest_time: this.f.rest_time.value,
+      working_time_from: this.f.working_time_from.value,
+      working_time_until: this.f.working_time_until.value,
+      district_id: this.selectedDistrict,
+      nurse: this.selectedNurse
+    };
+    if (this.data) {
+      this.httpService.update(URL_JSON.CALENDAR + '/update/' + this.data.id, data).subscribe(res => {
+        this.dialogRef.close(res[0]);
+      });
+    } else {
+      this.httpService.create(URL_JSON.CALENDAR, data).subscribe(res => {
+        this.dialogRef.close(res);
+      });
+    }
+  }
 }

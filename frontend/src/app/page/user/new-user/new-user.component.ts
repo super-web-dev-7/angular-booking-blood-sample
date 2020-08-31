@@ -109,7 +109,6 @@ export class NewUserComponent implements OnInit {
       });
     } else {
       this.httpService.create(URL_JSON.USER, data).subscribe(res => {
-        console.log(res);
         this.dialogRef.close(res);
       });
     }

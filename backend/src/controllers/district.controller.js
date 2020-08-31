@@ -1,5 +1,4 @@
 import db from '../models';
-import bcrypt from "bcrypt";
 
 const District = db.district;
 

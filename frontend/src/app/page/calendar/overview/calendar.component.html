@@ -2,7 +2,7 @@
 <div class="main-container mt-5">
   <div class="table-toolbar">
     <div class="search-field-container">
-      <input type="text" placeholder="Search...">
+      <input type="text" placeholder="Search..." [(ngModel)]="filterValue" (ngModelChange)="filter()">
       <mat-icon>search</mat-icon>
     </div>
     <button class="custom-button" mat-stroked-button [routerLink]="'/calendar/new'">Neue Kalenderressource anlegen</button>
@@ -10,7 +10,7 @@
   <div class="table-container mt-5">
     <mat-card class="table-card mat-card-radius">
       <div>
-        <table mat-table [dataSource]="dataSource" matSort>
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSort($event)">
 
           <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef> # </th>
@@ -18,33 +18,67 @@
           </ng-container>
 
           <ng-container matColumnDef="calendarName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Kalenderressourcenname </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Kalenderressourcenname
+              <mat-icon>
+                {{orderStatus.active === 'calendarName'
+                ? orderStatus.direction === 'asc' ? 'expand_less' : orderStatus.direction === 'desc' ? 'expand_more' : 'unfold_more'
+                : 'unfold_more'}}
+              </mat-icon>
+            </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
           </ng-container>
 
           <ng-container matColumnDef="district">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Bezirk </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Bezirk
+              <mat-icon>
+                {{orderStatus.active === 'district'
+                ? orderStatus.direction === 'asc' ? 'expand_less' : orderStatus.direction === 'desc' ? 'expand_more' : 'unfold_more'
+                : 'unfold_more'}}
+              </mat-icon>
+            </th>
             <td mat-cell *matCellDef="let element">
-              {{element.name}}
+              {{element.district.name}} ( {{element.district.zipcode[0].from}} - {{element.district.zipcode[0].to}})
+              {{element.district.zipcode.length > 1 ? '(+' + (element.district.zipcode.length - 1) + ')' : ''}}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="nurse">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Schwester </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Schwester
+              <mat-icon>
+                {{orderStatus.active === 'nurse'
+                ? orderStatus.direction === 'asc' ? 'expand_less' : orderStatus.direction === 'desc' ? 'expand_more' : 'unfold_more'
+                : 'unfold_more'}}
+              </mat-icon>
+            </th>
             <td mat-cell *matCellDef="let element">
-              {{element.name}}
+              {{element.user.firstName}}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="interval">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Terminvergabeintervall </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Terminvergabeintervall
+              <mat-icon>
+                {{orderStatus.active === 'interval'
+                ? orderStatus.direction === 'asc' ? 'expand_less' : orderStatus.direction === 'desc' ? 'expand_more' : 'unfold_more'
+                : 'unfold_more'}}
+              </mat-icon>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.duration_appointment}} Min ({{element.rest_time}} Min Ruhezeit),
+              {{getFloorValue(element.working_time_from / 2)}}:{{element.working_time_from % 2 === 0 ? '00' : '30'}}
+              -
+              {{getFloorValue(element.working_time_until / 2)}}:{{element.working_time_until % 2 === 0 ? '00' : '30'}}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: right"> Aktionen </th>
             <td mat-cell *matCellDef="let element" style="text-align: right" class="position-relative">
-              <button mat-icon-button aria-label="more">
+              <button mat-icon-button aria-label="more" (click)="editItem(element)">
                 <img src="/assets/images/edit.svg" alt="edit">
               </button>
               <button (click)="delete(element.id)" aria-label="more"

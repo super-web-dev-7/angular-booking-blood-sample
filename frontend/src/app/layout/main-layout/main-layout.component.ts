@@ -21,7 +21,6 @@ export class MainLayoutComponent implements OnInit {
       Breakpoints.HandsetPortrait,
       Breakpoints.TabletPortrait
     ]).subscribe(result => {
-      console.log(result);
       this.isOpen = !result.matches;
       this.isMobile = result.matches;
     });

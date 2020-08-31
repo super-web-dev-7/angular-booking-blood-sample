@@ -1,10 +1,10 @@
-<div class="p-2">
+<form [formGroup]="scheduleForm" class="p-2">
   <h1>Kalenderressource neu</h1>
 
   <div class="d-flex flex-wrap">
     <mat-form-field class="mt-4 w-100">
       <mat-label>Kalenderressourcenname</mat-label>
-      <input autocomplete="off" matInput>
+      <input autocomplete="off" matInput formControlName="name">
     </mat-form-field>
   </div>
 
@@ -22,6 +22,7 @@
       </mat-expansion-panel-header>
       <div class="d-flex flex-wrap expansion-panel-container">
         <button
+          type="button"
           mat-stroked-button
           *ngFor="let district of districts"
           [ngClass]="{'primary': selectedDistrict===district.id}"
@@ -43,11 +44,12 @@
       </mat-expansion-panel-header>
       <div class="d-flex flex-wrap expansion-panel-container">
         <button
+          type="button"
           mat-stroked-button
           *ngFor="let nurse of nurses"
           [ngClass]="{'primary': selectedNurse===nurse.id}"
           (click)="selectNurse(nurse.id)">
-          {{nurse.name}}
+          {{nurse.firstName}}
         </button>
       </div>
     </mat-expansion-panel>
@@ -67,25 +69,25 @@
       <div class="d-flex flex-wrap w-100">
         <mat-form-field class="mt-4 width-50 mr-3">
           <mat-label>Dauer der Termine (Min.)</mat-label>
-          <input autocomplete="off" matInput>
+          <input type="number" autocomplete="off" matInput formControlName="duration_appointment">
         </mat-form-field>
         <mat-form-field class="mt-4 width-50">
           <mat-label>Ruhezeit (Min.)</mat-label>
-          <input autocomplete="off" matInput>
+          <input type="number" autocomplete="off" matInput formControlName="rest_time">
         </mat-form-field>
         <mat-form-field class="mt-4 width-50 mr-3">
           <mat-label>Arbeitszeit von</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let value of values" [value]="value.value">
-              {{value.viewValue}}
+          <mat-select formControlName="working_time_from">
+            <mat-option *ngFor="let value of values; let index = index" [value]="index">
+              {{getFloor(index / 2)}} : {{index % 2 === 0 ? '00' : '30'}}
             </mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="mt-4 width-50">
           <mat-label>Arbeitszeit bis</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let value of values" [value]="value.value">
-              {{value.viewValue}}
+          <mat-select formControlName="working_time_until">
+            <mat-option *ngFor="let value of values; let index = index" [value]="index">
+              {{getFloor(index / 2)}} : {{index % 2 === 0 ? '00' : '30'}}
             </mat-option>
           </mat-select>
         </mat-form-field>
@@ -100,8 +102,8 @@
     <div class="d-flex align-items-center" style="width: 50%;">
     </div>
     <div class="d-flex align-items-center">
-      <button class="custom-button mr-3" mat-stroked-button>Abbrechen</button>
-      <button class="custom-button primary" mat-stroked-button>Neue Kalenderressource anlegen</button>
+      <button class="custom-button mr-3" mat-stroked-button (click)="onCloseDialog()">Abbrechen</button>
+      <button class="custom-button primary" mat-stroked-button (click)="onSubmitForm()">Neue Kalenderressource anlegen</button>
     </div>
   </div>
-</div>
+</form>
