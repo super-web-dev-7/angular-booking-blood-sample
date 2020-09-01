@@ -120,8 +120,9 @@ export class UserOverviewComponent implements OnInit {
 
   onSort = (event) => {
     this.orderStatus = event;
+    const users = [...this.allUser];
+
     if (event.active === 'active') {
-      const users = [...this.allUser];
       users.sort((a, b) => {
         const x = a.isActive;
         const y = b.isActive;
@@ -131,11 +132,21 @@ export class UserOverviewComponent implements OnInit {
           return x > y ? 1 : -1;
         }
       });
-      if (event.direction === '') {
-        this.dataSource.data = this.allUser;
-      } else {
-        this.dataSource.data = users;
-      }
+    } else {
+      users.sort((a, b) => {
+        const x = a[event.active];
+        const y = b[event.active];
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+    }
+    if (event.direction === '') {
+      this.dataSource.data = this.allUser;
+    } else {
+      this.dataSource.data = users;
     }
   }
 }
