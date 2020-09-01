@@ -133,11 +133,6 @@ export class DistrictComponent implements OnInit {
           return x > y ? 1 : -1;
         }
       });
-      if (event.direction === '') {
-        this.dataSource.data = this.allDistrict;
-      } else {
-        this.dataSource.data = districts;
-      }
     } else if (event.active === 'zip-code') {
       districts.sort((a, b) => {
         const x = JSON.stringify(a.zipcode);
@@ -148,11 +143,21 @@ export class DistrictComponent implements OnInit {
           return x > y ? 1 : -1;
         }
       });
-      if (event.direction === '') {
-        this.dataSource.data = this.allDistrict;
-      } else {
-        this.dataSource.data = districts;
-      }
+    } else if (event.active === 'name') {
+      districts.sort((a, b) => {
+        const x = a.name;
+        const y = b.name;
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+    }
+    if (event.direction === '') {
+      this.dataSource.data = this.allDistrict;
+    } else {
+      this.dataSource.data = districts;
     }
   }
 }

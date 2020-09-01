@@ -107,9 +107,9 @@ export class CalendarComponent implements OnInit {
         const x = a.name;
         const y = b.name;
         if (event.direction === 'asc') {
-          return x > y ? 1 : -1;
+          return x.localeCompare(y, 'de');
         } else if (event.direction === 'desc') {
-          return x < y ? 1 : -1;
+          return y.localeCompare(x, 'de');
         }
       });
       if (event.direction === '') {
@@ -122,9 +122,9 @@ export class CalendarComponent implements OnInit {
         const x = a.district.name;
         const y = b.district.name;
         if (event.direction === 'asc') {
-          return x > y ? 1 : -1;
+          return x.localeCompare(y, 'de');
         } else if (event.direction === 'desc') {
-          return x < y ? 1 : -1;
+          return y.localeCompare(x, 'de');
         }
       });
       if (event.direction === '') {
