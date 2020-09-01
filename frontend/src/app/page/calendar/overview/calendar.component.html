@@ -20,11 +20,7 @@
           <ng-container matColumnDef="calendarName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Kalenderressourcenname
-              <mat-icon>
-                {{orderStatus.active === 'calendarName'
-                ? orderStatus.direction === 'asc' ? 'expand_less' : orderStatus.direction === 'desc' ? 'expand_more' : 'unfold_more'
-                : 'unfold_more'}}
-              </mat-icon>
+              <app-order-icon columnName="name" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
           </ng-container>
@@ -32,11 +28,7 @@
           <ng-container matColumnDef="district">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Bezirk
-              <mat-icon>
-                {{orderStatus.active === 'district'
-                ? orderStatus.direction === 'asc' ? 'expand_less' : orderStatus.direction === 'desc' ? 'expand_more' : 'unfold_more'
-                : 'unfold_more'}}
-              </mat-icon>
+              <app-order-icon columnName="name" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element">
               {{element.district.name}} ( {{element.district.zipcode[0].from}} - {{element.district.zipcode[0].to}})
@@ -47,11 +39,7 @@
           <ng-container matColumnDef="nurse">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Schwester
-              <mat-icon>
-                {{orderStatus.active === 'nurse'
-                ? orderStatus.direction === 'asc' ? 'expand_less' : orderStatus.direction === 'desc' ? 'expand_more' : 'unfold_more'
-                : 'unfold_more'}}
-              </mat-icon>
+              <app-order-icon columnName="name" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element">
               {{element.user.firstName}}
@@ -61,11 +49,7 @@
           <ng-container matColumnDef="interval">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Terminvergabeintervall
-              <mat-icon>
-                {{orderStatus.active === 'interval'
-                ? orderStatus.direction === 'asc' ? 'expand_less' : orderStatus.direction === 'desc' ? 'expand_more' : 'unfold_more'
-                : 'unfold_more'}}
-              </mat-icon>
+              <app-order-icon columnName="name" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element">
               {{element.duration_appointment}} Min ({{element.rest_time}} Min Ruhezeit),

@@ -17,6 +17,7 @@ import { AuthComponent } from './layout/auth/auth.component';
 
 import {MaterialModule} from './material/material.module';
 import {MainLayoutModule} from './layout/main-layout/main-layout.module';
+import {SharedModule} from './shared/shared.module';
 
 
 @NgModule({
@@ -33,10 +34,13 @@ import {MainLayoutModule} from './layout/main-layout/main-layout.module';
     ReactiveFormsModule,
     HttpClientModule,
     MaterialModule,
-    MainLayoutModule
+    MainLayoutModule,
+    SharedModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+  ],
+  exports: [
   ],
   bootstrap: [AppComponent]
 })

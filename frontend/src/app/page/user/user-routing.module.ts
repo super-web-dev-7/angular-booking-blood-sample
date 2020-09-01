@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 
 import {UserOverviewComponent} from './user-overview/user-overview.component';
 import {MaterialModule} from '../../material/material.module';
-
+import {SharedModule} from "../../shared/shared.module";
 
 const routes: Routes = [
   {
@@ -20,12 +20,14 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [UserOverviewComponent],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        MaterialModule,
-        FormsModule
-    ]
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    MaterialModule,
+    FormsModule,
+    SharedModule
+  ]
 })
 
-export class UserRoutingModule { }
+export class UserRoutingModule {
+}

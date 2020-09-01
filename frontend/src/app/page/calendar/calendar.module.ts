@@ -11,7 +11,7 @@ import {NewDistrictComponent} from './new-district/new-district.component';
 @NgModule({
   declarations: [
     NewCalendarComponent,
-    NewDistrictComponent
+    NewDistrictComponent,
   ],
   imports: [
     CommonModule,

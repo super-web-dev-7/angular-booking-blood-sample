@@ -132,6 +132,7 @@ export class UserOverviewComponent implements OnInit {
           return x > y ? 1 : -1;
         }
       });
+    } else if (event.active === 'allocation') {
     } else {
       users.sort((a, b) => {
         const x = a[event.active];

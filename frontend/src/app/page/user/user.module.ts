@@ -13,14 +13,14 @@ import {MaterialModule} from '../../material/material.module';
   declarations: [
     NewUserComponent
   ],
-    imports: [
-        CommonModule,
-        UserRoutingModule,
-        MatSlideToggleModule,
-        MaterialModule,
-        FormsModule,
-        ReactiveFormsModule,
-    ]
+  imports: [
+    CommonModule,
+    UserRoutingModule,
+    MatSlideToggleModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ]
 })
 export class UserModule {
 }

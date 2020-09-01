@@ -20,10 +20,7 @@
           <ng-container matColumnDef="firstName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Vorname
-              <div class="order-icon-container">
-                <mat-icon [hidden]="orderStatus.active === 'firstName' && orderStatus.direction === 'desc'" class="less-icon">expand_less</mat-icon>
-                <mat-icon [hidden]="orderStatus.active === 'firstName' && orderStatus.direction === 'asc'" class="more-icon">expand_more</mat-icon>
-              </div>
+              <app-order-icon columnName="firstName" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
           </ng-container>
@@ -31,10 +28,7 @@
           <ng-container matColumnDef="lastName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Nachname
-              <div class="order-icon-container">
-                <mat-icon [hidden]="orderStatus.active === 'lastName' && orderStatus.direction === 'desc'" class="less-icon">expand_less</mat-icon>
-                <mat-icon [hidden]="orderStatus.active === 'lastName' && orderStatus.direction === 'asc'" class="more-icon">expand_more</mat-icon>
-              </div>
+              <app-order-icon columnName="lastName" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
           </ng-container>
@@ -42,10 +36,7 @@
           <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               E-Mail-Adresse
-              <div class="order-icon-container">
-                <mat-icon [hidden]="orderStatus.active === 'email' && orderStatus.direction === 'desc'" class="less-icon">expand_less</mat-icon>
-                <mat-icon [hidden]="orderStatus.active === 'email' && orderStatus.direction === 'asc'" class="more-icon">expand_more</mat-icon>
-              </div>
+              <app-order-icon columnName="email" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element"> {{element.email}} </td>
           </ng-container>
@@ -53,10 +44,7 @@
           <ng-container matColumnDef="phoneNumber">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Mobil
-              <div class="order-icon-container">
-                <mat-icon [hidden]="orderStatus.active === 'phoneNumber' && orderStatus.direction === 'desc'" class="less-icon">expand_less</mat-icon>
-                <mat-icon [hidden]="orderStatus.active === 'phoneNumber' && orderStatus.direction === 'asc'" class="more-icon">expand_more</mat-icon>
-              </div>
+              <app-order-icon columnName="phoneNumber" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element"> {{element.phoneNumber}} </td>
           </ng-container>
@@ -64,10 +52,7 @@
           <ng-container matColumnDef="allocation">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Zuweisung
-              <div class="order-icon-container">
-                <mat-icon [hidden]="orderStatus.active === 'allocation' && orderStatus.direction === 'desc'" class="less-icon">expand_less</mat-icon>
-                <mat-icon [hidden]="orderStatus.active === 'allocation' && orderStatus.direction === 'asc'" class="more-icon">expand_more</mat-icon>
-              </div>
+              <app-order-icon columnName="allocation" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element"> {{element.allocation === 0 ? 'Keine' : element.working_group?.name}} </td>
           </ng-container>
@@ -75,10 +60,7 @@
           <ng-container matColumnDef="role">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Rolle
-              <div class="order-icon-container">
-                <mat-icon [hidden]="orderStatus.active === 'role' && orderStatus.direction === 'desc'" class="less-icon">expand_less</mat-icon>
-                <mat-icon [hidden]="orderStatus.active === 'role' && orderStatus.direction === 'asc'" class="more-icon">expand_more</mat-icon>
-              </div>
+              <app-order-icon columnName="role" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element"> {{element.role}} </td>
           </ng-container>
@@ -86,10 +68,7 @@
           <ng-container matColumnDef="active">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Aktiv
-              <div class="order-icon-container">
-                <mat-icon [hidden]="orderStatus.active === 'active' && orderStatus.direction === 'desc'" class="less-icon">expand_less</mat-icon>
-                <mat-icon [hidden]="orderStatus.active === 'active' && orderStatus.direction === 'asc'" class="more-icon">expand_more</mat-icon>
-              </div>
+              <app-order-icon columnName="active" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element">
               <div class="d-flex">

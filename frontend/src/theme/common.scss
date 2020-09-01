@@ -242,18 +242,4 @@ mat-dialog-container {
   padding-left: 16px;
 }
 
-.order-icon-container {
-  display: flex;
-  flex-direction: column;
-  height: 20px;
-  width: 20px;
-  mat-icon {
-    position: absolute;
-  }
-  .less-icon {
-    top: -6px;
-  }
-  .more-icon {
-    bottom: -6px;
-  }
-}
+

@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {MaterialModule} from '../../material/material.module';
 import {CalendarComponent} from './overview/calendar.component';
 import {DistrictComponent} from './district/district.component';
+import {SharedModule} from '../../shared/shared.module';
 
 
 const routes: Routes = [
@@ -30,13 +31,14 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     CalendarComponent,
-    DistrictComponent
+    DistrictComponent,
   ],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        MaterialModule,
-        FormsModule
-    ]
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    MaterialModule,
+    FormsModule,
+    SharedModule
+  ]
 })
 export class CalendarRoutingModule { }
