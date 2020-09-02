@@ -79,7 +79,6 @@ export class NewComponent implements OnInit {
       group: this.selectedGroup,
       status: this.selectedStatus
     };
-    console.log(newPackageData);
   }
 
 }

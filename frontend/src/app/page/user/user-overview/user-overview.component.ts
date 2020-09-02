@@ -79,7 +79,6 @@ export class UserOverviewComponent implements OnInit {
   }
 
   editItem = (id) => {
-    console.log(id);
     const dataSource = this.dataSource.data;
     const data = dataSource.find(item => {
       return item.id === id;
@@ -105,7 +104,6 @@ export class UserOverviewComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('result>>>>> ', result);
       this.router.navigateByUrl('user/overview');
     });
   }

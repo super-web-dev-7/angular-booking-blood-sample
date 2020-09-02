@@ -16,8 +16,6 @@ export class RoleGuard implements CanActivate {
     const currentUser = this.authService.currentUserValue;
     const role = route.data.userRole;
     if (currentUser) {
-      console.log(currentUser);
-      console.log(role);
       if (role.includes(currentUser.role)) {
         return true;
       } else {

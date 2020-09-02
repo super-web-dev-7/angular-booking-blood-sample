@@ -2,7 +2,7 @@
 <div class="main-container mt-5">
   <div class="table-toolbar">
     <div class="search-field-container">
-      <input type="text" placeholder="Search...">
+      <input type="text" placeholder="Search..." [(ngModel)]="filterValue" (ngModelChange)="filter()">
       <mat-icon>search</mat-icon>
     </div>
     <button class="custom-button" mat-stroked-button [routerLink]="'/working-group/new'">Neue Arbeitsgruppe anlegen</button>
@@ -10,33 +10,49 @@
   <div class="table-container mt-5">
     <mat-card class="table-card mat-card-radius">
       <div>
-        <table mat-table [dataSource]="dataSource" matSort>
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSort($event)">
 
           <ng-container matColumnDef="no">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
+            <th mat-header-cell *matHeaderCellDef> # </th>
             <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="group_name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Arbeitsgruppenname </th>
-            <td mat-cell *matCellDef="let element"> {{element.group_name}} </td>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Arbeitsgruppenname
+              <app-order-icon columnName="name" [orderStatus]="orderStatus"></app-order-icon>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.name}}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="group_admin">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Arbeitsgruppen-Administrator </th>
-            <td mat-cell *matCellDef="let element"> {{element.group_admin}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Arbeitsgruppen-Administrator
+              <app-order-icon columnName="group_admin" [orderStatus]="orderStatus"></app-order-icon>
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.user.firstName}} {{element.user.lastName}}</td>
           </ng-container>
 
           <ng-container matColumnDef="calendar_resource">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Kalenderressourcen </th>
-            <td mat-cell *matCellDef="let element"> {{element.calendar_resource}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Kalenderressourcen
+              <app-order-icon columnName="calendar_resource" [orderStatus]="orderStatus"></app-order-icon>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.calendar.name}}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="active">
-            <th mat-header-cell *matHeaderCellDef> Aktiv </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Aktiv
+              <app-order-icon columnName="active" [orderStatus]="orderStatus"></app-order-icon>
+            </th>
             <td mat-cell *matCellDef="let element">
               <div class="d-flex">
-                <mat-slide-toggle [checked]="element.active"></mat-slide-toggle>
+                <mat-slide-toggle (change)="setActive($event, element.id)" [checked]="element.isActive"></mat-slide-toggle>
               </div>
             </td>
           </ng-container>
@@ -44,7 +60,7 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: right"> Aktionen </th>
             <td mat-cell *matCellDef="let element" style="text-align: right" class="position-relative">
-              <button mat-icon-button aria-label="more">
+              <button mat-icon-button aria-label="more" (click)="editItem(element.id)">
                 <img src="/assets/images/edit.svg" alt="edit">
               </button>
               <button (click)="delete(element.id)" aria-label="more"

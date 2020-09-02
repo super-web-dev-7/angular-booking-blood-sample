@@ -1,9 +1,9 @@
-<div class="p-2">
+<form [formGroup]="groupForm" class="p-2">
   <h1>Arbeitsgruppe neu</h1>
 
   <mat-form-field class="w-100 mt-4">
     <mat-label>Arbeitsgruppenname</mat-label>
-    <input autocomplete="off" matInput>
+    <input formControlName="name" autocomplete="off" matInput>
   </mat-form-field>
 
   <mat-accordion class="position-relative">
@@ -20,11 +20,12 @@
       </mat-expansion-panel-header>
       <div class="d-flex flex-wrap admin-container">
         <button
+          type="button"
           mat-stroked-button
           *ngFor="let admin of admins"
           [ngClass]="{'primary': selectedAdmin===admin.id}"
           (click)="selectAdmin(admin.id)">
-          {{admin.name}}
+          {{admin.firstName}} {{admin.lastName}}
         </button>
       </div>
     </mat-expansion-panel>
@@ -61,6 +62,7 @@
       </mat-expansion-panel-header>
       <div class="d-flex flex-wrap calendar-source-container">
         <button
+          type="button"
           mat-stroked-button
           *ngFor="let calendar of calendars"
           [ngClass]="{'primary': selectedCalendar===calendar.id}"
@@ -77,10 +79,10 @@
               <div class="round">
                 <mat-icon>stop_circle</mat-icon>
               </div>
-              <div>Inaktiv</div>
+              <div>Aktiv</div>
             </div>
             <div class="d-flex">
-              <mat-slide-toggle></mat-slide-toggle>
+              <mat-slide-toggle formControlName="isActive"></mat-slide-toggle>
             </div>
           </div>
         </mat-panel-title>
@@ -92,7 +94,7 @@
   </div>
 
   <div class="d-flex justify-content-end">
-    <button class="custom-button" mat-stroked-button>Abbrechen</button>
-    <button class="custom-button primary" mat-stroked-button>Neue Arbeitsgruppe anlegen</button>
+    <button class="custom-button" mat-stroked-button (click)="close()">Abbrechen</button>
+    <button class="custom-button primary" mat-stroked-button (click)="onSubmit()">Neue Arbeitsgruppe anlegen</button>
   </div>
-</div>
+</form>

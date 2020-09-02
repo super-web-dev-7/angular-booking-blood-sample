@@ -7,7 +7,7 @@ module.exports = (sequelize, Sequelize) => {
         admin: {
             type: Sequelize.INTEGER
         },
-        calendar: {
+        calendar_id: {
             type: Sequelize.INTEGER
         },
         isActive: {

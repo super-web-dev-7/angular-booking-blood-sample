@@ -42,7 +42,6 @@ exports.update = (req, res) => {
 }
 
 exports.delete = (req, res) => {
-    console.log(req.params.id);
     Calendar.destroy({where: {id: req.params.id}}).then(result => {
         res.status(204).json({});
     })

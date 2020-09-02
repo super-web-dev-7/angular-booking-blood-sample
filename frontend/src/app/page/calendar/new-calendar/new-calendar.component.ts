@@ -29,7 +29,6 @@ export class NewCalendarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data);
     this.httpService.get(URL_JSON.DISTRICT + '/get').subscribe((res: any) => {
       this.districts = res;
     });

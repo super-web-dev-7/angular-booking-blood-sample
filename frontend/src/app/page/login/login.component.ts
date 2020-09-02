@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
 
   login = () => {
     if (this.loginForm.valid) {
-      console.log('login');
       this.authService.login(this.f.email.value.toLowerCase(), this.f.password.value).pipe(first()).subscribe(
         res => {
           this.f.password.setValue(null);

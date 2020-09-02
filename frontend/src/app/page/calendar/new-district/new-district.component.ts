@@ -21,7 +21,6 @@ export class NewDistrictComponent implements OnInit {
     public httpService: HttpService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log('share data >>>> ', data);
   }
 
   ngOnInit(): void {

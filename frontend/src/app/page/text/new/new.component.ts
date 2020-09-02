@@ -60,7 +60,6 @@ export class NewComponent implements OnInit {
   }
 
   create = () => {
-    console.log(this.template)
   }
 
 }

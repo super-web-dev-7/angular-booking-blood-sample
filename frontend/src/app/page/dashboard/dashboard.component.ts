@@ -22,7 +22,6 @@ export class DashboardComponent implements OnInit {
   }
   ngOnInit(): void {
     this.httpRequest.getDashboardInfo().subscribe(res => {
-      console.log(res);
     });
   }
 

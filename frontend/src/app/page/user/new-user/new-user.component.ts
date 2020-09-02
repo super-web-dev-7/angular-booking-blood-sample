@@ -57,7 +57,6 @@ export class NewUserComponent implements OnInit {
     this.selectedAllocation = this.data?.working_group ? this.data.working_group.id : 0;
     this.selectedRole = this.data ? this.roles.findIndex(item => item.name === this.data.role) + 1 : null;
     this.httpService.get(URL_JSON.GROUP + '/get').subscribe((res: any) => {
-      console.log(res);
       this.allocations = res;
       this.allocations.unshift({
         id: 0,
@@ -85,11 +84,9 @@ export class NewUserComponent implements OnInit {
 
   createUser = () => {
     if (this.userForm.invalid) {
-      console.log('invalid');
       return;
     }
     if ((!this.selectedAllocation && this.selectedAllocation !== 0) || !this.selectedRole) {
-      console.log('unselect');
       return;
     }
     const data = {
