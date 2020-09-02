@@ -17,11 +17,19 @@ exports.create = (req, res) => {
 
 exports.get = async (req, res) => {
     Calendar.hasMany(WorkingGroup, {foreignKey: 'calendar_id'});
-    User.hasMany(WorkingGroup, {foreignKey: 'admin'});
     WorkingGroup.belongsTo(Calendar, {foreignKey: 'calendar_id'});
-    WorkingGroup.belongsTo(User, {foreignKey: 'admin'});
-    const allWorkingGroup =await WorkingGroup.findAll({where: {}, include: [Calendar, User]});
-    res.status(200).json(allWorkingGroup)
+    const allWorkingGroup =await WorkingGroup.findAll({where: {}, include: [Calendar]});
+    const response = [];
+    for (let workingGroup of allWorkingGroup) {
+        const users = [];
+        workingGroup.admin = JSON.parse(workingGroup.admin);
+        for (const item of workingGroup.admin) {
+            const user = await User.findByPk(item);
+            users.push(user);
+        }
+        response.push({...workingGroup.dataValues, users})
+    }
+    res.status(200).json(response)
 }
 
 exports.delete = (req, res) => {

@@ -13,7 +13,7 @@ import {URL_JSON} from '../../../utils/url_json';
 export class NewComponent implements OnInit {
 
   isAddAdminPopup = false;
-  selectedAdmin = null;
+  selectedAdmin = [];
   selectedCalendar = null;
   admins = [];
   calendars = [];
@@ -37,7 +37,7 @@ export class NewComponent implements OnInit {
       this.calendars = res;
     });
     this.selectedCalendar = this.data ? this.data?.calendar_id : 0;
-    this.selectedAdmin = this.data ? this.data?.admin : 0;
+    this.selectedAdmin = this.data ? this.data?.admin : [];
   }
 
   get f() {
@@ -49,7 +49,11 @@ export class NewComponent implements OnInit {
   }
 
   selectAdmin = (id) => {
-    this.selectedAdmin = id;
+    if (this.selectedAdmin.includes(id)) {
+      this.selectedAdmin.splice(this.selectedAdmin.indexOf(id), 1);
+    } else {
+      this.selectedAdmin.push(id);
+    }
   }
 
   selectCalendar = (id) => {
@@ -70,7 +74,7 @@ export class NewComponent implements OnInit {
     const data = {
       name: this.f.name.value,
       isActive: this.f.isActive.value,
-      admin: this.selectedAdmin,
+      admin: JSON.stringify(this.selectedAdmin),
       calendar_id: this.selectedCalendar
     };
     if (this.data) {

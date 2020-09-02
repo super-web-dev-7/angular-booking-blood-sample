@@ -5,7 +5,7 @@ module.exports = (sequelize, Sequelize) => {
             unique: true
         },
         admin: {
-            type: Sequelize.INTEGER
+            type: Sequelize.STRING
         },
         calendar_id: {
             type: Sequelize.INTEGER

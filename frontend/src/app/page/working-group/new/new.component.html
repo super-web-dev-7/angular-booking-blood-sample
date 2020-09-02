@@ -23,7 +23,7 @@
           type="button"
           mat-stroked-button
           *ngFor="let admin of admins"
-          [ngClass]="{'primary': selectedAdmin===admin.id}"
+          [ngClass]="{'primary': selectedAdmin.includes(admin.id)}"
           (click)="selectAdmin(admin.id)">
           {{admin.firstName}} {{admin.lastName}}
         </button>
