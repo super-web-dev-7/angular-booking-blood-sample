@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+
+import {HttpService} from '../../../service/http/http.service';
+import {URL_JSON} from '../../../utils/url_json';
 
 @Component({
   selector: 'app-new',
@@ -10,6 +15,8 @@ export class NewComponent implements OnInit {
 
   selectedShipment = null;
   selectedReceiver = null;
+  templateForm: FormGroup;
+
   shipments = [
     {
       id: 1,
@@ -23,22 +30,22 @@ export class NewComponent implements OnInit {
   receivers = [
     {
       id: 1,
-      name: 'Maria Synowzik'
+      name: 'Patient'
     },
     {
       id: 2,
-      name: 'Karin Blattip'
+      name: 'Schwester'
     },
     {
       id: 3,
-      name: 'Ernst Waltersdorf'
+      name: 'Arzt'
     }
   ];
 
   values = [
-    {value: '1', viewValue: '10'},
-    {value: '2', viewValue: '20'},
-    {value: '3', viewValue: '30'}
+    {value: 1, viewValue: 'Welcome'},
+    {value: 2, viewValue: 'Confirmation of appointment'},
+    {value: 3, viewValue: 'Reminder of appointment'}
   ];
 
   Editor = ClassicEditor;
@@ -46,9 +53,26 @@ export class NewComponent implements OnInit {
     editorData: ''
   };
 
-  constructor() { }
+  constructor(
+    public formBuilder: FormBuilder,
+    public httpService: HttpService,
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
   ngOnInit(): void {
+    console.log(this.data);
+    this.templateForm = this.formBuilder.group({
+      name: [this.data?.subject, Validators.required],
+      assign: [this.data?.assign, Validators.required],
+      message: [this.data?.message, Validators.required]
+    });
+    this.selectedShipment = this.data ? this.data.type === 'SMS' ? 1 : 2 : null;
+    this.selectedReceiver = this.data?.receiver;
+  }
+
+  get f() {
+    return this.templateForm.controls;
   }
 
   selectShipment = (id) => {
@@ -60,6 +84,29 @@ export class NewComponent implements OnInit {
   }
 
   create = () => {
+    if (this.templateForm.invalid) {
+      return;
+    }
+    if (!this.selectedReceiver || !this.selectedShipment) {
+      return;
+    }
+    const data = {
+      subject: this.f.name.value,
+      type: this.selectedShipment,
+      receiver: this.selectedReceiver,
+      assign: this.f.assign.value,
+      message: this.f.message.value
+    };
+    if (this.data) {
+      this.httpService.update(URL_JSON.TEMPLATE + '/update/' + this.data.id, data).subscribe(res => {
+        const response = Object.assign(data, {id: this.data.id});
+        this.dialogRef.close(response);
+      });
+    } else {
+      this.httpService.create(URL_JSON.TEMPLATE, data).subscribe(res => {
+        this.dialogRef.close();
+      });
+    }
   }
 
 }

@@ -38,8 +38,12 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.authService.login(this.f.email.value.toLowerCase(), this.f.password.value).pipe(first()).subscribe(
         res => {
+          if (res.role === 'Superadmin') {
+            this.router.navigate(['/dashboard']);
+          } else if (res.role === 'AG-Admin') {
+            this.router.navigate(['/ag-dashboard']);
+          }
           this.f.password.setValue(null);
-          this.router.navigate(['/dashboard']);
         },
         error => {
           this.error = error.error.message;

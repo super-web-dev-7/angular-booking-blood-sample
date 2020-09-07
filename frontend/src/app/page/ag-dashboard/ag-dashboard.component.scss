@@ -1,0 +1,50 @@
+.period-button {
+  width: 300px;
+  height: 40px;
+  font-size: 16px;
+  text-align: left;
+  padding-left: 34px;
+  border-radius: 25px;
+  box-shadow: 0 0 4px #E5ECF3;
+  background-color: white;
+  color: var(--primary-color);
+  margin-left: 15px;
+
+  mat-icon {
+    color: #C3C6D1;
+    //margin-top: 6px;
+  }
+}
+button.period-button mat-icon {
+  margin-top: 6px;
+}
+
+::ng-deep .mat-form-field-infix {
+  padding-top: 0!important;
+}
+
+mat-form-field.period-button {
+  padding-right: 10px;
+  ::ng-deep .mat-form-field-underline {
+    display: none;
+  }
+}
+
+.ticket-container {
+  padding: 30px 60px 54px 60px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px #E5ECF33D;
+  max-width: 430px;
+  min-height: 580px;
+
+  .ticket-header p {
+    color: var(--light-dark-color);
+  }
+
+  .ticket-header-icon {
+    position: absolute;
+    right: -20px;
+  }
+}
+

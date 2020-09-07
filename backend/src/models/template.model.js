@@ -11,7 +11,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER
         },
         assign: {
-            type: Sequelize.STRING
+            type: Sequelize.INTEGER
         },
         message: {
             type: Sequelize.STRING

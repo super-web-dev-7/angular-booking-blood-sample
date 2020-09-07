@@ -5,6 +5,8 @@ import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {NewComponent} from '../new/new.component';
+import {URL_JSON} from '../../../utils/url_json';
+import {HttpService} from '../../../service/http/http.service';
 
 @Component({
   selector: 'app-overview',
@@ -13,8 +15,8 @@ import {NewComponent} from '../new/new.component';
 })
 export class OverviewComponent implements OnInit {
 
-  displayedColumns: string[] = ['no', 'subject', 'art', 'receiver', 'assign', 'actions'];
-  dataSource = new MatTableDataSource<any>(ELEMENT_DATA);
+  displayedColumns: string[] = ['no', 'subject', 'type', 'receiver', 'assign', 'actions'];
+  dataSource = new MatTableDataSource<any>([]);
   currentPage = 0;
   pageSize = 5;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -22,9 +24,40 @@ export class OverviewComponent implements OnInit {
 
   selectedDeleteItem: number = null;
 
+  allTemplate: any;
+
+  receivers = [
+    {
+      id: 1,
+      name: 'Patient'
+    },
+    {
+      id: 2,
+      name: 'Schwester'
+    },
+    {
+      id: 3,
+      name: 'Arzt'
+    }
+  ];
+
+  assign = [
+    {value: 1, viewValue: 'Welcome'},
+    {value: 2, viewValue: 'Confirmation of appointment'},
+    {value: 3, viewValue: 'Reminder of appointment'}
+  ];
+
+  orderStatus = {
+    active: '',
+    direction: ''
+  };
+
+  filterValue = null;
+
   constructor(
     public router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public httpService: HttpService
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +68,10 @@ export class OverviewComponent implements OnInit {
     if (url[2] === 'new') {
       this.openDialog();
     }
+    this.httpService.get(URL_JSON.TEMPLATE + '/get').subscribe((res: any) => {
+      this.dataSource.data = res;
+      this.allTemplate = res;
+    });
   }
 
   onPaginateChange = ($event: PageEvent) => {
@@ -47,7 +84,14 @@ export class OverviewComponent implements OnInit {
   }
 
   deleteItem = () => {
-    this.selectedDeleteItem = null;
+    this.httpService.delete(URL_JSON.TEMPLATE + '/delete/' + this.selectedDeleteItem).subscribe(res => {
+      const dataSource = this.dataSource.data;
+      const removedIndex = dataSource.findIndex(item => {
+        return item.id === this.selectedDeleteItem;
+      });
+      dataSource.splice(removedIndex, 1);
+      this.dataSource.data = dataSource;
+    });
   }
 
   openDialog = () => {
@@ -60,35 +104,35 @@ export class OverviewComponent implements OnInit {
     });
   }
 
-}
+  editItem = (data) => {
+    const dialogRef = this.dialog.open(NewComponent, {
+      width: '900px',
+      data
+    });
 
-const ELEMENT_DATA: any[] = [
-  {
-    id: 1,
-    subject: 'Bezirk 1',
-    art: 'E-Mail',
-    receiver: 'Schwester',
-    assign: 'Terminstornierung durch Patient'
-  },
-  {
-    id: 2,
-    subject: 'Bezirk 2',
-    art: 'E-Mail',
-    receiver: 'Schwester',
-    assign: 'Terminstornierung durch Patient'
-  },
-  {
-    id: 3,
-    subject: 'Bezirk 3',
-    art: 'E-Mail',
-    receiver: 'Schwester',
-    assign: 'Terminstornierung durch Patient'
-  },
-  {
-    id: 4,
-    subject: 'Bezirk 4',
-    art: 'E-Mail',
-    receiver: 'Schwester',
-    assign: 'Terminstornierung durch Patient'
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        result.type = result.type === 1 ? 'SMS' : 'E-Mail';
+        const index = this.allTemplate.findIndex(item => item.id === result.id);
+        const template = this.allTemplate[index];
+        this.allTemplate[index] = {...template, ...result};
+        this.dataSource.data = this.allTemplate;
+      }
+    });
   }
-];
+
+  onSort = (event) => {
+    this.orderStatus = event;
+  }
+
+  filter = () => {
+    this.dataSource.data = this.allTemplate.filter(item => {
+      return item.subject.includes(this.filterValue)
+        || item.type.includes(this.filterValue)
+        || this.assign[item.assign - 1].viewValue.includes(this.filterValue)
+        || this.receivers[item.receiver - 1].name.includes(this.filterValue)
+        ;
+    });
+  }
+
+}

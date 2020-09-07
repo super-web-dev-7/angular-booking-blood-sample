@@ -1,13 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 
-import { OverviewComponent } from './overview/overview.component';
-import { NewComponent } from './new/new.component';
+import {OverviewComponent} from './overview/overview.component';
+import {NewComponent} from './new/new.component';
 import {TextRoutingModule} from './text-routing.module';
 import {MaterialModule} from '../../material/material.module';
-import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
-import {FormsModule} from "@angular/forms";
+
+import {SharedModule} from '../../shared/shared.module';
 
 
 @NgModule({
@@ -18,7 +20,10 @@ import {FormsModule} from "@angular/forms";
     MaterialModule,
     RouterModule,
     CKEditorModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
-export class TextModule { }
+export class TextModule {
+}

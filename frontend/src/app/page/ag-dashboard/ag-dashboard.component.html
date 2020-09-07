@@ -1,0 +1,40 @@
+<h3 class="header-title">Dashboard</h3>
+
+<div class="d-flex justify-content-end flex-wrap">
+  <button *ngIf="!showDetailPeriod" mat-raised-button class="period-button" (click)="showDetailPeriod = true">
+    Gesamtzeitraum
+    <mat-icon class="float-right">expand_more</mat-icon>
+  </button>
+  <button *ngIf="showDetailPeriod" mat-raised-button class="period-button" (click)="showDetailPeriod = false">
+    Gesamtzeitraum
+    <mat-icon class="float-right">expand_more</mat-icon>
+  </button>
+  <mat-form-field *ngIf="showDetailPeriod" class="period-button">
+    <input matInput [matDatepicker]="pickerFrom">
+    <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+      <mat-icon svgIcon="custom-calendar" aria-hidden="false" aria-label="calendar" matDatepickerToggleIcon></mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #pickerFrom></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field *ngIf="showDetailPeriod" class="period-button">
+    <input matInput [matDatepicker]="pickerTo">
+    <mat-datepicker-toggle matSuffix [for]="pickerTo">
+      <mat-icon svgIcon="custom-calendar" aria-hidden="false" aria-label="calendar" matDatepickerToggleIcon></mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #pickerTo></mat-datepicker>
+  </mat-form-field>
+</div>
+
+<div>
+  <div class="ticket-container">
+    <div class="ticket-header">
+      <p class="text-center position-relative">
+        12.08.2020 - 12.10.2020
+        <mat-icon class="ticket-header-icon" svgIcon="custom-calendar" aria-hidden="false" aria-label="calendar" matDatepickerToggleIcon></mat-icon>
+      </p>
+    </div>
+    <div class="chart-container">
+      <app-chart total="133" positive="94" negative="39" label="Termine gesamt"></app-chart>
+    </div>
+  </div>
+</div>

@@ -116,3 +116,141 @@ export const Sidebar = [
     link: '/credential'
   }
 ];
+
+export const AG_Sidebar = [
+  {
+    name: 'Dashboard',
+    icon: 'dashboard.svg',
+    role: '',
+    link: '/ag-dashboard',
+    children: []
+  },
+  {
+    name: 'Arbeitsgruppen',
+    icon: 'chat.svg',
+    role: '',
+    link: '/working-group',
+    children: [
+      {
+        name: 'Übersicht',
+        link: '/overview'
+      }
+    ]
+  },
+  {
+    name: 'Benutzer',
+    icon: 'profile.svg',
+    role: '',
+    link: '/user',
+    children: [
+      {
+        name: 'Übersicht',
+        link: '/overview'
+      },
+      {
+        name: 'Neuer Benutzer',
+        link: '/new'
+      }
+    ]
+  },
+  {
+    name: 'Kalenderverwaltung',
+    icon: 'calendar.svg',
+    role: '',
+    link: '/calendar',
+    children: [
+      {
+        name: 'Bezirke Übersicht',
+        link: '/district/overview'
+      },
+      {
+        name: 'Neuer Bezirk',
+        link: '/district/new'
+      },
+      {
+        name: 'Kalenderressourcen Übersicht',
+        link: '/overview'
+      },
+      {
+        name: 'Neue Kalenderressource',
+        link: '/new'
+      }
+    ]
+  },
+  {
+    name: 'Textvorlagen',
+    icon: 'text.svg',
+    role: '',
+    link: '/text',
+    children: [
+      {
+        name: 'Textvorlagen Übersicht',
+        link: '/overview'
+      },
+      {
+        name: 'Neue Textvorlage',
+        link: '/new'
+      }
+    ]
+  },
+  {
+    name: 'Terminverwaltung',
+    icon: 'package.png',
+    role: '',
+    link: '/appointment',
+    children: [
+      {
+        name: 'Offene Termine',
+        link: '/open-dates'
+      },
+      {
+        name: 'Bestätigte Termine',
+        link: '/confirmed'
+      },
+      {
+        name: 'Storniert / Verschoben',
+        link: '/canceled'
+      },
+      {
+        name: 'Abgeschlossene Termine',
+        link: '/completed'
+      },
+      {
+        name: 'Terminstatistik',
+        link: '/statistics'
+      },
+      {
+        name: 'Neuer Termin',
+        link: '/new'
+      }
+    ]
+  },
+  {
+    name: 'Agenturen',
+    icon: 'text.svg',
+    role: '',
+    link: '/agency',
+    children: [
+      {
+        name: 'Agenturen Übersicht',
+        link: '/overview'
+      },
+      {
+        name: 'Neue Agenturen',
+        link: '/new'
+      }
+    ]
+  },
+  {
+    name: 'SMS-Historie',
+    icon: 'text.svg',
+    role: '',
+    link: '/sms-history',
+    children: [
+      {
+        name: 'SMS Übersicht',
+        link: '/overview'
+      }
+    ]
+  }
+];

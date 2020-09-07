@@ -7,6 +7,8 @@ import workingGroupRouter from './working-group.router';
 import userRouter from './user.router';
 import districtRouter from './district.router';
 import calendarRouter from './calendar.router';
+import templateRouter from './template.router';
+
 
 const router = Router();
 
@@ -18,6 +20,7 @@ router.use('/group', workingGroupRouter);
 router.use('/user', userRouter);
 router.use('/district', districtRouter);
 router.use('/calendar', calendarRouter);
+router.use('/template', templateRouter);
 
 
 export default router;

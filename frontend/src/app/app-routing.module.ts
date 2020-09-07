@@ -8,6 +8,7 @@ import {LoginComponent} from './page/login/login.component';
 import {RegisterComponent} from './page/register/register.component';
 
 import {AuthGuard} from './guard/auth.guard';
+import {RoleGuard} from './guard/role.guard';
 
 const routes: Routes = [
   {
@@ -37,10 +38,18 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./page/dashboard/dashboard.module').then(m => m.DashboardModule),
-        // canActivate: [RoleGuard],
-        // data: {
-        //   userRole: ['Superadmin']
-        // }
+        canActivate: [RoleGuard],
+        data: {
+          userRole: ['Superadmin']
+        }
+      },
+      {
+        path: 'ag-dashboard',
+        loadChildren: () => import('./page/ag-dashboard/ag-dashboard.module').then(m => m.AgDashboardModule),
+        canActivate: [RoleGuard],
+        data: {
+          userRole: ['AG-Admin']
+        }
       },
       {
         path: 'paypal',

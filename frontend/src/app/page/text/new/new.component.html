@@ -1,4 +1,4 @@
-<div class="p-2">
+<form [formGroup]="templateForm" class="p-2">
   <h1>Textvorlage neu</h1>
 
   <div class="row">
@@ -6,7 +6,7 @@
       <div class="d-flex flex-wrap">
         <mat-form-field class="mt-4 w-100">
           <mat-label>Betreff</mat-label>
-          <input autocomplete="off" matInput>
+          <input formControlName="name" autocomplete="off" matInput>
         </mat-form-field>
       </div>
 
@@ -24,6 +24,7 @@
           </mat-expansion-panel-header>
           <div class="d-flex flex-wrap expansion-panel-container">
             <button
+              type="button"
               mat-stroked-button
               *ngFor="let shipment of shipments"
               [ngClass]="{'primary': selectedShipment===shipment.id}"
@@ -45,6 +46,7 @@
           </mat-expansion-panel-header>
           <div class="d-flex flex-wrap expansion-panel-container">
             <button
+              type="button"
               mat-stroked-button
               *ngFor="let receiver of receivers"
               [ngClass]="{'primary': selectedReceiver===receiver.id}"
@@ -69,7 +71,7 @@
           <div class="d-flex flex-wrap w-100">
             <mat-form-field class="mt-4 w-100">
               <mat-label>Registrierung durch Patient</mat-label>
-              <mat-select>
+              <mat-select formControlName="assign">
                 <mat-option *ngFor="let value of values" [value]="value.value">
                   {{value.viewValue}}
                 </mat-option>
@@ -83,7 +85,7 @@
       <div class="mt-4">Nachricht</div>
 <!--      [config]="{ toolbar: [ 'bold', 'italic' ] }"-->
       <ckeditor
-        [editor]="Editor" [(ngModel)]="template.editorData" data=""></ckeditor>
+        [editor]="Editor" formControlName="message" data=""></ckeditor>
     </div>
   </div>
 
@@ -95,4 +97,4 @@
       <button class="custom-button primary" (click)="create()" mat-stroked-button>Neue Textvorlage anlegen</button>
     </div>
   </div>
-</div>
+</form>
