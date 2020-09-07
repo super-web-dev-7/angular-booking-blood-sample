@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterModule} from '@angular/router';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 import {AgDashboardRoutingModule} from './ag-dashboard-routing.module';
 
 @NgModule({
@@ -8,7 +9,9 @@ import {AgDashboardRoutingModule} from './ag-dashboard-routing.module';
   imports: [
     CommonModule,
     AgDashboardRoutingModule,
-    RouterModule
+    RouterModule,
+    NgCircleProgressModule.forRoot({
+    })
   ]
 })
 export class AgDashboardModule { }

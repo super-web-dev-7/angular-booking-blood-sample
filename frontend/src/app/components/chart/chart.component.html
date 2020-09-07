@@ -1,4 +1,51 @@
-{{total}}
-{{positive}}
-{{negative}}
-{{label}}
+<div class="position-relative">
+  <circle-progress
+    [percent]="positive / total * 100"
+    [radius]="radius"
+    [backgroundPadding]="-1"
+    [backgroundStrokeWidth]="0"
+    [space]="-25"
+    [toFixed]="3"
+    [maxPercent]="100"
+    [outerStrokeGradient]="false"
+    [outerStrokeWidth]="25"
+    [outerStrokeColor]="'#50e3c2'"
+    [outerStrokeGradientStopColor]="'#50e3c2'"
+    [outerStrokeLinecap]="'butt'"
+    [innerStrokeColor]="'#f378cc'"
+    [innerStrokeWidth]="25"
+    [showTitle]="false"
+    [showUnits]="false"
+    [showBackground]="false"
+    [showSubtitle]="false"
+  >
+  </circle-progress>
+  <div class="round-mark" [ngStyle]="{'top.px': this.top1, 'left.px': this.left1}">
+    <img src="assets/images/ag-dashboard/green.svg" alt="green">
+  </div>
+  <div class="round-mark" [ngStyle]="{'top.px': this.top2, 'left.px': this.left2}">
+    <img src="assets/images/ag-dashboard/pink.svg" alt="green">
+  </div>
+  <div class="title" [ngStyle]="{'top.px': (this.radius + 25), 'left.px': (this.radius + 25)}">
+    <span class="total">{{total}}</span>
+    <span class="label">{{label}}</span>
+  </div>
+  <button mat-raised-button class="summary-button mt-5">
+    <span class="button-content">
+      <span>
+        <img src="assets/images/ag-dashboard/green.svg" alt="green">
+        <span class="ml-3 summary">Bestätigte Termine</span>
+      </span>
+      <span class="positive-number">{{positive}}</span>
+    </span>
+  </button>
+  <button mat-raised-button class="summary-button">
+    <span class="button-content">
+      <span>
+        <img src="assets/images/ag-dashboard/pink.svg" alt="green">
+        <span class="ml-3 summary">Offene Termine</span>
+      </span>
+      <span class="negative-number">{{negative}}</span>
+    </span>
+  </button>
+</div>

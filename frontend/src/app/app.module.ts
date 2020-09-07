@@ -20,6 +20,7 @@ import {MainLayoutModule} from './layout/main-layout/main-layout.module';
 import {SharedModule} from './shared/shared.module';
 import { AgDashboardComponent } from './page/ag-dashboard/ag-dashboard.component';
 import { ChartComponent } from './components/chart/chart.component';
+import {NgCircleProgressModule} from "ng-circle-progress";
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { ChartComponent } from './components/chart/chart.component';
     HttpClientModule,
     MaterialModule,
     MainLayoutModule,
-    SharedModule
+    SharedModule,
+    NgCircleProgressModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
