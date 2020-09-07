@@ -5,7 +5,12 @@
       <input type="text" placeholder="Search..." [(ngModel)]="filterValue" (ngModelChange)="filter()">
       <mat-icon>search</mat-icon>
     </div>
-    <button class="custom-button" [routerLink]="'/user/new'" mat-stroked-button>Neuen Benutzer anlegen</button>
+    <button
+      class="custom-button"
+      [routerLink]="'/user/new'"
+      mat-stroked-button
+      *ngIf="currentUser.role === 'Superadmin'"
+    >Neuen Benutzer anlegen</button>
   </div>
   <div class="table-container mt-5">
     <mat-card class="table-card mat-card-radius">

@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {NewUserComponent} from '../new-user/new-user.component';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
+import {AuthService} from '../../../service/auth/auth.service';
 
 @Component({
   selector: 'app-user-overview',
@@ -29,21 +30,30 @@ export class UserOverviewComponent implements OnInit {
     active: '',
     direction: ''
   };
+  currentUser: any;
 
   constructor(
     public router: Router,
     public dialog: MatDialog,
-    public httpService: HttpService
+    public httpService: HttpService,
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {
+    this.currentUser = this.authService.currentUserValue;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     const url = this.router.url.split('/');
     if (url[2] === 'new') {
       this.openDialog();
     } else {
-      this.httpService.get(URL_JSON.USER + '/get').subscribe((res: any) => {
+      let query;
+      if (this.currentUser.role === 'Superadmin') {
+        query = '';
+      } else if (this.currentUser.role === 'AG-Admin') {
+        query = 'role=Nurse&role=Doctor';
+      }
+      this.httpService.get(URL_JSON.USER + '/get?' + query).subscribe((res: any) => {
         this.dataSource.data = res;
         this.allUser = res;
       });

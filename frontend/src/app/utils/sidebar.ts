@@ -195,7 +195,7 @@ export const AG_Sidebar = [
   },
   {
     name: 'Terminverwaltung',
-    icon: 'package.png',
+    icon: 'appointment.svg',
     role: '',
     link: '/appointment',
     children: [
@@ -227,7 +227,7 @@ export const AG_Sidebar = [
   },
   {
     name: 'Agenturen',
-    icon: 'text.svg',
+    icon: 'agency.svg',
     role: '',
     link: '/agency',
     children: [
@@ -243,7 +243,7 @@ export const AG_Sidebar = [
   },
   {
     name: 'SMS-Historie',
-    icon: 'text.svg',
+    icon: 'sms.svg',
     role: '',
     link: '/sms-history',
     children: [

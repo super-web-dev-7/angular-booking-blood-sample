@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
+import {AuthService} from '../../../service/auth/auth.service';
 
 
 @Component({
@@ -16,36 +17,30 @@ export class NewUserComponent implements OnInit {
   selectedRole = null;
   allocations = [];
   roles = [
-    {
-      id: 1,
-      name: 'Superadmin'
-    },
-    {
-      id: 2,
-      name: 'AG-Admin'
-    },
-    {
-      id: 3,
-      name: 'Nurse'
-    },
-    {
-      id: 4,
-      name: 'Doctor'
-    }
+    {id: 1, name: 'Superadmin'},
+    {id: 2, name: 'AG-Admin'},
+    {id: 3, name: 'Nurse'},
+    {id: 4, name: 'Doctor'}
   ];
 
   userForm: FormGroup;
-
   password;
+  currentUser;
+
   constructor(
     public formBuilder: FormBuilder,
     public httpService: HttpService,
+    public authService: AuthService,
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
   }
 
   ngOnInit(): void {
+    this.currentUser = this.authService.currentUserValue;
+    if (this.currentUser.role === 'AG-Admin') {
+      this.roles.splice(0, 2);
+    }
     this.userForm = this.formBuilder.group({
       firstName: [this.data?.firstName, Validators.required],
       lastName: [this.data?.lastName, Validators.required],

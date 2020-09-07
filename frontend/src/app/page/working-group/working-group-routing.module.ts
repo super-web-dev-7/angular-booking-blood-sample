@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 import {WorkingGroupComponent} from './working-group.component';
 import {MaterialModule} from '../../material/material.module';
 import {SharedModule} from '../../shared/shared.module';
+import {RoleGuard} from '../../guard/role.guard';
 
 const routes: Routes = [
   {
@@ -13,7 +14,11 @@ const routes: Routes = [
   },
   {
     path: 'new',
-    component: WorkingGroupComponent
+    component: WorkingGroupComponent,
+    canActivate: [RoleGuard],
+    data: {
+      userRole: ['Superadmin']
+    }
   }
 ];
 

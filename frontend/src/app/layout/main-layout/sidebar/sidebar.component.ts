@@ -22,7 +22,6 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
-    console.log(this.currentUser);
     if (this.currentUser.role === 'Superadmin') {
       this.sidebar = Sidebar;
     } else if (this.currentUser.role === 'AG-Admin') {

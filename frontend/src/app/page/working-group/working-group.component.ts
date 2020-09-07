@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {NewComponent} from './new/new.component';
 import {HttpService} from '../../service/http/http.service';
 import {URL_JSON} from '../../utils/url_json';
+import {AuthService} from '../../service/auth/auth.service';
 
 @Component({
   selector: 'app-working-group',
@@ -29,14 +30,17 @@ export class WorkingGroupComponent implements OnInit {
     active: '',
     direction: ''
   };
+  currentUser: any;
 
   constructor(
     public router: Router,
     public dialog: MatDialog,
-    public httpService: HttpService
+    public httpService: HttpService,
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {
+    this.currentUser = this.authService.currentUserValue;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
