@@ -24,7 +24,6 @@ export class ChartComponent implements OnInit {
     this.left1 = (this.radius + 10) * (1 - Math.abs(Math.cos(reg))) - 25;
     this.top2 = (this.radius + 10) * (1 + Math.abs(Math.sin(reg)));
     this.left2 = (this.radius + 10) * (1 + Math.abs(Math.cos(reg)));
-    console.log(this.top1, this.left1);
   }
 
 }

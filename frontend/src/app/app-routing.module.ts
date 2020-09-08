@@ -78,7 +78,23 @@ const routes: Routes = [
       {
         path: 'interface',
         loadChildren: () => import('./page/interface/interface.module').then(m => m.InterfaceModule)
-      }
+      },
+      {
+        path: 'agency',
+        loadChildren: () => import('./page/agency/agency.module').then(m => m.AgencyModule),
+        canActivate: [RoleGuard],
+        data: {
+          userRole: ['AG-Admin']
+        }
+      },
+      {
+        path: 'appointment',
+        loadChildren: () => import('./page/appointment/appointment.module').then(m => m.AppointmentModule),
+        canActivate: [RoleGuard],
+        data: {
+          userRole: ['AG-Admin']
+        }
+      },
     ],
     canActivate: [AuthGuard]
   }

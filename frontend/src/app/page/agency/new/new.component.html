@@ -1,0 +1,84 @@
+<form [formGroup]="groupForm" class="p-2">
+  <h1>Agentur neu</h1>
+
+  <mat-form-field class="w-100 mt-4">
+    <mat-label>Agenturbezeichnung</mat-label>
+    <input formControlName="name" autocomplete="off" matInput>
+  </mat-form-field>
+
+  <mat-accordion class="position-relative">
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="d-flex avatar pink">
+            <div class="round">
+              <mat-icon>person</mat-icon>
+            </div>
+            <div>Ärzte</div>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="d-flex flex-wrap admin-container">
+        <button
+          type="button"
+          mat-stroked-button
+          *ngFor="let doctor of doctors"
+          [ngClass]="{'primary': selectedDoctors.includes(doctor.id)}"
+          (click)="selectAdmin(doctor.id)"
+        >
+          Dr. med. {{doctor.firstName}} {{doctor.lastName}}
+        </button>
+      </div>
+    </mat-expansion-panel>
+    <button (click)="showAddAdminPopup($event)" *ngIf="!isAddAdminPopup" mat-stroked-button class="add-button"><mat-icon>add</mat-icon></button>
+    <div class="add-admin-popup" *ngIf="isAddAdminPopup">
+      <div class="position-relative">
+        <div class="d-flex avatar pink">
+          <div class="round">
+            <mat-icon>group</mat-icon>
+          </div>
+          <div class="text-white">Neu</div>
+        </div>
+        <button (click)="showAddAdminPopup($event)" *ngIf="isAddAdminPopup" mat-stroked-button class="add-button white-pink"><mat-icon>add</mat-icon></button>
+      </div>
+      <mat-form-field class="w-100 mt-4 input-pink">
+        <mat-label>Vor- und Nachname</mat-label>
+        <input autocomplete="off" matInput>
+      </mat-form-field>
+      <mat-form-field class="w-100 mt-2 input-pink">
+        <mat-label>E-Mail-Adresse</mat-label>
+        <input autocomplete="off" matInput>
+      </mat-form-field>
+    </div>
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="d-flex avatar green">
+            <div class="round">
+              <mat-icon>group</mat-icon>
+            </div>
+            <div>Arbeitsgruppe</div>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="d-flex flex-wrap calendar-source-container">
+        <button
+          type="button"
+          mat-stroked-button
+          *ngFor="let group of groups"
+          [ngClass]="{'primary': selectedGroup===group.id}"
+          (click)="selectCalendar(group.id)">
+          {{group.name}} <br> {{group.range}}
+        </button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <div class="d-flex flex-column mt-4">
+
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <button class="custom-button" mat-stroked-button (click)="close()">Abbrechen</button>
+    <button class="custom-button primary" mat-stroked-button (click)="onSubmit()">Neue Agentur anlegen</button>
+  </div>
+</form>
