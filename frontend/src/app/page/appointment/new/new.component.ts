@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -21,6 +21,9 @@ export class NewComponent implements OnInit {
   doctors = [];
   groups = [];
   groupForm: FormGroup;
+  // @ViewChild('formView') formView: ElementRef;
+  // dialogHeight: any;
+
   constructor(
     public formBuilder: FormBuilder,
     public httpService: HttpService,
@@ -47,6 +50,7 @@ export class NewComponent implements OnInit {
     });
     this.selectedGroup = this.data ? this.data?.calendar_id : 0;
     this.selectedDoctors = this.data ? this.data?.admin : [];
+    // this.dialogHeight = this.formView.nativeElement.offsetHeight;
   }
 
   get f() {

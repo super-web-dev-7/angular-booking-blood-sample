@@ -1,0 +1,28 @@
+p {
+  text-align: center;
+  color: #F5A623;
+  border-bottom: 1px solid #4B6480;
+  margin-bottom: 3px;
+  padding-bottom: 3px;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.up-down-container {
+  display: flex;
+  flex-direction: column;
+  color: #C3C6D1;
+  position: absolute;
+  right: 0;
+  transform: translateY(-4px);
+  mat-icon {
+    cursor: pointer;
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+  }
+}

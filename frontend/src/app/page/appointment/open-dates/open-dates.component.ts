@@ -68,7 +68,8 @@ export class OpenDatesComponent implements OnInit {
 
   openDialog = () => {
     const dialogRef = this.dialog.open(NewComponent, {
-      width: '700px'
+      width: '650px',
+      position: {left: '15%'}
     });
 
     dialogRef.afterClosed().subscribe(result => {

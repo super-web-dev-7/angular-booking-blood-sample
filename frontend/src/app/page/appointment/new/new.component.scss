@@ -46,9 +46,46 @@ mat-expansion-panel {
   left: calc(100% - 16px);
 }
 
+.white-blue {
+  background-color: #4A90E2;
+  color: white;
+  top: 30px;
+  left: calc(100% - 16px);
+}
+
 .white-yellow {
   background-color: #F5A623;
   color: white;
   top: 30px;
   left: calc(100% - 16px);
+}
+
+.search-field-container {
+  width: 100%;
+  padding-left: 55px;
+}
+
+.add-patient-popup {
+  width: 650px;
+  height: 100%;
+  background-color: #E5ECF3;
+  position: absolute;
+  left: calc(100% + 22px);
+  display: flex;
+  flex-direction: column;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  top: -121px;
+  z-index: -1;
+}
+
+.background-primary {
+  background-color: #384C61;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 16px 16px 16px 24px;
+}
+
+.white-blue {
+  top: 45px;
 }

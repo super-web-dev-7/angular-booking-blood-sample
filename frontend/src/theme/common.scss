@@ -136,6 +136,16 @@ button {
   }
 }
 
+.input-blue {
+  mat-label {
+    color: #4A90E2;
+  }
+  input {
+    color: #fff;
+    caret-color: #ffffff;
+  }
+}
+
 .mat-form-field-appearance-legacy .mat-form-field-underline {
   height: 1px!important;
 }
@@ -149,6 +159,17 @@ button {
 
 .input-pink .mat-form-field-ripple {
   background-color: #F389CC;
+}
+
+.input-blue .mat-form-field-underline {
+  background-color: #4A90E2;
+  span {
+    background-color: #4A90E2!important;
+  }
+}
+
+.input-blue .mat-form-field-ripple {
+  background-color: #4A90E2;
 }
 
 .avatar {

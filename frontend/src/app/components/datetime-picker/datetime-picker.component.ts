@@ -30,4 +30,12 @@ export class DatetimePickerComponent implements OnInit {
     return moment(time).format('ddd DD.MM.YYYY hh:mm');
   }
 
+  up = () => {
+    this.currentTime = this.currentTime - this.interval;
+  }
+
+  down = () => {
+    this.currentTime = this.currentTime + this.interval;
+  }
+
 }

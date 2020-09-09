@@ -1,3 +1,13 @@
-<p>{{getDate(currentTime - interval)}}</p>
-<p>{{getDate(currentTime)}}</p>
-<p>{{getDate(currentTime + interval)}}</p>
+<div class="d-flex justify-content-center flex-column position-relative" style="padding-left: 40px; padding-right: 40px;">
+  <p class="opacity-50">{{getDate(currentTime - interval)}}</p>
+  <p>{{getDate(currentTime)}}</p>
+  <p class="opacity-50 border-bottom-0">{{getDate(currentTime + interval)}}</p>
+  <div class="up-down-container">
+    <mat-icon class="less-icon" (click)="up()">expand_less</mat-icon>
+    <mat-icon class="more-icon" (click)="down()">expand_more</mat-icon>
+  </div>
+</div>
+
+<div>
+
+</div>

@@ -1,4 +1,4 @@
-<form [formGroup]="groupForm" class="p-2">
+<form [formGroup]="groupForm" class="p-2" #formView>
   <h1>Termin neu</h1>
 
   <mat-form-field class="w-100 mt-4">
@@ -75,7 +75,7 @@
         </button>
       </div>
     </mat-expansion-panel>
-    <button (click)="showAppointmentPopup($event)" *ngIf="!isAppointmentPopup" mat-stroked-button class="add-calendar">
+    <button (click)="showAppointmentPopup($event)" *ngIf="!isAppointmentPopup && !isPatientPopup" mat-stroked-button class="add-calendar">
       <img src="assets/images/dark-calendar.svg" alt="calendar">
     </button>
     <div class="add-admin-popup" *ngIf="isAppointmentPopup">
@@ -95,7 +95,10 @@
           <img src="assets/images/white-calendar.svg" alt="calendar">
         </button>
       </div>
-      <app-datetime-picker></app-datetime-picker>
+      <div class="text-center mt-4">
+        <app-datetime-picker></app-datetime-picker>
+      </div>
+
     </div>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
@@ -109,40 +112,62 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="d-flex flex-wrap admin-container">
-        <button
-          type="button"
-          mat-stroked-button
-          *ngFor="let doctor of doctors"
-          [ngClass]="{'primary': selectedDoctors.includes(doctor.id)}"
-          (click)="selectAdmin(doctor.id)"
-        >
-          Dr. med. {{doctor.firstName}} {{doctor.lastName}}
-        </button>
+        <div class="search-field-container">
+          <input type="text" placeholder="Suchen...">
+          <mat-icon>search</mat-icon>
+        </div>
       </div>
     </mat-expansion-panel>
     <button (click)="showPatientPopup($event)" *ngIf="!isPatientPopup" mat-stroked-button class="add-button">
       <mat-icon>add</mat-icon>
     </button>
-    <div class="add-admin-popup" *ngIf="isPatientPopup">
-      <div class="position-relative">
-        <div class="d-flex avatar pink">
+    <div class="add-patient-popup" [ngStyle]="{'height.px': formView.offsetHeight + 48}" *ngIf="isPatientPopup">
+      <div class="position-relative background-primary">
+        <div class="d-flex avatar blue">
           <div class="round">
-            <mat-icon>group</mat-icon>
+            <mat-icon>person</mat-icon>
           </div>
           <div class="text-white">Neu</div>
         </div>
-        <button (click)="showPatientPopup($event)" *ngIf="isPatientPopup" mat-stroked-button class="add-button white-pink">
+        <button (click)="showPatientPopup($event)" *ngIf="isPatientPopup" mat-stroked-button class="add-button white-blue">
           <mat-icon>add</mat-icon>
         </button>
+        <div class="d-flex mt-2">
+          <mat-form-field class="w-100 input-blue m-3">
+            <mat-label>E-Mail-Adresse</mat-label>
+            <input autocomplete="off" matInput>
+          </mat-form-field>
+          <mat-form-field class="w-100 input-blue m-3">
+            <mat-label>Handynummer</mat-label>
+            <input autocomplete="off" matInput>
+          </mat-form-field>
+        </div>
+        <div class="d-flex mt-2">
+          <mat-form-field class="input-blue m-3" style="width: 175px;">
+            <mat-label>Passwort</mat-label>
+            <input type="password" autocomplete="off" matInput>
+          </mat-form-field>
+          <mat-form-field class="input-blue m-3" style="width: 175px;">
+            <mat-label>Passwort Wdhlg</mat-label>
+            <input type="password" autocomplete="off" matInput>
+          </mat-form-field>
+          <button type="button" class="custom-button m-3 ml-4">Generieren</button>
+        </div>
       </div>
-      <mat-form-field class="w-100 mt-4 input-pink">
-        <mat-label>Vor- und Nachname</mat-label>
-        <input autocomplete="off" matInput>
-      </mat-form-field>
-      <mat-form-field class="w-100 mt-2 input-pink">
-        <mat-label>E-Mail-Adresse</mat-label>
-        <input autocomplete="off" matInput>
-      </mat-form-field>
+      <div>
+<!--        <mat-form-field class="w-100 input-blue m-3">-->
+<!--          <mat-label>E-Mail-Adresse</mat-label>-->
+<!--          <input autocomplete="off" matInput>-->
+<!--        </mat-form-field>-->
+<!--        <mat-form-field class="w-100 input-blue m-3">-->
+<!--          <mat-label>Handynummer</mat-label>-->
+<!--          <input autocomplete="off" matInput>-->
+<!--        </mat-form-field>-->
+<!--        <mat-form-field class="w-100 input-blue m-3">-->
+<!--          <mat-label>Handynummer</mat-label>-->
+<!--          <input autocomplete="off" matInput>-->
+<!--        </mat-form-field>-->
+      </div>
     </div>
   </mat-accordion>
   <div class="d-flex flex-column mt-4">
