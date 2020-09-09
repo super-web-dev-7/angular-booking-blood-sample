@@ -95,6 +95,14 @@ const routes: Routes = [
           userRole: ['AG-Admin']
         }
       },
+      {
+        path: 'sms-history',
+        loadChildren: () => import('./page/sms/sms.module').then(m => m.SmsModule),
+        canActivate: [RoleGuard],
+        data: {
+          userRole: ['AG-Admin']
+        }
+      },
     ],
     canActivate: [AuthGuard]
   }
