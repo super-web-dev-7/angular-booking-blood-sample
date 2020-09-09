@@ -2,14 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import {ReactiveFormsModule} from '@angular/forms';
+
+import {NgCircleProgressModule} from 'ng-circle-progress';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import {JwtInterceptor} from './helper';
-import {AuthService} from './service/auth/auth.service';
 
 import { LoginComponent } from './page/login/login.component';
 import { RegisterComponent } from './page/register/register.component';
@@ -20,7 +20,7 @@ import {MainLayoutModule} from './layout/main-layout/main-layout.module';
 import {SharedModule} from './shared/shared.module';
 import { AgDashboardComponent } from './page/ag-dashboard/ag-dashboard.component';
 import { ChartComponent } from './components/chart/chart.component';
-import {NgCircleProgressModule} from "ng-circle-progress";
+
 
 
 @NgModule({
@@ -46,8 +46,8 @@ import {NgCircleProgressModule} from "ng-circle-progress";
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
   ],
-  exports: [
-  ],
+    exports: [
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

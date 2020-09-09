@@ -106,7 +106,7 @@ mat-slide-toggle {
   }
 }
 
-.add-button {
+.add-button, .add-calendar {
   width: 60px;
   height: 60px;
   background-color: #E1EAF1;
@@ -190,6 +190,15 @@ button {
     background-color: #E1F7F2;
     mat-icon {
       color: #50E3C2;
+    }
+  }
+}
+
+.blue {
+  .round {
+    background-color: #E1EAF1;
+    mat-icon {
+      color: #4A90E2;
     }
   }
 }

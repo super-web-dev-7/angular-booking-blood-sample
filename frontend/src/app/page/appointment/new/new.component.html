@@ -30,32 +30,12 @@
         </button>
       </div>
     </mat-expansion-panel>
-    <button (click)="showAddAdminPopup($event)" *ngIf="!isAddAdminPopup" mat-stroked-button class="add-button"><mat-icon>add</mat-icon></button>
-    <div class="add-admin-popup" *ngIf="isAddAdminPopup">
-      <div class="position-relative">
-        <div class="d-flex avatar pink">
-          <div class="round">
-            <mat-icon>group</mat-icon>
-          </div>
-          <div class="text-white">Neu</div>
-        </div>
-        <button (click)="showAddAdminPopup($event)" *ngIf="isAddAdminPopup" mat-stroked-button class="add-button white-pink"><mat-icon>add</mat-icon></button>
-      </div>
-      <mat-form-field class="w-100 mt-4 input-pink">
-        <mat-label>Vor- und Nachname</mat-label>
-        <input autocomplete="off" matInput>
-      </mat-form-field>
-      <mat-form-field class="w-100 mt-2 input-pink">
-        <mat-label>E-Mail-Adresse</mat-label>
-        <input autocomplete="off" matInput>
-      </mat-form-field>
-    </div>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
           <div class="d-flex avatar green">
             <div class="round">
-              <mat-icon>group</mat-icon>
+              <img src="assets/images/cube.png" alt="cube">
             </div>
             <div>Paket</div>
           </div>
@@ -75,9 +55,9 @@
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <div class="d-flex avatar pink">
+          <div class="d-flex avatar yellow">
             <div class="round">
-              <mat-icon>person</mat-icon>
+              <mat-icon svgIcon="time-icon" aria-hidden="false" aria-label="time">person</mat-icon>
             </div>
             <div>Termin</div>
           </div>
@@ -95,10 +75,32 @@
         </button>
       </div>
     </mat-expansion-panel>
+    <button (click)="showAppointmentPopup($event)" *ngIf="!isAppointmentPopup" mat-stroked-button class="add-calendar">
+      <img src="assets/images/dark-calendar.svg" alt="calendar">
+    </button>
+    <div class="add-admin-popup" *ngIf="isAppointmentPopup">
+      <div class="position-relative">
+        <div class="d-flex avatar yellow">
+          <div class="round">
+            <mat-icon svgIcon="time-icon" aria-hidden="false" aria-label="time">person</mat-icon>
+          </div>
+          <div class="text-white">Alle Termine</div>
+        </div>
+        <button
+          (click)="showAppointmentPopup($event)"
+          *ngIf="isAppointmentPopup"
+          mat-stroked-button
+          class="add-calendar white-yellow"
+        >
+          <img src="assets/images/white-calendar.svg" alt="calendar">
+        </button>
+      </div>
+      <app-datetime-picker></app-datetime-picker>
+    </div>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <div class="d-flex avatar pink">
+          <div class="d-flex avatar blue">
             <div class="round">
               <mat-icon>person</mat-icon>
             </div>
@@ -118,6 +120,30 @@
         </button>
       </div>
     </mat-expansion-panel>
+    <button (click)="showPatientPopup($event)" *ngIf="!isPatientPopup" mat-stroked-button class="add-button">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div class="add-admin-popup" *ngIf="isPatientPopup">
+      <div class="position-relative">
+        <div class="d-flex avatar pink">
+          <div class="round">
+            <mat-icon>group</mat-icon>
+          </div>
+          <div class="text-white">Neu</div>
+        </div>
+        <button (click)="showPatientPopup($event)" *ngIf="isPatientPopup" mat-stroked-button class="add-button white-pink">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <mat-form-field class="w-100 mt-4 input-pink">
+        <mat-label>Vor- und Nachname</mat-label>
+        <input autocomplete="off" matInput>
+      </mat-form-field>
+      <mat-form-field class="w-100 mt-2 input-pink">
+        <mat-label>E-Mail-Adresse</mat-label>
+        <input autocomplete="off" matInput>
+      </mat-form-field>
+    </div>
   </mat-accordion>
   <div class="d-flex flex-column mt-4">
 

@@ -10,7 +10,14 @@ h1 {
 .add-button {
   position: absolute;
   left: calc(100% + 2px);
-  top: 80px;
+  top: 320px;
+  transform: translateY(-50%);
+}
+
+.add-calendar {
+  position: absolute;
+  left: calc(100% + 2px);
+  top: 240px;
   transform: translateY(-50%);
 }
 
@@ -34,6 +41,13 @@ mat-expansion-panel {
 
 .white-pink {
   background-color: #F389CC;
+  color: white;
+  top: 30px;
+  left: calc(100% - 16px);
+}
+
+.white-yellow {
+  background-color: #F5A623;
   color: white;
   top: 30px;
   left: calc(100% - 16px);

@@ -1,8 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {HttpService} from "../../../service/http/http.service";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {URL_JSON} from "../../../utils/url_json";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatIconRegistry} from '@angular/material/icon';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+
+import {HttpService} from '../../../service/http/http.service';
+import {URL_JSON} from '../../../utils/url_json';
+
 
 @Component({
   selector: 'app-new',
@@ -10,7 +14,8 @@ import {URL_JSON} from "../../../utils/url_json";
   styleUrls: ['./new.component.scss']
 })
 export class NewComponent implements OnInit {
-  isAddAdminPopup = false;
+  isAppointmentPopup = false;
+  isPatientPopup = false;
   selectedDoctors = [];
   selectedGroup = null;
   doctors = [];
@@ -20,8 +25,15 @@ export class NewComponent implements OnInit {
     public formBuilder: FormBuilder,
     public httpService: HttpService,
     public dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    iconRegistry: MatIconRegistry,
+    sanitizer: DomSanitizer
+  ) {
+    iconRegistry.addSvgIcon(
+      'time-icon',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/images/time.svg')
+    );
+  }
 
   ngOnInit(): void {
     this.groupForm = this.formBuilder.group({
@@ -41,8 +53,12 @@ export class NewComponent implements OnInit {
     return this.groupForm.controls;
   }
 
-  showAddAdminPopup = (event) => {
-    this.isAddAdminPopup = !this.isAddAdminPopup;
+  showAppointmentPopup = (event) => {
+    this.isAppointmentPopup = !this.isAppointmentPopup;
+  }
+
+  showPatientPopup = (event) => {
+    this.isPatientPopup = !this.isPatientPopup;
   }
 
   selectAdmin = (id) => {

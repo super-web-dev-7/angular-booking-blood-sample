@@ -72,7 +72,7 @@ export class OpenDatesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.router.navigateByUrl('agency/overview');
+      this.router.navigateByUrl('appointment/open-dates');
     });
   }
 
