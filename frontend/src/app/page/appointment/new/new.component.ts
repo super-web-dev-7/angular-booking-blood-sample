@@ -23,7 +23,7 @@ export class NewComponent implements OnInit {
   groupForm: FormGroup;
   // @ViewChild('formView') formView: ElementRef;
   // dialogHeight: any;
-
+  values = [1, 2, 3, 4];
   constructor(
     public formBuilder: FormBuilder,
     public httpService: HttpService,
