@@ -50,7 +50,8 @@
               mat-stroked-button
               *ngFor="let receiver of receivers"
               [ngClass]="{'primary': selectedReceiver===receiver.id}"
-              (click)="selectReceiver(receiver.id)">
+              (click)="selectReceiver(receiver.id)"
+            >
               {{receiver.name}}
             </button>
           </div>
