@@ -28,11 +28,10 @@
           <ng-container matColumnDef="district">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Bezirk
-              <app-order-icon columnName="name" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element">
-              {{element.district.name}} ( {{element.district.zipcode[0].from}} - {{element.district.zipcode[0].to}})
-              {{element.district.zipcode.length > 1 ? '(+' + (element.district.zipcode.length - 1) + ')' : ''}}
+              {{element.districts[0].name}} ( {{element.districts[0].zipcode[0].from}} - {{element.districts[0].zipcode[0].to}})
+              {{element.districts.length > 1 ? '(+' + (element.districts.length - 1) + ')' : ''}}
             </td>
           </ng-container>
 

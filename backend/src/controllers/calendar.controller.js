@@ -17,26 +17,42 @@ exports.create = (req, res) => {
 };
 
 exports.get = async (req, res) => {
-    District.hasMany(Calendar, {foreignKey: 'district_id'});
     User.hasMany(Calendar, {foreignKey: 'nurse'})
-    Calendar.belongsTo(District, {foreignKey: 'district_id'});
     Calendar.belongsTo(User, {foreignKey: 'nurse'});
 
-    const allCalendar = await Calendar.findAll({where: req.query, include: [District, User]})
-    res.status(200).json(allCalendar);
+    const allCalendar = await Calendar.findAll({where: req.query, include: [User]})
+    const response = [];
+    for (let calendar of allCalendar) {
+        const districts = [];
+        calendar.district_id = JSON.parse(calendar.district_id);
+        for (const id of calendar.district_id) {
+            const district = await District.findByPk(id);
+            districts.push(district);
+        }
+        response.push({...calendar.dataValues, districts});
+    }
+    res.status(200).json(response);
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
     const data = req.body;
     const id = req.params.id;
     Calendar.update(data, {returning: true, where: {id}}).then((rowUpdated) => {
-        District.hasMany(Calendar, {foreignKey: 'district_id'});
         User.hasMany(Calendar, {foreignKey: 'nurse'})
-        Calendar.belongsTo(District, {foreignKey: 'district_id'});
         Calendar.belongsTo(User, {foreignKey: 'nurse'});
 
-        Calendar.findAll({where: {id}, include: [District, User]}).then(allCalendar => {
-            res.status(200).json(allCalendar);
+        Calendar.findAll({where: {id}, include: [User]}).then(async (allCalendar) => {
+            const response = [];
+            for (let calendar of allCalendar) {
+                const districts = [];
+                calendar.district_id = JSON.parse(calendar.district_id);
+                for (const id of calendar.district_id) {
+                    const district = await District.findByPk(id);
+                    districts.push(district);
+                }
+                response.push({...calendar.dataValues, districts});
+            }
+            res.status(200).json(response);
         })
     });
 }

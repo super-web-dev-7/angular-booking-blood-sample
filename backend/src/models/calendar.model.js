@@ -5,7 +5,7 @@ module.exports = (sequelize, Sequelize) => {
             unique: true
         },
         district_id: {
-            type: Sequelize.INTEGER
+            type: Sequelize.STRING
         },
         nurse: {
             type: Sequelize.INTEGER

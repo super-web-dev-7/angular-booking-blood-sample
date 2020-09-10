@@ -13,7 +13,7 @@ import {URL_JSON} from '../../../utils/url_json';
   styleUrls: ['./new-calendar.component.scss']
 })
 export class NewCalendarComponent implements OnInit {
-  selectedDistrict = null;
+  selectedDistrict = [];
   selectedNurse = null;
   districts = [];
   nurses = [];
@@ -42,7 +42,7 @@ export class NewCalendarComponent implements OnInit {
       working_time_until: [this.data?.working_time_until, Validators.required],
       working_time_from: [this.data?.working_time_from, Validators.required]
     });
-    this.selectedDistrict = this.data?.district_id;
+    this.selectedDistrict = this.data ? this.data?.district_id : [];
     this.selectedNurse = this.data?.nurse;
   }
 
@@ -55,7 +55,11 @@ export class NewCalendarComponent implements OnInit {
   }
 
   selectDistrict = (id) => {
-    this.selectedDistrict = id;
+    if (this.selectedDistrict.includes(id)) {
+      this.selectedDistrict.splice(this.selectedDistrict.indexOf(id), 1);
+    } else {
+      this.selectedDistrict.push(id);
+    }
   }
 
   selectNurse = (id) => {
@@ -70,7 +74,7 @@ export class NewCalendarComponent implements OnInit {
     if (this.scheduleForm.invalid) {
       return;
     }
-    if (!this.selectedDistrict || !this.selectedNurse) {
+    if (this.selectedDistrict.length === 0 || !this.selectedNurse) {
       return;
     }
 
@@ -80,7 +84,7 @@ export class NewCalendarComponent implements OnInit {
       rest_time: this.f.rest_time.value,
       working_time_from: this.f.working_time_from.value,
       working_time_until: this.f.working_time_until.value,
-      district_id: this.selectedDistrict,
+      district_id: JSON.stringify(this.selectedDistrict),
       nurse: this.selectedNurse
     };
     if (this.data) {
