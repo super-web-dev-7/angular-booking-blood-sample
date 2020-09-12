@@ -109,4 +109,8 @@ export class NewComponent implements OnInit {
     }
   }
 
+  close = () => {
+    this.dialogRef.close();
+  }
+
 }

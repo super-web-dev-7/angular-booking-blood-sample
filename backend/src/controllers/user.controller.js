@@ -4,6 +4,7 @@ import db from '../models';
 const User = db.user;
 const WorkingGroup = db.workingGroup;
 const saltRounds = 10;
+const Calendar = db.calendar;
 
 exports.create = (req, res) => {
     const newUser = req.body;
@@ -28,9 +29,25 @@ exports.get = async (req, res) => {
 }
 
 exports.delete = async (req, res) => {
-    User.destroy({where: {id: req.params.id}}).then(result => {
-        res.status(204).json({});
-    })
+    const user = await User.findByPk(req.params.id);
+    console.log(user);
+    if (user.role === 'Nurse') {
+        const calendar = await Calendar.findAll({where: {nurse: req.params.id}});
+        if (calendar.length > 0) {
+            res.status(400).json({error: 'Calendar has this user'});
+        }
+    }
+    if (user.role === 'AG-Admin') {
+        const groups = await Calendar.findAll({where: {}});
+        for (const group of groups) {
+            if (JSON.parse(group.admin).includes(req.params.id)) {
+
+            }
+        }
+    }
+    // User.destroy({where: {id: req.params.id}}).then(result => {
+    //     res.status(204).json({});
+    // })
 }
 
 exports.update = async (req, res) => {

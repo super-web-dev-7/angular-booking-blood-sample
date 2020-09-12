@@ -93,5 +93,4 @@ export class NewDistrictComponent implements OnInit {
       this.additionalZipCode[index].to = event.target.value;
     }
   }
-
 }
