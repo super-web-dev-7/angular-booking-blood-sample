@@ -1,0 +1,101 @@
+.period-button {
+  width: 300px;
+  height: 50px;
+  font-size: 16px;
+  text-align: left;
+  padding-left: 34px;
+  border-radius: 25px;
+  box-shadow: 0 0 4px #E5ECF3;
+  background-color: white;
+  color: var(--primary-color);
+  margin-left: 15px;
+
+  mat-icon {
+    color: #C3C6D1;
+    margin-top: 6px;
+  }
+}
+
+.select-agency {
+  button {
+    padding: 0 25px;
+  }
+}
+
+
+.ticket-container {
+  padding: 30px 27px 54px 24px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px #E5ECF33D;
+  //max-width: 360px;
+  min-width: 430px;
+  min-height: 580px;
+  text-align: center;
+
+  .ticket-header {
+    width: 100%;
+    color: var(--light-dark-color);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .chart-container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.summary-button {
+  border-radius: 30px;
+  height: 60px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 4px 16px #E3E8F4;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.button-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.summary {
+  color: #272140;
+  font-size: 14px;
+}
+
+.green-color {
+  color: #89DF8C;
+}
+
+.pink-color {
+  color: #F389CC;
+}
+
+.red-color {
+  color: #E87C60;
+}
+
+.blue-color {
+  color: #4A90E2;
+}
+
+.yellow-color {
+  color: #F5A623;
+}
+
+.light-green-color {
+  color: #50E3C2;
+}
+
+.package {
+  background-color: var(--primary-color);
+  border-radius: 20px;
+  padding: 30px 24px;
+}
+
+.custom-box-shadow {
+  box-shadow: 0px 4px 16px #293746;
+}

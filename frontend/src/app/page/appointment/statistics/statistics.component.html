@@ -1,1 +1,107 @@
-<p>statistics works!</p>
+<h3 class="header-title">Terminstatistik</h3>
+
+<div class="d-flex justify-content-between flex-wrap">
+  <div class="select-agency">
+    <button class="custom-button mr-3" mat-stroked-button>Alle</button>
+    <button class="custom-button mr-3" mat-stroked-button>Agenture 1</button>
+    <button class="custom-button mr-3" mat-stroked-button>Agenture 2</button>
+  </div>
+  <button mat-raised-button class="period-button">
+    Gesamtzeitraum
+    <mat-icon class="float-right">expand_more</mat-icon>
+  </button>
+</div>
+
+<div class="d-flex justify-content-between flex-wrap mt-5">
+  <div class="ticket-container">
+    <div class="ticket-header">
+      <span><b class="text-black">00</b>%</span>
+      <p class="text-center position-relative">
+        12.08.2020 - 12.10.2020
+      </p>
+      <mat-icon class="ticket-header-icon" svgIcon="custom-calendar" aria-hidden="false" aria-label="calendar"
+                matDatepickerToggleIcon></mat-icon>
+    </div>
+    <div class="chart-container mt-3">
+      <app-donut-chart [items]="data[0]" label="Termine gesamp"></app-donut-chart>
+      <button *ngFor="let item of data[0]; let index = index" mat-raised-button class="summary-button">
+        <span class="button-content">
+          <span>
+            <img [src]="'assets/images/chart-icon/' + item.icon + '.svg'" [alt]="item.icon">
+            <span class="ml-3 summary">{{label[index]}}</span>
+          </span>
+          <span [ngClass]="labelClass[index]">{{item.value}}</span>
+        </span>
+      </button>
+      <!--      <app-chart total="275" positive="200" negative="75" label="Termine gesamt"></app-chart>-->
+    </div>
+  </div>
+  <div class="ticket-container">
+    <div class="ticket-header">
+      <span><b class="text-black">00</b>%</span>
+      <p class="text-center position-relative">
+        12.08.2020 - 12.10.2020
+      </p>
+      <mat-icon class="ticket-header-icon" svgIcon="custom-calendar" aria-hidden="false" aria-label="calendar"
+                matDatepickerToggleIcon></mat-icon>
+    </div>
+    <div class="chart-container mt-3">
+      <app-donut-chart [items]="data[1]" label="Agentur 1"></app-donut-chart>
+      <button *ngFor="let item of data[1]; let index = index" mat-raised-button class="summary-button">
+        <span class="button-content">
+          <span>
+            <img [src]="'assets/images/chart-icon/' + item.icon + '.svg'" [alt]="item.icon">
+            <span class="ml-3 summary">{{label[index]}}</span>
+          </span>
+          <span [ngClass]="labelClass[index]">{{item.value}}</span>
+        </span>
+      </button>
+      <!--      <app-chart total="187" positive="167" negative="20" label="Agentur 1"></app-chart>-->
+    </div>
+  </div>
+  <div class="ticket-container">
+    <div class="ticket-header">
+      <span><b class="text-black">00</b>%</span>
+      <p class="text-center position-relative">
+        12.08.2020 - 12.10.2020
+      </p>
+      <mat-icon class="ticket-header-icon" svgIcon="custom-calendar" aria-hidden="false" aria-label="calendar"
+                matDatepickerToggleIcon></mat-icon>
+    </div>
+    <div class="chart-container mt-3">
+      <app-donut-chart [items]="data[2]" label="Agentur 2"></app-donut-chart>
+      <button *ngFor="let item of data[2]; let index = index" mat-raised-button class="summary-button">
+        <span class="button-content">
+          <span>
+            <img [src]="'assets/images/chart-icon/' + item.icon + '.svg'" [alt]="item.icon">
+            <span class="ml-3 summary">{{label[index]}}</span>
+          </span>
+          <span [ngClass]="labelClass[index]">{{item.value}}</span>
+        </span>
+      </button>
+      <!--      <app-chart total="88" positive="44" negative="44" label="Agentur 2"></app-chart>-->
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="package">
+      <div class="text-white">00 %</div>
+
+      <app-donut-chart [items]="packageData" label="Gebuchte Pakete"></app-donut-chart>
+      <button *ngFor="let item of packageData; let index = index" mat-raised-button class="summary-button custom-box-shadow">
+        <span class="button-content">
+          <span>
+            <img [src]="'assets/images/chart-icon/' + item.icon + '.svg'" [alt]="item.icon">
+            <span class="ml-3 summary">{{packageLabel[index]}}</span>
+          </span>
+          <span [ngClass]="packageLabelClass[index]">{{item.value / packageTotal * 100}}%</span>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="col-md-8 pl-4">
+    s
+  </div>
+</div>

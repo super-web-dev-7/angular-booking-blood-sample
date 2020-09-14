@@ -1,0 +1,19 @@
+<svg height="100%" width="100%" viewBox="0 0 150 165">
+  <circle  *ngFor="let item of items;let i=index" cx="75" cy="75" r="50" fill="transparent"
+           stroke-width="20"
+           [attr.stroke-dasharray]="getPerimeter(50)"
+           [attr.stroke-dashoffset]="getOffset(50, i)"
+           [attr.stroke]="getColor(i)"
+  />
+  <text x="50%" y="70" text-anchor="middle" stroke="#202331" stroke-width="1px" dy=".3em">{{total}}</text>
+  <text x="50%" y="85" text-anchor="middle" stroke="#8790A3" opacity="0.5" stroke-width="0.2px" font-size="8">{{label}}</text>
+  <defs>
+    <filter id="dropshadow" x="-40%" y="-40%" width="180%" height="180%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0.5" dy="3" stdDeviation="0.5"
+                    flood-color="'#E5ECF33D'" flood-opacity="0.05"/>
+    </filter>
+  </defs>
+  <circle [ngClass]="{'display-none': !item.value}" *ngFor="let item of items; let index = index" r="15" [attr.cx]="getCx(index)" [attr.cy]="getCy(index)" fill="white" style="filter:url(#dropshadow)"></circle>
+  <image [ngClass]="{'display-none': !item.value}" *ngFor="let item of items; let index = index" [attr.x] = "getCx(index) - 5" [attr.y]="getCy(index) - 5" width="10" height="10" [attr.href]="'assets/images/chart-icon/' + item.icon + '.svg'">
+  </image>
+</svg>

@@ -10,17 +10,18 @@ import {AppointmentRoutingModule} from './appointment-routing.module';
 import {SharedModule} from '../../shared/shared.module';
 import {MaterialModule} from '../../material/material.module';
 import {DatetimePickerComponent} from '../../components/datetime-picker/datetime-picker.component';
+import {DonutChartComponent} from '../../components/donut-chart/donut-chart.component';
 
 
 @NgModule({
-  declarations: [OpenDatesComponent, NewComponent, StatisticsComponent, DatetimePickerComponent],
+  declarations: [OpenDatesComponent, NewComponent, StatisticsComponent, DatetimePickerComponent, DonutChartComponent],
   imports: [
     CommonModule,
     AppointmentRoutingModule,
     SharedModule,
     MaterialModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
   ]
 })
 export class AppointmentModule { }
