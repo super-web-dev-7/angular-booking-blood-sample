@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <style>.a {
+      fill: #F389CC;
+    }
+    .b {
+      fill: #fff;
+      font-weight: bold;
+      font-size: 24px;
+    }</style>
+  </defs>
+  <g transform="translate(278.5 -278.308)">
+    <circle class="a" cx="12" cy="12" r="12" transform="translate(-278.5 278.308)"/>
+  </g>
+  <text class="b" stroke-width="5" transform="translate(5 20)">
+    <tspan x="0" y="0">+</tspan>
+  </text>
+</svg>

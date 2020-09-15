@@ -22,7 +22,6 @@ import { AgDashboardComponent } from './page/ag-dashboard/ag-dashboard.component
 import { ChartComponent } from './components/chart/chart.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,

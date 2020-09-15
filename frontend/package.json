@@ -23,6 +23,7 @@
     "@angular/router": "~10.0.2",
     "@ckeditor/ckeditor5-angular": "^1.2.3",
     "@ckeditor/ckeditor5-build-classic": "^21.0.0",
+    "@swimlane/ngx-charts": "^16.0.0",
     "bootstrap": "^4.5.2",
     "jwt-decode": "^2.2.0",
     "moment": "^2.27.0",

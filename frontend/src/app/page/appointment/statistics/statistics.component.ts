@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
+import {curveCardinal} from 'd3-shape';
 
 @Component({
   selector: 'app-statistics',
@@ -15,7 +16,7 @@ export class StatisticsComponent implements OnInit {
   labelClass = ['light-green-color', 'pink-color', 'red-color', 'green-color'];
 
   packageLabel = ['Allgemeine Gesundheit', 'Frauenmedizin', 'Corona', 'Gutes Immunsystem', 'Männermedizin', 'Sexuelle Gesundheit'];
-  packageLabelClass = ['light-green-color', 'pink-color', 'red-color', 'green-color', 'blue-color', 'yellow-color']
+  packageLabelClass = ['light-green-color', 'pink-color', 'red-color', 'green-color', 'blue-color', 'yellow-color'];
 
   data = [
     [
@@ -48,6 +49,53 @@ export class StatisticsComponent implements OnInit {
   ];
 
   packageTotal = 0;
+
+  barChartData = [
+    {positive: 16, negative: 5, label: 'März'},
+    {positive: 11, negative: 12, label: 'April'},
+    {positive: 8, negative: 3, label: 'Mai'},
+    {positive: 14, negative: 10, label: 'Juni'},
+    {positive: 10, negative: 15, label: 'Juli'},
+    {positive: 12, negative: 10, label: 'August'}
+  ];
+
+  lineChartData = [
+    {
+      name: 'Patient',
+      series: [
+        {
+          name: 'March',
+          value: 10
+        },
+        {
+          name: 'April',
+          value: 13
+        },
+        {
+          name: 'May',
+          value: 15
+        },
+        {
+          name: 'June',
+          value: 17
+        },
+        {
+          name: 'July',
+          value: 12
+        },
+        {
+          name: 'August',
+          value: 21
+        }
+      ]
+    },
+  ];
+
+  curve: any = curveCardinal;
+  customColors = {
+    domain: ['#FFF', '#FFF'],
+
+  };
 
   constructor(
     iconRegistry: MatIconRegistry,

@@ -1,0 +1,18 @@
+<div class="d-flex justify-content-between">
+  <div *ngFor="let item of data">
+    <div class="d-flex flex-column align-items-center justify-content-center item-container">
+      <div class="positive-container">
+        <span class="positive-label">{{item.positive}}</span>
+        <div class="positive-part" [ngStyle]="{'height.px': 100 * item.positive / maxValue}">
+        </div>
+      </div>
+      <span class="middle-label">{{item.label}}</span>
+      <div class="negative-container">
+        <div class="negative-part" [ngStyle]="{'height.px': 100 * item.negative / maxValue}">
+        </div>
+        <span class="negative-label">{{item.negative}}</span>
+      </div>
+
+    </div>
+  </div>
+</div>

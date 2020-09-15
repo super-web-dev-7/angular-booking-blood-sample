@@ -90,7 +90,8 @@
       <div class="text-white">00 %</div>
 
       <app-donut-chart [items]="packageData" label="Gebuchte Pakete"></app-donut-chart>
-      <button *ngFor="let item of packageData; let index = index" mat-raised-button class="summary-button custom-box-shadow">
+      <button *ngFor="let item of packageData; let index = index" mat-raised-button
+              class="summary-button custom-box-shadow">
         <span class="button-content">
           <span>
             <img [src]="'assets/images/chart-icon/' + item.icon + '.svg'" [alt]="item.icon">
@@ -102,6 +103,66 @@
     </div>
   </div>
   <div class="col-md-8 pl-4">
-    s
+
+    <div class="bar-chart-container">
+      <div>
+        <app-bar-chart [data]="barChartData"></app-bar-chart>
+      </div>
+
+      <div class="d-flex justify-content-center mt-3">
+        <button mat-raised-button class="white-button custom-box-shadow">
+          <span class="button-content">
+            <span>
+              <img [src]="'assets/images/chart-icon/plus-pink.svg'" [alt]="'plus'">
+              <span class="ml-3 summary">Neuer Termineingang</span>
+            </span>
+          </span>
+        </button>
+        <button mat-raised-button class="white-button custom-box-shadow ml-3">
+          <span class="button-content">
+            <span>
+              <img [src]="'assets/images/chart-icon/thumb-up.svg'" [alt]="'plus'">
+              <span class="ml-3 summary">Abgeschlossene Termine</span>
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+
+    <div class="current-month-container">
+      <div class="item-container pink-white">
+        <span class="value">12</span>
+        <span class="label">Ø Monat</span>
+      </div>
+      <div class="item-container white-pink">
+        <span class="value">3</span>
+        <span class="label">Ø Woche</span>
+      </div>
+      <div class="item-container green-white">
+        <span class="value">9</span>
+        <span class="label">Ø Monat</span>
+      </div>
+      <div class="item-container white-green">
+        <span class="value">2</span>
+        <span class="label">Ø Woche</span>
+      </div>
+    </div>
+
+    <div class="line-chart-container">
+      <div class="current-container">
+        <mat-icon>person</mat-icon>
+        <span class="value">311</span>
+        <span class="label">Patienten gesamt</span>
+      </div>
+      <div class="line-chart">
+        <ngx-charts-line-chart
+          [results]="lineChartData"
+          [curve]="curve"
+          [xAxis]="true"
+          [showXAxisLabel]="true"
+          [customColors]="customColors"
+        ></ngx-charts-line-chart>
+      </div>
+    </div>
   </div>
 </div>
