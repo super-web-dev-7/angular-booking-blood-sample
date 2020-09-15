@@ -89,7 +89,7 @@
     <div class="package">
       <div class="text-white">00 %</div>
 
-      <app-donut-chart [items]="packageData" label="Gebuchte Pakete"></app-donut-chart>
+      <app-donut-chart [items]="packageData" label="Gebuchte Pakete" labelColor="white"></app-donut-chart>
       <button *ngFor="let item of packageData; let index = index" mat-raised-button
               class="summary-button custom-box-shadow">
         <span class="button-content">

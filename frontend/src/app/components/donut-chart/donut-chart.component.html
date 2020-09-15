@@ -5,8 +5,10 @@
            [attr.stroke-dashoffset]="getOffset(50, i)"
            [attr.stroke]="getColor(i)"
   />
-  <text x="50%" y="70" text-anchor="middle" stroke="#202331" stroke-width="1px" dy=".3em">{{total}}</text>
-  <text x="50%" y="85" text-anchor="middle" stroke="#8790A3" opacity="0.5" stroke-width="0.2px" font-size="8">{{label}}</text>
+  <text *ngIf="labelColor === 'white'" font-weight="800" fill="white" x="50%" y="70" text-anchor="middle" dy=".3em">{{total}}</text>
+  <text *ngIf="labelColor === 'white'" fill="white" x="50%" y="85" text-anchor="middle" opacity="0.5" font-size="8">{{label}}</text>
+  <text *ngIf="labelColor !== 'white'" font-weight="800" x="50%" y="70" text-anchor="middle" dy=".3em">{{total}}</text>
+  <text *ngIf="labelColor !== 'white'" x="50%" y="85" text-anchor="middle" opacity="0.5" font-size="8">{{label}}</text>
   <defs>
     <filter id="dropshadow" x="-40%" y="-40%" width="180%" height="180%" filterUnits="userSpaceOnUse">
       <feDropShadow dx="0.5" dy="3" stdDeviation="0.5"

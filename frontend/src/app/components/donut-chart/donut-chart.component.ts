@@ -9,6 +9,7 @@ export class DonutChartComponent implements OnInit {
 
   @Input() items;
   @Input() label;
+  @Input() labelColor;
 
 
   public total = 0;
