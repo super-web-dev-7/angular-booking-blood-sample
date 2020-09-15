@@ -5,6 +5,8 @@ import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {NewComponent} from '../new/new.component';
+import {HttpService} from '../../../service/http/http.service';
+import {URL_JSON} from '../../../utils/url_json';
 
 @Component({
   selector: 'app-overview',
@@ -14,7 +16,7 @@ import {NewComponent} from '../new/new.component';
 export class OverviewComponent implements OnInit {
 
   displayedColumns: string[] = ['no', 'name', 'number', 'assign', 'price', 'status', 'actions'];
-  dataSource = new MatTableDataSource<any>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<any>([]);
   currentPage = 0;
   pageSize = 5;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -22,9 +24,17 @@ export class OverviewComponent implements OnInit {
 
   selectedDeleteItem: number = null;
 
+  allPackages: any;
+  filterValue = null;
+  orderStatus = {
+    active: '',
+    direction: ''
+  };
+
   constructor(
     public router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public httpService: HttpService
   ) { }
 
   ngOnInit(): void {
@@ -35,6 +45,11 @@ export class OverviewComponent implements OnInit {
     if (url[2] === 'new') {
       this.openDialog();
     }
+    this.httpService.get(URL_JSON.PACKAGE + '/get').subscribe((res: any) => {
+      console.log(res);
+      this.dataSource.data = res;
+      this.allPackages = res;
+    });
   }
 
   onPaginateChange = ($event: PageEvent) => {
@@ -47,7 +62,12 @@ export class OverviewComponent implements OnInit {
   }
 
   deleteItem = () => {
-    this.selectedDeleteItem = null;
+    this.httpService.delete(URL_JSON.PACKAGE + '/delete/' + this.selectedDeleteItem).subscribe(() => {
+      const index = this.allPackages.findIndex(item => item.id === this.selectedDeleteItem);
+      this.allPackages.splice(index, 1);
+      this.dataSource.data = this.allPackages;
+      this.selectedDeleteItem = null;
+    });
   }
 
   openDialog = () => {
@@ -55,44 +75,56 @@ export class OverviewComponent implements OnInit {
       width: '900px'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       this.router.navigateByUrl('package/overview');
     });
   }
 
-}
-
-const ELEMENT_DATA: any[] = [
-  {
-    id: 1,
-    name: 'Allg. Gesundheits-Check-Up',
-    number: '2548963 - 5',
-    assign: 'Arbeitsgruppe 1 (+2)',
-    price: 12350,
-    status: 'Öffentlich'
-  },
-  {
-    id: 2,
-    name: 'Corona',
-    number: '5452856 - 1',
-    assign: 'Arbeitsgruppe 2',
-    price: 7890,
-    status: 'Intern'
-  },
-  {
-    id: 3,
-    name: 'Corona',
-    number: '5452856 - 1',
-    assign: 'Arbeitsgruppe 2',
-    price: 7890,
-    status: 'Intern'
-  },
-  {
-    id: 4,
-    name: 'Corona',
-    number: '5452856 - 1',
-    assign: 'Arbeitsgruppe 2',
-    price: 7890,
-    status: 'Intern'
+  update = (data) => {
+    const dialogRef = this.dialog.open(NewComponent, {
+      width: '900px',
+      data
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const index = this.allPackages.findIndex(item => item.id === result.id);
+        this.allPackages[index] = result;
+        this.dataSource.data = this.allPackages;
+      }
+    });
   }
-];
+
+  filter = () => {
+    console.log(this.filterValue);
+    this.dataSource.data = this.allPackages.filter(item => {
+      return item.name.includes(this.filterValue) ||
+        item.number.toString().includes(this.filterValue) ||
+        item.price.toString().includes(this.filterValue) ||
+        JSON.stringify(item.special_price).includes(this.filterValue) ||
+        item.working_group.name.includes(this.filterValue) ||
+        item.status.includes(this.filterValue);
+    });
+  }
+
+  onSort = (event) => {
+    this.orderStatus = event;
+    const packages = [...this.allPackages];
+    if (event.active === 'assign') {
+      packages.sort((a, b) => {
+        const x = a.working_group.name;
+        const y = b.working_group.name;
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+    }
+    if (event.direction === '') {
+      this.dataSource.data = this.allPackages;
+    } else {
+      this.dataSource.data = packages;
+    }
+  }
+
+}

@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+
 import {HttpService} from '../../../service/http/http.service';
+import {URL_JSON} from '../../../utils/url_json';
+
 
 @Component({
   selector: 'app-new',
@@ -12,32 +16,20 @@ export class NewComponent implements OnInit {
   selectedGroup = null;
   selectedStatus = null;
   isActive = false;
-  groups = [
-    {
-      id: 1,
-      name: 'Arbeitsgruppe 1'
-    },
-    {
-      id: 2,
-      name: 'Arbeitsgruppe 2'
-    },
-    {
-      id: 3,
-      name: 'Arbeitsgruppe 3'
-    }
-  ];
+  content = null;
+  groups = [];
   statuses = [
     {
-      id: 1,
-      name: 'Inaktiv'
+      name: 'Inaktiv',
+      value: 'Inactive'
     },
     {
-      id: 2,
-      name: 'Öffentlich'
+      name: 'Öffentlich',
+      value: 'Public'
     },
     {
-      id: 3,
-      name: 'Intern'
+      name: 'Intern',
+      value: 'Intern'
     }
   ];
 
@@ -45,15 +37,30 @@ export class NewComponent implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    public httpRequest: HttpService
+    public httpService: HttpService,
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit(): void {
+    console.log(this.data);
     this.newPackageForm = this.formBuilder.group({
-      name: [null, Validators.required],
-      number: [null, Validators.required],
-      price: [null, Validators.required],
-      special_price: [null, Validators.required]
+      name: [this.data?.name, Validators.required],
+      number: [this.data?.number, Validators.required],
+      price: [this.data?.price, Validators.required],
+      specialPrice: [this.data?.special_price]
+    });
+    if (this.data) {
+      this.selectedGroup = this.data.group_id;
+      this.selectedStatus = this.data.status;
+      if (this.data.special_price) {
+        this.isActive = true;
+      }
+      this.content = this.data.content;
+    }
+
+    this.httpService.get(URL_JSON.GROUP + '/get').subscribe((res: any) => {
+      this.groups = res;
     });
   }
 
@@ -69,16 +76,33 @@ export class NewComponent implements OnInit {
     return this.newPackageForm.controls;
   }
 
-  newPackage = () => {
+  onSubmit = () => {
+    if (this.newPackageForm.invalid) {
+      return;
+    }
+
+    if (this.isActive && !this.f.specialPrice.value) {
+      return;
+    }
     const newPackageData = {
       name: this.f.name.value,
       number: this.f.number.value,
       price: this.f.price.value,
-      special_price: this.f.special_price.value,
+      special_price: this.isActive ? this.f.specialPrice.value : null,
       isActive: this.isActive,
-      group: this.selectedGroup,
-      status: this.selectedStatus
+      group_id: this.selectedGroup,
+      status: this.selectedStatus,
+      content: this.content
     };
+    if (this.data) {
+      this.httpService.update(URL_JSON.PACKAGE + '/update/' + this.data.id, newPackageData).subscribe(res => {
+        this.dialogRef.close(res);
+      });
+    } else {
+      this.httpService.create(URL_JSON.PACKAGE, newPackageData).subscribe(res => {
+        this.dialogRef.close();
+      });
+    }
   }
 
 }

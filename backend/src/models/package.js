@@ -13,14 +13,14 @@ module.exports = (sequelize, Sequelize) => {
         special_price: {
             type: Sequelize.INTEGER
         },
-        working_group: {
+        group_id: {
             type: Sequelize.INTEGER
         },
         status: {
             type: Sequelize.ENUM('Inactive', 'Public', 'Intern')
         },
         content: {
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         }
     });
 };

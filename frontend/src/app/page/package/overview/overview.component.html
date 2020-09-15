@@ -2,7 +2,7 @@
 <div class="main-container mt-5">
   <div class="table-toolbar">
     <div class="search-field-container">
-      <input type="text" placeholder="Search...">
+      <input type="text" placeholder="Search..." [(ngModel)]="filterValue" (ngModelChange)="filter()">
       <mat-icon>search</mat-icon>
     </div>
     <button class="custom-button" mat-stroked-button [routerLink]="'/package/new'">Neues Paket anlegen</button>
@@ -10,7 +10,7 @@
   <div class="table-container mt-5">
     <mat-card class="table-card mat-card-radius">
       <div>
-        <table mat-table [dataSource]="dataSource" matSort>
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSort($event)">
 
           <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
@@ -18,34 +18,49 @@
           </ng-container>
 
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Paketbezeichnung </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Paketbezeichnung
+              <app-order-icon columnName="name" [orderStatus]="orderStatus"></app-order-icon>
+            </th>
             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
           </ng-container>
 
           <ng-container matColumnDef="number">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Paket-Labornummer </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Paket-Labornummer
+              <app-order-icon columnName="number" [orderStatus]="orderStatus"></app-order-icon>
+            </th>
             <td mat-cell *matCellDef="let element"> {{element.number}} </td>
           </ng-container>
 
           <ng-container matColumnDef="assign">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Zuweisen zur Arbeitsgruppe </th>
-            <td mat-cell *matCellDef="let element"> {{element.assign}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Zuweisen zur Arbeitsgruppe
+              <app-order-icon columnName="assign" [orderStatus]="orderStatus"></app-order-icon>
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.working_group?.name}} </td>
           </ng-container>
 
           <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef> Preis </th>
-            <td mat-cell *matCellDef="let element"> {{element.price}} &euro; </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Preis
+              <app-order-icon columnName="price" [orderStatus]="orderStatus"></app-order-icon>
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.special_price ? element.special_price : element.price}} &euro; </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Status
+              <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
+            </th>
             <td mat-cell *matCellDef="let element"> {{element.status}} </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: right"> Aktionen </th>
             <td mat-cell *matCellDef="let element" style="text-align: right" class="position-relative">
-              <button mat-icon-button aria-label="more">
+              <button mat-icon-button aria-label="more" (click)="update(element)">
                 <img src="/assets/images/edit.svg" alt="edit">
               </button>
               <button (click)="delete(element.id)" aria-label="more"

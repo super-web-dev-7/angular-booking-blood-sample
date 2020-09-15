@@ -6,7 +6,6 @@ import {MaterialModule} from '../../material/material.module';
 import {OverviewComponent} from './overview/overview.component';
 
 
-
 const routes: Routes = [
   {
     path: 'overview',
@@ -23,7 +22,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    MaterialModule
+    MaterialModule,
+
   ]
 })
 export class PackageRoutingModule { }

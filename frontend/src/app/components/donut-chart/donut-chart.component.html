@@ -1,6 +1,6 @@
 <svg height="100%" width="100%" viewBox="0 0 150 165">
   <circle  *ngFor="let item of items;let i=index" cx="75" cy="75" r="50" fill="transparent"
-           stroke-width="20"
+           stroke-width="14"
            [attr.stroke-dasharray]="getPerimeter(50)"
            [attr.stroke-dashoffset]="getOffset(50, i)"
            [attr.stroke]="getColor(i)"
@@ -15,7 +15,7 @@
                     flood-color="'#E5ECF33D'" flood-opacity="0.05"/>
     </filter>
   </defs>
-  <circle [ngClass]="{'display-none': !item.value}" *ngFor="let item of items; let index = index" r="15" [attr.cx]="getCx(index)" [attr.cy]="getCy(index)" fill="white" style="filter:url(#dropshadow)"></circle>
+  <circle [ngClass]="{'display-none': !item.value}" *ngFor="let item of items; let index = index" r="13" [attr.cx]="getCx(index)" [attr.cy]="getCy(index)" fill="white" style="filter:url(#dropshadow)"></circle>
   <image [ngClass]="{'display-none': !item.value}" *ngFor="let item of items; let index = index" [attr.x] = "getCx(index) - 5" [attr.y]="getCy(index) - 5" width="10" height="10" [attr.href]="'assets/images/chart-icon/' + item.icon + '.svg'">
   </image>
 </svg>
