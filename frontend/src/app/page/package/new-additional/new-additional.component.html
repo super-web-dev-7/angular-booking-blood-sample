@@ -1,0 +1,88 @@
+<div class="p-3">
+  <h1>Zusatzpaket neu</h1>
+
+  <div class="row">
+    <div>
+      <form [formGroup]="newPackageForm" class="d-flex flex-wrap">
+        <mat-form-field class="mt-4 w-100">
+          <mat-label>Zusatzpaket Bezeichnung</mat-label>
+          <input formControlName="name" autocomplete="off" matInput>
+        </mat-form-field>
+        <mat-form-field class="mt-4 w-100">
+          <mat-label>Wert für API an das Labor</mat-label>
+          <input formControlName="number" type="number" autocomplete="off" matInput>
+        </mat-form-field>
+        <mat-form-field class="mt-4 w-100">
+          <mat-label>Paket-Preis</mat-label>
+          <input formControlName="price" type="number" autocomplete="off" matInput>
+        </mat-form-field>
+        <mat-form-field class="mt-4 width-50">
+          <mat-label>Sonder-Preis</mat-label>
+          <input type="number" formControlName="specialPrice" autocomplete="off" matInput [readonly]="!isActive">
+        </mat-form-field>
+        <div class="width-50 ml-3 d-flex align-items-center">
+          <div class="checkbox-container" (click)="isActive = !isActive">
+            <div *ngIf="isActive" class="check-mark"></div>
+          </div>
+          <span>Sonderpreis aktivieren</span>
+        </div>
+      </form>
+
+      <mat-accordion class="position-relative">
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="d-flex avatar pink">
+                <div class="round">
+                  <img src="assets/images/cube.png" alt="cube">
+                </div>
+                <div>Paket</div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="d-flex flex-wrap expansion-panel-container">
+            <button
+              type="button"
+              mat-stroked-button
+              *ngFor="let item of packages"
+              [ngClass]="{'primary': selectedPackage===item.id}"
+              (click)="selectPackage(item.id)">
+              {{item.name}}
+            </button>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="d-flex avatar green">
+                <div class="round">
+                  <mat-icon>stop_circle</mat-icon>
+                </div>
+                <div>Status</div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="d-flex flex-wrap expansion-panel-container">
+            <button
+              type="button"
+              mat-stroked-button
+              *ngFor="let status of statuses"
+              [ngClass]="{'primary': selectedStatus===status.value}"
+              (click)="selectStatus(status.value)">
+              {{status.name}}
+            </button>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-5">
+    <div class="d-flex align-items-center" style="width: 50%;">
+    </div>
+    <div class="d-flex align-items-center">
+      <button class="custom-button mr-3" mat-stroked-button>Abbrechen</button>
+      <button class="custom-button primary" mat-stroked-button (click)="onSubmit()">Neues Zusatzpaket anlegen</button>
+    </div>
+  </div>
+</div>

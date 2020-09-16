@@ -11,5 +11,6 @@ export const URL_JSON = {
   CALENDAR: API_URL + 'calendar',
   TEMPLATE: API_URL + 'template',
   PACKAGE: API_URL + 'package',
-  DISTRICT: API_URL + 'district'
+  DISTRICT: API_URL + 'district',
+  ADDITIONAL_PACKAGE: API_URL + 'additional-package'
 };

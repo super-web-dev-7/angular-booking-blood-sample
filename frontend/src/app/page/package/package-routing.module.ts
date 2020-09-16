@@ -4,6 +4,7 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {MaterialModule} from '../../material/material.module';
 import {OverviewComponent} from './overview/overview.component';
+import {OverviewAdditionalComponent} from './overview-additional/overview-additional.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,14 @@ const routes: Routes = [
   {
     path: 'new',
     component: OverviewComponent
+  },
+  {
+    path: 'new-additional',
+    component: OverviewAdditionalComponent
+  },
+  {
+    path: 'overview-additional',
+    component: OverviewAdditionalComponent
   }
 ];
 

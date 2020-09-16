@@ -6,6 +6,7 @@ import district from './district.model';
 import paket from './package';
 import template from './template.model';
 import workingGroup from './working-group.model';
+import additionalPackage from './additional-package';
 
 const sequelize = new Sequelize(config.mysql.database, config.mysql.user, config.mysql.password, {
     host: config.mysql.host,
@@ -23,5 +24,6 @@ db.district = district(sequelize, Sequelize);
 db.package = paket(sequelize, Sequelize);
 db.template = template(sequelize, Sequelize);
 db.workingGroup = workingGroup(sequelize, Sequelize);
+db.additionalPackage = additionalPackage(sequelize, Sequelize);
 
 export default db;

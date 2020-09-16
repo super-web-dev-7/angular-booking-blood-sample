@@ -98,6 +98,14 @@ export const Sidebar = [
       {
         name: 'Neues Paket',
         link: '/new'
+      },
+      {
+        name: 'Zusatzpakete Übersicht',
+        link: '/overview-additional'
+      },
+      {
+        name: 'Neues Zusatzpaket',
+        link: '/new-additional'
       }
     ]
   },

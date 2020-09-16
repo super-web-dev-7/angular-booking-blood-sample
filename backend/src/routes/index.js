@@ -8,6 +8,7 @@ import userRouter from './user.router';
 import districtRouter from './district.router';
 import calendarRouter from './calendar.router';
 import templateRouter from './template.router';
+import additionalPackageRouter from './additional-package.router';
 
 
 const router = Router();
@@ -21,6 +22,7 @@ router.use('/user', userRouter);
 router.use('/district', districtRouter);
 router.use('/calendar', calendarRouter);
 router.use('/template', templateRouter);
+router.use('/additional-package', additionalPackageRouter);
 
 
 export default router;

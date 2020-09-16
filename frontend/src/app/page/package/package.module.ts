@@ -9,9 +9,11 @@ import {PackageRoutingModule} from './package-routing.module';
 import {OverviewComponent} from './overview/overview.component';
 import {NewComponent} from './new/new.component';
 import {SharedModule} from '../../shared/shared.module';
+import { NewAdditionalComponent } from './new-additional/new-additional.component';
+import { OverviewAdditionalComponent } from './overview-additional/overview-additional.component';
 
 @NgModule({
-  declarations: [OverviewComponent, NewComponent],
+  declarations: [OverviewComponent, NewComponent, NewAdditionalComponent, OverviewAdditionalComponent],
   imports: [
     CommonModule,
     PackageRoutingModule,
