@@ -82,7 +82,7 @@ export class OverviewAdditionalComponent implements OnInit {
 
   update = (data) => {
     const dialogRef = this.dialog.open(NewAdditionalComponent, {
-      width: '900px',
+      width: '600px',
       data
     });
     dialogRef.afterClosed().subscribe(result => {
