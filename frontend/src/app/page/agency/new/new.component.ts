@@ -18,11 +18,7 @@ export class NewComponent implements OnInit {
   groups = [];
   groupForm: FormGroup;
   newUserForm: FormGroup;
-  newUser = {
-    name: '',
-    email: '',
-    password: ''
-  };
+  error = null;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -122,7 +118,10 @@ export class NewComponent implements OnInit {
       });
     } else {
       this.httpService.create(URL_JSON.AGENCY, data).subscribe(() => {
+        this.error = null;
         this.dialogRef.close();
+      }, error => {
+        this.error = error.error.message;
       });
     }
     // const data = {

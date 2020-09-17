@@ -5,8 +5,14 @@
     <mat-form-field class="w-100 mt-4">
       <mat-label>Agenturbezeichnung</mat-label>
       <input formControlName="name" autocomplete="off" matInput>
+      <mat-error *ngIf="newUserForm.get('email').hasError('required')">
+        This field is required.
+      </mat-error>
     </mat-form-field>
   </form>
+  <mat-error *ngIf="error">
+    {{error}}
+  </mat-error>
 
   <mat-accordion class="position-relative">
     <mat-expansion-panel hideToggle>
