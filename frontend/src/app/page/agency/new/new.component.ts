@@ -66,11 +66,11 @@ export class NewComponent implements OnInit {
     this.newUserForm.controls.password.setValue(password);
   }
 
-  showAddAdminPopup = () => {
+  addDoctor = () => {
     if (this.newUserForm.invalid) {
       return;
     }
-    if (this.getUser.name.value.split().length < 2) {
+    if (this.getUser.name.value.split(' ').length < 2) {
       return;
     }
     this.isAddAdminPopup = !this.isAddAdminPopup;
@@ -82,9 +82,8 @@ export class NewComponent implements OnInit {
       role: 'Doctor',
       isActive: true
     };
-    console.log(data);
     this.httpService.create(URL_JSON.USER, data).subscribe(res => {
-      console.log(res);
+      this.doctors.push(res);
     });
   }
 
