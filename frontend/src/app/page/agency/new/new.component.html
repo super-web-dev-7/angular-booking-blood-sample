@@ -1,10 +1,12 @@
-<form [formGroup]="groupForm" class="p-2">
+<div class="p-2">
   <h1>Agentur neu</h1>
 
-  <mat-form-field class="w-100 mt-4">
-    <mat-label>Agenturbezeichnung</mat-label>
-    <input formControlName="name" autocomplete="off" matInput>
-  </mat-form-field>
+  <form [formGroup]="groupForm" class="w-100 d-inline">
+    <mat-form-field class="w-100 mt-4">
+      <mat-label>Agenturbezeichnung</mat-label>
+      <input formControlName="name" autocomplete="off" matInput>
+    </mat-form-field>
+  </form>
 
   <mat-accordion class="position-relative">
     <mat-expansion-panel hideToggle>
@@ -30,8 +32,8 @@
         </button>
       </div>
     </mat-expansion-panel>
-    <button (click)="showAddAdminPopup($event)" *ngIf="!isAddAdminPopup" mat-stroked-button class="add-button"><mat-icon>add</mat-icon></button>
-    <div class="add-admin-popup" *ngIf="isAddAdminPopup">
+    <button (click)="isAddAdminPopup = !isAddAdminPopup" *ngIf="!isAddAdminPopup" mat-stroked-button class="add-button"><mat-icon>add</mat-icon></button>
+    <form [formGroup]="newUserForm" class="add-admin-popup" *ngIf="isAddAdminPopup">
       <div class="position-relative">
         <div class="d-flex avatar pink">
           <div class="round">
@@ -39,17 +41,31 @@
           </div>
           <div class="text-white">Neu</div>
         </div>
-        <button (click)="showAddAdminPopup($event)" *ngIf="isAddAdminPopup" mat-stroked-button class="add-button white-pink"><mat-icon>add</mat-icon></button>
+        <button (click)="showAddAdminPopup()" *ngIf="isAddAdminPopup" mat-stroked-button class="add-button white-pink"><mat-icon>add</mat-icon></button>
       </div>
       <mat-form-field class="w-100 mt-4 input-pink">
-        <mat-label>Vor- und Nachname</mat-label>
-        <input autocomplete="off" matInput>
+        <mat-label>Vor - und Nachname</mat-label>
+        <input autocomplete="off" matInput formControlName="name">
+        <mat-error *ngIf="newUserForm.get('name').hasError('required')">
+          This field is required.
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="w-100 mt-2 input-pink">
         <mat-label>E-Mail-Adresse</mat-label>
-        <input autocomplete="off" matInput>
+        <input autocomplete="off" matInput formControlName="email">
+        <mat-error *ngIf="newUserForm.get('email').hasError('required')">
+          This field is required.
+        </mat-error>
       </mat-form-field>
-    </div>
+      <mat-form-field class="w-100 mt-2 input-pink">
+        <mat-label>Password</mat-label>
+        <input autocomplete="off" matInput formControlName="password">
+        <mat-error *ngIf="newUserForm.get('password').hasError('required')">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+      <button mat-stroked-button class="custom-button" (click)="generatePassword()">Generate Password</button>
+    </form>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -81,4 +97,4 @@
     <button class="custom-button" mat-stroked-button (click)="close()">Abbrechen</button>
     <button class="custom-button primary primary-button" mat-stroked-button (click)="onSubmit()">Neue Agentur anlegen</button>
   </div>
-</form>
+</div>

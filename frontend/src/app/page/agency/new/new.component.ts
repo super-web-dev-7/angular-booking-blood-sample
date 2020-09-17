@@ -17,17 +17,32 @@ export class NewComponent implements OnInit {
   doctors = [];
   groups = [];
   groupForm: FormGroup;
+  newUserForm: FormGroup;
+  newUser = {
+    name: '',
+    email: '',
+    password: ''
+  };
+
   constructor(
     public formBuilder: FormBuilder,
     public httpService: HttpService,
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.groupForm = this.formBuilder.group({
       name: [this.data?.name, Validators.required],
     });
+
+    this.newUserForm = this.formBuilder.group({
+      name: [null, Validators.required],
+      email: [null, Validators.required],
+      password: [null, Validators.required]
+    });
+
     this.httpService.get(URL_JSON.USER + '/get?role=Doctor').subscribe((res: any) => {
       this.doctors = res;
     });
@@ -42,8 +57,35 @@ export class NewComponent implements OnInit {
     return this.groupForm.controls;
   }
 
+  get getUser() {
+    return this.newUserForm.controls;
+  }
+
+  generatePassword = () => {
+    const password = Math.random().toString(36).slice(-8);
+    this.newUserForm.controls.password.setValue(password);
+  }
+
   showAddAdminPopup = () => {
+    if (this.newUserForm.invalid) {
+      return;
+    }
+    if (this.getUser.name.value.split().length < 2) {
+      return;
+    }
     this.isAddAdminPopup = !this.isAddAdminPopup;
+    const data = {
+      firstName: this.getUser.name.value.split(' ')[0],
+      lastName: this.getUser.name.value.split(' ')[1],
+      email: this.getUser.email.value,
+      password: this.getUser.password.value,
+      role: 'Doctor',
+      isActive: true
+    };
+    console.log(data);
+    this.httpService.create(URL_JSON.USER, data).subscribe(res => {
+      console.log(res);
+    });
   }
 
   selectAdmin = (id) => {
