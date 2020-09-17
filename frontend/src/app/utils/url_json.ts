@@ -12,5 +12,6 @@ export const URL_JSON = {
   TEMPLATE: API_URL + 'template',
   PACKAGE: API_URL + 'package',
   DISTRICT: API_URL + 'district',
-  ADDITIONAL_PACKAGE: API_URL + 'additional-package'
+  ADDITIONAL_PACKAGE: API_URL + 'additional-package',
+  AGENCY: API_URL + 'agency'
 };

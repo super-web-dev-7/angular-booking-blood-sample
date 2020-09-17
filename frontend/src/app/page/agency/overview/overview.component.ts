@@ -1,10 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
+
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
+
 import {NewComponent} from '../new/new.component';
+import {HttpService} from '../../../service/http/http.service';
+import {URL_JSON} from '../../../utils/url_json';
 
 @Component({
   selector: 'app-overview',
@@ -14,7 +18,7 @@ import {NewComponent} from '../new/new.component';
 export class OverviewComponent implements OnInit {
 
   displayedColumns: string[] = ['no', 'name', 'doctors', 'workingGroup', 'actions'];
-  dataSource = new MatTableDataSource<any>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<any>([]);
   currentPage = 0;
   pageSize = 5;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -27,9 +31,13 @@ export class OverviewComponent implements OnInit {
     direction: ''
   };
 
+  allAgency: any;
+  filterValue = null;
+
   constructor(
     public router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public httpService: HttpService
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +48,10 @@ export class OverviewComponent implements OnInit {
     if (url[2] === 'new') {
       this.openDialog();
     }
+    this.httpService.get(URL_JSON.AGENCY + '/get').subscribe((res: any) => {
+      this.dataSource.data = res;
+      this.allAgency = res;
+    });
   }
 
   onPaginateChange = ($event: PageEvent) => {
@@ -60,48 +72,53 @@ export class OverviewComponent implements OnInit {
       width: '900px'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       this.router.navigateByUrl('agency/overview');
     });
   }
 
   onSort = (event) => {
     this.orderStatus = event;
+    const allAgency = [...this.allAgency];
+    if (event.active === 'workingGroup') {
+      allAgency.sort((a, b) => {
+        const x = a.working_group.name;
+        const y = b.working_group.name;
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+    }
+    if (event.direction === '') {
+      this.dataSource.data = this.allAgency;
+    } else {
+      this.dataSource.data = allAgency;
+    }
+  }
+
+  filter = () => {
+    this.dataSource.data = this.allAgency.filter(item => {
+      return item.name.includes(this.filterValue) ||
+        item.working_group.name.includes(this.filterValue) ||
+        JSON.stringify(item.doctors).includes(this.filterValue);
+    });
+  }
+
+  edit = (data) => {
+    const dialogRef = this.dialog.open(NewComponent, {
+      width: '900px',
+      data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const index = this.allAgency.findIndex(item => item.id === result.id);
+        this.allAgency[index] = result;
+        this.dataSource.data = this.allAgency;
+      }
+    });
   }
 
 }
-
-const ELEMENT_DATA: any[] = [
-  {
-    id: 1,
-    name: 'Allg. Gesundheits-Check-Up',
-    number: '2548963 - 5',
-    assign: 'Arbeitsgruppe 1 (+2)',
-    price: 12350,
-    status: 'Öffentlich'
-  },
-  {
-    id: 2,
-    name: 'Corona',
-    number: '5452856 - 1',
-    assign: 'Arbeitsgruppe 2',
-    price: 7890,
-    status: 'Intern'
-  },
-  {
-    id: 3,
-    name: 'Corona',
-    number: '5452856 - 1',
-    assign: 'Arbeitsgruppe 2',
-    price: 7890,
-    status: 'Intern'
-  },
-  {
-    id: 4,
-    name: 'Corona',
-    number: '5452856 - 1',
-    assign: 'Arbeitsgruppe 2',
-    price: 7890,
-    status: 'Intern'
-  }
-];

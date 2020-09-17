@@ -34,15 +34,15 @@ export class NewComponent implements OnInit {
     this.httpService.get(URL_JSON.GROUP + '/get').subscribe((res: any) => {
       this.groups = res;
     });
-    this.selectedGroup = this.data ? this.data?.calendar_id : 0;
-    this.selectedDoctors = this.data ? this.data?.admin : [];
+    this.selectedGroup = this.data ? this.data?.group_id : 0;
+    this.selectedDoctors = this.data ? this.data?.doctors_id : [];
   }
 
   get f() {
     return this.groupForm.controls;
   }
 
-  showAddAdminPopup = (event) => {
+  showAddAdminPopup = () => {
     this.isAddAdminPopup = !this.isAddAdminPopup;
   }
 
@@ -68,6 +68,21 @@ export class NewComponent implements OnInit {
     }
     if (!this.selectedDoctors && !this.selectedGroup) {
       return;
+    }
+
+    const data = {
+      name: this.f.name.value,
+      doctors_id: this.selectedDoctors,
+      group_id: this.selectedGroup
+    };
+    if (this.data) {
+      this.httpService.update(URL_JSON.AGENCY + '/update/' + this.data.id, data).subscribe(result => {
+        this.dialogRef.close(result);
+      });
+    } else {
+      this.httpService.create(URL_JSON.AGENCY, data).subscribe(() => {
+        this.dialogRef.close();
+      });
     }
     // const data = {
     //   name: this.f.name.value,

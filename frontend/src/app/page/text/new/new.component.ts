@@ -61,7 +61,6 @@ export class NewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data);
     this.templateForm = this.formBuilder.group({
       name: [this.data?.subject, Validators.required],
       assign: [this.data?.assign, Validators.required],
@@ -98,12 +97,12 @@ export class NewComponent implements OnInit {
       message: this.f.message.value
     };
     if (this.data) {
-      this.httpService.update(URL_JSON.TEMPLATE + '/update/' + this.data.id, data).subscribe(res => {
+      this.httpService.update(URL_JSON.TEMPLATE + '/update/' + this.data.id, data).subscribe(() => {
         const response = Object.assign(data, {id: this.data.id});
         this.dialogRef.close(response);
       });
     } else {
-      this.httpService.create(URL_JSON.TEMPLATE, data).subscribe(res => {
+      this.httpService.create(URL_JSON.TEMPLATE, data).subscribe(() => {
         this.dialogRef.close();
       });
     }

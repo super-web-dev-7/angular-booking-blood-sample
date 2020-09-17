@@ -43,7 +43,6 @@ export class NewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data);
     this.newPackageForm = this.formBuilder.group({
       name: [this.data?.name, Validators.required],
       number: [this.data?.number, Validators.required],
@@ -99,7 +98,7 @@ export class NewComponent implements OnInit {
         this.dialogRef.close(res);
       });
     } else {
-      this.httpService.create(URL_JSON.PACKAGE, newPackageData).subscribe(res => {
+      this.httpService.create(URL_JSON.PACKAGE, newPackageData).subscribe(() => {
         this.dialogRef.close();
       });
     }

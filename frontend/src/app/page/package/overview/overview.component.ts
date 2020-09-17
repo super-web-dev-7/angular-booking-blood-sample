@@ -46,7 +46,6 @@ export class OverviewComponent implements OnInit {
       this.openDialog();
     }
     this.httpService.get(URL_JSON.PACKAGE + '/get').subscribe((res: any) => {
-      console.log(res);
       this.dataSource.data = res;
       this.allPackages = res;
     });
@@ -95,7 +94,6 @@ export class OverviewComponent implements OnInit {
   }
 
   filter = () => {
-    console.log(this.filterValue);
     this.dataSource.data = this.allPackages.filter(item => {
       return item.name.includes(this.filterValue) ||
         item.number.toString().includes(this.filterValue) ||

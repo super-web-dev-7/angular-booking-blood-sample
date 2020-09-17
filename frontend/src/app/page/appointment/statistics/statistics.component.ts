@@ -111,7 +111,6 @@ export class StatisticsComponent implements OnInit {
     for (const item of this.packageData) {
       this.packageTotal += item.value;
     }
-    console.log(this.packageTotal);
   }
 
 }

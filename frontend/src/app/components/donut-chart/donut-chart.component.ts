@@ -43,7 +43,6 @@ export class DonutChartComponent implements OnInit {
     for (let i = 0; i < index; i++) {
       percent += ((this.items[i].value) / this.total);
     }
-    // console.log(index, percent);
     const perimeter = Math.PI * 2 * radius;
     return perimeter * percent;
   }

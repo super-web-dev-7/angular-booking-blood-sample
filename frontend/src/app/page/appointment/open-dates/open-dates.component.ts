@@ -35,7 +35,6 @@ export class OpenDatesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.router.url);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
@@ -72,7 +71,7 @@ export class OpenDatesComponent implements OnInit {
       position: {left: '15%'}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       this.router.navigateByUrl('appointment/open-dates');
     });
   }

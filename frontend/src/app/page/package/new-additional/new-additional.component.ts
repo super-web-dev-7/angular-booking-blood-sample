@@ -42,7 +42,6 @@ export class NewAdditionalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data);
     this.newPackageForm = this.formBuilder.group({
       name: [this.data?.name, Validators.required],
       number: [this.data?.number, Validators.required],
@@ -93,13 +92,12 @@ export class NewAdditionalComponent implements OnInit {
       status: this.selectedStatus,
       content: this.content
     };
-    console.log(newPackageData);
     if (this.data) {
       this.httpService.update(URL_JSON.ADDITIONAL_PACKAGE + '/update/' + this.data.id, newPackageData).subscribe(res => {
         this.dialogRef.close(res);
       });
     } else {
-      this.httpService.create(URL_JSON.ADDITIONAL_PACKAGE, newPackageData).subscribe(res => {
+      this.httpService.create(URL_JSON.ADDITIONAL_PACKAGE, newPackageData).subscribe(() => {
         this.dialogRef.close();
       });
     }

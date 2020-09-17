@@ -7,6 +7,7 @@ import paket from './package';
 import template from './template.model';
 import workingGroup from './working-group.model';
 import additionalPackage from './additional-package';
+import agency from './agency.model';
 
 const sequelize = new Sequelize(config.mysql.database, config.mysql.user, config.mysql.password, {
     host: config.mysql.host,
@@ -25,5 +26,6 @@ db.package = paket(sequelize, Sequelize);
 db.template = template(sequelize, Sequelize);
 db.workingGroup = workingGroup(sequelize, Sequelize);
 db.additionalPackage = additionalPackage(sequelize, Sequelize);
+db.agency = agency(sequelize, Sequelize);
 
 export default db;

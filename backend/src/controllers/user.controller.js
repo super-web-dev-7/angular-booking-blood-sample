@@ -30,7 +30,6 @@ exports.get = async (req, res) => {
 
 exports.delete = async (req, res) => {
     const user = await User.findByPk(req.params.id);
-    console.log(user);
     if (user.role === 'Nurse') {
         const calendar = await Calendar.findAll({where: {nurse: req.params.id}});
         if (calendar.length > 0) {
