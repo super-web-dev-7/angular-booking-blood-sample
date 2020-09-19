@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    return sequelize.define('additional-package', {
+    return sequelize.define('additional_package', {
         name: {
             type: Sequelize.STRING,
             unique: true
