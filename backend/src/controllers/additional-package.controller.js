@@ -1,7 +1,6 @@
 import db from '../models';
 
 const AdditionalPackage = db.additionalPackage;
-const Package = db.package;
 
 exports.create = (req, res) => {
     const newPackage = req.body;
@@ -15,9 +14,7 @@ exports.create = (req, res) => {
 };
 
 exports.get = async (req, res) => {
-    Package.hasMany(AdditionalPackage, {foreignKey: 'package_id'});
-    AdditionalPackage.belongsTo(Package, {foreignKey: 'package_id'});
-    const allPackage = await AdditionalPackage.findAll({where: {}, include: [Package]});
+    const allPackage = await AdditionalPackage.findAll({where: {}});
     res.status(200).json(allPackage);
 }
 
@@ -31,9 +28,7 @@ exports.update = async (req, res) => {
     const data = req.body;
     const id = req.params.id;
     AdditionalPackage.update(data, {returning: true, where: {id}}).then(() => {
-        Package.hasMany(AdditionalPackage, {foreignKey: 'package_id'});
-        AdditionalPackage.belongsTo(Package, {foreignKey: 'package_id'});
-        AdditionalPackage.findByPk(id, {include: [Package]}).then(updatedPackage => {
+        AdditionalPackage.findByPk(id).then(updatedPackage => {
             res.json(updatedPackage);
         });
     });

@@ -12,11 +12,9 @@ import {URL_JSON} from '../../../utils/url_json';
 })
 export class NewAdditionalComponent implements OnInit {
 
-  selectedPackage = null;
   selectedStatus = null;
   isActive = false;
   content = null;
-  packages = [];
   statuses = [
     {
       name: 'Inaktiv',
@@ -49,21 +47,12 @@ export class NewAdditionalComponent implements OnInit {
       specialPrice: [this.data?.special_price]
     });
     if (this.data) {
-      this.selectedPackage = this.data.package_id;
       this.selectedStatus = this.data.status;
       if (this.data.special_price) {
         this.isActive = true;
       }
       this.content = this.data.content;
     }
-
-    this.httpService.get(URL_JSON.PACKAGE + '/get').subscribe((res: any) => {
-      this.packages = res;
-    });
-  }
-
-  selectPackage = (id) => {
-    this.selectedPackage = id;
   }
 
   selectStatus = (id) => {
@@ -88,7 +77,6 @@ export class NewAdditionalComponent implements OnInit {
       price: this.f.price.value,
       special_price: this.isActive ? this.f.specialPrice.value : null,
       isActive: this.isActive,
-      package_id: this.selectedPackage,
       status: this.selectedStatus,
       content: this.content
     };

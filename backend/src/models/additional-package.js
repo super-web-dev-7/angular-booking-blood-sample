@@ -13,9 +13,6 @@ module.exports = (sequelize, Sequelize) => {
         special_price: {
             type: Sequelize.INTEGER
         },
-        package_id: {
-            type: Sequelize.INTEGER
-        },
         status: {
             type: Sequelize.ENUM('Inactive', 'Public', 'Intern')
         }

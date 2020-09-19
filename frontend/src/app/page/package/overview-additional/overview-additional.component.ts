@@ -15,7 +15,7 @@ import {NewAdditionalComponent} from '../new-additional/new-additional.component
 })
 export class OverviewAdditionalComponent implements OnInit {
 
-  displayedColumns: string[] = ['no', 'name', 'number', 'assign', 'price', 'status', 'actions'];
+  displayedColumns: string[] = ['no', 'name', 'number', 'price', 'status', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
   currentPage = 0;
   pageSize = 5;
@@ -61,7 +61,7 @@ export class OverviewAdditionalComponent implements OnInit {
   }
 
   deleteItem = () => {
-    this.httpService.delete(URL_JSON.PACKAGE + '/delete/' + this.selectedDeleteItem).subscribe(() => {
+    this.httpService.delete(URL_JSON.ADDITIONAL_PACKAGE + '/delete/' + this.selectedDeleteItem).subscribe(() => {
       const index = this.allPackages.findIndex(item => item.id === this.selectedDeleteItem);
       this.allPackages.splice(index, 1);
       this.dataSource.data = this.allPackages;
@@ -99,30 +99,12 @@ export class OverviewAdditionalComponent implements OnInit {
         item.number.toString().includes(this.filterValue) ||
         item.price.toString().includes(this.filterValue) ||
         JSON.stringify(item.special_price).includes(this.filterValue) ||
-        item.package.name.includes(this.filterValue) ||
         item.status.includes(this.filterValue);
     });
   }
 
   onSort = (event) => {
     this.orderStatus = event;
-    const packages = [...this.allPackages];
-    if (event.active === 'assign') {
-      packages.sort((a, b) => {
-        const x = a.package.name;
-        const y = b.package.name;
-        if (event.direction === 'asc') {
-          return x.localeCompare(y, 'de');
-        } else if (event.direction === 'desc') {
-          return y.localeCompare(x, 'de');
-        }
-      });
-    }
-    if (event.direction === '') {
-      this.dataSource.data = this.allPackages;
-    } else {
-      this.dataSource.data = packages;
-    }
   }
 
 }
