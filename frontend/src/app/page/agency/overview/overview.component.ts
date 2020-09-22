@@ -5,10 +5,12 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 import {NewComponent} from '../new/new.component';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
+
 
 @Component({
   selector: 'app-overview',
@@ -37,6 +39,7 @@ export class OverviewComponent implements OnInit {
   constructor(
     public router: Router,
     public dialog: MatDialog,
+    public snackBar: MatSnackBar,
     public httpService: HttpService
   ) { }
 
@@ -49,6 +52,7 @@ export class OverviewComponent implements OnInit {
       this.openDialog();
     }
     this.httpService.get(URL_JSON.AGENCY + '/get').subscribe((res: any) => {
+      console.log(res)
       this.dataSource.data = res;
       this.allAgency = res;
     });
@@ -64,7 +68,17 @@ export class OverviewComponent implements OnInit {
   }
 
   deleteItem = () => {
-    this.selectedDeleteItem = null;
+    this.httpService.delete(URL_JSON.AGENCY + '/delete/' + this.selectedDeleteItem).subscribe(res => {
+      const dataSource = this.dataSource.data;
+      const removedIndex = dataSource.findIndex(item => {
+        return item.id === this.selectedDeleteItem;
+      });
+      dataSource.splice(removedIndex, 1);
+      this.dataSource.data = dataSource;
+    }, error => {
+      this.snackBar.open('You can\'t delete this item.', 'Warning', {duration: 3000});
+      this.selectedDeleteItem = null;
+    });
   }
 
   openDialog = () => {

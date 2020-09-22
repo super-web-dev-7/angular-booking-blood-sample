@@ -1,9 +1,9 @@
 import db from '../models';
-import bcrypt from "bcrypt";
 
 const Calendar = db.calendar;
 const District = db.district;
 const User = db.user;
+const Group = db.workingGroup;
 
 exports.create = (req, res) => {
     const newCalendar = req.body;
@@ -57,7 +57,14 @@ exports.update = async (req, res) => {
     });
 }
 
-exports.delete = (req, res) => {
+exports.delete = async (req, res) => {
+    const allGroups = await Group.findAll({where: {calendar_id: req.params.id}});
+    console.log(allGroups.length);
+    if (allGroups.length > 0) {
+        res.status(400).json({message: 'This item can\'t delete.', status: 400});
+        return;
+    }
+
     Calendar.destroy({where: {id: req.params.id}}).then(result => {
         res.status(204).json({});
     })

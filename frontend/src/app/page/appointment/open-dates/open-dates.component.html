@@ -2,10 +2,10 @@
 <div class="main-container mt-5">
   <div class="table-toolbar">
     <div>
-      <button class="custom-button mr-3" mat-stroked-button>Alle</button>
-      <button class="custom-button mr-3" mat-stroked-button>Agenture 1</button>
-      <button class="custom-button mr-3" mat-stroked-button>Agenture 2</button>
-      <button class="custom-button" mat-stroked-button>Agenture 3</button>
+      <button class="custom-button mr-3" [ngClass]="{'selected': selectedButton === 0}" (click)="selectButton(0)" mat-stroked-button>Alle</button>
+      <button class="custom-button mr-3" [ngClass]="{'selected': selectedButton === 1}" (click)="selectButton(1)" mat-stroked-button>Agenture 1</button>
+      <button class="custom-button mr-3" [ngClass]="{'selected': selectedButton === 2}" (click)="selectButton(2)" mat-stroked-button>Agenture 2</button>
+      <button class="custom-button" [ngClass]="{'selected': selectedButton === 3}" (click)="selectButton(3)" mat-stroked-button>Agenture 3</button>
     </div>
     <div class="d-flex">
       <div class="search-field-container">
@@ -76,7 +76,7 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: right"> Aktionen </th>
             <td mat-cell *matCellDef="let element" style="text-align: right" class="position-relative text-center">
-              <button mat-icon-button aria-label="more">
+              <button mat-icon-button aria-label="more" (click)="detail(element)">
                 <mat-icon>search</mat-icon>
               </button>
             </td>

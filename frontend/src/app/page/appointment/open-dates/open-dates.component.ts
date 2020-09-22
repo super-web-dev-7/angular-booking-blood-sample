@@ -21,6 +21,7 @@ export class OpenDatesComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   selectedDeleteItem: number = null;
+  selectedButton = 0;
 
   orderStatus = {
     active: '',
@@ -57,6 +58,10 @@ export class OpenDatesComponent implements OnInit {
     this.pageSize = $event.pageSize;
   }
 
+  selectButton = (id) => {
+    this.selectedButton = id;
+  }
+
   delete = (id) => {
     this.selectedDeleteItem = id;
   }
@@ -78,6 +83,10 @@ export class OpenDatesComponent implements OnInit {
 
   onSort = (event) => {
     this.orderStatus = event;
+  }
+
+  detail = element => {
+    console.log(element);
   }
 
 }

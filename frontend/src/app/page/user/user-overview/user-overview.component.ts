@@ -4,10 +4,13 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 import {NewUserComponent} from '../new-user/new-user.component';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 import {AuthService} from '../../../service/auth/auth.service';
+
 
 @Component({
   selector: 'app-user-overview',
@@ -35,6 +38,7 @@ export class UserOverviewComponent implements OnInit {
   constructor(
     public router: Router,
     public dialog: MatDialog,
+    public snackBar: MatSnackBar,
     public httpService: HttpService,
     public authService: AuthService
   ) { }
@@ -85,6 +89,9 @@ export class UserOverviewComponent implements OnInit {
       });
       dataSource.splice(removedIndex, 1);
       this.dataSource.data = dataSource;
+    }, error => {
+      this.snackBar.open('You can\'t delete this item.', 'Warning', {duration: 3000});
+      this.selectedDeleteItem = null;
     });
   }
 

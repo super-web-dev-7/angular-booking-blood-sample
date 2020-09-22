@@ -13,9 +13,9 @@ import {AuthService} from '../../../service/auth/auth.service';
 })
 export class NewUserComponent implements OnInit {
 
-  selectedAllocation = null;
+  // selectedAllocation = null;
   selectedRole = null;
-  allocations = [];
+  // allocations = [];
   roles = [
     {id: 1, name: 'Superadmin'},
     {id: 2, name: 'AG-Admin'},
@@ -40,6 +40,7 @@ export class NewUserComponent implements OnInit {
     this.currentUser = this.authService.currentUserValue;
     if (this.currentUser.role === 'AG-Admin') {
       this.roles.splice(0, 2);
+      this.roles.push({id: 5, name: 'Patient'});
     }
     this.userForm = this.formBuilder.group({
       firstName: [this.data?.firstName, Validators.required],
@@ -49,24 +50,24 @@ export class NewUserComponent implements OnInit {
       password: [null, Validators.required],
       isActive: [this.data ? this.data?.isActive : false, Validators.required]
     });
-    this.selectedAllocation = this.data?.working_group ? this.data.working_group.id : 0;
+    // this.selectedAllocation = this.data?.working_group ? this.data.working_group.id : 0;
     this.selectedRole = this.data ? this.roles.findIndex(item => item.name === this.data.role) + 1 : null;
-    this.httpService.get(URL_JSON.GROUP + '/get').subscribe((res: any) => {
-      this.allocations = res;
-      this.allocations.unshift({
-        id: 0,
-        name: 'Keine'
-      });
-    });
+    // this.httpService.get(URL_JSON.GROUP + '/get').subscribe((res: any) => {
+    //   this.allocations = res;
+    //   this.allocations.unshift({
+    //     id: 0,
+    //     name: 'Keine'
+    //   });
+    // });
   }
 
   get f() {
     return this.userForm.controls;
   }
 
-  selectAllocation = (id) => {
-    this.selectedAllocation = id;
-  }
+  // selectAllocation = (id) => {
+  //   this.selectedAllocation = id;
+  // }
 
   selectRole = (id) => {
     this.selectedRole = id;
@@ -77,11 +78,19 @@ export class NewUserComponent implements OnInit {
     this.userForm.controls.password.setValue(password);
   }
 
+  getRoleName = selectedRole => {
+    const index = this.roles.findIndex(item => item.id === selectedRole);
+    return this.roles[index].name;
+  }
+
   createUser = () => {
     if (this.userForm.invalid) {
       return;
     }
-    if ((!this.selectedAllocation && this.selectedAllocation !== 0) || !this.selectedRole) {
+    // if (!this.selectedAllocation) {
+    //   this.selectedAllocation = 0;
+    // }
+    if (!this.selectedRole) {
       return;
     }
     const data = {
@@ -91,8 +100,8 @@ export class NewUserComponent implements OnInit {
       phoneNumber: this.f.phoneNumber.value,
       password: this.f.password.value,
       isActive: this.f.isActive.value,
-      role: this.roles[this.selectedRole - 1].name,
-      allocation: this.selectedAllocation
+      role: this.getRoleName(this.selectedRole),
+      // allocation: this.selectedAllocation
     };
     if (this.data) {
       this.httpService.update(URL_JSON.USER + '/update/' + this.data.id, data).subscribe(res => {

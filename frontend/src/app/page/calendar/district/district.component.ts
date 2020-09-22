@@ -7,6 +7,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {NewDistrictComponent} from '../new-district/new-district.component';
 import {URL_JSON} from '../../../utils/url_json';
 import {HttpService} from '../../../service/http/http.service';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-district',
@@ -33,6 +34,7 @@ export class DistrictComponent implements OnInit {
   constructor(
     public router: Router,
     public dialog: MatDialog,
+    public snackBar: MatSnackBar,
     public httpService: HttpService
   ) {
   }
@@ -78,6 +80,10 @@ export class DistrictComponent implements OnInit {
       });
       dataSource.splice(removedIndex, 1);
       this.dataSource.data = dataSource;
+    }, error => {
+      console.log(error);
+      this.snackBar.open('You can\'t delete this item.', 'Warning', {duration: 3000});
+      this.selectedDeleteItem = null;
     });
   }
 

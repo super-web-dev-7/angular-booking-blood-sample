@@ -4,9 +4,12 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 import {NewCalendarComponent} from '../new-calendar/new-calendar.component';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
+
 
 @Component({
   selector: 'app-calendar',
@@ -33,6 +36,7 @@ export class CalendarComponent implements OnInit {
   constructor(
     public router: Router,
     public dialog: MatDialog,
+    public snackBar: MatSnackBar,
     public httpService: HttpService
   ) { }
 
@@ -88,6 +92,9 @@ export class CalendarComponent implements OnInit {
       });
       dataSource.splice(removedIndex, 1);
       this.dataSource.data = dataSource;
+    }, error => {
+      this.snackBar.open('You can\'t delete this item.', 'Warning', {duration: 3000});
+      this.selectedDeleteItem = null;
     });
   }
 

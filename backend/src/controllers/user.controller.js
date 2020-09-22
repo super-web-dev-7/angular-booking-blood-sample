@@ -5,6 +5,7 @@ const User = db.user;
 const WorkingGroup = db.workingGroup;
 const saltRounds = 10;
 const Calendar = db.calendar;
+const Agency = db.agency;
 
 exports.create = (req, res) => {
     const newUser = req.body;
@@ -33,20 +34,31 @@ exports.delete = async (req, res) => {
     if (user.role === 'Nurse') {
         const calendar = await Calendar.findAll({where: {nurse: req.params.id}});
         if (calendar.length > 0) {
-            res.status(400).json({error: 'Calendar has this user'});
+            res.status(400).json({error: 'Calendar has this user'})
+            return;
         }
     }
     if (user.role === 'AG-Admin') {
-        const groups = await Calendar.findAll({where: {}});
+        const groups = await WorkingGroup.findAll({where: {}});
         for (const group of groups) {
-            if (JSON.parse(group.admin).includes(req.params.id)) {
-
+            if (JSON.parse(group.admin).includes(parseInt(req.params.id))) {
+                res.status(400).json({error: 'Working Group has this user'});
+                return;
             }
         }
     }
-    // User.destroy({where: {id: req.params.id}}).then(result => {
-    //     res.status(204).json({});
-    // })
+    if (user.role === 'Doctor') {
+        const agency = await Agency.findAll({where: {}});
+        for (const item of agency) {
+            if (JSON.parse(item.doctors_id).includes(parseInt(req.params.id))) {
+                res.status(400).json({error: 'Agency has this user'});
+                return;
+            }
+        }
+    }
+    User.destroy({where: {id: req.params.id}}).then(result => {
+        res.status(204).json({});
+    })
 }
 
 exports.update = async (req, res) => {

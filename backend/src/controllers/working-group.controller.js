@@ -3,6 +3,8 @@ import db from '../models';
 const WorkingGroup = db.workingGroup;
 const Calendar = db.calendar;
 const User = db.user;
+const Package = db.package;
+const Agency = db.agency;
 
 exports.create = (req, res) => {
     const newGroup = req.body;
@@ -32,7 +34,22 @@ exports.get = async (req, res) => {
     res.status(200).json(response)
 }
 
-exports.delete = (req, res) => {
+exports.delete = async (req, res) => {
+    const allPackage = await Package.findAll({where: {group_id: req.params.id}});
+    if (allPackage.length > 0) {
+        res.status(400).json({message: 'This item can\'t delete.', status: 400});
+        return;
+    }
+    const allUser = await User.findAll({where: {allocation: req.params.id}});
+    if (allUser.length > 0) {
+        res.status(400).json({message: 'This item can\'t delete.', status: 400});
+        return;
+    }
+    const allAgency = await Agency.findAll({where: {group_id: req.params.id}});
+    if (allAgency.length > 0) {
+        res.status(400).json({message: 'This item can\'t delete.', status: 400});
+        return;
+    }
     WorkingGroup.destroy({where: {id: req.params.id}}).then(result => {
         res.status(204).json({});
     });

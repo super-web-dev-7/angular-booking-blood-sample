@@ -36,9 +36,9 @@ exports.get = async (req, res) => {
 }
 
 exports.delete = async (req, res) => {
-    // AdditionalPackage.destroy({where: {id: req.params.id}}).then(() => {
-    //     res.status(204).json({});
-    // })
+    Agency.destroy({where: {id: req.params.id}}).then(() => {
+        res.status(204).json({});
+    })
 }
 
 exports.update = async (req, res) => {
