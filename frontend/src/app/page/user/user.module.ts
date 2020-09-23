@@ -7,11 +7,13 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {UserRoutingModule} from './user-routing.module';
 import {NewUserComponent} from './new-user/new-user.component';
 import {MaterialModule} from '../../material/material.module';
+import { NewPatientComponent } from './new-patient/new-patient.component';
 
 
 @NgModule({
   declarations: [
-    NewUserComponent
+    NewUserComponent,
+    NewPatientComponent
   ],
   imports: [
     CommonModule,

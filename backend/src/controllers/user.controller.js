@@ -6,6 +6,7 @@ const WorkingGroup = db.workingGroup;
 const saltRounds = 10;
 const Calendar = db.calendar;
 const Agency = db.agency;
+const Patient = db.patient;
 
 exports.create = (req, res) => {
     const newUser = req.body;
@@ -22,10 +23,46 @@ exports.create = (req, res) => {
     })
 };
 
+exports.createPatient = (req, res) => {
+    const newUser = {
+        email: req.body.email,
+        password: req.body.password,
+        role: 'Patient',
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        phoneNumber: req.body.phoneNumber,
+        isActive: true
+    }
+    bcrypt.hash(newUser.password, saltRounds, (err, hash) => {
+        newUser.password = hash;
+        User.create(newUser).then(data => {
+            const newPatientData = {
+                user_id: data.id,
+                salutation: req.body.salutation,
+                street: req.body.street,
+                age: req.body.age,
+                gender: req.body.gender,
+                plz: req.body.plz,
+                ort: req.body.ort,
+                differentPlace: req.body.differentPlace,
+                customerStore: req.body.customerStore,
+                alternative: req.body.alternative,
+                sendSMS: req.body.sendSMS
+            };
+            Patient.create(newPatientData).then(patientData => {
+                console.log(patientData);
+            })
+            res.send(data);
+        }).catch(err => {
+            res.status(400).send({
+                message: err.errors[0].message || 'Some error occurred.'
+            })
+        })
+    })
+};
+
 exports.get = async (req, res) => {
-    WorkingGroup.hasMany(User, {foreignKey: 'allocation'});
-    User.belongsTo(WorkingGroup, {foreignKey: 'allocation'});
-    const allUsers = await User.findAll({where: req.query, include: [WorkingGroup]});
+    const allUsers = await User.findAll({where: req.query});
     res.status(200).json(allUsers);
 }
 

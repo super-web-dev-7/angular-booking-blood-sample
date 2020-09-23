@@ -5,7 +5,7 @@ import {FormsModule} from '@angular/forms';
 
 import {UserOverviewComponent} from './user-overview/user-overview.component';
 import {MaterialModule} from '../../material/material.module';
-import {SharedModule} from "../../shared/shared.module";
+import {SharedModule} from '../../shared/shared.module';
 
 const routes: Routes = [
   {
@@ -14,6 +14,10 @@ const routes: Routes = [
   },
   {
     path: 'new',
+    component: UserOverviewComponent
+  },
+  {
+    path: 'new-patient',
     component: UserOverviewComponent
   }
 ];

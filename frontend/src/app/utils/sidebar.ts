@@ -35,6 +35,10 @@ export const Sidebar = [
       {
         name: 'Neuer Benutzer',
         link: '/new'
+      },
+      {
+        name: 'Neuer Patient',
+        link: '/new-patient'
       }
     ]
   },
@@ -158,6 +162,10 @@ export const AG_Sidebar = [
       {
         name: 'Neuer Benutzer',
         link: '/new'
+      },
+      {
+        name: 'Neuer Patient',
+        link: '/new-patient'
       }
     ]
   },

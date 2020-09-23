@@ -20,16 +20,20 @@ exports.create = (req, res) => {
 exports.get = async (req, res) => {
     Calendar.hasMany(WorkingGroup, {foreignKey: 'calendar_id'});
     WorkingGroup.belongsTo(Calendar, {foreignKey: 'calendar_id'});
-    const allWorkingGroup = await WorkingGroup.findAll({where: {}, include: [Calendar]});
+    User.hasMany(WorkingGroup, {foreignKey: 'nurse'});
+    WorkingGroup.belongsTo(User, {foreignKey: 'nurse'});
+    Agency.hasMany(WorkingGroup, {foreignKey: 'agency_id'});
+    WorkingGroup.belongsTo(Agency, {foreignKey: 'agency_id'});
+    const allWorkingGroup = await WorkingGroup.findAll({where: {}, include: [Calendar, User, Agency]});
     const response = [];
     for (let workingGroup of allWorkingGroup) {
-        const users = [];
+        const admins = [];
         workingGroup.admin = JSON.parse(workingGroup.admin);
         for (const item of workingGroup.admin) {
             const user = await User.findByPk(item);
-            users.push(user);
+            admins.push(user);
         }
-        response.push({...workingGroup.dataValues, users})
+        response.push({...workingGroup.dataValues, admins})
     }
     res.status(200).json(response)
 }

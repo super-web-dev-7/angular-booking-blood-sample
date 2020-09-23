@@ -39,9 +39,9 @@
               <app-order-icon columnName="group_admin" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element">
-              {{element.users[0].firstName}} {{element.users[0].lastName}}
-              <span *ngIf="element.users.length > 1">
-                (+{{element.users.length - 1}})
+              {{element.admins[0].firstName}} {{element.admins[0].lastName}}
+              <span *ngIf="element.admins.length > 1">
+                (+{{element.admins.length - 1}})
               </span>
             </td>
           </ng-container>
@@ -53,6 +53,39 @@
             </th>
             <td mat-cell *matCellDef="let element">
               {{element.calendar.name}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="nurse">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Schwester
+              <app-order-icon columnName="nurse" [orderStatus]="orderStatus"></app-order-icon>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.user.firstName}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="interval">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Terminvergabeintervall
+              <app-order-icon columnName="interval" [orderStatus]="orderStatus"></app-order-icon>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.duration_appointment}} Min ({{element.rest_time}} Min Ruhezeit),
+              {{getFloorValue(element.working_time_from / 2)}}:{{element.working_time_from % 2 === 0 ? '00' : '30'}}
+              -
+              {{getFloorValue(element.working_time_until / 2)}}:{{element.working_time_until % 2 === 0 ? '00' : '30'}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="agency">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Agentur
+              <app-order-icon columnName="agency" [orderStatus]="orderStatus"></app-order-icon>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.agency.name}}
             </td>
           </ng-container>
 

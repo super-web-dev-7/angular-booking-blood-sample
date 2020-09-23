@@ -10,6 +10,7 @@ import {NewUserComponent} from '../new-user/new-user.component';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 import {AuthService} from '../../../service/auth/auth.service';
+import {NewPatientComponent} from '../new-patient/new-patient.component';
 
 
 @Component({
@@ -19,7 +20,7 @@ import {AuthService} from '../../../service/auth/auth.service';
 })
 export class UserOverviewComponent implements OnInit {
 
-  displayedColumns: string[] = ['no', 'firstName', 'lastName', 'email', 'phoneNumber', 'allocation', 'role', 'active', 'actions'];
+  displayedColumns: string[] = ['no', 'firstName', 'lastName', 'email', 'phoneNumber', 'role', 'active', 'actions'];
   dataSource = new MatTableDataSource<any>();
   currentPage = 0;
   pageSize = 5;
@@ -41,7 +42,8 @@ export class UserOverviewComponent implements OnInit {
     public snackBar: MatSnackBar,
     public httpService: HttpService,
     public authService: AuthService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
@@ -50,18 +52,19 @@ export class UserOverviewComponent implements OnInit {
     const url = this.router.url.split('/');
     if (url[2] === 'new') {
       this.openDialog();
-    } else {
-      let query;
-      if (this.currentUser.role === 'Superadmin') {
-        query = '';
-      } else if (this.currentUser.role === 'AG-Admin') {
-        query = 'role=Nurse&role=Doctor';
-      }
-      this.httpService.get(URL_JSON.USER + '/get?' + query).subscribe((res: any) => {
-        this.dataSource.data = res;
-        this.allUser = res;
-      });
+    } else if (url[2] === 'new-patient') {
+      this.openNewPatientDialog();
     }
+    let query;
+    if (this.currentUser.role === 'Superadmin') {
+      query = '';
+    } else if (this.currentUser.role === 'AG-Admin') {
+      query = 'role=Nurse&role=Doctor&role=Patient';
+    }
+    this.httpService.get(URL_JSON.USER + '/get?' + query).subscribe((res: any) => {
+      this.dataSource.data = res;
+      this.allUser = res;
+    });
   }
 
   onPaginateChange = ($event: PageEvent) => {
@@ -125,6 +128,15 @@ export class UserOverviewComponent implements OnInit {
     });
   }
 
+  openNewPatientDialog = () => {
+    const dialogRef = this.dialog.open(NewPatientComponent, {
+      width: '1000px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.router.navigateByUrl('user/overview');
+    });
+  }
+
   setActive = (event, id) => {
     const data = {
       isActive: event.checked
@@ -147,7 +159,6 @@ export class UserOverviewComponent implements OnInit {
           return x > y ? 1 : -1;
         }
       });
-    } else if (event.active === 'allocation') {
     } else {
       users.sort((a, b) => {
         const x = a[event.active];

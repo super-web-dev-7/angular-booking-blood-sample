@@ -40,7 +40,6 @@ export class NewUserComponent implements OnInit {
     this.currentUser = this.authService.currentUserValue;
     if (this.currentUser.role === 'AG-Admin') {
       this.roles.splice(0, 2);
-      this.roles.push({id: 5, name: 'Patient'});
     }
     this.userForm = this.formBuilder.group({
       firstName: [this.data?.firstName, Validators.required],

@@ -2,7 +2,6 @@ import db from '../models';
 
 const Calendar = db.calendar;
 const District = db.district;
-const User = db.user;
 const Group = db.workingGroup;
 
 exports.create = (req, res) => {
@@ -17,10 +16,7 @@ exports.create = (req, res) => {
 };
 
 exports.get = async (req, res) => {
-    User.hasMany(Calendar, {foreignKey: 'nurse'})
-    Calendar.belongsTo(User, {foreignKey: 'nurse'});
-
-    const allCalendar = await Calendar.findAll({where: req.query, include: [User]})
+    const allCalendar = await Calendar.findAll({where: req.query})
     const response = [];
     for (let calendar of allCalendar) {
         const districts = [];
@@ -38,10 +34,7 @@ exports.update = async (req, res) => {
     const data = req.body;
     const id = req.params.id;
     Calendar.update(data, {returning: true, where: {id}}).then((rowUpdated) => {
-        User.hasMany(Calendar, {foreignKey: 'nurse'})
-        Calendar.belongsTo(User, {foreignKey: 'nurse'});
-
-        Calendar.findAll({where: {id}, include: [User]}).then(async (allCalendar) => {
+        Calendar.findAll({where: {id}}).then(async (allCalendar) => {
             const response = [];
             for (let calendar of allCalendar) {
                 const districts = [];
@@ -59,7 +52,6 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
     const allGroups = await Group.findAll({where: {calendar_id: req.params.id}});
-    console.log(allGroups.length);
     if (allGroups.length > 0) {
         res.status(400).json({message: 'This item can\'t delete.', status: 400});
         return;
