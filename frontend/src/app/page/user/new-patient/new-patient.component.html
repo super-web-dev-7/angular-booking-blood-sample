@@ -5,16 +5,16 @@
       <mat-form-field class="mt-4">
         <mat-label>E-Mail-Adresse</mat-label>
         <input formControlName="email" autocomplete="off" matInput>
-        <mat-icon *ngIf="f.email.touched && !f.email.errors?.email" style="color: greenyellow" matSuffix>done</mat-icon>
-        <mat-icon *ngIf="f.email.touched && f.email.errors?.email" style="color: red" matSuffix>close</mat-icon>
+        <mat-icon *ngIf="f.email.touched && !f.email.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+        <mat-icon *ngIf="f.email.touched && f.email.errors" style="color: red" matSuffix>close</mat-icon>
       </mat-form-field>
     </div>
     <div class="col-md-6">
       <mat-form-field class="mt-4">
         <mat-label>Handynummer</mat-label>
         <input type="text" formControlName="phoneNumber" autocomplete="off" matInput>
-        <mat-icon *ngIf="f.phoneNumber.touched && !f.phoneNumber.errors?.pattern" style="color: greenyellow" matSuffix>done</mat-icon>
-        <mat-icon *ngIf="f.phoneNumber.touched && f.phoneNumber.errors?.pattern" style="color: red" matSuffix>close</mat-icon>
+        <mat-icon *ngIf="f.phoneNumber.touched && !f.phoneNumber.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+        <mat-icon *ngIf="f.phoneNumber.touched && f.phoneNumber.errors" style="color: red" matSuffix>close</mat-icon>
       </mat-form-field>
     </div>
   </div>
@@ -93,13 +93,13 @@
       <mat-checkbox formControlName="differentPlace">Abweichender Abnahmeort</mat-checkbox>
     </div>
     <div class="col-md-3">
-      <mat-checkbox formControlName="customerStore">Abweichender Abnahmeort</mat-checkbox>
+      <mat-checkbox formControlName="customerStore">Kunde hinterlegt Zahlungsmittel</mat-checkbox>
     </div>
     <div class="col-md-3">
-      <mat-checkbox formControlName="alternative">Abweichender Abnahmeort</mat-checkbox>
+      <mat-checkbox formControlName="alternative">Alternatives Zahlungsmittel</mat-checkbox>
     </div>
     <div class="col-md-3">
-      <mat-checkbox formControlName="sendSMS">Abweichender Abnahmeort</mat-checkbox>
+      <mat-checkbox formControlName="sendSMS">Code via SMS senden</mat-checkbox>
     </div>
   </div>
   <div class="mt-5">

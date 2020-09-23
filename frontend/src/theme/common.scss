@@ -294,3 +294,7 @@ table thead tr th {
   -ms-user-select: none;
   user-select: none;
 }
+
+.mat-slide-toggle.mat-disabled {
+  opacity: 0.8!important;
+}

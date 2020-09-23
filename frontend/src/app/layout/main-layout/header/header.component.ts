@@ -1,4 +1,6 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Router} from '@angular/router';
+
 import {AuthService} from '../../../service/auth/auth.service';
 
 @Component({
@@ -13,7 +15,8 @@ export class HeaderComponent implements OnInit {
   currentUser: any;
 
   constructor(
-    public authService: AuthService
+    public authService: AuthService,
+    public router: Router
   ) {
     this.currentUser = this.authService.currentUserValue;
   }
@@ -23,5 +26,10 @@ export class HeaderComponent implements OnInit {
 
   openSidebar = () => {
     this.setOpen.emit(true);
+  }
+
+  logout = () => {
+    this.authService.logout();
+    this.router.navigateByUrl('/login');
   }
 }

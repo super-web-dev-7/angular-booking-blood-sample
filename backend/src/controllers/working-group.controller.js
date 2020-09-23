@@ -24,11 +24,16 @@ exports.get = async (req, res) => {
     WorkingGroup.belongsTo(User, {foreignKey: 'nurse'});
     Agency.hasMany(WorkingGroup, {foreignKey: 'agency_id'});
     WorkingGroup.belongsTo(Agency, {foreignKey: 'agency_id'});
+    const id = parseInt(req.query.admin);
+    console.log(req.query);
     const allWorkingGroup = await WorkingGroup.findAll({where: {}, include: [Calendar, User, Agency]});
     const response = [];
     for (let workingGroup of allWorkingGroup) {
         const admins = [];
         workingGroup.admin = JSON.parse(workingGroup.admin);
+        if (id && !workingGroup.admin.includes(id)) {
+            continue;
+        }
         for (const item of workingGroup.admin) {
             const user = await User.findByPk(item);
             admins.push(user);
@@ -41,11 +46,6 @@ exports.get = async (req, res) => {
 exports.delete = async (req, res) => {
     const allPackage = await Package.findAll({where: {group_id: req.params.id}});
     if (allPackage.length > 0) {
-        res.status(400).json({message: 'This item can\'t delete.', status: 400});
-        return;
-    }
-    const allUser = await User.findAll({where: {allocation: req.params.id}});
-    if (allUser.length > 0) {
         res.status(400).json({message: 'This item can\'t delete.', status: 400});
         return;
     }

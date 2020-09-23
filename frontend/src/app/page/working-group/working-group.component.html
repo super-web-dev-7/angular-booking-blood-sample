@@ -39,9 +39,12 @@
               <app-order-icon columnName="group_admin" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element">
-              {{element.admins[0].firstName}} {{element.admins[0].lastName}}
-              <span *ngIf="element.admins.length > 1">
-                (+{{element.admins.length - 1}})
+<!--              {{element.admins[0].firstName}} {{element.admins[0].lastName}}-->
+<!--              <span *ngIf="element.admins.length > 1">-->
+<!--                (+{{element.admins.length - 1}})-->
+<!--              </span>-->
+              <span *ngFor="let admin of element.admins; let i = index;">
+                {{admin.firstName}} {{admin.lastName}}{{i === element.admins.length - 1 ? '' : ',&nbsp;'}}
               </span>
             </td>
           </ng-container>
@@ -96,7 +99,7 @@
             </th>
             <td mat-cell *matCellDef="let element">
               <div class="d-flex">
-                <mat-slide-toggle (change)="setActive($event, element.id)"
+                <mat-slide-toggle [disabled]="currentUser.role !== 'Superadmin'" (change)="setActive($event, element.id)"
                                   [checked]="element.isActive"></mat-slide-toggle>
               </div>
             </td>

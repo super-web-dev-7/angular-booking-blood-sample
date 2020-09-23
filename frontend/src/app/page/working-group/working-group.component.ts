@@ -52,10 +52,18 @@ export class WorkingGroupComponent implements OnInit {
     if (url[2] === 'new') {
       this.openDialog();
     }
-    this.httpService.get(URL_JSON.GROUP + '/get').subscribe((res: any) => {
-      this.dataSource.data = res;
-      this.allGroup = res;
-    });
+    if (this.currentUser.role === 'Superadmin') {
+      this.httpService.get(URL_JSON.GROUP + '/get').subscribe((res: any) => {
+        this.dataSource.data = res;
+        this.allGroup = res;
+      });
+    } else if (this.currentUser.role === 'AG-Admin') {
+      this.httpService.get(URL_JSON.GROUP + '/get?admin=' + this.currentUser.id).subscribe((res: any) => {
+        this.dataSource.data = res;
+        this.allGroup = res;
+      });
+    }
+
   }
 
   onPaginateChange = ($event: PageEvent) => {

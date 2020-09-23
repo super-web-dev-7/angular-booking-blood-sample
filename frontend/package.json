@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build-test": "ng build --configuration test"
+    "build-test": "ng build --configuration test",
+    "build-customer": "ng build --configuration customer"
   },
   "private": true,
   "dependencies": {

@@ -10,7 +10,7 @@
       <img src="/assets/images/avatar.png" alt="user-avatar">
       <span *ngIf="!isMobile" class="ml-2 text-capitalize">{{currentUser.role}}</span>
     </div>
-    <button *ngIf="!isMobile" class="ml-3" mat-icon-button aria-label="more">
+    <button *ngIf="!isMobile" (click)="logout()" class="ml-3" mat-icon-button aria-label="more">
       <mat-icon>more_horiz</mat-icon>
     </button>
   </div>

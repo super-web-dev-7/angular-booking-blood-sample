@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {UserOverviewComponent} from './user-overview/user-overview.component';
 import {MaterialModule} from '../../material/material.module';
 import {SharedModule} from '../../shared/shared.module';
+import {RoleGuard} from '../../guard/role.guard';
 
 const routes: Routes = [
   {
@@ -18,7 +19,11 @@ const routes: Routes = [
   },
   {
     path: 'new-patient',
-    component: UserOverviewComponent
+    component: UserOverviewComponent,
+    canActivate: [RoleGuard],
+    data: {
+      userRole: ['AG-Admin']
+    }
   }
 ];
 
