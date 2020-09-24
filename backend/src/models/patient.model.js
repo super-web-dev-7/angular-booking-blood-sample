@@ -4,7 +4,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER
         },
         salutation: {
-            type: Sequelize.STRING,
+            type: Sequelize.ENUM('Herr', 'Frau')
         },
         street: {
             type: Sequelize.STRING
@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER
         },
         gender: {
-            type: Sequelize.ENUM('Male', 'Female')
+            type: Sequelize.ENUM('Male', 'Female', 'Divers')
         },
         plz: {
             type: Sequelize.STRING

@@ -38,7 +38,11 @@
     <div class="col-md-4">
       <mat-form-field class="mt-4">
         <mat-label>Anrede</mat-label>
-        <input formControlName="salutation" autocomplete="off" matInput>
+<!--        <input formControlName="salutation" autocomplete="off" matInput>-->
+        <mat-select formControlName="salutation">
+          <mat-option value="Herr">Herr</mat-option>
+          <mat-option value="Frau">Frau</mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
     <div class="col-md-4">
@@ -78,13 +82,17 @@
     <div class="col-md-6">
       <mat-form-field class="mt-4">
         <mat-label>Alter</mat-label>
-        <input formControlName="age" autocomplete="off" matInput>
+        <input formControlName="age" autocomplete="off" type="number" matInput>
       </mat-form-field>
     </div>
     <div class="col-md-6">
       <mat-form-field class="mt-4">
         <mat-label>Geschlecht</mat-label>
-        <input formControlName="gender" autocomplete="off" matInput>
+        <mat-select formControlName="gender">
+          <mat-option value="Female">Weiblich</mat-option>
+          <mat-option value="Male">Männlich</mat-option>
+          <mat-option value="Divers">Divers</mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
   </div>

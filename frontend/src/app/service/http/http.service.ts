@@ -12,11 +12,6 @@ export class HttpService {
     public http: HttpClient
   ) { }
 
-  // dashboard
-  getDashboardInfo = () => {
-    return this.http.get(`${URL_JSON.DASHBOARD}/get_all`);
-  }
-
   create = (url, newData) => {
     return this.http.post(`${url}/create`, newData);
   }

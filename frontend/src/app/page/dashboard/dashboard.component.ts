@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {HttpService} from '../../service/http/http.service';
+import {URL_JSON} from '../../utils/url_json';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,6 +10,7 @@ import {HttpService} from '../../service/http/http.service';
 })
 export class DashboardComponent implements OnInit {
   isMobile = false;
+  data: any;
 
   constructor(
     breakpointObserver: BreakpointObserver,
@@ -21,7 +23,8 @@ export class DashboardComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.httpRequest.getDashboardInfo().subscribe(res => {
+    this.httpRequest.get(URL_JSON.BASE + 'dashboard/superadmin').subscribe(res => {
+      this.data = res;
     });
   }
 

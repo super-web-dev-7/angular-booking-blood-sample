@@ -14,4 +14,5 @@ export const URL_JSON = {
   DISTRICT: API_URL + 'district',
   ADDITIONAL_PACKAGE: API_URL + 'additional-package',
   AGENCY: API_URL + 'agency',
+  BASE: API_URL
 };

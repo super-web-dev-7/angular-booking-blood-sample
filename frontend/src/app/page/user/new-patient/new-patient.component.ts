@@ -15,6 +15,11 @@ export class NewPatientComponent implements OnInit {
 
   patientForm: FormGroup;
   phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$';
+  genders = [
+    {label: 'Female', value: 'Weiblich'},
+    {label: 'Male', value: 'Männlich'},
+    {label: 'Divers', value: 'Divers'},
+  ];
 
   constructor(
     public formBuilder: FormBuilder,
@@ -82,9 +87,9 @@ export class NewPatientComponent implements OnInit {
       alternative: this.f.alternative.value,
       sendSMS: this.f.sendSMS.value
     };
-    console.log(data);
     this.httpService.create(URL_JSON.USER + '/patient', data).subscribe(res => {
       console.log(res);
+      this.dialogRef.close(res);
     });
   }
 

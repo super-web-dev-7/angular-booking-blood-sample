@@ -13,10 +13,14 @@
     <mat-form-field class="mt-4">
       <mat-label>E-Mail-Adresse</mat-label>
       <input formControlName="email" autocomplete="off" matInput>
+      <mat-icon *ngIf="f.email.touched && !f.email.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+      <mat-icon *ngIf="f.email.touched && f.email.errors" style="color: red" matSuffix>close</mat-icon>
     </mat-form-field>
     <mat-form-field class="mt-4">
       <mat-label>Mobilnummer</mat-label>
       <input formControlName="phoneNumber" autocomplete="off" matInput>
+      <mat-icon *ngIf="f.phoneNumber.touched && !f.phoneNumber.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+      <mat-icon *ngIf="f.phoneNumber.touched && f.phoneNumber.errors" style="color: red" matSuffix>close</mat-icon>
     </mat-form-field>
   </div>
 
