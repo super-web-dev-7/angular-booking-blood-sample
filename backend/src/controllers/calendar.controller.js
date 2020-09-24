@@ -3,6 +3,7 @@ import db from '../models';
 const Calendar = db.calendar;
 const District = db.district;
 const Group = db.workingGroup;
+const User = db.user;
 
 exports.create = (req, res) => {
     const newCalendar = req.body;
@@ -16,7 +17,11 @@ exports.create = (req, res) => {
 };
 
 exports.get = async (req, res) => {
-    const allCalendar = await Calendar.findAll({where: req.query})
+    User.hasMany(Calendar, {foreignKey: 'nurse'})
+    Calendar.belongsTo(User, {foreignKey: 'nurse'});
+
+    const allCalendar = await Calendar.findAll({where: req.query, include: [User]})
+
     const response = [];
     for (let calendar of allCalendar) {
         const districts = [];
@@ -34,7 +39,11 @@ exports.update = async (req, res) => {
     const data = req.body;
     const id = req.params.id;
     Calendar.update(data, {returning: true, where: {id}}).then((rowUpdated) => {
-        Calendar.findAll({where: {id}}).then(async (allCalendar) => {
+        User.hasMany(Calendar, {foreignKey: 'nurse'})
+        Calendar.belongsTo(User, {foreignKey: 'nurse'});
+
+        Calendar.findAll({where: {id}, include: [User]}).then(async (allCalendar) => {
+
             const response = [];
             for (let calendar of allCalendar) {
                 const districts = [];

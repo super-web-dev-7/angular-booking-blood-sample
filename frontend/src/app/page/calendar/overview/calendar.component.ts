@@ -18,7 +18,7 @@ import {URL_JSON} from '../../../utils/url_json';
 })
 export class CalendarComponent implements OnInit {
 
-  displayedColumns: string[] = ['no', 'calendarName', 'district', 'actions'];
+  displayedColumns: string[] = ['no', 'calendarName', 'district', 'nurse', 'interval', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
   currentPage = 0;
   pageSize = 5;
@@ -59,6 +59,11 @@ export class CalendarComponent implements OnInit {
     });
   }
 
+  getFloorValue = (value) => {
+    return Math.floor(value);
+  }
+
+
   onPaginateChange = ($event: PageEvent) => {
     this.currentPage = $event.pageIndex;
     this.pageSize = $event.pageSize;
@@ -67,7 +72,13 @@ export class CalendarComponent implements OnInit {
   filter = () => {
     this.dataSource.data = this.allCalendar.filter(item => {
       return item.name.includes(this.filterValue)
-        || JSON.stringify(item.district.zipcode).includes(this.filterValue);
+        || JSON.stringify(item.district.zipcode).includes(this.filterValue)
+        || item.user.firstName.includes(this.filterValue)
+        || item.working_time_from.includes(this.filterValue)
+        || item.working_time_until.includes(this.filterValue)
+        || item.duration_appointment.includes(this.filterValue)
+        || item.rest_time.includes(this.filterValue);
+
     });
   }
 
@@ -110,6 +121,21 @@ export class CalendarComponent implements OnInit {
           return x.localeCompare(y, 'de');
         } else if (event.direction === 'desc') {
           return y.localeCompare(x, 'de');
+        }
+      });
+      if (event.direction === '') {
+        this.dataSource.data = this.allCalendar;
+      } else {
+        this.dataSource.data = calendars;
+      }
+    } else if (event.active === 'interval') {
+      calendars.sort((a, b) => {
+        const x = a.duration_appointment;
+        const y = b.duration_appointment;
+        if (event.direction === 'asc') {
+          return x > y ? 1 : -1;
+        } else if (event.direction === 'desc') {
+          return x < y ? 1 : -1;
         }
       });
       if (event.direction === '') {

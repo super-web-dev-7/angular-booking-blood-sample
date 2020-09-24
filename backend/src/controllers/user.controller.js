@@ -69,9 +69,9 @@ exports.get = async (req, res) => {
 exports.delete = async (req, res) => {
     const user = await User.findByPk(req.params.id);
     if (user.role === 'Nurse') {
-        const group = await WorkingGroup.findAll({where: {nurse: req.params.id}});
-        if (group.length > 0) {
-            res.status(400).json({error: 'Group has this user'})
+        const calendar = await Calendar.findAll({where: {nurse: req.params.id}});
+        if (calendar.length > 0) {
+            res.status(400).json({error: 'Calendar has this user'})
             return;
         }
     }
@@ -80,10 +80,6 @@ exports.delete = async (req, res) => {
         for (const group of groups) {
             if (JSON.parse(group.admin).includes(parseInt(req.params.id))) {
                 res.status(400).json({error: 'Working Group has this user.'});
-                return;
-            }
-            if (group.nurse === req.params.id) {
-                res.status(400).json({error: 'Working Group has this user.'})
                 return;
             }
         }

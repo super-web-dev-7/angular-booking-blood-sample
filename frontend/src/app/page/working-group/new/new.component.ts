@@ -20,9 +20,6 @@ export class NewComponent implements OnInit {
   admins = [];
   calendars = [];
   groupForm: FormGroup;
-  values = newArray(48);
-  nurses = [];
-  selectedNurse = null;
   allAgency = [];
   selectedAgency = null;
 
@@ -36,11 +33,7 @@ export class NewComponent implements OnInit {
   ngOnInit(): void {
     this.groupForm = this.formBuilder.group({
       name: [this.data?.name, Validators.required],
-      isActive: [this.data ? this.data?.isActive : false, Validators.required],
-      duration_appointment: [this.data?.duration_appointment, Validators.required],
-      rest_time: [this.data?.rest_time, Validators.required],
-      working_time_until: [this.data?.working_time_until, Validators.required],
-      working_time_from: [this.data?.working_time_from, Validators.required]
+      isActive: [this.data ? this.data?.isActive : false, Validators.required]
     });
     this.httpService.get(URL_JSON.USER + '/get?role=AG-Admin').subscribe((res: any) => {
       this.admins = res;
@@ -48,25 +41,17 @@ export class NewComponent implements OnInit {
     this.httpService.get(URL_JSON.CALENDAR + '/get').subscribe((res: any) => {
       this.calendars = res;
     });
-    this.httpService.get(URL_JSON.USER + '/get?role=Nurse').subscribe((res: any) => {
-      this.nurses = res;
-    });
     this.httpService.get(URL_JSON.AGENCY + '/get').subscribe((res: any) => {
       this.allAgency = res;
     });
 
     this.selectedCalendar = this.data ? this.data?.calendar_id : 0;
     this.selectedAdmin = this.data ? this.data?.admin : [];
-    this.selectedNurse = this.data?.nurse;
     this.selectedAgency = this.data?.agency;
   }
 
   get f() {
     return this.groupForm.controls;
-  }
-
-  getFloor = (value) => {
-    return Math.floor(value);
   }
 
   selectAgency = id => {
@@ -75,10 +60,6 @@ export class NewComponent implements OnInit {
 
   showAddAdminPopup = (event) => {
     this.isAddAdminPopup = !this.isAddAdminPopup;
-  }
-
-  selectNurse = (id) => {
-    this.selectedNurse = id;
   }
 
   selectAdmin = (id) => {
@@ -101,19 +82,14 @@ export class NewComponent implements OnInit {
     if (this.groupForm.invalid) {
       return;
     }
-    if (!this.selectedAdmin || !this.selectedCalendar || !this.selectedNurse) {
+    if (!this.selectedAdmin || !this.selectedCalendar) {
       return;
     }
     const data = {
       name: this.f.name.value,
       isActive: this.f.isActive.value,
-      duration_appointment: this.f.duration_appointment.value,
-      rest_time: this.f.rest_time.value,
-      working_time_from: this.f.working_time_from.value,
-      working_time_until: this.f.working_time_until.value,
       admin: JSON.stringify(this.selectedAdmin),
       calendar_id: this.selectedCalendar,
-      nurse: this.selectedNurse,
       agency_id: this.selectedAgency
     };
     if (this.data) {

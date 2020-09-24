@@ -19,7 +19,7 @@ import {AuthService} from '../../service/auth/auth.service';
 })
 export class WorkingGroupComponent implements OnInit {
 
-  displayedColumns: string[] = ['no', 'name', 'group_admin', 'calendar_resource', 'nurse', 'interval', 'agency', 'active', 'actions'];
+  displayedColumns: string[] = ['no', 'name', 'group_admin', 'calendar_resource', 'agency', 'active', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
   currentPage = 0;
   pageSize = 5;
@@ -80,10 +80,6 @@ export class WorkingGroupComponent implements OnInit {
       return item.name.includes(this.filterValue)
         || item.calendar.name.includes(this.filterValue)
         || (item.user.firstName + ' ' + item.user.lastName).includes(this.filterValue)
-        || item.working_time_from.includes(this.filterValue)
-        || item.working_time_until.includes(this.filterValue)
-        || item.duration_appointment.includes(this.filterValue)
-        || item.rest_time.includes(this.filterValue)
         || item.agency.name.includes(this.filterValue);
     });
   }
@@ -180,16 +176,6 @@ export class WorkingGroupComponent implements OnInit {
           return y.localeCompare(x, 'de');
         }
       });
-    } else if (event.active === 'nurse') {
-      groups.sort((a, b) => {
-        const x = a.user.firstName;
-        const y = b.user.firstName;
-        if (event.direction === 'asc') {
-          return x.localeCompare(y, 'de');
-        } else if (event.direction === 'desc') {
-          return y.localeCompare(x, 'de');
-        }
-      });
     } else if (event.active === 'agency') {
       groups.sort((a, b) => {
         const x = a.agency.name;
@@ -200,21 +186,6 @@ export class WorkingGroupComponent implements OnInit {
           return y.localeCompare(x, 'de');
         }
       });
-    } else if (event.active === 'interval') {
-      groups.sort((a, b) => {
-        const x = a.duration_appointment;
-        const y = b.duration_appointment;
-        if (event.direction === 'asc') {
-          return x > y ? 1 : -1;
-        } else if (event.direction === 'desc') {
-          return x < y ? 1 : -1;
-        }
-      });
-      if (event.direction === '') {
-        this.dataSource.data = this.allGroup;
-      } else {
-        this.dataSource.data = groups;
-      }
     }
     this.dataSource.data = groups;
   }

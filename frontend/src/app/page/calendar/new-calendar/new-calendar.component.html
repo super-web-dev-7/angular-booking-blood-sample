@@ -32,6 +32,69 @@
         </button>
       </div>
     </mat-expansion-panel>
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="d-flex avatar green">
+            <div class="round">
+              <mat-icon>group</mat-icon>
+            </div>
+            <div>Schwester</div>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="d-flex flex-wrap expansion-panel-container">
+        <button
+          type="button"
+          mat-stroked-button
+          *ngFor="let nurse of nurses"
+          [ngClass]="{'primary': selectedNurse===nurse.id}"
+          (click)="selectNurse(nurse.id)">
+          {{nurse.firstName}}
+        </button>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="d-flex avatar yellow">
+            <div class="d-flex align-items-center">
+              <div class="round">
+                <mat-icon>stop_circle</mat-icon>
+              </div>
+              <div>Terminvergabeintervall</div>
+            </div>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="d-flex flex-wrap w-100">
+        <mat-form-field class="mt-4 width-50 mr-3">
+          <mat-label>Dauer der Termine (Min.)</mat-label>
+          <input type="number" autocomplete="off" matInput formControlName="duration_appointment">
+        </mat-form-field>
+        <mat-form-field class="mt-4 width-50">
+          <mat-label>Ruhezeit (Min.)</mat-label>
+          <input type="number" autocomplete="off" matInput formControlName="rest_time">
+        </mat-form-field>
+        <mat-form-field class="mt-4 width-50 mr-3">
+          <mat-label>Arbeitszeit von</mat-label>
+          <mat-select formControlName="working_time_from">
+            <mat-option *ngFor="let value of values; let index = index" [value]="index">
+              {{getFloor(index / 2)}} : {{index % 2 === 0 ? '00' : '30'}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="mt-4 width-50">
+          <mat-label>Arbeitszeit bis</mat-label>
+          <mat-select formControlName="working_time_until">
+            <mat-option *ngFor="let value of values; let index = index" [value]="index">
+              {{getFloor(index / 2)}} : {{index % 2 === 0 ? '00' : '30'}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-expansion-panel>
+
   </mat-accordion>
   <div class="d-flex flex-column mt-4">
 

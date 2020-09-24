@@ -59,29 +59,6 @@
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="nurse">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Schwester
-              <app-order-icon columnName="nurse" [orderStatus]="orderStatus"></app-order-icon>
-            </th>
-            <td mat-cell *matCellDef="let element">
-              {{element.user.firstName}}
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="interval">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Terminvergabeintervall
-              <app-order-icon columnName="interval" [orderStatus]="orderStatus"></app-order-icon>
-            </th>
-            <td mat-cell *matCellDef="let element">
-              {{element.duration_appointment}} Min ({{element.rest_time}} Min Ruhezeit),
-              {{getFloorValue(element.working_time_from / 2)}}:{{element.working_time_from % 2 === 0 ? '00' : '30'}}
-              -
-              {{getFloorValue(element.working_time_until / 2)}}:{{element.working_time_until % 2 === 0 ? '00' : '30'}}
-            </td>
-          </ng-container>
-
           <ng-container matColumnDef="agency">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Agentur
