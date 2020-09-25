@@ -4,10 +4,12 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 import {NewDistrictComponent} from '../new-district/new-district.component';
 import {URL_JSON} from '../../../utils/url_json';
 import {HttpService} from '../../../service/http/http.service';
-import {MatSnackBar} from "@angular/material/snack-bar";
+
 
 @Component({
   selector: 'app-district',
@@ -16,7 +18,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class DistrictComponent implements OnInit {
 
-  displayedColumns: string[] = ['no', 'name', 'zip-code', 'active', 'actions'];
+  displayedColumns: string[] = ['no', 'name', 'model', 'active', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
   currentPage = 0;
   pageSize = 5;
@@ -48,9 +50,6 @@ export class DistrictComponent implements OnInit {
       this.openDialog();
     }
     this.httpService.get(URL_JSON.DISTRICT + '/get').subscribe((res: any) => {
-      for (const item of res) {
-        item.zipcode = JSON.parse(item.zipcode);
-      }
       this.dataSource.data = res;
       this.allDistrict = res;
     });
@@ -64,7 +63,7 @@ export class DistrictComponent implements OnInit {
   filter = () => {
     this.dataSource.data = this.allDistrict.filter(item => {
       return item.name.includes(this.filterValue)
-        || JSON.stringify(item.zipcode).includes(this.filterValue);
+        || item.district_model.name.includes(this.filterValue);
     });
   }
 
@@ -117,7 +116,7 @@ export class DistrictComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        result.zipcode = JSON.parse(result.zipcode);
+        // result.zipcode = JSON.parse(result.zipcode);
         const index = this.allDistrict.findIndex(item => item.id === result.id);
         const district = this.allDistrict[index];
         this.allDistrict[index] = {...district, ...result};
@@ -139,10 +138,10 @@ export class DistrictComponent implements OnInit {
           return x > y ? 1 : -1;
         }
       });
-    } else if (event.active === 'zip-code') {
+    } else if (event.active === 'model') {
       districts.sort((a, b) => {
-        const x = JSON.stringify(a.zipcode);
-        const y = JSON.stringify(b.zipcode);
+        const x = a.district_model.name;
+        const y = b.district_model.name;
         if (event.direction === 'desc') {
           return x < y ? 1 : -1;
         } else if (event.direction === 'asc') {

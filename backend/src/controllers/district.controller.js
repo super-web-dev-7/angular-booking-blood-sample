@@ -2,6 +2,7 @@ import db from '../models';
 
 const District = db.district;
 const Calendar = db.calendar;
+const DistrictModel = db.districtModel;
 
 exports.create = (req, res) => {
     const newDistrict = req.body;
@@ -15,7 +16,9 @@ exports.create = (req, res) => {
 };
 
 exports.get = async (req, res) => {
-    const allDistrict = await District.findAll({where: {}});
+    DistrictModel.hasMany(District, {foreignKey: 'model'});
+    District.belongsTo(DistrictModel, {foreignKey: 'model'});
+    const allDistrict = await District.findAll({where: {}, include: [DistrictModel]});
     res.status(200).json(allDistrict);
 }
 
@@ -38,7 +41,19 @@ exports.delete = async (req, res) => {
 exports.update = async (req, res) => {
     const data = req.body;
     const id = req.params.id;
-    District.update(data, {returning: true, where: {id}}).then((rowsUpdated) => {
-        res.json(rowsUpdated);
+    District.update(data, {returning: true, where: {id}}).then(async (rowsUpdated) => {
+        // res.json(rowsUpdated);
+        DistrictModel.hasMany(District, {foreignKey: 'model'});
+        District.belongsTo(DistrictModel, {foreignKey: 'model'});
+        const updatedDistrict = await District.findByPk(id, {include: [DistrictModel]})
+        res.json(updatedDistrict);
     });
+}
+
+exports.getModel = async (req, res) => {
+    const allModels = await DistrictModel.findAll({where: {}});
+    for (let model of allModels) {
+        model.zipcode = JSON.parse(model.zipcode);
+    }
+    res.status(200).json(allModels);
 }

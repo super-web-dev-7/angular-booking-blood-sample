@@ -6,29 +6,39 @@
       <mat-label>Bezirksname</mat-label>
       <input autocomplete="off" formControlName="name" matInput>
     </mat-form-field>
-    <div class="w-100">
-      <mat-form-field class="width-50 mt-4 mr-3">
-        <mat-label>PLZ-Bereich von</mat-label>
-        <input autocomplete="off" formControlName="from" matInput>
-      </mat-form-field>
-      <mat-form-field class="width-50 mt-4">
-        <mat-label>PLZ-Bereich bis</mat-label>
-        <input autocomplete="off" formControlName="to" matInput>
-      </mat-form-field>
-    </div>
-    <div class="w-100" *ngFor="let item of additionalZipCodeCount">
-      <mat-form-field class="width-50 mt-4 mr-3">
-        <mat-label>PLZ-Bereich von</mat-label>
-        <input autocomplete="off" matInput [defaultValue]="additionalZipCode[item].from" (change)="onChangeValue($event, item, 0)">
-      </mat-form-field>
-      <mat-form-field class="width-50 mt-4">
-        <mat-label>PLZ-Bereich bis</mat-label>
-        <input autocomplete="off" matInput [defaultValue]="additionalZipCode[item].to" (change)="onChangeValue($event, item, 1)">
-      </mat-form-field>
-    </div>
-    <button type="button" (click)="addZipCode()" mat-stroked-button class="add-button">
-      <mat-icon>add</mat-icon>
-    </button>
+    <mat-form-field class="w-100 mt-4">
+      <mat-select formControlName="model">
+        <mat-option>
+          <ngx-mat-select-search [formControl]="districtSearchControl"></ngx-mat-select-search>
+        </mat-option>
+        <mat-option *ngFor="let model of allStaticDistrict" [value]="model.id">
+          {{model.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+<!--    <div class="w-100">-->
+<!--      <mat-form-field class="width-50 mt-4 mr-3">-->
+<!--        <mat-label>PLZ-Bereich von</mat-label>-->
+<!--        <input autocomplete="off" formControlName="from" matInput>-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field class="width-50 mt-4">-->
+<!--        <mat-label>PLZ-Bereich bis</mat-label>-->
+<!--        <input autocomplete="off" formControlName="to" matInput>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--    <div class="w-100" *ngFor="let item of additionalZipCodeCount">-->
+<!--      <mat-form-field class="width-50 mt-4 mr-3">-->
+<!--        <mat-label>PLZ-Bereich von</mat-label>-->
+<!--        <input autocomplete="off" matInput [defaultValue]="additionalZipCode[item].from" (change)="onChangeValue($event, item, 0)">-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field class="width-50 mt-4">-->
+<!--        <mat-label>PLZ-Bereich bis</mat-label>-->
+<!--        <input autocomplete="off" matInput [defaultValue]="additionalZipCode[item].to" (change)="onChangeValue($event, item, 1)">-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+<!--    <button type="button" (click)="addZipCode()" mat-stroked-button class="add-button">-->
+<!--      <mat-icon>add</mat-icon>-->
+<!--    </button>-->
   </div>
 
   <div class="d-flex avatar yellow justify-content-between">
