@@ -30,7 +30,7 @@
               Bezirk
             </th>
             <td mat-cell *matCellDef="let element">
-              {{element.districts[0].name}} ( {{element.districts[0].zipcode[0].from}} - {{element.districts[0].zipcode[0].to}})
+              {{element.districts[0].name}}
               {{element.districts.length > 1 ? '(+' + (element.districts.length - 1) + ')' : ''}}
             </td>
           </ng-container>

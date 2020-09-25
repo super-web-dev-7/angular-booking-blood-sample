@@ -49,11 +49,6 @@ export class CalendarComponent implements OnInit {
       this.openDialog();
     }
     this.httpService.get(URL_JSON.CALENDAR + '/get').subscribe((res: any) => {
-      for (const item of res) {
-        for (const district of item.districts) {
-          district.zipcode = JSON.parse(district.zipcode);
-        }
-      }
       this.dataSource.data = res;
       this.allCalendar = res;
     });
@@ -63,7 +58,6 @@ export class CalendarComponent implements OnInit {
     return Math.floor(value);
   }
 
-
   onPaginateChange = ($event: PageEvent) => {
     this.currentPage = $event.pageIndex;
     this.pageSize = $event.pageSize;
@@ -72,13 +66,12 @@ export class CalendarComponent implements OnInit {
   filter = () => {
     this.dataSource.data = this.allCalendar.filter(item => {
       return item.name.includes(this.filterValue)
-        || JSON.stringify(item.district.zipcode).includes(this.filterValue)
+        || JSON.stringify(item.districts).includes(this.filterValue)
         || item.user.firstName.includes(this.filterValue)
-        || item.working_time_from.includes(this.filterValue)
-        || item.working_time_until.includes(this.filterValue)
-        || item.duration_appointment.includes(this.filterValue)
-        || item.rest_time.includes(this.filterValue);
-
+        || item.working_time_from.toString().includes(this.filterValue)
+        || item.working_time_until.toString().includes(this.filterValue)
+        || item.duration_appointment.toString().includes(this.filterValue)
+        || item.rest_time.toString().includes(this.filterValue);
     });
   }
 
@@ -168,9 +161,6 @@ export class CalendarComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        for (const district of result.districts) {
-          district.zipcode = JSON.parse(district.zipcode);
-        }
         const index = this.allCalendar.findIndex(item => item.id === result.id);
         const calendar = this.allCalendar[index];
         this.allCalendar[index] = {...calendar, ...result};
