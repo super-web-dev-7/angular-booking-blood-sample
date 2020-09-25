@@ -7,6 +7,8 @@ const jwt = () => {
             // public routes that don't require authentication
             '/api/auth/login',
             '/api/auth/register',
+            '/api/test/district/insert',
+            '/api/test/ping'
         ]
     });
 };

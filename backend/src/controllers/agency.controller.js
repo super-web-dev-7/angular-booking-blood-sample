@@ -18,9 +18,9 @@ exports.create = (req, res) => {
 };
 
 exports.get = async (req, res) => {
-    WorkingGroup.hasMany(Agency, {foreignKey: 'group_id'});
-    Agency.belongsTo(WorkingGroup, {foreignKey: 'group_id'});
-    const allAgency = await Agency.findAll({where: {}, include: [WorkingGroup]});
+    // WorkingGroup.hasMany(Agency, {foreignKey: 'group_id'});
+    // Agency.belongsTo(WorkingGroup, {foreignKey: 'group_id'});
+    const allAgency = await Agency.findAll({where: {}});
     const response = [];
     for (const agency of allAgency) {
         let doctors;
@@ -46,9 +46,9 @@ exports.update = async (req, res) => {
     data.doctors_id = JSON.stringify(data.doctors_id);
     const id = req.params.id;
     Agency.update(data, {returning: true, where: {id}}).then(() => {
-        WorkingGroup.hasMany(Agency, {foreignKey: 'group_id'});
-        Agency.belongsTo(WorkingGroup, {foreignKey: 'group_id'});
-        Agency.findByPk(id, {include: [WorkingGroup]}).then(async updatedAgency => {
+        // WorkingGroup.hasMany(Agency, {foreignKey: 'group_id'});
+        // Agency.belongsTo(WorkingGroup, {foreignKey: 'group_id'});
+        Agency.findByPk(id).then(async updatedAgency => {
             let doctors;
             doctors = [];
             updatedAgency.doctors_id = JSON.parse(updatedAgency.doctors_id);
@@ -59,11 +59,4 @@ exports.update = async (req, res) => {
             res.status(200).json({...updatedAgency.dataValues, doctors});
         })
     })
-    // AdditionalPackage.update(data, {returning: true, where: {id}}).then(() => {
-    //     Package.hasMany(AdditionalPackage, {foreignKey: 'package_id'});
-    //     AdditionalPackage.belongsTo(Package, {foreignKey: 'package_id'});
-    //     AdditionalPackage.findByPk(id, {include: [Package]}).then(updatedPackage => {
-    //         res.json(updatedPackage);
-    //     });
-    // });
 }

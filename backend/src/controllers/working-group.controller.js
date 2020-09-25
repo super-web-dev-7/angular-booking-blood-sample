@@ -47,11 +47,11 @@ exports.delete = async (req, res) => {
         res.status(400).json({message: 'This item can\'t delete.', status: 400});
         return;
     }
-    const allAgency = await Agency.findAll({where: {group_id: req.params.id}});
-    if (allAgency.length > 0) {
-        res.status(400).json({message: 'This item can\'t delete.', status: 400});
-        return;
-    }
+    // const allAgency = await Agency.findAll({where: {group_id: req.params.id}});
+    // if (allAgency.length > 0) {
+    //     res.status(400).json({message: 'This item can\'t delete.', status: 400});
+    //     return;
+    // }
     WorkingGroup.destroy({where: {id: req.params.id}}).then(result => {
         res.status(204).json({});
     });

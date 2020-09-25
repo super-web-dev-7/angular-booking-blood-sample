@@ -1,7 +1,7 @@
 <div class="p-2">
   <h1>Agentur neu</h1>
 
-  <form [formGroup]="groupForm" class="w-100 d-inline">
+  <form [formGroup]="agencyForm" class="w-100 d-inline">
     <mat-form-field class="w-100 mt-4">
       <mat-label>Agenturbezeichnung</mat-label>
       <input formControlName="name" autocomplete="off" matInput>
@@ -72,28 +72,28 @@
       </mat-form-field>
       <button mat-stroked-button class="custom-button" (click)="generatePassword()">Generate Password</button>
     </form>
-    <mat-expansion-panel hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <div class="d-flex avatar green">
-            <div class="round">
-              <mat-icon>group</mat-icon>
-            </div>
-            <div>Arbeitsgruppe</div>
-          </div>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="d-flex flex-wrap calendar-source-container">
-        <button
-          type="button"
-          mat-stroked-button
-          *ngFor="let group of groups"
-          [ngClass]="{'primary': selectedGroup===group.id}"
-          (click)="selectCalendar(group.id)">
-          {{group.name}} <br> {{group.range}}
-        </button>
-      </div>
-    </mat-expansion-panel>
+<!--    <mat-expansion-panel hideToggle>-->
+<!--      <mat-expansion-panel-header>-->
+<!--        <mat-panel-title>-->
+<!--          <div class="d-flex avatar green">-->
+<!--            <div class="round">-->
+<!--              <mat-icon>group</mat-icon>-->
+<!--            </div>-->
+<!--            <div>Arbeitsgruppe</div>-->
+<!--          </div>-->
+<!--        </mat-panel-title>-->
+<!--      </mat-expansion-panel-header>-->
+<!--      <div class="d-flex flex-wrap calendar-source-container">-->
+<!--        <button-->
+<!--          type="button"-->
+<!--          mat-stroked-button-->
+<!--          *ngFor="let group of groups"-->
+<!--          [ngClass]="{'primary': selectedGroup===group.id}"-->
+<!--          (click)="selectCalendar(group.id)">-->
+<!--          {{group.name}} <br> {{group.range}}-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </mat-expansion-panel>-->
   </mat-accordion>
   <div class="d-flex flex-column mt-4">
 

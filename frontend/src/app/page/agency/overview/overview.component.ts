@@ -19,7 +19,7 @@ import {URL_JSON} from '../../../utils/url_json';
 })
 export class OverviewComponent implements OnInit {
 
-  displayedColumns: string[] = ['no', 'name', 'doctors', 'workingGroup', 'actions'];
+  displayedColumns: string[] = ['no', 'name', 'doctors', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
   currentPage = 0;
   pageSize = 5;
