@@ -59,7 +59,7 @@ export class NewAdditionalComponent implements OnInit {
     this.selectedStatus = id;
   }
 
-  get f() {
+  get f(): any {
     return this.newPackageForm.controls;
   }
 

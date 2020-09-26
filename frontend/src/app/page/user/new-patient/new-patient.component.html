@@ -13,7 +13,8 @@
       <mat-form-field class="mt-4">
         <mat-label>Handynummer</mat-label>
         <input type="text" formControlName="phoneNumber" autocomplete="off" matInput>
-        <mat-icon *ngIf="f.phoneNumber.touched && !f.phoneNumber.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+        <mat-icon *ngIf="f.phoneNumber.touched && !f.phoneNumber.errors" style="color: greenyellow" matSuffix>done
+        </mat-icon>
         <mat-icon *ngIf="f.phoneNumber.touched && f.phoneNumber.errors" style="color: red" matSuffix>close</mat-icon>
       </mat-form-field>
     </div>
@@ -31,14 +32,16 @@
         <input formControlName="confirmPassword" autocomplete="off" matInput>
         <mat-error *ngIf="f.confirmPassword.errors?.mustMatch">Password must match.</mat-error>
       </mat-form-field>
-      <button type="button" class="custom-button mt-2" style="width: 190px;" mat-stroked-button (click)="generatePassword()">Generieren</button>
+      <button type="button" class="custom-button mt-2" style="width: 190px;" mat-stroked-button
+              (click)="generatePassword()">Generieren
+      </button>
     </div>
   </div>
   <div class="row">
     <div class="col-md-4">
       <mat-form-field class="mt-4">
         <mat-label>Anrede</mat-label>
-<!--        <input formControlName="salutation" autocomplete="off" matInput>-->
+        <!--        <input formControlName="salutation" autocomplete="off" matInput>-->
         <mat-select formControlName="salutation">
           <mat-option value="Herr">Herr</mat-option>
           <mat-option value="Frau">Frau</mat-option>
@@ -98,20 +101,66 @@
   </div>
   <div class="row mt-4">
     <div class="col-md-3">
-      <mat-checkbox formControlName="differentPlace">Abweichender Abnahmeort</mat-checkbox>
+      <div class="d-flex" (click)="changeCheckboxValue('differentPlace')">
+        <div class="d-flex align-items-center">
+          <div class="checkbox-container">
+            <div *ngIf="f.differentPlace.value" class="check-mark"></div>
+          </div>
+          <span>Abweichender Abnahmeort</span>
+        </div>
+      </div>
+      <mat-checkbox *ngIf="false" formControlName="differentPlace">Abweichender Abnahmeort</mat-checkbox>
     </div>
     <div class="col-md-3">
-      <mat-checkbox formControlName="customerStore">Kunde hinterlegt Zahlungsmittel</mat-checkbox>
+      <div class="d-flex" (click)="changeCheckboxValue('customerStore')">
+        <div class="d-flex align-items-center">
+          <div class="checkbox-container">
+            <div *ngIf="f.customerStore.value" class="check-mark"></div>
+          </div>
+          <span class="checkbox-label">Kunde hinterlegt Zahlungsmittel</span>
+        </div>
+      </div>
+      <mat-checkbox *ngIf="false" formControlName="customerStore">Kunde hinterlegt Zahlungsmittel</mat-checkbox>
     </div>
     <div class="col-md-3">
-      <mat-checkbox formControlName="alternative">Alternatives Zahlungsmittel</mat-checkbox>
+      <div class="d-flex" (click)="changeCheckboxValue('alternative')">
+        <div class="d-flex align-items-center">
+          <div class="checkbox-container">
+            <div *ngIf="f.alternative.value" class="check-mark"></div>
+          </div>
+          <span>Alternatives Zahlungsmittel</span>
+        </div>
+      </div>
+      <mat-checkbox *ngIf="false" formControlName="alternative">Alternatives Zahlungsmittel</mat-checkbox>
     </div>
     <div class="col-md-3">
-      <mat-checkbox formControlName="sendSMS">Code via SMS senden</mat-checkbox>
+      <div class="d-flex" (click)="changeCheckboxValue('sendSMS')">
+        <div class="d-flex align-items-center">
+          <div class="checkbox-container">
+            <div *ngIf="f.sendSMS.value" class="check-mark"></div>
+          </div>
+          <span>Code via SMS senden</span>
+        </div>
+      </div>
+      <mat-checkbox *ngIf="false" formControlName="sendSMS">Code via SMS senden</mat-checkbox>
     </div>
   </div>
-  <div class="mt-5">
-    <div class="d-flex align-items-center justify-content-end w-100">
+  <div [ngClass]="{'justify-content-end mt-5': !f.differentPlace.value, 'justify-content-between mt-3': f.differentPlace.value}" class=" d-flex" >
+    <div *ngIf="f.differentPlace.value" style="width: 210px;">
+      <mat-form-field class="">
+        <mat-label>Street</mat-label>
+        <input autocomplete="off" type="text" matInput formControlName="otherStreet">
+      </mat-form-field>
+      <mat-form-field class="">
+        <mat-label>Postal Code</mat-label>
+        <input autocomplete="off" type="number" matInput formControlName="otherPostalCode">
+      </mat-form-field>
+      <mat-form-field class="">
+        <mat-label>City</mat-label>
+        <input autocomplete="off" type="text" matInput formControlName="otherCity">
+      </mat-form-field>
+    </div>
+    <div class="d-flex align-items-end justify-content-end">
       <button class="custom-button mr-3" mat-stroked-button (click)="close()">
         Abbrechen
       </button>

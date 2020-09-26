@@ -29,7 +29,7 @@
         </button>
       </div>
     </mat-expansion-panel>
-    <button (click)="showAddAdminPopup($event)" *ngIf="!isAddAdminPopup" mat-stroked-button class="add-button"><mat-icon>add</mat-icon></button>
+    <button (click)="showAddAdminPopup()" *ngIf="!isAddAdminPopup" mat-stroked-button class="add-button"><mat-icon>add</mat-icon></button>
     <div class="add-admin-popup" *ngIf="isAddAdminPopup">
       <div class="position-relative">
         <div class="d-flex avatar pink">
@@ -38,7 +38,7 @@
           </div>
           <div class="text-white">Neu</div>
         </div>
-        <button (click)="showAddAdminPopup($event)" *ngIf="isAddAdminPopup" mat-stroked-button class="add-button white-pink"><mat-icon>add</mat-icon></button>
+        <button (click)="showAddAdminPopup()" *ngIf="isAddAdminPopup" mat-stroked-button class="add-button white-pink"><mat-icon>add</mat-icon></button>
       </div>
       <mat-form-field class="w-100 mt-4 input-pink">
         <mat-label>Vor- und Nachname</mat-label>
@@ -104,7 +104,7 @@
               <div>Aktiv</div>
             </div>
             <div class="d-flex">
-              <mat-slide-toggle formControlName="isActive"></mat-slide-toggle>
+              <mat-slide-toggle [disabled]="currentUser.role !== 'Superadmin'" formControlName="isActive"></mat-slide-toggle>
             </div>
           </div>
         </mat-panel-title>

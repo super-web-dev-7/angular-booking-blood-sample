@@ -1,10 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {newArray} from '@angular/compiler/src/util';
 
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
+import {AuthService} from '../../../service/auth/auth.service';
 
 
 @Component({
@@ -22,15 +22,18 @@ export class NewComponent implements OnInit {
   groupForm: FormGroup;
   allAgency = [];
   selectedAgency = null;
+  currentUser;
 
   constructor(
     public formBuilder: FormBuilder,
     public httpService: HttpService,
+    public authService: AuthService,
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit(): void {
+    this.currentUser = this.authService.currentUserValue;
     this.groupForm = this.formBuilder.group({
       name: [this.data?.name, Validators.required],
       isActive: [this.data ? this.data?.isActive : false, Validators.required]
@@ -50,7 +53,7 @@ export class NewComponent implements OnInit {
     this.selectedAgency = this.data?.agency;
   }
 
-  get f() {
+  get f(): any {
     return this.groupForm.controls;
   }
 
@@ -58,7 +61,7 @@ export class NewComponent implements OnInit {
     this.selectedAgency = id;
   }
 
-  showAddAdminPopup = (event) => {
+  showAddAdminPopup = () => {
     this.isAddAdminPopup = !this.isAddAdminPopup;
   }
 
@@ -97,7 +100,7 @@ export class NewComponent implements OnInit {
         this.dialogRef.close(result[0]);
       });
     } else {
-      this.httpService.create(URL_JSON.GROUP, data).subscribe(res => {
+      this.httpService.create(URL_JSON.GROUP, data).subscribe(() => {
         this.dialogRef.close();
       });
     }

@@ -47,7 +47,10 @@ exports.createPatient = (req, res) => {
                 differentPlace: req.body.differentPlace,
                 customerStore: req.body.customerStore,
                 alternative: req.body.alternative,
-                sendSMS: req.body.sendSMS
+                sendSMS: req.body.sendSMS,
+                otherStreet: req.body.otherStreet,
+                otherCity: req.body.otherCity,
+                otherPostalCode: req.body.otherPostalCode
             };
             Patient.create(newPatientData).then(patientData => {
                 console.log(patientData);
@@ -93,7 +96,7 @@ exports.delete = async (req, res) => {
             }
         }
     }
-    User.destroy({where: {id: req.params.id}}).then(result => {
+    User.destroy({where: {id: req.params.id}}).then(() => {
         res.status(204).json({});
     })
 }

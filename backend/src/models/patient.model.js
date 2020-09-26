@@ -32,6 +32,15 @@ module.exports = (sequelize, Sequelize) => {
         },
         sendSMS: {
             type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false
+        },
+        otherStreet: {
+            type: Sequelize.STRING
+        },
+        otherCity: {
+            type: Sequelize.STRING
+        },
+        otherPostalCode: {
+            type: Sequelize.INTEGER
         }
     });
 };

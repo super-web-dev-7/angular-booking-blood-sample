@@ -45,13 +45,24 @@ export class NewPatientComponent implements OnInit {
       differentPlace: [false, Validators.required],
       customerStore: [false, Validators.required],
       alternative: [false, Validators.required],
-      sendSMS: [false, Validators.required]
+      sendSMS: [false, Validators.required],
+      otherStreet: [null],
+      otherPostalCode: [null],
+      otherCity: [null]
     }, {
       validators: MustMatch('password', 'confirmPassword')
     });
+    if (this.f.differentPlace.value) {
+      this.f.otherStreet.setValidators([Validators.required]);
+      this.f.otherPostalCode.setValidators([Validators.required]);
+      this.f.otherCity.setValidators([Validators.required]);
+      this.f.otherStreet.updateValueAndValidity();
+      this.f.otherPostalCode.updateValueAndValidity();
+      this.f.otherCity.updateValueAndValidity();
+    }
   }
 
-  get f() {
+  get f(): any {
     return this.patientForm.controls;
   }
 
@@ -63,6 +74,24 @@ export class NewPatientComponent implements OnInit {
 
   close = () => {
     this.dialogRef.close();
+  }
+
+  changeCheckboxValue = (item) => {
+    this.f[item].setValue(!this.f[item].value);
+    if (item === 'differentPlace') {
+      if (this.f[item].value) {
+        this.f.otherStreet.setValidators([Validators.required]);
+        this.f.otherPostalCode.setValidators([Validators.required]);
+        this.f.otherCity.setValidators([Validators.required]);
+      } else {
+        this.f.otherStreet.setValidators(null);
+        this.f.otherPostalCode.setValidators(null);
+        this.f.otherCity.setValidators(null);
+      }
+      this.f.otherStreet.updateValueAndValidity();
+      this.f.otherPostalCode.updateValueAndValidity();
+      this.f.otherCity.updateValueAndValidity();
+    }
   }
 
   createPatient = () => {
@@ -85,8 +114,12 @@ export class NewPatientComponent implements OnInit {
       differentPlace: this.f.differentPlace.value,
       customerStore: this.f.customerStore.value,
       alternative: this.f.alternative.value,
-      sendSMS: this.f.sendSMS.value
+      sendSMS: this.f.sendSMS.value,
+      otherStreet: this.f.otherStreet.value,
+      otherCity: this.f.otherCity.value,
+      otherPostalCode: this.f.otherPostalCode.value
     };
+    console.log(data);
     this.httpService.create(URL_JSON.USER + '/patient', data).subscribe(res => {
       console.log(res);
       this.dialogRef.close(res);

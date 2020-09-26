@@ -85,14 +85,14 @@ export class UserOverviewComponent implements OnInit {
   }
 
   deleteItem = () => {
-    this.httpService.delete(URL_JSON.USER + '/delete/' + this.selectedDeleteItem).subscribe(res => {
+    this.httpService.delete(URL_JSON.USER + '/delete/' + this.selectedDeleteItem).subscribe(() => {
       const dataSource = this.dataSource.data;
       const removedIndex = dataSource.findIndex(item => {
         return item.id === this.selectedDeleteItem;
       });
       dataSource.splice(removedIndex, 1);
       this.dataSource.data = dataSource;
-    }, error => {
+    }, () => {
       this.snackBar.open('You can\'t delete this item.', 'Warning', {duration: 3000});
       this.selectedDeleteItem = null;
     });
@@ -123,16 +123,16 @@ export class UserOverviewComponent implements OnInit {
       width: '900px'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       this.router.navigateByUrl('user/overview');
     });
   }
 
   openNewPatientDialog = () => {
     const dialogRef = this.dialog.open(NewPatientComponent, {
-      width: '1000px'
+      width: '1100px'
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       this.router.navigateByUrl('user/overview');
     });
   }
@@ -141,7 +141,7 @@ export class UserOverviewComponent implements OnInit {
     const data = {
       isActive: event.checked
     };
-    this.httpService.update(URL_JSON.USER + '/update/' + id, data).subscribe(res => {
+    this.httpService.update(URL_JSON.USER + '/update/' + id, data).subscribe(() => {
     });
   }
 

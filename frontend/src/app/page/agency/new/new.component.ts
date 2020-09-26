@@ -49,11 +49,11 @@ export class NewComponent implements OnInit {
     this.selectedDoctors = this.data ? this.data?.doctors_id : [];
   }
 
-  get f() {
+  get f(): any {
     return this.agencyForm.controls;
   }
 
-  get getUser() {
+  get getUser(): any {
     return this.newUserForm.controls;
   }
 

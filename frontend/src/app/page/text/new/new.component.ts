@@ -70,7 +70,7 @@ export class NewComponent implements OnInit {
     this.selectedReceiver = this.data?.receiver;
   }
 
-  get f() {
+  get f(): any {
     return this.templateForm.controls;
   }
 

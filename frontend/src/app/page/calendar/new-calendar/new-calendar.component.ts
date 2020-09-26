@@ -57,7 +57,7 @@ export class NewCalendarComponent implements OnInit {
   }
 
 
-  get f() {
+  get f(): any {
     return this.scheduleForm.controls;
   }
 

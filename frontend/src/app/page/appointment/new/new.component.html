@@ -75,7 +75,7 @@
         </button>
       </div>
     </mat-expansion-panel>
-    <button (click)="showAppointmentPopup($event)" *ngIf="!isAppointmentPopup && !isPatientPopup" mat-stroked-button class="add-calendar">
+    <button (click)="showAppointmentPopup()" *ngIf="!isAppointmentPopup && !isPatientPopup" mat-stroked-button class="add-calendar">
       <img src="assets/images/dark-calendar.svg" alt="calendar">
     </button>
     <div class="add-admin-popup" *ngIf="isAppointmentPopup">
@@ -87,7 +87,7 @@
           <div class="text-white">Alle Termine</div>
         </div>
         <button
-          (click)="showAppointmentPopup($event)"
+          (click)="showAppointmentPopup()"
           *ngIf="isAppointmentPopup"
           mat-stroked-button
           class="add-calendar white-yellow"
@@ -118,7 +118,7 @@
         </div>
       </div>
     </mat-expansion-panel>
-    <button (click)="showPatientPopup($event)" *ngIf="!isPatientPopup" mat-stroked-button class="add-button">
+    <button (click)="showPatientPopup()" *ngIf="!isPatientPopup" mat-stroked-button class="add-button">
       <mat-icon>add</mat-icon>
     </button>
     <div class="add-patient-popup" [ngStyle]="{'height.px': formView.offsetHeight + 48}" *ngIf="isPatientPopup">
@@ -129,7 +129,7 @@
           </div>
           <div class="text-white">Neu</div>
         </div>
-        <button (click)="showPatientPopup($event)" *ngIf="isPatientPopup" mat-stroked-button class="add-button white-blue">
+        <button (click)="showPatientPopup()" *ngIf="isPatientPopup" mat-stroked-button class="add-button white-blue">
           <mat-icon>add</mat-icon>
         </button>
         <div class="d-flex mt-2">

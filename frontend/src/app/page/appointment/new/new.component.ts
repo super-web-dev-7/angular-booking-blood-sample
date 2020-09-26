@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -53,15 +53,15 @@ export class NewComponent implements OnInit {
     // this.dialogHeight = this.formView.nativeElement.offsetHeight;
   }
 
-  get f() {
+  get f(): any {
     return this.groupForm.controls;
   }
 
-  showAppointmentPopup = (event) => {
+  showAppointmentPopup = () => {
     this.isAppointmentPopup = !this.isAppointmentPopup;
   }
 
-  showPatientPopup = (event) => {
+  showPatientPopup = () => {
     this.isPatientPopup = !this.isPatientPopup;
   }
 

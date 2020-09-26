@@ -60,7 +60,7 @@ export class NewUserComponent implements OnInit {
     // });
   }
 
-  get f() {
+  get f(): any {
     return this.userForm.controls;
   }
 
@@ -103,7 +103,7 @@ export class NewUserComponent implements OnInit {
       // allocation: this.selectedAllocation
     };
     if (this.data) {
-      this.httpService.update(URL_JSON.USER + '/update/' + this.data.id, data).subscribe(res => {
+      this.httpService.update(URL_JSON.USER + '/update/' + this.data.id, data).subscribe(() => {
         const response = Object.assign(data, {id: this.data.id});
         this.dialogRef.close(response);
       });
