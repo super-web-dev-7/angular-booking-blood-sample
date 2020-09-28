@@ -69,6 +69,36 @@ exports.get = async (req, res) => {
     res.status(200).json(allUsers);
 }
 
+exports.getPatientById = async (req, res) => {
+    const patient = await Patient.findAll({where: {user_id: req.params.id}});
+    res.status(200).json(patient[0])
+}
+
+exports.getAgAdminInWorkingGroup = async (req, res) => {
+    const admins = await User.findAll({where: {role: 'AG-Admin'}});
+    const groups = await WorkingGroup.findAll({where: {}});
+    const agAdmin = [];
+    for (const group of groups) {
+        group.admin = JSON.parse(group.admin);
+    }
+    for (const admin of admins) {
+        let count = 0;
+        for (const group of groups) {
+            if (group.admin.includes(admin.id)) {
+                break;
+            } else {
+                count++;
+            }
+        }
+
+        if (count === groups.length) {
+            agAdmin.push(admin);
+            count = 0;
+        }
+    }
+    res.status(200).json(agAdmin);
+}
+
 exports.delete = async (req, res) => {
     const user = await User.findByPk(req.params.id);
     if (user.role === 'Nurse') {
@@ -109,6 +139,42 @@ exports.update = async (req, res) => {
         User.update(data, {returning: true, where: {id}}).then((rowsUpdated) => {
             res.json(rowsUpdated);
         });
-
     })
+}
+
+exports.updatePatientById = async (req, res) => {
+    const body = req.body;
+    console.log(body)
+    const id = req.params.id;
+    bcrypt.hash(body.password, saltRounds, function (err, hash) {
+        body.password = hash;
+        const data = {
+            firstName: body.firstName,
+            lastName: body.lastName,
+            email: body.email,
+            password: body.password,
+            phoneNumber: body.phoneNumber
+        };
+        console.log(id)
+        console.log(data);
+        User.update(data, {returning: true, where: {id}}).then((rowsUpdated) => {
+            const patientData = {
+                salutation: body.salutation,
+                street: body.street,
+                age: body.age,
+                gender: body.gender,
+                plz: body.plz,
+                ort: body.ort,
+                differentPlace: body.differentPlace,
+                customerStore: body.customerStore,
+                alternative: body.alternative,
+                sendSMS: body.sendSMS,
+                otherStreet: body.otherStreet,
+                otherCity: body.otherCity,
+                otherPostalCode: body.otherPostalCode
+            };
+            Patient.update(patientData, {returning: true, where: {user_id: id}}).then();
+            res.json(data);
+        });
+    });
 }

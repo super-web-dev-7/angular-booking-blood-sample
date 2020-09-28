@@ -88,7 +88,14 @@ export class CalendarComponent implements OnInit {
       dataSource.splice(removedIndex, 1);
       this.dataSource.data = dataSource;
     }, error => {
-      this.snackBar.open('You can\'t delete this item.', 'Warning', {duration: 3000});
+      const index = this.dataSource.data.findIndex(item => {
+        return item.id === this.selectedDeleteItem;
+      });
+      const name = '\"' + this.dataSource.data[index].name + '\"';
+      this.snackBar.open(
+        name + ' kann nicht gelöscht werden, da ' + name + ' in Verbindung zu anderen Funktionen steht. Bitte löschen Sie zuerst diese Verbindungen.',
+        'Warning',
+        {duration: 5000});
       this.selectedDeleteItem = null;
     });
   }

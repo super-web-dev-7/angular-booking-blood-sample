@@ -20,7 +20,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
         allocation: {
-            type: Sequelize.INTEGER
+            type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false
         },
         isActive: {
             type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpService} from '../../../service/http/http.service';
 import {AuthService} from '../../../service/auth/auth.service';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MustMatch} from '../../../shared/confirm-password.validator';
 import {URL_JSON} from '../../../utils/url_json';
 
@@ -20,35 +20,42 @@ export class NewPatientComponent implements OnInit {
     {label: 'Male', value: 'Männlich'},
     {label: 'Divers', value: 'Divers'},
   ];
+  patientData: any;
 
   constructor(
     public formBuilder: FormBuilder,
     public httpService: HttpService,
     public authService: AuthService,
     public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit(): void {
+    if (this.data) {
+      this.httpService.get(URL_JSON.USER + '/get/patient/' + this.data.id).subscribe((res: any) => {
+        this.patientData = res;
+      });
+    }
     this.patientForm = this.formBuilder.group({
-      email: [null, [Validators.required, Validators.email]],
-      phoneNumber: ['', [Validators.required, Validators.pattern(this.phoneNumberPattern)]],
+      email: [this.data?.email, [Validators.required, Validators.email]],
+      phoneNumber: [this.data?.phoneNumber, [Validators.required, Validators.pattern(this.phoneNumberPattern)]],
       password: [null, Validators.required],
       confirmPassword: [null, Validators.required],
-      firstName: [null, Validators.required],
-      lastName: [null, Validators.required],
-      salutation: [null, Validators.required],
-      street: [null, Validators.required],
-      age: [null, Validators.required],
-      gender: [null, Validators.required],
-      plz: [null, Validators.required],
-      ort: [null, Validators.required],
-      differentPlace: [false, Validators.required],
-      customerStore: [false, Validators.required],
-      alternative: [false, Validators.required],
-      sendSMS: [false, Validators.required],
-      otherStreet: [null],
-      otherPostalCode: [null],
-      otherCity: [null]
+      firstName: [this.data?.firstName, Validators.required],
+      lastName: [this.data?.lastName, Validators.required],
+      salutation: [this.data?.salutation, Validators.required],
+      street: [this.data?.street, Validators.required],
+      age: [this.data?.age, Validators.required],
+      gender: [this.data?.gender, Validators.required],
+      plz: [this.data?.plz, Validators.required],
+      ort: [this.data?.ort, Validators.required],
+      differentPlace: [this.data?.differentPlace, Validators.required],
+      customerStore: [this.data?.customerStore, Validators.required],
+      alternative: [this.data?.alternative, Validators.required],
+      sendSMS: [this.data?.sendSMS, Validators.required],
+      otherStreet: [this.data?.otherStreet],
+      otherPostalCode: [this.data?.otherPostalCode],
+      otherCity: [this.data?.otherCity]
     }, {
       validators: MustMatch('password', 'confirmPassword')
     });
@@ -119,11 +126,15 @@ export class NewPatientComponent implements OnInit {
       otherCity: this.f.otherCity.value,
       otherPostalCode: this.f.otherPostalCode.value
     };
-    console.log(data);
-    this.httpService.create(URL_JSON.USER + '/patient', data).subscribe(res => {
-      console.log(res);
-      this.dialogRef.close(res);
-    });
+    if (this.data) {
+      this.httpService.update(URL_JSON.USER + '/update/patient/' + this.data.user_id, data).subscribe((res: any) => {
+        res.id = this.data.user_id;
+        this.dialogRef.close(res);
+      });
+    } else {
+      this.httpService.create(URL_JSON.USER + '/patient', data).subscribe(res => {
+        this.dialogRef.close(res);
+      });
+    }
   }
-
 }

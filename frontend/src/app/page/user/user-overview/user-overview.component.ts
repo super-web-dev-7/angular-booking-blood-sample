@@ -3,7 +3,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 import {NewUserComponent} from '../new-user/new-user.component';
@@ -57,7 +57,7 @@ export class UserOverviewComponent implements OnInit {
     }
     let query;
     if (this.currentUser.role === 'Superadmin') {
-      query = '';
+      query = 'role=Superadmin&role=AG-Admin&role=Nurse&role=Doctor';
     } else if (this.currentUser.role === 'AG-Admin') {
       query = 'role=Nurse&role=Doctor&role=Patient';
     }
@@ -93,7 +93,14 @@ export class UserOverviewComponent implements OnInit {
       dataSource.splice(removedIndex, 1);
       this.dataSource.data = dataSource;
     }, () => {
-      this.snackBar.open('You can\'t delete this item.', 'Warning', {duration: 3000});
+      const index = this.dataSource.data.findIndex(item => {
+        return item.id === this.selectedDeleteItem;
+      });
+      const name = '\"' + this.dataSource.data[index].firstName + '\"';
+      this.snackBar.open(
+        name + ' kann nicht gelöscht werden, da ' + name + ' in Verbindung zu anderen Funktionen steht. Bitte löschen Sie zuerst diese Verbindungen.',
+        'Warning',
+        {duration: 5000});
       this.selectedDeleteItem = null;
     });
   }
@@ -103,11 +110,26 @@ export class UserOverviewComponent implements OnInit {
     const data = dataSource.find(item => {
       return item.id === id;
     });
-    const dialogRef = this.dialog.open(NewUserComponent, {
-      width: '900px',
-      data
-    });
 
+    let dialogRef: MatDialogRef<any>;
+    if (data.role === 'Patient') {
+      this.httpService.get(URL_JSON.USER + '/get/patient/' + data.id).subscribe((res: any) => {
+        dialogRef = this.dialog.open(NewPatientComponent, {
+          width: '1100px',
+          data: {...data, ...(res)}
+        });
+        this.afterClosed(dialogRef);
+      });
+    } else {
+      dialogRef = this.dialog.open(NewUserComponent, {
+        width: '900px',
+        data
+      });
+      this.afterClosed(dialogRef);
+    }
+  }
+
+  afterClosed = (dialogRef) => {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         const index = this.allUser.findIndex(item => item.id === result.id);

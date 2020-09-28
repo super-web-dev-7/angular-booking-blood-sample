@@ -38,8 +38,11 @@ export class NewComponent implements OnInit {
       name: [this.data?.name, Validators.required],
       isActive: [this.data ? this.data?.isActive : false, Validators.required]
     });
-    this.httpService.get(URL_JSON.USER + '/get?role=AG-Admin').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.USER + '/get/working-group').subscribe((res: any) => {
       this.admins = res;
+      if (this.data) {
+        this.admins = [...this.data.admins, ...this.admins];
+      }
     });
     this.httpService.get(URL_JSON.CALENDAR + '/get').subscribe((res: any) => {
       this.calendars = res;
