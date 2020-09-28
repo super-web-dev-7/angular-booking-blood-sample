@@ -67,9 +67,6 @@ export class NewComponent implements OnInit {
     if (this.newUserForm.invalid) {
       return;
     }
-    if (this.getUser.name.value.split(' ').length < 2) {
-      return;
-    }
     this.isAddAdminPopup = !this.isAddAdminPopup;
     const data = {
       firstName: this.getUser.firstName.value,
