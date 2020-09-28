@@ -20,6 +20,7 @@ export class NewComponent implements OnInit {
   admins = [];
   calendars = [];
   groupForm: FormGroup;
+  userForm: FormGroup;
   allAgency = [];
   selectedAgency = null;
   currentUser;
@@ -38,6 +39,12 @@ export class NewComponent implements OnInit {
       name: [this.data?.name, Validators.required],
       isActive: [this.data ? this.data?.isActive : false, Validators.required]
     });
+    this.userForm = this.formBuilder.group({
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, Validators.required]
+    });
     this.httpService.get(URL_JSON.USER + '/get/working-group').subscribe((res: any) => {
       this.admins = res;
       if (this.data) {
@@ -50,14 +57,19 @@ export class NewComponent implements OnInit {
     this.httpService.get(URL_JSON.AGENCY + '/get').subscribe((res: any) => {
       this.allAgency = res;
     });
+    console.log(this.data);
 
     this.selectedCalendar = this.data ? this.data?.calendar_id : 0;
     this.selectedAdmin = this.data ? this.data?.admin : [];
-    this.selectedAgency = this.data?.agency;
+    this.selectedAgency = this.data?.agency.id;
   }
 
   get f(): any {
     return this.groupForm.controls;
+  }
+
+  get uf(): any {
+    return this.userForm.controls;
   }
 
   selectAgency = id => {
@@ -65,7 +77,11 @@ export class NewComponent implements OnInit {
   }
 
   showAddAdminPopup = () => {
-    this.isAddAdminPopup = !this.isAddAdminPopup;
+    if (this.isAddAdminPopup) {
+      this.createNewAdmin();
+    } else {
+      this.isAddAdminPopup = !this.isAddAdminPopup;
+    }
   }
 
   selectAdmin = (id) => {
@@ -82,6 +98,26 @@ export class NewComponent implements OnInit {
 
   close = () => {
     this.dialogRef.close();
+  }
+
+  createNewAdmin = () => {
+    if (this.userForm.invalid) {
+      return;
+    }
+    const data = {
+      firstName: this.uf.firstName.value,
+      lastName: this.uf.lastName.value,
+      email: this.uf.email.value,
+      password: this.uf.password.value,
+      role: 'AG-Admin',
+      isActive: 1
+    };
+    console.log(data);
+    this.httpService.create(URL_JSON.USER, data).subscribe(res => {
+      console.log(res);
+      this.admins.push(res);
+      this.isAddAdminPopup = !this.isAddAdminPopup;
+    });
   }
 
   onSubmit = () => {

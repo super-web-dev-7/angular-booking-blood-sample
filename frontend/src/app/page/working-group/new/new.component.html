@@ -1,10 +1,12 @@
-<form [formGroup]="groupForm" class="p-2">
+<div class="p-2">
   <h1>Arbeitsgruppe neu</h1>
 
-  <mat-form-field class="w-100 mt-4">
-    <mat-label>Arbeitsgruppenname</mat-label>
-    <input formControlName="name" autocomplete="off" matInput>
-  </mat-form-field>
+  <form [formGroup]="groupForm" class="w-100 d-inline">
+    <mat-form-field class="w-100 mt-4">
+      <mat-label>Arbeitsgruppenname</mat-label>
+      <input formControlName="name" autocomplete="off" matInput>
+    </mat-form-field>
+  </form>
 
   <mat-accordion class="position-relative">
     <mat-expansion-panel hideToggle>
@@ -30,7 +32,7 @@
       </div>
     </mat-expansion-panel>
     <button (click)="showAddAdminPopup()" *ngIf="!isAddAdminPopup" mat-stroked-button class="add-button"><mat-icon>add</mat-icon></button>
-    <div class="add-admin-popup" *ngIf="isAddAdminPopup">
+    <form [formGroup]="userForm" class="add-admin-popup" *ngIf="isAddAdminPopup">
       <div class="position-relative">
         <div class="d-flex avatar pink">
           <div class="round">
@@ -41,14 +43,28 @@
         <button (click)="showAddAdminPopup()" *ngIf="isAddAdminPopup" mat-stroked-button class="add-button white-pink"><mat-icon>add</mat-icon></button>
       </div>
       <mat-form-field class="w-100 mt-4 input-pink">
-        <mat-label>Vor- und Nachname</mat-label>
-        <input autocomplete="off" matInput>
+        <mat-label>Vorname</mat-label>
+        <input formControlName="firstName" autocomplete="off" matInput>
+        <mat-error *ngIf="userForm.get('firstName').hasError('required')">This field is required</mat-error>
       </mat-form-field>
-      <mat-form-field class="w-100 mt-2 input-pink">
+      <mat-form-field class="w-100 input-pink">
+        <mat-label>Nachname</mat-label>
+        <input formControlName="lastName" autocomplete="off" matInput>
+        <mat-error *ngIf="userForm.get('lastName').hasError('required')">This field is required</mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100 input-pink">
         <mat-label>E-Mail-Adresse</mat-label>
-        <input autocomplete="off" matInput>
+        <input formControlName="email" autocomplete="off" matInput>
+        <mat-error *ngIf="userForm.get('email').hasError('required')">This field is required</mat-error>
+        <mat-icon *ngIf="uf.email.touched && !uf.email.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+        <mat-icon *ngIf="uf.email.touched && uf.email.errors" style="color: red" matSuffix>close</mat-icon>
       </mat-form-field>
-    </div>
+      <mat-form-field class="w-100 input-pink">
+        <mat-label>Passwort</mat-label>
+        <input formControlName="password" autocomplete="off" matInput>
+        <mat-error *ngIf="userForm.get('password').hasError('required')">This field is required</mat-error>
+      </mat-form-field>
+    </form>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -103,9 +119,9 @@
               </div>
               <div>Aktiv</div>
             </div>
-            <div class="d-flex">
+            <form [formGroup]="groupForm" class="d-flex">
               <mat-slide-toggle [disabled]="currentUser.role !== 'Superadmin'" formControlName="isActive"></mat-slide-toggle>
-            </div>
+            </form>
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -119,4 +135,4 @@
     <button class="custom-button" mat-stroked-button (click)="close()">Abbrechen</button>
     <button class="custom-button primary primary-button" mat-stroked-button (click)="onSubmit()">Neue Arbeitsgruppe anlegen</button>
   </div>
-</form>
+</div>
