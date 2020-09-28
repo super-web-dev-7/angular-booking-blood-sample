@@ -6,6 +6,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
+import {MustMatch} from '../../../shared/confirm-password.validator';
 
 
 @Component({
@@ -21,9 +22,7 @@ export class NewComponent implements OnInit {
   doctors = [];
   groups = [];
   groupForm: FormGroup;
-  // @ViewChild('formView') formView: ElementRef;
-  // dialogHeight: any;
-  values = [1, 2, 3, 4];
+  patientForm: FormGroup;
   constructor(
     public formBuilder: FormBuilder,
     public httpService: HttpService,
@@ -42,6 +41,29 @@ export class NewComponent implements OnInit {
     this.groupForm = this.formBuilder.group({
       name: [this.data?.name, Validators.required],
     });
+    this.patientForm = this.formBuilder.group({
+      email: [null, [Validators.required, Validators.email]],
+      phoneNumber: [null, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],
+      password: [null, Validators.required],
+      confirmPassword: [null, Validators.required],
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
+      street: [null, Validators.required],
+      plz: [null, Validators.required],
+      ort: [null, Validators.required],
+      salutation: [null, Validators.required],
+      age: [null, Validators.required],
+      gender: [null, Validators.required],
+      differentPlace: [false, Validators.required],
+      customerStore: [false, Validators.required],
+      alternative: [false, Validators.required],
+      sendSMS: [false, Validators.required],
+      otherStreet: [null],
+      otherPostalCode: [null],
+      otherCity: [null]
+    }, {
+      validators: MustMatch('password', 'confirmPassword')
+    });
     this.httpService.get(URL_JSON.USER + '/get?role=Doctor').subscribe((res: any) => {
       this.doctors = res;
     });
@@ -57,12 +79,18 @@ export class NewComponent implements OnInit {
     return this.groupForm.controls;
   }
 
+  get pf(): any {
+    return this.patientForm.controls;
+  }
+
   showAppointmentPopup = () => {
     this.isAppointmentPopup = !this.isAppointmentPopup;
+    this.isPatientPopup = false;
   }
 
   showPatientPopup = () => {
     this.isPatientPopup = !this.isPatientPopup;
+    this.isAppointmentPopup = false;
   }
 
   selectAdmin = (id) => {
@@ -75,6 +103,30 @@ export class NewComponent implements OnInit {
 
   selectCalendar = (id) => {
     this.selectedGroup = id;
+  }
+
+  changeCheckboxValue = (item) => {
+    this.pf[item].setValue(!this.pf[item].value);
+    if (item === 'differentPlace') {
+      if (this.pf[item].value) {
+        this.pf.otherStreet.setValidators([Validators.required]);
+        this.pf.otherPostalCode.setValidators([Validators.required]);
+        this.pf.otherCity.setValidators([Validators.required]);
+      } else {
+        this.pf.otherStreet.setValidators(null);
+        this.pf.otherPostalCode.setValidators(null);
+        this.pf.otherCity.setValidators(null);
+      }
+      this.pf.otherStreet.updateValueAndValidity();
+      this.pf.otherPostalCode.updateValueAndValidity();
+      this.pf.otherCity.updateValueAndValidity();
+    }
+  }
+
+  generatePassword = () => {
+    const password = Math.random().toString(36).slice(-8);
+    this.f.password.setValue(password);
+    this.f.confirmPassword.setValue(password);
   }
 
   close = () => {

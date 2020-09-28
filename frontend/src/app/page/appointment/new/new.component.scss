@@ -49,8 +49,9 @@ mat-expansion-panel {
 .white-blue {
   background-color: #4A90E2;
   color: white;
-  top: 30px;
-  left: calc(100% - 16px);
+  top: 15px;
+  left: 100%;
+  transform: translateX(-50%);
 }
 
 .white-yellow {
@@ -86,10 +87,6 @@ mat-expansion-panel {
   padding: 16px 16px 16px 24px;
 }
 
-.white-blue {
-  top: 45px;
-}
-
 .checkbox-container {
   border: 1px solid #CFDCE6;
   display: flex;
@@ -105,4 +102,8 @@ mat-expansion-panel {
     background-color: var(--primary-color);
     border-radius: 50%;
   }
+}
+
+form {
+  display: inline;
 }
