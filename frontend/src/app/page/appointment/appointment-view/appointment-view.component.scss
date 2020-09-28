@@ -1,0 +1,99 @@
+.item-container {
+  border-bottom: 2px solid #CFDCE6;
+  padding-bottom: 12px;
+  padding-left: 20px;
+  padding-top: 25px;
+  display: flex;
+  position: relative;
+
+  .label {
+    width: 120px;
+    color: #272140;
+  }
+
+  .value {
+    color: #A9BBC9;
+  }
+}
+
+.detail-patient {
+  position: absolute;
+  left: 100%;
+  top: 0;
+}
+
+.detail-patient-popup {
+  position: absolute;
+  left: 100%;
+  top: calc(50% - 24px);
+  width: 640px;
+  height: calc(50% + 48px);
+  background-color: #e5ecf3;
+  z-index: -1;
+  border-radius: 10px;
+  padding-left: 64px;
+  .white-blue {
+    top: 15px;
+    left: 100%;
+    transform: translateX(-50%);
+  }
+}
+
+.patient-item-container, .schedule-item-container {
+  display: flex;
+  padding-bottom: 18px;
+  padding-right: 30px;
+  .label {
+    width: 40%;
+    color: #312C41;
+  }
+  .value {
+    width: 60%;
+    color: #9EB1BF;
+  }
+}
+
+.checkbox-container {
+  border: 1px solid #CFDCE6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  margin-right: 16px;
+  cursor: pointer;
+  .check-mark {
+    width: 12px;
+    height: 12px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+  }
+  .green-mark {
+    background-color: #89DF8C;
+  }
+}
+
+.detail-schedule {
+  position: absolute;
+  left: calc(100% + 24px);
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.detail-schedule-popup {
+  position: absolute;
+  left: 100%;
+  top: calc(0% - 24px);
+  width: 640px;
+  height: calc(100% + 48px);
+  background-color: #e5ecf3;
+  z-index: -1;
+  border-radius: 10px;
+  padding-left: 64px;
+  .detail-schedule-button {
+    left: 100%;
+    transform: translateX(-50%);
+    top: 20px;
+    background-color: var(--primary-color);
+  }
+}

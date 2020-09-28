@@ -1,0 +1,135 @@
+<div class="p-2 position-relative">
+  <h1>Termin neu</h1>
+  <div class="item-container">
+    <div class="label">PLZ</div>
+    <div class="value">10709</div>
+  </div>
+  <div class="item-container">
+    <div class="label">Zuweisung</div>
+    <div class="value">Agentur 2</div>
+  </div>
+  <div class="item-container">
+    <div class="label">Paket</div>
+    <div class="value">Gutes Immunsystem</div>
+  </div>
+  <div class="item-container">
+    <div class="label">Termin</div>
+    <div class="value">DO 25.08.2020 15:30</div>
+  </div>
+  <div class="item-container">
+    <div class="label">Patient</div>
+    <div class="value">Maria Zimmermann, Rosenweg 47, 10709 Berlin</div>
+    <button (click)="isShowPatient = !isShowPatient; isShowSchedule = false;" *ngIf="!isShowPatient" mat-stroked-button class="add-button detail-patient white-blue">
+      <mat-icon>person</mat-icon>
+    </button>
+  </div>
+  <div class="item-container">
+    <div class="label">Anamnesebogen</div>
+    <div class="value">namnese-checkup-maria-zimmermann.pdf</div>
+  </div>
+  <div class="item-container">
+    <div class="label">Schwester</div>
+    <div class="value">Diana Weber</div>
+  </div>
+  <div class="item-container">
+    <div class="label">Letzter Arzt</div>
+    <div class="value">Dr. med. Jessica Johns</div>
+  </div>
+  <div class="item-container">
+    <div class="label">Status</div>
+    <div class="value">Anamnesebogen freigegeben</div>
+  </div>
+  <div class="d-flex justify-content-end mt-5">
+    <button class="custom-button" mat-stroked-button (click)="close()">Abbrechen</button>
+    <button class="custom-button primary primary-button ml-3" mat-stroked-button (click)="onSubmit()">Neuen Termin anlegen</button>
+  </div>
+
+  <div class="detail-patient-popup" *ngIf="isShowPatient">
+    <div class="position-relative">
+      <button
+        (click)="isShowPatient = !isShowPatient;"
+        *ngIf="isShowPatient"
+        mat-stroked-button
+        class="add-button white-blue"
+      >
+        <mat-icon>person</mat-icon>
+      </button>
+      <div class="patient-item-container">
+        <div class="label">E-Mail-Address</div>
+        <div class="value">Maria.z@gmail.com</div>
+      </div>
+      <div class="patient-item-container">
+        <div class="label">Handynummer</div>
+        <div class="value">017985466241</div>
+      </div>
+      <div class="patient-item-container">
+        <div class="label">Name</div>
+        <div class="value">Frau Maria Zimmermann</div>
+      </div>
+      <div class="patient-item-container">
+        <div class="label">Adresse</div>
+        <div class="value">Rosenweg 47, 10709 Berlin</div>
+      </div>
+      <div class="patient-item-container">
+        <div class="label">Alter</div>
+        <div class="value">29 Jahre</div>
+      </div>
+      <div class="patient-item-container">
+        <div class="label">Geschlecht</div>
+        <div class="value">Weiblich</div>
+      </div>
+      <div class="d-flex" style="padding-bottom: 20px;">
+        <div class="d-flex align-items-center">
+          <div class="checkbox-container">
+            <div *ngIf="true" class="check-mark"></div>
+          </div>
+          <span>Code via SMS senden</span>
+        </div>
+      </div>
+      <div class="d-flex" style="padding-bottom: 20px;">
+        <div class="d-flex align-items-center">
+          <div class="checkbox-container">
+            <div *ngIf="true" class="check-mark green-mark"></div>
+          </div>
+          <span>Code via SMS senden</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button (click)="isShowSchedule = !isShowSchedule; isShowPatient = false" *ngIf="!isShowSchedule" mat-stroked-button class="add-button detail-schedule">
+    <img src="assets/images/timeicon-dark.svg" alt="dark">
+  </button>
+  <div class="detail-schedule-popup" *ngIf="isShowSchedule">
+    <div class="position-relative">
+      <button
+        (click)="isShowSchedule = !isShowSchedule"
+        *ngIf="isShowSchedule"
+        mat-stroked-button
+        class="add-button detail-schedule-button"
+      >
+        <img src="assets/images/timeicon-light.svg" alt="light">
+      </button>
+      <div class="schedule-item-container">
+        <div class="label">19.08.2020 10:41</div>
+        <div class="value">Termin bestätigt<br>Termin im Kalender der Schwester eingetragen</div>
+      </div>
+      <div class="schedule-item-container">
+        <div class="label">19.08.2020 10:37</div>
+        <div class="value">Dr. med. Jessica Johns: Anamnesebogen freigegeben</div>
+      </div>
+      <div class="schedule-item-container">
+        <div class="label">19.08.2020 10:29</div>
+        <div class="value">Dr. med. Jessica Johns:Patienten-Rückfrage erfolgreich bearbeitet</div>
+      </div>
+      <div class="schedule-item-container">
+        <div class="label">19.08.2020 10:00</div>
+        <div class="value">Patienten-Rückfrage eingegangen</div>
+      </div>
+      <div class="schedule-item-container">
+        <div class="label">18.08.2020 15:03</div>
+        <div class="value">Anamnesebogen hochgeladen</div>
+      </div>
+    </div>
+  </div>
+</div>

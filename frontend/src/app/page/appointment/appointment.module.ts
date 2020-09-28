@@ -13,11 +13,20 @@ import {MaterialModule} from '../../material/material.module';
 import {DatetimePickerComponent} from '../../components/datetime-picker/datetime-picker.component';
 import {DonutChartComponent} from '../../components/donut-chart/donut-chart.component';
 import {BarChartComponent} from '../../components/bar-chart/bar-chart.component';
+import { AppointmentViewComponent } from './appointment-view/appointment-view.component';
 
 
 
 @NgModule({
-  declarations: [OpenDatesComponent, NewComponent, StatisticsComponent, DatetimePickerComponent, DonutChartComponent, BarChartComponent],
+  declarations: [
+    OpenDatesComponent,
+    NewComponent,
+    StatisticsComponent,
+    DatetimePickerComponent,
+    DonutChartComponent,
+    BarChartComponent,
+    AppointmentViewComponent
+  ],
   imports: [
     CommonModule,
     AppointmentRoutingModule,

@@ -10,6 +10,7 @@ button:focus {
 .search-field-container {
   position: relative;
   width: 300px;
+
   input {
     width: 100%;
     height: 50px;
@@ -18,9 +19,11 @@ button:focus {
     border: 0;
     border-radius: 25px;
   }
+
   input:focus {
     outline: none;
   }
+
   mat-icon {
     position: absolute;
     right: 10px;
@@ -35,7 +38,7 @@ table {
 
 .custom-button {
   background-color: #E1EAF1;
-  border-radius: 25px!important;
+  border-radius: 25px !important;
   height: 50px;
   font-size: 1rem;
 }
@@ -54,11 +57,13 @@ table {
 }
 
 .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-  background-color: #F5A623!important;
+  background-color: #F5A623 !important;
 }
+
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-  background-color: white!important;
+  background-color: white !important;
 }
+
 .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb-container {
   transform: translate3d(20px, 0, 0) !important;
 }
@@ -76,7 +81,7 @@ mat-slide-toggle {
     width: 54px;
     height: 34px;
     border-radius: 17px;
-    background-color: #E1EAF1!important;
+    background-color: #E1EAF1 !important;
   }
 }
 
@@ -94,7 +99,7 @@ mat-slide-toggle {
   box-shadow: 0 1px 10px #E87C607A;
 
   .ja-button {
-    color: #E87C60!important;
+    color: #E87C60 !important;
     padding: 0;
     min-width: 40px;
   }
@@ -119,17 +124,18 @@ mat-slide-toggle {
 }
 
 button {
-  border: none!important;
+  border: none !important;
 }
 
 .mat-dialog-container {
-  overflow: visible!important;
+  overflow: visible !important;
 }
 
 .input-pink {
   mat-label {
     color: #F389CC;
   }
+
   input {
     color: #fff;
     caret-color: #ffffff;
@@ -140,6 +146,7 @@ button {
   mat-label {
     color: #4A90E2;
   }
+
   input {
     color: #fff;
     caret-color: #ffffff;
@@ -147,13 +154,14 @@ button {
 }
 
 .mat-form-field-appearance-legacy .mat-form-field-underline {
-  height: 1px!important;
+  height: 1px !important;
 }
 
 .input-pink .mat-form-field-underline {
   background-color: #F389CC;
+
   span {
-    background-color: #F389CC!important;
+    background-color: #F389CC !important;
   }
 }
 
@@ -163,8 +171,9 @@ button {
 
 .input-blue .mat-form-field-underline {
   background-color: #4A90E2;
+
   span {
-    background-color: #4A90E2!important;
+    background-color: #4A90E2 !important;
   }
 }
 
@@ -177,6 +186,7 @@ button {
   font-size: 16px;
   width: 100%;
   color: black;
+
   .round {
     width: 60px;
     height: 60px;
@@ -191,6 +201,7 @@ button {
 .pink {
   .round {
     background-color: #FEF0F9;
+
     mat-icon {
       color: #F389CC;
     }
@@ -200,6 +211,7 @@ button {
 .yellow {
   .round {
     background-color: #FEEACA;
+
     mat-icon {
       color: #F5A623;
     }
@@ -209,6 +221,7 @@ button {
 .green {
   .round {
     background-color: #E1F7F2;
+
     mat-icon {
       color: #50E3C2;
     }
@@ -218,6 +231,7 @@ button {
 .blue {
   .round {
     background-color: #E1EAF1;
+
     mat-icon {
       color: #4A90E2;
     }
@@ -231,10 +245,10 @@ button {
 .expansion-panel-container {
   button {
     margin: 5px;
-    box-shadow: 0 1px 10px #E5ECF3!important;
-    height: 44px!important;
-    padding-left: 20px!important;
-    padding-right: 20px!important;
+    box-shadow: 0 1px 10px #E5ECF3 !important;
+    height: 44px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
 }
 
@@ -242,11 +256,11 @@ button {
   margin-left: 16px;
   background-color: var(--primary-color);
   color: white;
-  border-radius: 10px!important;
+  border-radius: 10px !important;
 }
 
 .primary-button {
-  border-radius: 25px!important;
+  border-radius: 25px !important;
 }
 
 .width-50 {
@@ -258,7 +272,7 @@ button {
 //}
 
 .mat-menu-panel {
-  border-radius: 10px!important;
+  border-radius: 10px !important;
 }
 
 .delete-icon {
@@ -270,15 +284,15 @@ button {
 }
 
 .mat-card-radius {
-  border-radius: 12px!important;
+  border-radius: 12px !important;
 }
 
 mat-dialog-container {
-  border-radius: 12px!important;
+  border-radius: 12px !important;
 }
 
 .mat-form-field-hide-placeholder .mat-form-field-label {
-  top: 10px!important;
+  top: 10px !important;
   padding-left: 16px;
 }
 
@@ -296,5 +310,10 @@ table thead tr th {
 }
 
 .mat-slide-toggle.mat-disabled {
-  opacity: 0.8!important;
+  opacity: 0.8 !important;
+}
+
+.white-blue {
+  background-color: #4A90E2;
+  color: white;
 }

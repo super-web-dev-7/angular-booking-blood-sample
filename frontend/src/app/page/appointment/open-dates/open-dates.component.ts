@@ -5,6 +5,7 @@ import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
 import {NewComponent} from '../new/new.component';
+import {AppointmentViewComponent} from '../appointment-view/appointment-view.component';
 
 @Component({
   selector: 'app-open-dates',
@@ -87,8 +88,15 @@ export class OpenDatesComponent implements OnInit {
 
   detail = element => {
     console.log(element);
-  }
+    const dialogRef = this.dialog.open(AppointmentViewComponent, {
+      width: '650px',
+      position: {left: '15%'}
+    });
 
+    dialogRef.afterClosed().subscribe(() => {
+      console.log('closed');
+    });
+  }
 }
 
 const ELEMENT_DATA: any[] = [
