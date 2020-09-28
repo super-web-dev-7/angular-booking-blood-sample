@@ -71,6 +71,11 @@ export class NewComponent implements OnInit {
     return this.userForm.controls;
   }
 
+  generatePassword = () => {
+    const password = Math.random().toString(36).slice(-8);
+    this.userForm.controls.password.setValue(password);
+  }
+
   selectAgency = id => {
     this.selectedAgency = id;
   }

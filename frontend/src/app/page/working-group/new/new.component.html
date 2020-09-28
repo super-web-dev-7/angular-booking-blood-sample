@@ -64,6 +64,7 @@
         <input formControlName="password" autocomplete="off" matInput>
         <mat-error *ngIf="userForm.get('password').hasError('required')">This field is required</mat-error>
       </mat-form-field>
+      <button type="button" mat-stroked-button class="custom-button" (click)="generatePassword()">Generate Password</button>
     </form>
     <mat-expansion-panel hideToggle>
       <mat-expansion-panel-header>

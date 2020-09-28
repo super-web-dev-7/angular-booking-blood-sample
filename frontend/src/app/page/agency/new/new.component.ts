@@ -34,8 +34,9 @@ export class NewComponent implements OnInit {
     });
 
     this.newUserForm = this.formBuilder.group({
-      name: [null, Validators.required],
-      email: [null, Validators.required],
+      firstName: [null, Validators.required],
+      lastName: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required]
     });
 
@@ -71,8 +72,8 @@ export class NewComponent implements OnInit {
     }
     this.isAddAdminPopup = !this.isAddAdminPopup;
     const data = {
-      firstName: this.getUser.name.value.split(' ')[0],
-      lastName: this.getUser.name.value.split(' ')[1],
+      firstName: this.getUser.firstName.value,
+      lastName: this.getUser.lastName.value,
       email: this.getUser.email.value,
       password: this.getUser.password.value,
       role: 'Doctor',

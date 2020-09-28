@@ -50,20 +50,29 @@
         <button (click)="addDoctor()" *ngIf="isAddAdminPopup" mat-stroked-button class="add-button white-pink"><mat-icon>add</mat-icon></button>
       </div>
       <mat-form-field class="w-100 mt-4 input-pink">
-        <mat-label>Vor - und Nachname</mat-label>
-        <input autocomplete="off" matInput formControlName="name">
-        <mat-error *ngIf="newUserForm.get('name').hasError('required')">
+        <mat-label>Vorname</mat-label>
+        <input autocomplete="off" matInput formControlName="firstName">
+        <mat-error *ngIf="newUserForm.get('firstName').hasError('required')">
           This field is required.
         </mat-error>
       </mat-form-field>
-      <mat-form-field class="w-100 mt-2 input-pink">
+      <mat-form-field class="w-100 input-pink">
+        <mat-label>Nachname</mat-label>
+        <input autocomplete="off" matInput formControlName="lastName">
+        <mat-error *ngIf="newUserForm.get('lastName').hasError('required')">
+          This field is required.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100 input-pink">
         <mat-label>E-Mail-Adresse</mat-label>
         <input autocomplete="off" matInput formControlName="email">
         <mat-error *ngIf="newUserForm.get('email').hasError('required')">
           This field is required.
         </mat-error>
+        <mat-icon *ngIf="getUser.email.touched && !getUser.email.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+        <mat-icon *ngIf="getUser.email.touched && getUser.email.errors" style="color: red" matSuffix>close</mat-icon>
       </mat-form-field>
-      <mat-form-field class="w-100 mt-2 input-pink">
+      <mat-form-field class="w-100 input-pink">
         <mat-label>Password</mat-label>
         <input autocomplete="off" matInput formControlName="password">
         <mat-error *ngIf="newUserForm.get('password').hasError('required')">
