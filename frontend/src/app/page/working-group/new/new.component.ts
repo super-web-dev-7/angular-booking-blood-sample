@@ -57,7 +57,6 @@ export class NewComponent implements OnInit {
     this.httpService.get(URL_JSON.AGENCY + '/get').subscribe((res: any) => {
       this.allAgency = res;
     });
-    console.log(this.data);
 
     this.selectedCalendar = this.data ? this.data?.calendar_id : 0;
     this.selectedAdmin = this.data ? this.data?.admin : [];
@@ -112,9 +111,7 @@ export class NewComponent implements OnInit {
       role: 'AG-Admin',
       isActive: 1
     };
-    console.log(data);
     this.httpService.create(URL_JSON.USER, data).subscribe(res => {
-      console.log(res);
       this.admins.push(res);
       this.isAddAdminPopup = !this.isAddAdminPopup;
     });
