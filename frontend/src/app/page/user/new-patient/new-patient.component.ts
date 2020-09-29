@@ -103,7 +103,6 @@ export class NewPatientComponent implements OnInit {
 
   createPatient = () => {
     if (this.patientForm.invalid) {
-      console.log('invalid')
       return;
     }
 
@@ -127,7 +126,6 @@ export class NewPatientComponent implements OnInit {
       otherCity: this.f.otherCity.value,
       otherPostalCode: this.f.otherPostalCode.value
     };
-    console.log(data)
     if (this.data) {
       this.httpService.update(URL_JSON.USER + '/update/patient/' + this.data.user_id, data).subscribe((res: any) => {
         res.id = this.data.user_id;
