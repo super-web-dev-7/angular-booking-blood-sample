@@ -5,7 +5,7 @@
   <div>
     <ul class="ul-0">
       <li *ngFor="let item of sidebar" [ngClass]="{'nested': item.children.length > 0}">
-        <a *ngIf="item.children.length === 0" class="ul-0-a" (click)="changeRoute(item.link)" [routerLink]="item.link" routerLinkActive="active">
+        <a *ngIf="item.children.length === 0" class="ul-0-a" (click)="changeRoute(item.link, item.link)" routerLinkActive="active">
           <div class="icon-container">
             <img [src]="'/assets/images/' + item.icon" alt="menu-icon">
           </div>
@@ -16,14 +16,14 @@
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div [ngClass]="{'icon-container': selected === item.link}">
-                  <img [src]="'/assets/images/' + item.icon" alt="menu-icon">
+                  <img class="icon-item" [src]="'/assets/images/' + item.icon" alt="menu-icon">
                 </div>
                 <span>{{item.name}}</span>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="sub-list-container" *ngFor="let subItem of item.children">
               <div>
-                <a class="ul-0-a" (click)="changeRoute(item.link)" [routerLink]="item.link + subItem.link">
+                <a class="ul-0-a" (click)="changeRoute(item.link, item.link + subItem.link)">
                   <span>{{subItem.name}}</span>
                 </a>
               </div>

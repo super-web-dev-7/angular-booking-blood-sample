@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {AG_Sidebar, Sidebar} from '../../../utils/sidebar';
@@ -14,6 +14,7 @@ export class SidebarComponent implements OnInit {
   sidebar;
   selected;
   currentUser;
+  @Output() menuClick = new EventEmitter();
 
   constructor(
     public router: Router,
@@ -30,7 +31,8 @@ export class SidebarComponent implements OnInit {
     this.selected = '/' + this.router.url.split('/')[1];
   }
 
-  changeRoute = (link) => {
-    this.selected = link;
+  changeRoute = (selected, link) => {
+    this.menuClick.emit(link);
+    this.selected = selected;
   }
 }

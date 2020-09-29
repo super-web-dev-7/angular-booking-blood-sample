@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {Router} from '@angular/router';
+
 import {AuthService} from '../../service/auth/auth.service';
 
 @Component({
@@ -15,7 +17,8 @@ export class MainLayoutComponent implements OnInit {
 
   constructor(
     breakpointObserver: BreakpointObserver,
-    public authService: AuthService
+    public authService: AuthService,
+    public router: Router
   ) {
     breakpointObserver.observe([
       Breakpoints.HandsetPortrait,
@@ -32,5 +35,12 @@ export class MainLayoutComponent implements OnInit {
 
   setOpen = ($event: any) => {
     this.isOpen = true;
+  }
+
+  menuClick = (link) => {
+    this.isOpen = false;
+    setTimeout(() => {
+      this.router.navigateByUrl(link);
+    }, 500);
   }
 }

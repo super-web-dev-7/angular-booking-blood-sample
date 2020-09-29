@@ -1,6 +1,6 @@
 <mat-sidenav-container>
-  <mat-sidenav [opened]="isOpen" [mode]="isMobile ? 'over' : 'side'" (closed)="isOpen = false">
-    <app-sidebar></app-sidebar>
+  <mat-sidenav [opened]="isOpen" [mode]="isMobile ? 'over' : 'side'" (closed)="isOpen = false" #sidenav>
+    <app-sidebar (menuClick)="menuClick($event)"></app-sidebar>
   </mat-sidenav>
   <mat-sidenav-content class="page-wrapper">
     <div class="background-container" *ngIf="!isMobile"></div>
