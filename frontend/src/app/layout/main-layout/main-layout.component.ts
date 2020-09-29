@@ -38,9 +38,13 @@ export class MainLayoutComponent implements OnInit {
   }
 
   menuClick = (link) => {
-    this.isOpen = false;
-    setTimeout(() => {
+    if (this.isMobile) {
+      this.isOpen = false;
+      setTimeout(() => {
+        this.router.navigateByUrl(link);
+      }, 500);
+    } else {
       this.router.navigateByUrl(link);
-    }, 500);
+    }
   }
 }
