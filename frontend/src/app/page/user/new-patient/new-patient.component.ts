@@ -49,10 +49,10 @@ export class NewPatientComponent implements OnInit {
       gender: [this.data?.gender, Validators.required],
       plz: [this.data?.plz, Validators.required],
       ort: [this.data?.ort, Validators.required],
-      differentPlace: [this.data?.differentPlace, Validators.required],
-      customerStore: [this.data?.customerStore, Validators.required],
-      alternative: [this.data?.alternative, Validators.required],
-      sendSMS: [this.data?.sendSMS, Validators.required],
+      differentPlace: [this.data ? this.data?.differentPlace : false, Validators.required],
+      customerStore: [this.data ? this.data?.customerStore : false, Validators.required],
+      alternative: [this.data ? this.data?.alternative : false, Validators.required],
+      sendSMS: [this.data ? this.data?.sendSMS : false, Validators.required],
       otherStreet: [this.data?.otherStreet],
       otherPostalCode: [this.data?.otherPostalCode],
       otherCity: [this.data?.otherCity]
@@ -103,6 +103,7 @@ export class NewPatientComponent implements OnInit {
 
   createPatient = () => {
     if (this.patientForm.invalid) {
+      console.log('invalid')
       return;
     }
 
@@ -126,6 +127,7 @@ export class NewPatientComponent implements OnInit {
       otherCity: this.f.otherCity.value,
       otherPostalCode: this.f.otherPostalCode.value
     };
+    console.log(data)
     if (this.data) {
       this.httpService.update(URL_JSON.USER + '/update/patient/' + this.data.user_id, data).subscribe((res: any) => {
         res.id = this.data.user_id;
