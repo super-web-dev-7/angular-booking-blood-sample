@@ -40,6 +40,7 @@
         <button
           type="button"
           mat-stroked-button
+          class="select-button"
           *ngFor="let role of roles"
           [ngClass]="{'primary': selectedRole===role.id}"
           (click)="selectRole(role.id)">

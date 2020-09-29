@@ -26,6 +26,7 @@
             <button
               type="button"
               mat-stroked-button
+              class="select-button"
               *ngFor="let shipment of shipments"
               [ngClass]="{'primary': selectedShipment===shipment.id}"
               (click)="selectShipment(shipment.id)">
@@ -48,6 +49,7 @@
             <button
               type="button"
               mat-stroked-button
+              class="select-button"
               *ngFor="let receiver of receivers"
               [ngClass]="{'primary': selectedReceiver===receiver.id}"
               (click)="selectReceiver(receiver.id)"

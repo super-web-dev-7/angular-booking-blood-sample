@@ -30,6 +30,7 @@
         <button
           type="button"
           mat-stroked-button
+          class="select-button"
           *ngFor="let doctor of doctors"
           [ngClass]="{'primary': selectedDoctors.includes(doctor.id)}"
           (click)="selectAdmin(doctor.id)"

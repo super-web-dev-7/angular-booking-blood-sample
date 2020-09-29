@@ -252,11 +252,15 @@ button {
   }
 }
 
+.select-button {
+  margin-left: 16px!important;
+  border-radius: 10px !important;
+  box-shadow: 0 1px 10px #E5ECF3!important;
+}
+
 .primary {
-  margin-left: 16px;
   background-color: var(--primary-color);
   color: white;
-  border-radius: 10px !important;
 }
 
 .primary-button {
@@ -317,3 +321,4 @@ table thead tr th {
   background-color: #4A90E2;
   color: white;
 }
+

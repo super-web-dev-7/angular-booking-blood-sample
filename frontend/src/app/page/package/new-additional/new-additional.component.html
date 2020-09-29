@@ -66,6 +66,7 @@
             <button
               type="button"
               mat-stroked-button
+              class="select-button"
               *ngFor="let status of statuses"
               [ngClass]="{'primary': selectedStatus===status.value}"
               (click)="selectStatus(status.value)">

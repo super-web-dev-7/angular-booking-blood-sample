@@ -24,6 +24,7 @@
         <button
           type="button"
           mat-stroked-button
+          class="select-button"
           *ngFor="let district of districts"
           [ngClass]="{'primary': selectedDistrict.includes(district.id)}"
           (click)="selectDistrict(district.id)"
@@ -47,6 +48,7 @@
         <button
           type="button"
           mat-stroked-button
+          class="select-button"
           *ngFor="let nurse of nurses"
           [ngClass]="{'primary': selectedNurse===nurse.id}"
           (click)="selectNurse(nurse.id)">

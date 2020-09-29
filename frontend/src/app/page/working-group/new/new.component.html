@@ -24,6 +24,7 @@
         <button
           type="button"
           mat-stroked-button
+          class="select-button"
           *ngFor="let admin of admins"
           [ngClass]="{'primary': selectedAdmin.includes(admin.id)}"
           (click)="selectAdmin(admin.id)">
@@ -81,6 +82,7 @@
         <button
           type="button"
           mat-stroked-button
+          class="select-button"
           *ngFor="let calendar of calendars"
           [ngClass]="{'primary': selectedCalendar===calendar.id}"
           (click)="selectCalendar(calendar.id)">
@@ -103,6 +105,7 @@
         <button
           type="button"
           mat-stroked-button
+          class="select-button"
           *ngFor="let agency of allAgency"
           [ngClass]="{'primary': selectedAgency===agency.id}"
           (click)="selectAgency(agency.id)">
