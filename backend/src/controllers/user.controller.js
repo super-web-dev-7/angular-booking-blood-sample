@@ -126,6 +126,9 @@ exports.delete = async (req, res) => {
             }
         }
     }
+    if (user.role === 'Patient') {
+        Patient.destroy({where: {user_id: req.params.id}})
+    }
     User.destroy({where: {id: req.params.id}}).then(() => {
         res.status(204).json({});
     })
