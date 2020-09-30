@@ -4,9 +4,9 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             unique: true
         },
-        // group_id: {
-        //     type: Sequelize.INTEGER
-        // },
+        group_id: {
+            type: Sequelize.INTEGER
+        },
         doctors_id: {
             type: Sequelize.STRING
         },

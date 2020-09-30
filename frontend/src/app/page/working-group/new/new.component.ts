@@ -21,8 +21,8 @@ export class NewComponent implements OnInit {
   calendars = [];
   groupForm: FormGroup;
   userForm: FormGroup;
-  allAgency = [];
-  selectedAgency = null;
+  // allAgency = [];
+  // selectedAgency = null;
   currentUser;
 
   constructor(
@@ -51,16 +51,23 @@ export class NewComponent implements OnInit {
         this.admins = [...this.data.admins, ...this.admins];
       }
     });
-    this.httpService.get(URL_JSON.CALENDAR + '/get').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.CALENDAR + '/get/unused').subscribe((res: any) => {
       this.calendars = res;
+      if (this.data) {
+        console.log(this.data);
+        this.calendars.unshift(this.data.calendar);
+      }
     });
-    this.httpService.get(URL_JSON.AGENCY + '/get').subscribe((res: any) => {
-      this.allAgency = res;
-    });
+    // this.httpService.get(URL_JSON.AGENCY + '/get/unused').subscribe((res: any) => {
+    //   this.allAgency = res;
+    //   if (this.data) {
+    //     this.allAgency.unshift(this.data.agency);
+    //   }
+    // });
 
     this.selectedCalendar = this.data ? this.data?.calendar_id : 0;
     this.selectedAdmin = this.data ? this.data?.admin : [];
-    this.selectedAgency = this.data?.agency.id;
+    // this.selectedAgency = this.data?.agency.id;
   }
 
   get f(): any {
@@ -76,9 +83,9 @@ export class NewComponent implements OnInit {
     this.userForm.controls.password.setValue(password);
   }
 
-  selectAgency = id => {
-    this.selectedAgency = id;
-  }
+  // selectAgency = id => {
+  //   this.selectedAgency = id;
+  // }
 
   showAddAdminPopup = () => {
     if (this.isAddAdminPopup) {
@@ -134,11 +141,11 @@ export class NewComponent implements OnInit {
       isActive: this.f.isActive.value,
       admin: JSON.stringify(this.selectedAdmin),
       calendar_id: this.selectedCalendar,
-      agency_id: this.selectedAgency
+      // agency_id: this.selectedAgency
     };
     if (this.data) {
       this.httpService.update(URL_JSON.GROUP + '/update/' + this.data.id, data).subscribe((result) => {
-        this.dialogRef.close(result[0]);
+        this.dialogRef.close(result);
       });
     } else {
       this.httpService.create(URL_JSON.GROUP, data).subscribe(() => {

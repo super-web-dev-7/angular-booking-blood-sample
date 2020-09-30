@@ -35,6 +35,22 @@ exports.get = async (req, res) => {
     res.status(200).json(response);
 }
 
+exports.getById = async (req, res) => {
+    User.hasMany(Calendar, {foreignKey: 'nurse'})
+    Calendar.belongsTo(User, {foreignKey: 'nurse'});
+
+    const calendar = await Calendar.findByPk(req.params.id, {include: [User]});
+
+    calendar.district_id = JSON.parse(calendar.district_id);
+    const districts = [];
+    for (const id of calendar.district_id) {
+        const district = await District.findByPk(id);
+        districts.push(district);
+    }
+    const response = {...calendar.dataValues, districts};
+    res.status(200).json(response);
+}
+
 exports.update = async (req, res) => {
     const data = req.body;
     const id = req.params.id;
@@ -69,4 +85,33 @@ exports.delete = async (req, res) => {
     Calendar.destroy({where: {id: req.params.id}}).then(result => {
         res.status(204).json({});
     })
+}
+
+exports.getUnusedCalendars = async (req, res) => {
+    User.hasMany(Calendar, {foreignKey: 'nurse'})
+    Calendar.belongsTo(User, {foreignKey: 'nurse'});
+
+    const allCalendar = await Calendar.findAll({where: req.query, include: [User]});
+    const groups = await Group.findAll({where: {}});
+
+    const calendars = [];
+    for (const calendar of allCalendar) {
+        const tempGroup = groups.filter(item => item.calendar_id === calendar.id);
+        if (tempGroup.length > 0) {
+            continue;
+        }
+        calendars.push(calendar)
+    }
+
+    const response = [];
+    for (let calendar of calendars) {
+        const districts = [];
+        calendar.district_id = JSON.parse(calendar.district_id);
+        for (const id of calendar.district_id) {
+            const district = await District.findByPk(id);
+            districts.push(district);
+        }
+        response.push({...calendar.dataValues, districts});
+    }
+    res.status(200).json(response);
 }

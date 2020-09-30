@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
@@ -7,6 +7,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 import {MustMatch} from '../../../shared/confirm-password.validator';
+import * as moment from "moment";
 
 
 @Component({
@@ -17,12 +18,17 @@ import {MustMatch} from '../../../shared/confirm-password.validator';
 export class NewComponent implements OnInit {
   isAppointmentPopup = false;
   isPatientPopup = false;
-  selectedDoctors = [];
-  selectedGroup = null;
-  doctors = [];
-  groups = [];
+  selectedAgency = null;
+  selectedPackage = null;
+  selectedTime = null;
+  agencies = [];
+  packages = [];
+  allTimes = [];
   groupForm: FormGroup;
   patientForm: FormGroup;
+  public patientSearchControl = new FormControl();
+  allPatient = [];
+  allPatient$ = [];
   constructor(
     public formBuilder: FormBuilder,
     public httpService: HttpService,
@@ -64,15 +70,24 @@ export class NewComponent implements OnInit {
     }, {
       validators: MustMatch('password', 'confirmPassword')
     });
-    this.httpService.get(URL_JSON.USER + '/get?role=Doctor').subscribe((res: any) => {
-      this.doctors = res;
+    this.httpService.get(URL_JSON.AGENCY + '/get').subscribe((res: any) => {
+      this.agencies = res;
     });
-    this.httpService.get(URL_JSON.GROUP + '/get').subscribe((res: any) => {
-      this.groups = res;
+    this.httpService.get(URL_JSON.PACKAGE + '/get').subscribe((res: any) => {
+      this.packages = res;
     });
-    this.selectedGroup = this.data ? this.data?.calendar_id : 0;
-    this.selectedDoctors = this.data ? this.data?.admin : [];
-    // this.dialogHeight = this.formView.nativeElement.offsetHeight;
+    this.httpService.get(URL_JSON.USER + '/get?role=Patient').subscribe((res: any) => {
+      this.allPatient = res;
+      this.allPatient$ = res;
+    });
+    this.selectedPackage = this.data ? this.data?.calendar_id : null;
+    this.selectedAgency = this.data ? this.data?.agency : null;
+    this.patientSearchControl.valueChanges.subscribe(() => {
+      console.log('');
+      let search = this.patientSearchControl.value;
+      search = search.toLowerCase();
+      this.allPatient = this.allPatient$.filter(item => (item.firstName + item.lastName).toLowerCase().indexOf(search) > -1);
+    });
   }
 
   get f(): any {
@@ -93,16 +108,49 @@ export class NewComponent implements OnInit {
     this.isAppointmentPopup = false;
   }
 
-  selectAdmin = (id) => {
-    if (this.selectedDoctors.includes(id)) {
-      this.selectedDoctors.splice(this.selectedDoctors.indexOf(id), 1);
-    } else {
-      this.selectedDoctors.push(id);
+  selectAgency = (agency) => {
+    this.selectedAgency = agency.id;
+    this.httpService.get(URL_JSON.CALENDAR + '/get/' + agency.working_group.calendar_id).subscribe((res: any) => {
+      this.makeAppointmentTime(res);
+    });
+  }
+
+  makeAppointmentTime = calendar  => {
+    this.allTimes = [];
+    calendar.working_time_from = this.getMillisecondsFromNumber(calendar.working_time_from);
+    calendar.working_time_until = this.getMillisecondsFromNumber(calendar.working_time_until);
+    calendar.duration_appointment = calendar.duration_appointment * 60 * 1000;
+    calendar.rest_time = calendar.rest_time * 60 * 1000;
+    console.log(calendar);
+    let time = calendar.working_time_from;
+    while ((time + calendar.duration_appointment) < calendar.working_time_until) {
+      this.allTimes.push(time);
+      time += calendar.duration_appointment + calendar.rest_time;
+    }
+    for (const item of this.allTimes) {
+      console.log(this.getDate(item));
     }
   }
 
-  selectCalendar = (id) => {
-    this.selectedGroup = id;
+  getDate = time => {
+    moment.locale('de');
+    return moment(time).format('ddd DD.MM.YYYY hh:mm');
+  }
+
+  getMillisecondsFromNumber = (num: any) => {
+    const now = new Date();
+    const date = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate(),
+      Math.floor(num / 2),
+      num % 2 === 0 ? 0 : 30
+    );
+    return date.getTime();
+  }
+
+  selectPackage = (id) => {
+    this.selectedPackage = id;
   }
 
   changeCheckboxValue = (item) => {
@@ -137,7 +185,7 @@ export class NewComponent implements OnInit {
     if (this.groupForm.invalid) {
       return;
     }
-    if (!this.selectedDoctors && !this.selectedGroup) {
+    if (!this.selectedAgency && !this.selectedPackage) {
       return;
     }
     // const data = {

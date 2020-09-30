@@ -26,11 +26,11 @@
           type="button"
           mat-stroked-button
           class="select-button"
-          *ngFor="let doctor of doctors"
-          [ngClass]="{'primary': selectedDoctors.includes(doctor.id)}"
-          (click)="selectAdmin(doctor.id)"
+          *ngFor="let agency of agencies"
+          [ngClass]="{'primary': selectedAgency === agency.id}"
+          (click)="selectAgency(agency)"
         >
-          Dr. med. {{doctor.firstName}} {{doctor.lastName}}
+          {{agency.name}}
         </button>
       </div>
     </mat-expansion-panel>
@@ -50,10 +50,10 @@
           type="button"
           mat-stroked-button
           class="select-button"
-          *ngFor="let group of groups"
-          [ngClass]="{'primary': selectedGroup===group.id}"
-          (click)="selectCalendar(group.id)">
-          {{group.name}} <br> {{group.range}}
+          *ngFor="let item of packages"
+          [ngClass]="{'primary': selectedPackage === item.id}"
+          (click)="selectPackage(item.id)">
+          {{item.name}}
         </button>
       </div>
     </mat-expansion-panel>
@@ -69,16 +69,16 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="d-flex flex-wrap admin-container">
-        <button
-          type="button"
-          mat-stroked-button
-          class="select-button"
-          *ngFor="let doctor of doctors"
-          [ngClass]="{'primary': selectedDoctors.includes(doctor.id)}"
-          (click)="selectAdmin(doctor.id)"
-        >
-          Dr. med. {{doctor.firstName}} {{doctor.lastName}}
-        </button>
+<!--        <button-->
+<!--          type="button"-->
+<!--          mat-stroked-button-->
+<!--          class="select-button"-->
+<!--          *ngFor="let time of allTimes"-->
+<!--          [ngClass]="{'primary': selectedDoctors.includes(time.id)}"-->
+<!--          (click)="selectAdmin(time.id)"-->
+<!--        >-->
+<!--          {{time}}-->
+<!--        </button>-->
       </div>
     </mat-expansion-panel>
     <button (click)="showAppointmentPopup()" *ngIf="!isAppointmentPopup && !isPatientPopup" mat-stroked-button
@@ -120,8 +120,20 @@
       </mat-expansion-panel-header>
       <div class="d-flex flex-wrap admin-container">
         <div class="search-field-container">
-          <input type="text" placeholder="Suchen...">
-          <mat-icon>search</mat-icon>
+<!--          <input type="text" placeholder="Suchen...">-->
+<!--          <mat-icon>search</mat-icon>-->
+          <mat-form-field class="w-100 mt-4">
+            <mat-label>Bezirk wählen</mat-label>
+            <mat-select>
+              <mat-option>
+                <ngx-mat-select-search [formControl]="patientSearchControl"></ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let patient of allPatient" [value]="patient.id">
+                {{patient.firstName}} {{patient.lastName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
         </div>
       </div>
     </mat-expansion-panel>

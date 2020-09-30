@@ -13,9 +13,9 @@ export class NewComponent implements OnInit {
 
   isAddAdminPopup = false;
   selectedDoctors = [];
-  // selectedGroup = null;
+  selectedGroup = null;
   doctors = [];
-  // groups = [];
+  groups = [];
   agencyForm: FormGroup;
   newUserForm: FormGroup;
   error = null;
@@ -43,10 +43,13 @@ export class NewComponent implements OnInit {
     this.httpService.get(URL_JSON.USER + '/get?role=Doctor').subscribe((res: any) => {
       this.doctors = res;
     });
-    // this.httpService.get(URL_JSON.GROUP + '/get').subscribe((res: any) => {
-    //   this.groups = res;
-    // });
-    // this.selectedGroup = this.data ? this.data?.group_id : 0;
+    this.httpService.get(URL_JSON.GROUP + '/get/unused').subscribe((res: any) => {
+      this.groups = res;
+      if (this.data) {
+        this.groups.unshift(this.data.working_group);
+      }
+    });
+    this.selectedGroup = this.data ? this.data?.group_id : 0;
     this.selectedDoctors = this.data ? this.data?.doctors_id : [];
   }
 
@@ -89,9 +92,9 @@ export class NewComponent implements OnInit {
     }
   }
 
-  // selectCalendar = (id) => {
-  //   this.selectedGroup = id;
-  // }
+  selectGroup = (id) => {
+    this.selectedGroup = id;
+  }
 
   close = () => {
     this.dialogRef.close();
@@ -108,7 +111,7 @@ export class NewComponent implements OnInit {
     const data = {
       name: this.f.name.value,
       doctors_id: this.selectedDoctors,
-      // group_id: this.selectedGroup
+      group_id: this.selectedGroup
     };
     if (this.data) {
       this.httpService.update(URL_JSON.AGENCY + '/update/' + this.data.id, data).subscribe(result => {

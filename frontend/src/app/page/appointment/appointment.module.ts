@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 
 import { OpenDatesComponent } from './open-dates/open-dates.component';
 import { NewComponent } from './new/new.component';
@@ -14,7 +15,6 @@ import {DatetimePickerComponent} from '../../components/datetime-picker/datetime
 import {DonutChartComponent} from '../../components/donut-chart/donut-chart.component';
 import {BarChartComponent} from '../../components/bar-chart/bar-chart.component';
 import { AppointmentViewComponent } from './appointment-view/appointment-view.component';
-
 
 
 @NgModule({
@@ -34,7 +34,8 @@ import { AppointmentViewComponent } from './appointment-view/appointment-view.co
     MaterialModule,
     ReactiveFormsModule,
     RouterModule,
-    NgxChartsModule
+    NgxChartsModule,
+    NgxMatSelectSearchModule
   ]
 })
 export class AppointmentModule { }

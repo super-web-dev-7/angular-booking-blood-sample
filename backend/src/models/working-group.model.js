@@ -10,9 +10,9 @@ module.exports = (sequelize, Sequelize) => {
         calendar_id: {
             type: Sequelize.INTEGER
         },
-        agency_id: {
-            type: Sequelize.INTEGER
-        },
+        // agency_id: {
+        //     type: Sequelize.INTEGER
+        // },
         isActive: {
             type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false
         }

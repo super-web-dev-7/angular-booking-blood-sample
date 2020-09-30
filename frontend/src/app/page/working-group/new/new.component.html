@@ -90,29 +90,29 @@
         </button>
       </div>
     </mat-expansion-panel>
-    <mat-expansion-panel hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <div class="d-flex avatar pink">
-            <div class="round">
-              <mat-icon>group</mat-icon>
-            </div>
-            <div>Agentur</div>
-          </div>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="d-flex flex-wrap expansion-panel-container">
-        <button
-          type="button"
-          mat-stroked-button
-          class="select-button"
-          *ngFor="let agency of allAgency"
-          [ngClass]="{'primary': selectedAgency===agency.id}"
-          (click)="selectAgency(agency.id)">
-          {{agency.name}}
-        </button>
-      </div>
-    </mat-expansion-panel>
+<!--    <mat-expansion-panel hideToggle>-->
+<!--      <mat-expansion-panel-header>-->
+<!--        <mat-panel-title>-->
+<!--          <div class="d-flex avatar pink">-->
+<!--            <div class="round">-->
+<!--              <mat-icon>group</mat-icon>-->
+<!--            </div>-->
+<!--            <div>Agentur</div>-->
+<!--          </div>-->
+<!--        </mat-panel-title>-->
+<!--      </mat-expansion-panel-header>-->
+<!--      <div class="d-flex flex-wrap expansion-panel-container">-->
+<!--        <button-->
+<!--          type="button"-->
+<!--          mat-stroked-button-->
+<!--          class="select-button"-->
+<!--          *ngFor="let agency of allAgency"-->
+<!--          [ngClass]="{'primary': selectedAgency===agency.id}"-->
+<!--          (click)="selectAgency(agency.id)">-->
+<!--          {{agency.name}}-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </mat-expansion-panel>-->
     <mat-expansion-panel hideToggle disabled>
       <mat-expansion-panel-header>
         <mat-panel-title>
