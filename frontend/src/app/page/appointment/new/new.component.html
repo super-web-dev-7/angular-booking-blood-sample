@@ -1,7 +1,7 @@
 <div class="p-2" #formView>
   <h1>Termin neu</h1>
 
-  <form [formGroup]="groupForm">
+  <form [formGroup]="appointmentForm">
     <mat-form-field class="w-100 mt-4">
       <mat-label>PLZ</mat-label>
       <input formControlName="name" autocomplete="off" matInput>
@@ -69,16 +69,16 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="d-flex flex-wrap admin-container">
-<!--        <button-->
-<!--          type="button"-->
-<!--          mat-stroked-button-->
-<!--          class="select-button"-->
-<!--          *ngFor="let time of allTimes"-->
-<!--          [ngClass]="{'primary': selectedDoctors.includes(time.id)}"-->
-<!--          (click)="selectAdmin(time.id)"-->
-<!--        >-->
-<!--          {{time}}-->
-<!--        </button>-->
+        <button
+          type="button"
+          mat-stroked-button
+          class="select-button"
+          *ngFor="let time of randomTimes"
+          [ngClass]="{'primary': selectedTime === time}"
+          (click)="selectedTime = time"
+        >
+          {{getDate(time)}}
+        </button>
       </div>
     </mat-expansion-panel>
     <button (click)="showAppointmentPopup()" *ngIf="!isAppointmentPopup && !isPatientPopup" mat-stroked-button
@@ -94,7 +94,7 @@
           <div class="text-white">Alle Termine</div>
         </div>
         <button
-          (click)="showAppointmentPopup()"
+          (click)="showAppointmentPopup(); addTime();"
           *ngIf="isAppointmentPopup"
           mat-stroked-button
           class="add-calendar white-yellow"
@@ -103,7 +103,7 @@
         </button>
       </div>
       <div class="text-center mt-4">
-        <app-datetime-picker></app-datetime-picker>
+        <app-datetime-picker [data]="allTimes" (setSelectedTime)="selectedPTime = $event"></app-datetime-picker>
       </div>
 
     </div>
@@ -122,18 +122,19 @@
         <div class="search-field-container">
 <!--          <input type="text" placeholder="Suchen...">-->
 <!--          <mat-icon>search</mat-icon>-->
-          <mat-form-field class="w-100 mt-4">
-            <mat-label>Bezirk wählen</mat-label>
-            <mat-select>
-              <mat-option>
-                <ngx-mat-select-search [formControl]="patientSearchControl"></ngx-mat-select-search>
-              </mat-option>
-              <mat-option *ngFor="let patient of allPatient" [value]="patient.id">
-                {{patient.firstName}} {{patient.lastName}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
+          <form [formGroup]="appointmentForm">
+            <mat-form-field class="w-100 mt-4">
+              <mat-label>Patient wählen</mat-label>
+              <mat-select formControlName="patient">
+                <mat-option>
+                  <ngx-mat-select-search [formControl]="patientSearchControl"></ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let patient of allPatient" [value]="patient.id">
+                  {{patient.firstName}} {{patient.lastName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </form>
         </div>
       </div>
     </mat-expansion-panel>
@@ -149,7 +150,7 @@
           </div>
           <div class="text-white">Neu</div>
         </div>
-        <button (click)="showPatientPopup()" *ngIf="isPatientPopup" mat-stroked-button class="add-button white-blue">
+        <button (click)="addPatient();" *ngIf="isPatientPopup" mat-stroked-button class="add-button white-blue">
           <mat-icon>add</mat-icon>
         </button>
         <div class="d-flex mt-2">
@@ -169,11 +170,11 @@
         <div class="d-flex">
           <mat-form-field class="input-blue mr-3 ml-3" style="width: 175px;">
             <mat-label>Passwort</mat-label>
-            <input type="password" autocomplete="off" matInput formControlName="password">
+            <input type="text" autocomplete="off" matInput formControlName="password">
           </mat-form-field>
           <mat-form-field class="input-blue mr-3 ml-3" style="width: 175px;">
             <mat-label>Passwort Wdhlg</mat-label>
-            <input type="password" autocomplete="off" matInput formControlName="confirmPassword">
+            <input type="text" autocomplete="off" matInput formControlName="confirmPassword">
             <mat-error *ngIf="pf.confirmPassword.errors?.mustMatch">Password must match.</mat-error>
           </mat-form-field>
           <button type="button" class="custom-button mr-3 ml-4" (click)="generatePassword()">Generieren</button>

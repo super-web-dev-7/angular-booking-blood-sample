@@ -2,23 +2,24 @@
   <h1>Termin neu</h1>
   <div class="item-container">
     <div class="label">PLZ</div>
-    <div class="value">10709</div>
+    <div class="value">{{data.patient.plz}}</div>
   </div>
   <div class="item-container">
     <div class="label">Zuweisung</div>
-    <div class="value">Agentur 2</div>
+    <div class="value">{{data.agency.name}}</div>
   </div>
   <div class="item-container">
     <div class="label">Paket</div>
-    <div class="value">Gutes Immunsystem</div>
+    <div class="value">{{data.package.name}}</div>
   </div>
   <div class="item-container">
     <div class="label">Termin</div>
-    <div class="value">DO 25.08.2020 15:30</div>
+    <div class="value">{{getDate(data.time)}}</div>
   </div>
   <div class="item-container">
     <div class="label">Patient</div>
-    <div class="value">Maria Zimmermann, Rosenweg 47, 10709 Berlin</div>
+    <div class="value">{{data.user.firstName}} {{data.user.lastName}}, {{data.patient.street}}, {{data.patient.plz}}, Berlin</div>
+<!--    <div class="value">Maria Zimmermann, Rosenweg 47, 10709 Berlin</div>-->
     <button (click)="isShowPatient = !isShowPatient; isShowSchedule = false;" *ngIf="!isShowPatient" mat-stroked-button class="add-button detail-patient white-blue">
       <mat-icon>person</mat-icon>
     </button>
@@ -29,11 +30,11 @@
   </div>
   <div class="item-container">
     <div class="label">Schwester</div>
-    <div class="value">Diana Weber</div>
+    <div class="value">{{data.nurse.firstName}} {{data.nurse.lastName}}</div>
   </div>
   <div class="item-container">
     <div class="label">Letzter Arzt</div>
-    <div class="value">Dr. med. Jessica Johns</div>
+    <div class="value">Dr. med. {{data.doctors[0].firstName}} {{data.doctors[0].lastName}}</div>
   </div>
   <div class="item-container">
     <div class="label">Status</div>
@@ -56,40 +57,40 @@
       </button>
       <div class="patient-item-container">
         <div class="label">E-Mail-Address</div>
-        <div class="value">Maria.z@gmail.com</div>
+        <div class="value">{{data.user.email}}</div>
       </div>
       <div class="patient-item-container">
         <div class="label">Handynummer</div>
-        <div class="value">017985466241</div>
+        <div class="value">{{data.user.phoneNumber}}</div>
       </div>
       <div class="patient-item-container">
         <div class="label">Name</div>
-        <div class="value">Frau Maria Zimmermann</div>
+        <div class="value">{{data.user.firstName}} {{data.user.lastName}}</div>
       </div>
       <div class="patient-item-container">
         <div class="label">Adresse</div>
-        <div class="value">Rosenweg 47, 10709 Berlin</div>
+        <div class="value">{{data.patient.street}}, {{data.patient.plz}} Berlin</div>
       </div>
       <div class="patient-item-container">
         <div class="label">Alter</div>
-        <div class="value">29 Jahre</div>
+        <div class="value">{{data.patient.age}} Jahre</div>
       </div>
       <div class="patient-item-container">
         <div class="label">Geschlecht</div>
-        <div class="value">Weiblich</div>
+        <div class="value">{{data.patient.gender}}</div>
       </div>
       <div class="d-flex" style="padding-bottom: 20px;">
         <div class="d-flex align-items-center">
           <div class="checkbox-container">
-            <div *ngIf="true" class="check-mark"></div>
+            <div *ngIf="data.patient.customerStore" class="check-mark"></div>
           </div>
-          <span>Code via SMS senden</span>
+          <span>Kunde hinterlegt Zahlungsmittel</span>
         </div>
       </div>
       <div class="d-flex" style="padding-bottom: 20px;">
         <div class="d-flex align-items-center">
           <div class="checkbox-container">
-            <div *ngIf="true" class="check-mark green-mark"></div>
+            <div *ngIf="data.patient.sendSMS" class="check-mark green-mark"></div>
           </div>
           <span>Code via SMS senden</span>
         </div>

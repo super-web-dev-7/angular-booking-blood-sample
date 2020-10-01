@@ -10,6 +10,7 @@ import additionalPackage from './additional-package';
 import agency from './agency.model';
 import patient from './patient.model';
 import districtModel from './static-district.model';
+import appointmentModel from './appointment.model';
 
 const sequelize = new Sequelize(config.mysql.database, config.mysql.user, config.mysql.password, {
     host: config.mysql.host,
@@ -31,9 +32,18 @@ db.additionalPackage = additionalPackage(sequelize, Sequelize);
 db.agency = agency(sequelize, Sequelize);
 db.patient = patient(sequelize, Sequelize);
 db.districtModel = districtModel(sequelize, Sequelize);
+db.appointment = appointmentModel(sequelize, Sequelize);
 
 // Relations
 db.patient.belongsTo(db.user);
 db.user.hasMany(db.patient);
+
+// Appointment Model
+db.appointment.belongsTo(db.user);
+db.appointment.belongsTo(db.package);
+db.appointment.belongsTo(db.agency);
+db.user.hasMany(db.appointment);
+db.package.hasMany(db.appointment);
+db.agency.hasMany(db.appointment);
 
 export default db;

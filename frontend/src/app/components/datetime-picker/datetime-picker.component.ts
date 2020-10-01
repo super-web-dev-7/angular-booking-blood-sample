@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -8,34 +8,40 @@ import * as moment from 'moment';
 })
 export class DatetimePickerComponent implements OnInit {
 
-  currentTime: any;
-  interval = 3 * 60 * 60 * 1000;
+  @Input() data;
+  @Output() setSelectedTime = new EventEmitter();
+  index = 0;
   constructor() { }
 
   ngOnInit(): void {
-    const today = new Date();
-    let i = 0;
-    while (true) {
-      this.currentTime = new Date(today.getFullYear(), today.getMonth(), today.getDay(), i * 3, 0, 0).getTime();
-      if (this.currentTime > new Date().getTime()) {
-        break;
-      } else {
-        i++;
-      }
-    }
+    this.setSelectedTime.emit(this.index);
   }
 
   getDate = time => {
-    moment.locale('de');
-    return moment(time).format('ddd DD.MM.YYYY hh:mm');
+    if (time) {
+      moment.locale('de');
+      return moment(time).format('ddd DD.MM.YYYY hh:mm');
+    } else {
+      return null;
+    }
   }
 
   up = () => {
-    this.currentTime = this.currentTime - this.interval;
+    if (this.index === 0) {
+      this.setSelectedTime.emit(this.index);
+      return;
+    }
+    this.index--;
+    this.setSelectedTime.emit(this.index);
   }
 
   down = () => {
-    this.currentTime = this.currentTime + this.interval;
+    if (this.index === this.data.length - 1) {
+      this.setSelectedTime.emit(this.index);
+      return;
+    }
+    this.index++;
+    this.setSelectedTime.emit(this.index);
   }
 
 }

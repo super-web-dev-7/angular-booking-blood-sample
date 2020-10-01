@@ -10,6 +10,7 @@ import calendarRouter from './calendar.router';
 import templateRouter from './template.router';
 import additionalPackageRouter from './additional-package.router';
 import agencyRouter from './agency.router';
+import appointmentRouter from './appointment.router';
 import otherRouter from './other.router';
 
 
@@ -26,6 +27,7 @@ router.use('/calendar', calendarRouter);
 router.use('/template', templateRouter);
 router.use('/additional-package', additionalPackageRouter);
 router.use('/agency', agencyRouter);
+router.use('/appointment', appointmentRouter);
 router.use('', otherRouter);
 
 

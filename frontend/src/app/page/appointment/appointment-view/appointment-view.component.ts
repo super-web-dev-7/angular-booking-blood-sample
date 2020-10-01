@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-appointment-view',
@@ -14,6 +15,7 @@ export class AppointmentViewComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<any>,
     public router: Router,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {
   }
 
@@ -22,6 +24,11 @@ export class AppointmentViewComponent implements OnInit {
 
   close = () => {
     this.dialogRef.close();
+  }
+
+  getDate = time => {
+    moment.locale('de');
+    return moment(time).format('ddd DD.MM.YYYY hh:mm');
   }
 
   onSubmit = () => {

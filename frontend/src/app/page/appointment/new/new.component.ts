@@ -3,12 +3,11 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import * as moment from 'moment';
 
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 import {MustMatch} from '../../../shared/confirm-password.validator';
-import * as moment from "moment";
-
 
 @Component({
   selector: 'app-new',
@@ -24,11 +23,13 @@ export class NewComponent implements OnInit {
   agencies = [];
   packages = [];
   allTimes = [];
-  groupForm: FormGroup;
+  randomTimes = [];
+  appointmentForm: FormGroup;
   patientForm: FormGroup;
   public patientSearchControl = new FormControl();
   allPatient = [];
   allPatient$ = [];
+  selectedPTime = null;
   constructor(
     public formBuilder: FormBuilder,
     public httpService: HttpService,
@@ -44,8 +45,9 @@ export class NewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.groupForm = this.formBuilder.group({
+    this.appointmentForm = this.formBuilder.group({
       name: [this.data?.name, Validators.required],
+      patient: [null, Validators.required]
     });
     this.patientForm = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
@@ -83,7 +85,6 @@ export class NewComponent implements OnInit {
     this.selectedPackage = this.data ? this.data?.calendar_id : null;
     this.selectedAgency = this.data ? this.data?.agency : null;
     this.patientSearchControl.valueChanges.subscribe(() => {
-      console.log('');
       let search = this.patientSearchControl.value;
       search = search.toLowerCase();
       this.allPatient = this.allPatient$.filter(item => (item.firstName + item.lastName).toLowerCase().indexOf(search) > -1);
@@ -91,7 +92,7 @@ export class NewComponent implements OnInit {
   }
 
   get f(): any {
-    return this.groupForm.controls;
+    return this.appointmentForm.controls;
   }
 
   get pf(): any {
@@ -101,6 +102,14 @@ export class NewComponent implements OnInit {
   showAppointmentPopup = () => {
     this.isAppointmentPopup = !this.isAppointmentPopup;
     this.isPatientPopup = false;
+  }
+
+  addTime = () => {
+    if (this.allTimes.length === 0) {
+      return;
+    }
+    this.randomTimes.push(this.allTimes[this.selectedPTime]);
+    this.allTimes.splice(this.selectedPTime, 1);
   }
 
   showPatientPopup = () => {
@@ -116,19 +125,29 @@ export class NewComponent implements OnInit {
   }
 
   makeAppointmentTime = calendar  => {
+    const date = new Date();
     this.allTimes = [];
-    calendar.working_time_from = this.getMillisecondsFromNumber(calendar.working_time_from);
-    calendar.working_time_until = this.getMillisecondsFromNumber(calendar.working_time_until);
-    calendar.duration_appointment = calendar.duration_appointment * 60 * 1000;
-    calendar.rest_time = calendar.rest_time * 60 * 1000;
-    console.log(calendar);
-    let time = calendar.working_time_from;
-    while ((time + calendar.duration_appointment) < calendar.working_time_until) {
-      this.allTimes.push(time);
-      time += calendar.duration_appointment + calendar.rest_time;
+    const currentDay = date.getDay();
+    let plusDate = 0;
+    const durationAppointment = calendar.duration_appointment * 60 * 1000;
+    const restTime = calendar.rest_time * 60 * 1000;
+    while (currentDay + plusDate < 6) {
+      const workingTimeFrom = this.getMillisecondsFromNumber(calendar.working_time_from, plusDate);
+      const workingTimeUntil = this.getMillisecondsFromNumber(calendar.working_time_until, plusDate);
+      let time = workingTimeFrom;
+      while ((time + durationAppointment) < workingTimeUntil) {
+        this.allTimes.push(time);
+        time += durationAppointment + restTime;
+      }
+      plusDate++;
     }
-    for (const item of this.allTimes) {
-      console.log(this.getDate(item));
+    for (const i of new Array(4)) {
+      const randomIndex = Math.floor(Math.random() * this.allTimes.length);
+      this.randomTimes.push(this.allTimes[randomIndex]);
+      this.allTimes.splice(randomIndex, 1);
+      if (this.allTimes.length === 0) {
+        break;
+      }
     }
   }
 
@@ -137,12 +156,12 @@ export class NewComponent implements OnInit {
     return moment(time).format('ddd DD.MM.YYYY hh:mm');
   }
 
-  getMillisecondsFromNumber = (num: any) => {
+  getMillisecondsFromNumber = (num: any, plusDate) => {
     const now = new Date();
     const date = new Date(
       now.getFullYear(),
       now.getMonth(),
-      now.getDate(),
+      now.getDate() + plusDate,
       Math.floor(num / 2),
       num % 2 === 0 ? 0 : 30
     );
@@ -173,8 +192,8 @@ export class NewComponent implements OnInit {
 
   generatePassword = () => {
     const password = Math.random().toString(36).slice(-8);
-    this.f.password.setValue(password);
-    this.f.confirmPassword.setValue(password);
+    this.pf.password.setValue(password);
+    this.pf.confirmPassword.setValue(password);
   }
 
   close = () => {
@@ -182,27 +201,57 @@ export class NewComponent implements OnInit {
   }
 
   onSubmit = () => {
-    if (this.groupForm.invalid) {
+    if (this.appointmentForm.invalid) {
       return;
     }
-    if (!this.selectedAgency && !this.selectedPackage) {
+    if (!this.selectedAgency || !this.selectedPackage || !this.selectedTime) {
+      console.log('select invaild');
       return;
     }
-    // const data = {
-    //   name: this.f.name.value,
-    //   isActive: this.f.isActive.value,
-    //   admin: JSON.stringify(this.selectedDoctors),
-    //   calendar_id: this.selectedGroup
-    // };
-    // if (this.data) {
-    //   this.httpService.update(URL_JSON.GROUP + '/update/' + this.data.id, data).subscribe((result) => {
-    //     this.dialogRef.close(result[0]);
-    //   });
-    // } else {
-    //   this.httpService.create(URL_JSON.GROUP, data).subscribe(res => {
-    //     this.dialogRef.close();
-    //   });
-    // }
+    const data = {
+      name: this.f.name.value,
+      userId: this.f.patient.value,
+      agencyId: this.selectedAgency,
+      packageId: this.selectedPackage,
+      time: this.selectedTime
+    };
+    console.log(data);
+    if (this.data) {
+    } else {
+      this.httpService.create(URL_JSON.APPOINTMENT, data).subscribe(res => {
+        this.dialogRef.close();
+      });
+    }
   }
 
+  addPatient = () => {
+    if (this.pf.invalid) {
+      return;
+    }
+    const data = {
+      email: this.pf.email.value,
+      phoneNumber: this.pf.phoneNumber.value,
+      password: this.pf.password.value,
+      firstName: this.pf.firstName.value,
+      lastName: this.pf.lastName.value,
+      salutation: this.pf.salutation.value,
+      street: this.pf.street.value,
+      age: this.pf.age.value,
+      gender: this.pf.gender.value,
+      plz: this.pf.plz.value,
+      ort: this.pf.ort.value,
+      differentPlace: this.pf.differentPlace.value,
+      customerStore: this.pf.customerStore.value,
+      alternative: this.pf.alternative.value,
+      sendSMS: this.pf.sendSMS.value,
+      otherStreet: this.pf.otherStreet.value,
+      otherCity: this.pf.otherCity.value,
+      otherPostalCode: this.pf.otherPostalCode.value
+    };
+    this.httpService.create(URL_JSON.USER + '/patient', data).subscribe(res => {
+      this.allPatient$.push(res);
+      this.allPatient.push(res);
+      this.showPatientPopup();
+    });
+  }
 }

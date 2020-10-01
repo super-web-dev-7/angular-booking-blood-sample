@@ -4,8 +4,12 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
+import * as moment from 'moment';
+
 import {NewComponent} from '../new/new.component';
 import {AppointmentViewComponent} from '../appointment-view/appointment-view.component';
+import {HttpService} from '../../../service/http/http.service';
+import {URL_JSON} from '../../../utils/url_json';
 
 @Component({
   selector: 'app-open-dates',
@@ -15,7 +19,7 @@ import {AppointmentViewComponent} from '../appointment-view/appointment-view.com
 export class OpenDatesComponent implements OnInit {
 
   displayedColumns: string[] = ['no', 'date', 'time', 'patient', 'nurse', 'lastDoctor', 'status', 'actions'];
-  dataSource = new MatTableDataSource<any>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<any>([]);
   currentPage = 0;
   pageSize = 5;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -23,6 +27,9 @@ export class OpenDatesComponent implements OnInit {
 
   selectedDeleteItem: number = null;
   selectedButton = 0;
+
+  allAppointment = [];
+  filterValue = null;
 
   orderStatus = {
     active: '',
@@ -33,7 +40,8 @@ export class OpenDatesComponent implements OnInit {
 
   constructor(
     public router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public httpService: HttpService
   ) { }
 
   ngOnInit(): void {
@@ -52,6 +60,20 @@ export class OpenDatesComponent implements OnInit {
     } else if (url[2] === 'completed') {
       this.title = 'Abgeschlossene';
     }
+    this.httpService.get(URL_JSON.APPOINTMENT + '/get').subscribe((res: any) => {
+      this.dataSource.data = res;
+      this.allAppointment = res;
+    });
+  }
+
+  getDate = (time) => {
+    moment.locale('de');
+    return moment(time).format('DD.MM.YYYY');
+  }
+
+  getTime = (time) => {
+    moment.locale('de');
+    return moment(time).format('hh:mm');
   }
 
   onPaginateChange = ($event: PageEvent) => {
@@ -90,7 +112,8 @@ export class OpenDatesComponent implements OnInit {
     console.log(element);
     const dialogRef = this.dialog.open(AppointmentViewComponent, {
       width: '650px',
-      position: {left: '15%'}
+      position: {left: '15%'},
+      data: element
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -98,38 +121,3 @@ export class OpenDatesComponent implements OnInit {
     });
   }
 }
-
-const ELEMENT_DATA: any[] = [
-  {
-    id: 1,
-    name: 'Allg. Gesundheits-Check-Up',
-    number: '2548963 - 5',
-    assign: 'Arbeitsgruppe 1 (+2)',
-    price: 12350,
-    status: 'Öffentlich'
-  },
-  {
-    id: 2,
-    name: 'Corona',
-    number: '5452856 - 1',
-    assign: 'Arbeitsgruppe 2',
-    price: 7890,
-    status: 'Intern'
-  },
-  {
-    id: 3,
-    name: 'Corona',
-    number: '5452856 - 1',
-    assign: 'Arbeitsgruppe 2',
-    price: 7890,
-    status: 'Intern'
-  },
-  {
-    id: 4,
-    name: 'Corona',
-    number: '5452856 - 1',
-    assign: 'Arbeitsgruppe 2',
-    price: 7890,
-    status: 'Intern'
-  }
-];
