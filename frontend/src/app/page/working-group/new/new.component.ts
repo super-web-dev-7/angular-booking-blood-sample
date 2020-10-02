@@ -45,13 +45,13 @@ export class NewComponent implements OnInit {
       email: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required]
     });
-    this.httpService.get(URL_JSON.USER + '/get/working-group').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.USER + '/getWorkingGroup').subscribe((res: any) => {
       this.admins = res;
       if (this.data) {
         this.admins = [...this.data.admins, ...this.admins];
       }
     });
-    this.httpService.get(URL_JSON.CALENDAR + '/get/unused').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.CALENDAR + '/get_unused').subscribe((res: any) => {
       this.calendars = res;
       if (this.data) {
         console.log(this.data);

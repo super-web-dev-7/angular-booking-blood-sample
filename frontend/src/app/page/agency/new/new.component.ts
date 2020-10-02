@@ -43,7 +43,7 @@ export class NewComponent implements OnInit {
     this.httpService.get(URL_JSON.USER + '/get?role=Doctor').subscribe((res: any) => {
       this.doctors = res;
     });
-    this.httpService.get(URL_JSON.GROUP + '/get/unused').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.GROUP + '/get_unused').subscribe((res: any) => {
       this.groups = res;
       if (this.data) {
         this.groups.unshift(this.data.working_group);

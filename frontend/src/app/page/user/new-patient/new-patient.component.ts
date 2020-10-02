@@ -32,7 +32,7 @@ export class NewPatientComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.data) {
-      this.httpService.get(URL_JSON.USER + '/get/patient/' + this.data.id).subscribe((res: any) => {
+      this.httpService.get(URL_JSON.USER + '/getPatientById/' + this.data.id).subscribe((res: any) => {
         this.patientData = res;
       });
     }

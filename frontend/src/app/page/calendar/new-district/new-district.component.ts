@@ -32,7 +32,7 @@ export class NewDistrictComponent implements OnInit {
       model: [this.data?.model, Validators.required],
       isActive: [this.data ? this.data?.isActive : false, Validators.required]
     });
-    this.httpService.get(URL_JSON.DISTRICT + '/get/model').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.DISTRICT + '/get_model').subscribe((res: any) => {
       this.allStaticDistrict = res;
       this.allStaticDistrict$ = res;
     });

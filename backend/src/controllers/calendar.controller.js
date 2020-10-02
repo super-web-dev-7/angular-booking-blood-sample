@@ -39,15 +39,15 @@ exports.getById = async (req, res) => {
     User.hasMany(Calendar, {foreignKey: 'nurse'})
     Calendar.belongsTo(User, {foreignKey: 'nurse'});
 
-    const calendar = await Calendar.findByPk(req.params.id, {include: [User]});
+    const calendar = await Calendar.findByPk(req.params.id, {include: [User], raw: true});
 
-    calendar.district_id = JSON.parse(calendar.district_id);
     const districts = [];
+    calendar.district_id = JSON.parse(calendar.district_id);
     for (const id of calendar.district_id) {
         const district = await District.findByPk(id);
         districts.push(district);
     }
-    const response = {...calendar.dataValues, districts};
+    const response = {...calendar, districts};
     res.status(200).json(response);
 }
 

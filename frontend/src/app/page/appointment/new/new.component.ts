@@ -119,7 +119,7 @@ export class NewComponent implements OnInit {
 
   selectAgency = (agency) => {
     this.selectedAgency = agency.id;
-    this.httpService.get(URL_JSON.CALENDAR + '/get/' + agency.working_group.calendar_id).subscribe((res: any) => {
+    this.httpService.get(URL_JSON.CALENDAR + '/getById/' + agency.working_group.calendar_id).subscribe((res: any) => {
       this.makeAppointmentTime(res);
     });
   }

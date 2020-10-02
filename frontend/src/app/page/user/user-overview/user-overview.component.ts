@@ -113,7 +113,7 @@ export class UserOverviewComponent implements OnInit {
 
     let dialogRef: MatDialogRef<any>;
     if (data.role === 'Patient') {
-      this.httpService.get(URL_JSON.USER + '/get/patient/' + data.id).subscribe((res: any) => {
+      this.httpService.get(URL_JSON.USER + '/getPatientById/' + data.id).subscribe((res: any) => {
         dialogRef = this.dialog.open(NewPatientComponent, {
           width: '1100px',
           data: {...data, ...(res)}

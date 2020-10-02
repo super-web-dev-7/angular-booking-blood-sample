@@ -5,9 +5,9 @@ const router = Router();
 
 router.route('/create').post(calendarController.create);
 router.route('/get').get(calendarController.get);
-router.route('/get/:id').get(calendarController.getById);
+router.route('/getById/:id').get(calendarController.getById);
 router.route('/delete/:id').delete(calendarController.delete);
 router.route('/update/:id').put(calendarController.update);
-router.route('/get/unused').get(calendarController.getUnusedCalendars);
+router.route('/get_unused').get(calendarController.getUnusedCalendars);
 
 export default router;
