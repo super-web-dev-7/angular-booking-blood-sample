@@ -102,9 +102,17 @@ const routes: Routes = [
         data: {
           userRole: ['AG-Admin']
         }
-      },
+      }
     ],
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'nurse-view',
+    loadChildren: () => import('./page/nurse-view/nurse-view.module').then(m => m.NurseViewModule),
+    canActivate: [RoleGuard],
+    data: {
+      userRole: ['Nurse']
+    }
   }
 ];
 
