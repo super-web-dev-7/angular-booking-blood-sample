@@ -20,7 +20,7 @@
   <mat-sidenav
     [opened]="isRightMenuOpen"
     [mode]="'over'"
-    (closed)="isRightMenuOpen = false; close()"
+    (closed)="close()"
     #rightSidenav
     (keydown.escape)="rightSidenav.close()"
     position="end"
@@ -82,7 +82,7 @@
         </div>
       </div>
       <div class="button-container">
-        <button mat-raised-button class="primary-button" color="primary">Patient vorbereitet</button>
+        <button mat-raised-button class="primary-button" color="primary" (click)="patientPrepared()">Patient vorbereitet</button>
       </div>
     </div>
 <!--    2-->
@@ -106,11 +106,14 @@
           </div>
           <div>
             <div class="d-flex avatar pink">
-              <div class="round">
+              <div class="round" (click)="isEditEmail = !isEditEmail">
                 <mat-icon>email</mat-icon>
               </div>
               <div>
-                muster@mustermann.de
+                <span *ngIf="!isEditEmail">{{defaultEmail}}</span>
+                <mat-form-field class="w-100" *ngIf="isEditEmail">
+                  <input autocomplete="off" matInput [(ngModel)]="customEmail">
+                </mat-form-field>
               </div>
             </div>
             <div class="d-flex avatar green">
@@ -122,18 +125,27 @@
               </div>
             </div>
             <div class="d-flex avatar yellow">
-              <div class="round">
+              <div class="round" (click)="isEditText = !isEditText">
                 <mat-icon>lens</mat-icon>
               </div>
               <div>
-                Terminverspätung
+                <span>Terminverspätung</span>
               </div>
             </div>
+            <mat-form-field class="text-template" appearance="standard" *ngIf="isEditText">
+              <textarea [(ngModel)]="customText" [defaultValue]="defaultText" matInput rows="14"></textarea>
+            </mat-form-field>
+<!--            <div class="text-template" *ngIf="isEditText">-->
+<!--              -->
+<!--            </div>-->
           </div>
         </div>
       </div>
       <div class="button-container">
-        <button mat-raised-button class="primary-button" color="primary">Terminverspätung melden</button>
+        <button mat-raised-button class="primary-button" color="primary" (click)="appointmentDelay()">Terminverspätung melden</button>
+        <button mat-fab class="ml-2 phone-button">
+          <mat-icon>phone</mat-icon>
+        </button>
       </div>
     </div>
 <!--    3-->
@@ -161,7 +173,10 @@
                 <mat-icon>email</mat-icon>
               </div>
               <div>
-                muster@mustermann.de
+                <span *ngIf="!isEditEmail">{{defaultEmail}}</span>
+                <mat-form-field class="w-100" *ngIf="isEditEmail">
+                  <input autocomplete="off" matInput [(ngModel)]="customEmail">
+                </mat-form-field>
               </div>
             </div>
             <div class="d-flex avatar green">
@@ -173,18 +188,21 @@
               </div>
             </div>
             <div class="d-flex avatar yellow">
-              <div class="round">
+              <div class="round" (click)="isEditText = !isEditText">
                 <mat-icon>lens</mat-icon>
               </div>
               <div>
                 Terminverschiebung
               </div>
             </div>
+            <mat-form-field class="text-template" appearance="standard" *ngIf="isEditText">
+              <textarea [(ngModel)]="customText" [defaultValue]="defaultText" matInput rows="14"></textarea>
+            </mat-form-field>
           </div>
         </div>
       </div>
       <div class="button-container">
-        <button mat-raised-button class="primary-button" color="primary">Termin verschieben</button>
+        <button mat-raised-button class="primary-button" color="primary" (click)="shiftSchedule()">Termin verschieben</button>
       </div>
     </div>
 <!--    4-->
@@ -224,18 +242,57 @@
               </div>
             </div>
             <div class="d-flex avatar yellow">
-              <div class="round">
+              <div class="round" (click)="isEditText = !isEditText">
                 <mat-icon>lens</mat-icon>
               </div>
               <div>
                 Termin wahrgenommen
               </div>
             </div>
+            <div *ngIf="isEditText" style="padding-right: 60px;">
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="w-100">
+                    <mat-label>Blutdruck</mat-label>
+                    <input autocomplete="off" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="w-100">
+                    <mat-label>Puls</mat-label>
+                    <input autocomplete="off" matInput>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div>
+                <mat-form-field class="w-100">
+                  <mat-label>Sauerstoffsättigung</mat-label>
+                  <input autocomplete="off" matInput>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <mat-form-field class="w-100">
+                    <mat-label>Größe in cm</mat-label>
+                    <input autocomplete="off" matInput>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <mat-form-field class="w-100">
+                    <mat-label>Gewicht in kg</mat-label>
+                    <input autocomplete="off" matInput>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div>
+                Kommentar Lirum Larum Patientin gut drauf, fährt in den Urlaub und braucht den Bericht kurzfristig. Der Kommentar wird an das Labor übermittelt.
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="button-container">
-        <button mat-raised-button class="primary-button" color="primary">Termin erledigt</button>
+        <button mat-raised-button class="primary-button" color="primary" (click)="appointmentTaken()">Termin erledigt</button>
       </div>
     </div>
 <!--    5-->
@@ -286,7 +343,7 @@
         </div>
       </div>
       <div class="button-container">
-        <button mat-raised-button class="primary-button" color="primary">Um neuen Termin bitten</button>
+        <button mat-raised-button class="primary-button" color="primary" (click)="patientNotThere()">Um neuen Termin bitten</button>
       </div>
     </div>
   </mat-sidenav>

@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
           } else if (res.role === 'Nurse') {
             this.router.navigate(['/nurse-view']);
           }
-          this.f.password.setValue(null);
+          // this.f.password.setValue(null);
         },
         error => {
           this.error = error.error.message;

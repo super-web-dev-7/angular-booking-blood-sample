@@ -57,69 +57,86 @@
     color: #CDD4E2;
   }
 
-  .schedule {
-    border-left: 2px solid #384C61;
-    padding: 5px;
-    margin-bottom: 32px;
-    div {
-      padding-left: 20px;
-      font-size: 14px;
-      color: #272140;
-    }
-    div:first-child {
-      font-size: 16px;
-      font-weight: 500;
-    }
-    div:last-child {
-      color: #576E82;
-    }
+  .text-template {
+    margin-right: 60px;
+    margin-left: 60px;
+    margin-bottom: 53px;
   }
-  .avatar {
-    margin-bottom: 20px;
-  }
-
-  .button-container {
-    text-align: center;
-    .primary-button {
-      background-color: #384C61;
-      margin-bottom: 43px;
-      font-weight: 100;
-      height: 50px;
-      font-size: 16px;
-      padding-left: 30px;
-      padding-right: 30px;
-    }
-  }
-
 }
+
+.schedule {
+  border-left: 2px solid #384C61;
+  padding: 5px;
+  margin-bottom: 32px;
+
+  div {
+    padding-left: 20px;
+    font-size: 14px;
+    color: #272140;
+  }
+
+  div:first-child {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  div:last-child {
+    color: #576E82;
+  }
+}
+
+.avatar {
+  margin-bottom: 20px;
+}
+
+.button-container {
+  text-align: center;
+
+  .primary-button {
+    background-color: #384C61;
+    margin-bottom: 43px;
+    font-weight: 100;
+    height: 50px;
+    font-size: 16px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
 
 .main-content-container {
   padding-left: 30px;
   padding-top: 56px;
   padding-right: 30px;
+
   .header {
     .sub-header {
       display: flex;
       justify-content: space-between;
+
       .logo {
         height: 32px;
       }
+
       .avatar {
         width: 30px;
         height: 30px;
         border-radius: 50%;
       }
     }
+
     .title {
       font-size: 36px;
       margin-top: 30px;
       font-weight: 300;
       color: #384C61;
+
       span {
         font-weight: 400;
       }
     }
   }
+
   .main-body {
     .calendar-container {
       display: flex;
@@ -135,18 +152,22 @@
         display: flex;
         width: 50%;
         justify-content: space-between;
+
         .date-item {
           display: flex;
           flex-direction: column;
           align-items: center;
           color: #CAD2E1;
+
           .date-item-date {
             font-size: 20px;
           }
+
           .date-item-month {
             font-size: 12px;
           }
         }
+
         .active {
           color: #384C61;
         }
@@ -163,9 +184,11 @@
           cursor: pointer;
           margin-left: 30px;
         }
+
         .date-range-5 {
           cursor: pointer;
         }
+
         .active {
           color: #384C61;
         }
@@ -180,22 +203,26 @@
         font-size: 12px;
         display: flex;
         flex-direction: column;
+
         .line-bar {
           margin-bottom: 10px;
           margin-top: 10px;
           width: 10px;
           border: 1px solid #A9BBC9;
         }
+
         .double-line-bar {
           margin-top: 10px;
           margin-bottom: 10px;
           width: 20px;
           border: 1px solid #A9BBC9;
         }
+
         .time-label-hour {
           margin-bottom: 8px;
           margin-top: 10px;
         }
+
         .active {
           width: 50px;
           border-color: #FF5B74;
@@ -223,28 +250,34 @@
                 font-size: 10px;
                 color: #97DC50;
               }
+
               .appointment-status-pink {
                 font-size: 10px;
                 color: #F389CC;
               }
+
               .patient-name {
                 font-size: 16px;
                 font-weight: 400;
                 margin-top: 8px;
                 margin-bottom: 3px;
               }
+
               .patient-address, .patient-package {
                 font-size: 14px;
                 color: #272140;
               }
+
               .patient-time {
                 font-size: 14px;
                 color: #576E82;
               }
             }
+
             .border-green {
               border-color: #97DC50;
             }
+
             .border-pink {
               border-color: #F389CC;
             }
@@ -268,6 +301,10 @@
       }
     }
   }
+}
+
+.phone-button {
+  background-color: #89DF8C;
 }
 
 @media only screen and (max-width: 599px) {

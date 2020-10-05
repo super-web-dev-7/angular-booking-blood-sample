@@ -23,6 +23,14 @@ export class NurseDashboardComponent implements OnInit {
   workingStartHour = 18;
   workingEndHour = 32;
   workingHourArray = new Array((32 - 18) / 2);
+
+  defaultEmail = 'muster@mustermann.de';
+  customEmail = '';
+  isEditEmail = false;
+
+  isEditText = false;
+  defaultText = '';
+  customText = 'Sehr geehrte Frau Skywalker, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Mit freundlichen Grüßen Schwester 1';
   constructor(
     public authService: AuthService,
     public breakpointObserver: BreakpointObserver
@@ -39,12 +47,33 @@ export class NurseDashboardComponent implements OnInit {
   }
 
   close = () => {
+    this.isRightMenuOpen = false;
     this.isProfileMenuOpen = false;
     this.isAppointmentTakenMenuOpen = false;
     this.isAppointmentDelayMenuOpen = false;
     this.isPatientPreparedMenuOpen = false;
     this.isPatientPreparedMenuOpen = false;
     this.isShiftScheduleMenuOpen = false;
+  }
+
+  patientPrepared = () => {
+    this.close();
+  }
+
+  appointmentDelay = () => {
+    this.close();
+  }
+
+  shiftSchedule = () => {
+    this.close();
+  }
+
+  appointmentTaken = () => {
+    this.close();
+  }
+
+  patientNotThere = () => {
+    this.close();
   }
 }
 
