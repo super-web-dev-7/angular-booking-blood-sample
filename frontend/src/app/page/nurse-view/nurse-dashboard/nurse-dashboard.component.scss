@@ -103,11 +103,28 @@
   }
 }
 
+.submit-page {
+  display: flex;
+  align-items: center;
+  .green-circle {
+    width: 24px;
+    height: 24px;
+    background-color: #76D279;
+    border-radius: 50%;
+  }
+  .green-text {
+    color: #76D279;
+    font-size: 16px;
+    margin-left: 12.5px;
+  }
+}
+
 
 .main-content-container {
   padding-left: 30px;
   padding-top: 56px;
   padding-right: 30px;
+
 
   .header {
     .sub-header {
@@ -308,9 +325,23 @@
 }
 
 @media only screen and (max-width: 599px) {
-  .right-popup, .side-bar {
+  .right-popup {
+    width: 100vw;
+    padding-top: 0;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    margin-top: 20px;
+    justify-content: flex-start;
+  }
+
+  .side-bar {
     width: 100vw;
   }
+
+  .button-container {
+    margin-top: 32px;
+  }
+
   .main-content-container {
     .main-body {
       .calendar-container {

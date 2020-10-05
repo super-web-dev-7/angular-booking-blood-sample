@@ -31,6 +31,7 @@ export class NurseDashboardComponent implements OnInit {
   isEditText = false;
   defaultText = '';
   customText = 'Sehr geehrte Frau Skywalker, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Mit freundlichen Grüßen Schwester 1';
+  isSubmit = false;
   constructor(
     public authService: AuthService,
     public breakpointObserver: BreakpointObserver
@@ -52,8 +53,11 @@ export class NurseDashboardComponent implements OnInit {
     this.isAppointmentTakenMenuOpen = false;
     this.isAppointmentDelayMenuOpen = false;
     this.isPatientPreparedMenuOpen = false;
-    this.isPatientPreparedMenuOpen = false;
+    this.isPatientNotThereMenuOpen = false;
     this.isShiftScheduleMenuOpen = false;
+    this.isSubmit = false;
+    this.isEditText = false;
+    this.isEditEmail = false;
   }
 
   patientPrepared = () => {
@@ -69,11 +73,13 @@ export class NurseDashboardComponent implements OnInit {
   }
 
   appointmentTaken = () => {
-    this.close();
+    this.isSubmit = true;
+    // this.close();
   }
 
   patientNotThere = () => {
-    this.close();
+    // this.close();
+    this.isSubmit = true;
   }
 }
 
