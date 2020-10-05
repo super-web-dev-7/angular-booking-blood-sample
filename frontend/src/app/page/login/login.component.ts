@@ -42,6 +42,8 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/dashboard']);
           } else if (res.role === 'AG-Admin') {
             this.router.navigate(['/ag-dashboard']);
+          } else if (res.role === 'Nurse') {
+            this.router.navigate(['/nurse-view']);
           }
           this.f.password.setValue(null);
         },

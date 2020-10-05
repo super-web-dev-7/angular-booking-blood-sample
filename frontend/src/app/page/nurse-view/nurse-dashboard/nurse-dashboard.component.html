@@ -1,0 +1,404 @@
+<mat-sidenav-container (backdropClick)="sidenav.close(); rightSidenav.close()">
+  <mat-sidenav
+    [opened]="isOpen"
+    [mode]="'over'"
+    (closed)="isOpen = false"
+    #sidenav
+    (keydown.escape)="sidenav.close()"
+    disableClose>
+    <div class="side-bar">
+      <button mat-icon-button (click)="sidenav.close()" class="back-button">
+        <mat-icon>keyboard_arrow_left</mat-icon>
+      </button>
+      <ul>
+        <li>Dashboard</li>
+        <li>Dashboard</li>
+        <li>Dashboard</li>
+      </ul>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav
+    [opened]="isRightMenuOpen"
+    [mode]="'over'"
+    (closed)="isRightMenuOpen = false; close()"
+    #rightSidenav
+    (keydown.escape)="rightSidenav.close()"
+    position="end"
+    disableClose>
+    <div class="side-bar right-sidenav" *ngIf="isProfileMenuOpen">
+      <button mat-icon-button (click)="rightSidenav.close()" class="back-button">
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+      <ul>
+        <li>Profil bearbeiten</li>
+        <li>Logout</li>
+      </ul>
+    </div>
+<!--    1-->
+    <div *ngIf="isPatientPreparedMenuOpen" class="right-popup">
+      <div style="padding-left: 12%;">
+        <div class="text-right close-icon">
+          <button mat-icon-button (click)="rightSidenav.close()" class="back-button">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <div>
+          <h1 style="font-size: 36px;">
+            <span>Patient </span>
+            <span style="font-weight: 100">vorbereitet</span>
+          </h1>
+          <div class="schedule">
+            <div>Leia Skywalker</div>
+            <div>Luisenweg 8, 12387 Berlin</div>
+            <div>Paket Nummer 1</div>
+            <div>15.07.2020, 12:00 — 13:30</div>
+          </div>
+          <div>
+            <div class="d-flex avatar pink">
+              <div class="round">
+                <mat-icon>email</mat-icon>
+              </div>
+              <div>
+                muster@mustermann.de
+              </div>
+            </div>
+            <div class="d-flex avatar green">
+              <div class="round">
+                <mat-icon>smartphone</mat-icon>
+              </div>
+              <div>
+                0178 536247885
+              </div>
+            </div>
+            <div class="d-flex avatar yellow">
+              <div class="round">
+                <mat-icon>lens</mat-icon>
+              </div>
+              <div>
+                Patient vorbereitet
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button-container">
+        <button mat-raised-button class="primary-button" color="primary">Patient vorbereitet</button>
+      </div>
+    </div>
+<!--    2-->
+    <div *ngIf="isAppointmentDelayMenuOpen" class="right-popup">
+      <div style="padding-left: 12%;">
+        <div class="text-right close-icon">
+          <button mat-icon-button (click)="rightSidenav.close()" class="back-button">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <div>
+          <h1 style="font-size: 36px;">
+            <span>Termin </span>
+            <span style="font-weight: 100">Verspätung</span>
+          </h1>
+          <div class="schedule">
+            <div>Leia Skywalker</div>
+            <div>Luisenweg 8, 12387 Berlin</div>
+            <div>Paket Nummer 1</div>
+            <div>15.07.2020, 12:00 — 13:30</div>
+          </div>
+          <div>
+            <div class="d-flex avatar pink">
+              <div class="round">
+                <mat-icon>email</mat-icon>
+              </div>
+              <div>
+                muster@mustermann.de
+              </div>
+            </div>
+            <div class="d-flex avatar green">
+              <div class="round">
+                <mat-icon>smartphone</mat-icon>
+              </div>
+              <div>
+                0178 536247885
+              </div>
+            </div>
+            <div class="d-flex avatar yellow">
+              <div class="round">
+                <mat-icon>lens</mat-icon>
+              </div>
+              <div>
+                Terminverspätung
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button-container">
+        <button mat-raised-button class="primary-button" color="primary">Terminverspätung melden</button>
+      </div>
+    </div>
+<!--    3-->
+    <div *ngIf="isShiftScheduleMenuOpen" class="right-popup">
+      <div style="padding-left: 12%;">
+        <div class="text-right close-icon">
+          <button mat-icon-button (click)="rightSidenav.close()" class="back-button">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <div>
+          <h1 style="font-size: 36px;">
+            <span>Termin </span>
+            <span style="font-weight: 100">verschieben</span>
+          </h1>
+          <div class="schedule">
+            <div>Leia Skywalker</div>
+            <div>Luisenweg 8, 12387 Berlin</div>
+            <div>Paket Nummer 1</div>
+            <div>15.07.2020, 12:00 — 13:30</div>
+          </div>
+          <div>
+            <div class="d-flex avatar pink">
+              <div class="round">
+                <mat-icon>email</mat-icon>
+              </div>
+              <div>
+                muster@mustermann.de
+              </div>
+            </div>
+            <div class="d-flex avatar green">
+              <div class="round">
+                <mat-icon>smartphone</mat-icon>
+              </div>
+              <div>
+                0178 536247885
+              </div>
+            </div>
+            <div class="d-flex avatar yellow">
+              <div class="round">
+                <mat-icon>lens</mat-icon>
+              </div>
+              <div>
+                Terminverschiebung
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button-container">
+        <button mat-raised-button class="primary-button" color="primary">Termin verschieben</button>
+      </div>
+    </div>
+<!--    4-->
+    <div *ngIf="isAppointmentTakenMenuOpen" class="right-popup">
+      <div style="padding-left: 12%;">
+        <div class="text-right close-icon">
+          <button mat-icon-button (click)="rightSidenav.close()" class="back-button">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <div>
+          <h1 style="font-size: 36px;">
+            <span>Termin </span>
+            <span style="font-weight: 100">erledigt</span>
+          </h1>
+          <div class="schedule">
+            <div>Leia Skywalker</div>
+            <div>Luisenweg 8, 12387 Berlin</div>
+            <div>Paket Nummer 1</div>
+            <div>15.07.2020, 12:00 — 13:30</div>
+          </div>
+          <div>
+            <div class="d-flex avatar pink">
+              <div class="round">
+                <mat-icon>email</mat-icon>
+              </div>
+              <div>
+                muster@mustermann.de
+              </div>
+            </div>
+            <div class="d-flex avatar green">
+              <div class="round">
+                <mat-icon>smartphone</mat-icon>
+              </div>
+              <div>
+                0178 536247885
+              </div>
+            </div>
+            <div class="d-flex avatar yellow">
+              <div class="round">
+                <mat-icon>lens</mat-icon>
+              </div>
+              <div>
+                Termin wahrgenommen
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button-container">
+        <button mat-raised-button class="primary-button" color="primary">Termin erledigt</button>
+      </div>
+    </div>
+<!--    5-->
+    <div *ngIf="isPatientNotThereMenuOpen" class="right-popup">
+      <div style="padding-left: 12%;">
+        <div class="text-right close-icon">
+          <button mat-icon-button (click)="rightSidenav.close()" class="back-button">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <div>
+          <h1 style="font-size: 36px;">
+            <span>Patient </span>
+            <span style="font-weight: 100">nicht da</span>
+          </h1>
+          <div class="schedule">
+            <div>Leia Skywalker</div>
+            <div>Luisenweg 8, 12387 Berlin</div>
+            <div>Paket Nummer 1</div>
+            <div>15.07.2020, 12:00 — 13:30</div>
+          </div>
+          <div>
+            <div class="d-flex avatar pink">
+              <div class="round">
+                <mat-icon>email</mat-icon>
+              </div>
+              <div>
+                muster@mustermann.de
+              </div>
+            </div>
+            <div class="d-flex avatar green">
+              <div class="round">
+                <mat-icon>smartphone</mat-icon>
+              </div>
+              <div>
+                0178 536247885
+              </div>
+            </div>
+            <div class="d-flex avatar yellow">
+              <div class="round">
+                <mat-icon>lens</mat-icon>
+              </div>
+              <div>
+                Patienten nicht angetroffen
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button-container">
+        <button mat-raised-button class="primary-button" color="primary">Um neuen Termin bitten</button>
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content class="page-wrapper">
+    <div class="main-content-container">
+      <div class="header">
+        <div class="sub-header">
+          <div>
+            <button mat-icon-button (click)="isOpen = true">
+              <img src="assets/images/menu.svg" alt="icon">
+            </button>
+            <img class="logo" src="assets/images/logo.png" alt="logo">
+          </div>
+          <img (click)="isRightMenuOpen = true; isProfileMenuOpen = true;" class="avatar" src="/assets/images/avatar.png" alt="user-avatar">
+        </div>
+        <h1 class="title"><span>Hallo Schwester 1</span>, Dashboard</h1>
+      </div>
+      <div class="main-body">
+        <div class="calendar-container">
+          <div class="calendar-body">
+            <div class="date-item">
+              <div class="date-item-date">13</div>
+              <div class="date-item-month">Juli</div>
+            </div>
+            <div class="date-item">
+              <div class="date-item-date">14</div>
+              <div class="date-item-month">Juli</div>
+            </div>
+            <div class="date-item active">
+              <div class="date-item-date">15</div>
+              <div class="date-item-month">Juli</div>
+            </div>
+            <div class="date-item">
+              <div class="date-item-date">16</div>
+              <div class="date-item-month">Juli</div>
+            </div>
+            <div class="date-item">
+              <div class="date-item-date">17</div>
+              <div class="date-item-month">Juli</div>
+            </div>
+          </div>
+          <div class="date-range-container" *ngIf="!isMobile">
+            <div class="date-range-5 active">5 Tage</div>
+            <div class="date-range-month">Monat</div>
+          </div>
+        </div>
+        <div class="schedule-container">
+          <div *ngFor="let hour of workingHourArray; let index = index;" class="time-label">
+            <div class="time-label-item time-label-hour">
+              <div>{{getFloor(workingStartHour / 2 + index)}}:{{'00'}}</div>
+              <div class="w-100 position-relative" *ngIf="index === 0 || index === 3">
+                <div class="appointment-container">
+                  <div class="appointment-inner-container" [ngClass]="{'border-green' : index === 0, 'border-pink': index === 3}">
+                    <div *ngIf="index === 0" class="appointment-status-green">Termin wahrgenommen</div>
+                    <div *ngIf="index === 3" class="appointment-status-pink">Patient vorbereitet</div>
+                    <div class="patient-name">Patientenname</div>
+                    <div class="patient-address">Marienstraße 4, 15387 Berlin</div>
+                    <div class="patient-package">Paket Nummer 1</div>
+                    <div class="patient-time">09:00 — 10:15</div>
+                  </div>
+                </div>
+                <button class="detail-menu" mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>more_horiz</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div class="time-label-item">
+              <div class="line-bar"></div>
+<!--              <div class="appointment-container">-->
+<!--                ddd-->
+<!--              </div>-->
+            </div>
+            <div class="time-label-item">
+              <div class="double-line-bar" [ngClass]="{'active': index === 2}"></div>
+<!--              <div *ngIf="index !== 2" class="appointment-container">-->
+<!--                ddd-->
+<!--              </div>-->
+              <div class="current-time" *ngIf="index === 2">
+                {{'11:30 AM'}}
+              </div>
+            </div>
+            <div class="time-label-item">
+              <div class="line-bar"></div>
+<!--              <div class="appointment-container">-->
+<!--                ddd-->
+<!--              </div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+      <mat-menu #menu="matMenu">
+        <div class="d-flex flex-row">
+          <button class="panel-width" mat-menu-item (click)="isRightMenuOpen = true; isPatientPreparedMenuOpen = true">
+            <span>Patient vorbereitet</span>
+          </button>
+          <button class="ml-1" mat-icon-button>
+            <mat-icon class="close-icon">close</mat-icon>
+          </button>
+        </div>
+        <button mat-menu-item (click)="isRightMenuOpen = true; isAppointmentDelayMenuOpen = true">
+          <span>Termin Verspätung</span>
+        </button>
+        <button mat-menu-item (click)="isRightMenuOpen = true; isShiftScheduleMenuOpen = true">
+          <span>Termin verschieben</span>
+        </button>
+        <button mat-menu-item (click)="isRightMenuOpen = true; isAppointmentTakenMenuOpen = true">
+          <span>Termin wahrgenommen</span>
+        </button>
+        <button mat-menu-item (click)="isRightMenuOpen = true; isPatientNotThereMenuOpen = true">
+          <span>Patient nicht da</span>
+        </button>
+      </mat-menu>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
