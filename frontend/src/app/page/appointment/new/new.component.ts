@@ -136,7 +136,9 @@ export class NewComponent implements OnInit {
       const workingTimeUntil = this.getMillisecondsFromNumber(calendar.working_time_until, plusDate);
       let time = workingTimeFrom;
       while ((time + durationAppointment) < workingTimeUntil) {
-        this.allTimes.push(time);
+        if (time > date.getTime()) {
+          this.allTimes.push(time);
+        }
         time += durationAppointment + restTime;
       }
       plusDate++;
