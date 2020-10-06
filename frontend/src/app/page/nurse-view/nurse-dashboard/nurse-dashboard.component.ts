@@ -173,11 +173,27 @@ export class NurseDashboardComponent implements OnInit {
   }
 
   appointmentDelay = () => {
-    this.close();
+    const data = {
+      email: this.customEmail ? this.customEmail : this.defaultEmail,
+      content: this.customText,
+      subject: 'Appointment Delay'
+    };
+    this.httpService.post(URL_JSON.BASE + 'sendEmail', data).subscribe(res => {
+      this.close();
+    });
+    // this.close();
   }
 
   shiftSchedule = () => {
-    this.close();
+    const data = {
+      email: this.customEmail ? this.customEmail : this.defaultEmail,
+      content: this.customText,
+      subject: 'Appointment Moving'
+    };
+    this.httpService.post(URL_JSON.BASE + 'sendEmail', data).subscribe(res => {
+      this.close();
+    });
+    // this.close();
   }
 
   appointmentTaken = () => {

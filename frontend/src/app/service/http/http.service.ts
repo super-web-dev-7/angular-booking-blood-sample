@@ -28,6 +28,10 @@ export class HttpService {
     return this.http.put(`${url}`, updateData);
   }
 
+  post = (url, data) => {
+    return this.http.post(`${url}`, data);
+  }
+
   // working-group
 
   // user

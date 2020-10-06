@@ -82,7 +82,7 @@
                   <mat-icon>email</mat-icon>
                 </div>
                 <div>
-                  {{selectedAppointment.patientEmail}}
+                  {{defaultEmail}}
                 </div>
               </div>
               <div class="d-flex avatar green">
@@ -136,7 +136,7 @@
                   <mat-icon>email</mat-icon>
                 </div>
                 <div>
-                  <span *ngIf="!isEditEmail">{{defaultEmail}}</span>
+                  <span *ngIf="!isEditEmail">{{customEmail ? customEmail : defaultEmail}}</span>
                   <mat-form-field class="w-100" *ngIf="isEditEmail">
                     <input autocomplete="off" matInput [(ngModel)]="customEmail">
                   </mat-form-field>
@@ -199,11 +199,11 @@
             </div>
             <div>
               <div class="d-flex avatar pink">
-                <div class="round">
+                <div class="round" (click)="isEditEmail = !isEditEmail">
                   <mat-icon>email</mat-icon>
                 </div>
                 <div>
-                  <span *ngIf="!isEditEmail">{{defaultEmail}}</span>
+                  <span *ngIf="!isEditEmail">{{customEmail ? customEmail : defaultEmail}}</span>
                   <mat-form-field class="w-100" *ngIf="isEditEmail">
                     <input autocomplete="off" matInput [(ngModel)]="customEmail">
                   </mat-form-field>
