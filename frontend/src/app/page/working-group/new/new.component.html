@@ -86,7 +86,7 @@
           *ngFor="let calendar of calendars"
           [ngClass]="{'primary': selectedCalendar===calendar.id}"
           (click)="selectCalendar(calendar.id)">
-          {{calendar.name}} <br> {{calendar.range}}
+          {{calendar?.name}} <br> {{calendar.range}}
         </button>
       </div>
     </mat-expansion-panel>
