@@ -7,6 +7,7 @@ const saltRounds = 10;
 const Calendar = db.calendar;
 const Agency = db.agency;
 const Patient = db.patient;
+const Appointment = db.appointment;
 
 exports.create = (req, res) => {
     const newUser = req.body;
@@ -127,7 +128,13 @@ exports.delete = async (req, res) => {
         }
     }
     if (user.role === 'Patient') {
-        Patient.destroy({where: {user_id: req.params.id}})
+        const appointment = await Appointment.findAll({where: {userId: req.params.id}});
+        if (appointment.length > 0) {
+            res.status(400).json({error: 'Appointment has this user'})
+            return;
+        } else {
+            Patient.destroy({where: {user_id: req.params.id}})
+        }
     }
     User.destroy({where: {id: req.params.id}}).then(() => {
         res.status(204).json({});

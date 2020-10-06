@@ -45,6 +45,7 @@ export class NurseDashboardComponent implements OnInit {
   textTemplate = [];
   selectedAppointment: any;
   Editor = ClassicEditor;
+
   constructor(
     public authService: AuthService,
     public httpService: HttpService,
@@ -73,6 +74,31 @@ export class NurseDashboardComponent implements OnInit {
     this.httpService.get(URL_JSON.TEMPLATE + '/getWithQuery?type=E-Mail&receiver=1').subscribe((res: any) => {
       this.textTemplate = res;
     });
+    // const data = {
+    //   apiKey: '629e1c77-b9c3-4189-a829-b4b183a53699',
+    //   clientSecret: 'DEV_SECRET_BITSKIN_API',
+    //   engagementID: 'fe96b443-27a9-41da-b257-d8429b82e669',
+    //   patientID: '0815',
+    //   workingGroupID: 'TBD',
+    //   profileID: 'gbb',
+    //   appointment: '2020-07-20T12:30:00.000Z',
+    //   pFirstName: 'Max',
+    //   pLastName: 'Mustermann',
+    //   pDateOfBirth: '1990-01-01T00:00:00.000Z',
+    //   pEmail: 'max.mustermann@mail.de',
+    //   pAddress: 'Musterstraße 1',
+    //   pPostalCode: '10585',
+    //   pCity: 'Musterstadt',
+    //   pCountryCode: 'DE',
+    //   pGender: 'm',
+    //   pAnamnesis: {
+    //     smoker: 0,
+    //     medication: '10; mg; Medikament; XY'
+    //   }
+    // };
+    // this.httpService.update('https://dev.mobilebloodcheck.de/bp-api/engagement', data).subscribe(res => {
+    //   console.log(res)
+    // });
   }
 
   getCurrentTimeFormat = () => {

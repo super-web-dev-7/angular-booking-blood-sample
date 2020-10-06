@@ -4,6 +4,7 @@ import {response} from "express";
 const Agency = db.agency;
 const WorkingGroup = db.workingGroup;
 const User = db.user;
+const Appointment = db.appointment;
 
 exports.create = (req, res) => {
     const newAgency = req.body;
@@ -36,6 +37,11 @@ exports.get = async (req, res) => {
 }
 
 exports.delete = async (req, res) => {
+    const appointment = await Appointment.findAll({where: {agencyId: req.params.id}});
+    if (appointment.length > 0) {
+        res.status(400).json({error: 'Appointment has this agency'})
+        return;
+    }
     Agency.destroy({where: {id: req.params.id}}).then(() => {
         res.status(204).json({});
     })

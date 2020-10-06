@@ -20,8 +20,6 @@ exports.create = (req, res) => {
 exports.get = async (req, res) => {
     Calendar.hasMany(WorkingGroup, {foreignKey: 'calendar_id'});
     WorkingGroup.belongsTo(Calendar, {foreignKey: 'calendar_id'});
-    // Agency.hasMany(WorkingGroup, {foreignKey: 'agency_id'});
-    // WorkingGroup.belongsTo(Agency, {foreignKey: 'agency_id'});
     const id = parseInt(req.query.admin);
     const allWorkingGroup = await WorkingGroup.findAll({where: {}, include: [Calendar]});
     const response = [];

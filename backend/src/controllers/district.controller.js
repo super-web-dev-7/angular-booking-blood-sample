@@ -22,7 +22,6 @@ exports.get = async (req, res) => {
     res.status(200).json(allDistrict);
 }
 
-
 exports.delete = async (req, res) => {
     const allCalendar = await Calendar.findAll({where: {}});
     for (const calendar of allCalendar) {

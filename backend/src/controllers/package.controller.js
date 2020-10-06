@@ -2,6 +2,7 @@ import db from '../models';
 
 const Package = db.package;
 const WorkingGroup = db.workingGroup;
+const Appointment = db.appointment;
 
 exports.create = (req, res) => {
     const newPackage = req.body;
@@ -22,6 +23,11 @@ exports.get = async (req, res) => {
 }
 
 exports.delete = async (req, res) => {
+    const appointment = await Appointment.findAll({where: {packageId: req.params.id}});
+    if (appointment.length > 0) {
+        res.status(400).json({error: 'Appointment has this package'})
+        return;
+    }
     Package.destroy({where: {id: req.params.id}}).then(() => {
         res.status(204).json({});
     })
