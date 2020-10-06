@@ -31,7 +31,7 @@
       </button>
       <ul>
         <li>Profil bearbeiten</li>
-        <li>Logout</li>
+        <li (click)="logout()">Logout</li>
       </ul>
     </div>
     <div style="height: fit-content; background-color: #F2F7FB;">
@@ -70,10 +70,11 @@
               <span style="font-weight: 100">vorbereitet</span>
             </h1>
             <div class="schedule">
-              <div>Leia Skywalker</div>
-              <div>Luisenweg 8, 12387 Berlin</div>
-              <div>Paket Nummer 1</div>
-              <div>15.07.2020, 12:00 — 13:30</div>
+              <div>{{selectedAppointment.patientFirstName}} {{selectedAppointment.patientLastName}}</div>
+              <div>{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
+                , {{selectedAppointment.addressPlz}} Berlin</div>
+              <div>{{selectedAppointment.packageName}}</div>
+              <div>{{getTimeString(selectedAppointment.startTime, 'DD.MM.YYYY, hh:mm')}} — {{getEndTime(selectedAppointment.startTime, selectedAppointment.duration)}}</div>
             </div>
             <div>
               <div class="d-flex avatar pink">
@@ -81,7 +82,7 @@
                   <mat-icon>email</mat-icon>
                 </div>
                 <div>
-                  muster@mustermann.de
+                  {{selectedAppointment.patientEmail}}
                 </div>
               </div>
               <div class="d-flex avatar green">
@@ -89,7 +90,7 @@
                   <mat-icon>smartphone</mat-icon>
                 </div>
                 <div>
-                  0178 536247885
+                  {{selectedAppointment.patientNumber}}
                 </div>
               </div>
               <div class="d-flex avatar yellow">
@@ -123,10 +124,11 @@
               <span style="font-weight: 100">Verspätung</span>
             </h1>
             <div class="schedule">
-              <div>Leia Skywalker</div>
-              <div>Luisenweg 8, 12387 Berlin</div>
-              <div>Paket Nummer 1</div>
-              <div>15.07.2020, 12:00 — 13:30</div>
+              <div>{{selectedAppointment.patientFirstName}} {{selectedAppointment.patientLastName}}</div>
+              <div>{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
+                , {{selectedAppointment.addressPlz}} Berlin</div>
+              <div>{{selectedAppointment.packageName}}</div>
+              <div>{{getTimeString(selectedAppointment.startTime, 'DD.MM.YYYY, hh:mm')}} — {{getEndTime(selectedAppointment.startTime, selectedAppointment.duration)}}</div>
             </div>
             <div>
               <div class="d-flex avatar pink">
@@ -145,7 +147,7 @@
                   <mat-icon>smartphone</mat-icon>
                 </div>
                 <div>
-                  0178 536247885
+                  {{selectedAppointment.patientNumber}}
                 </div>
               </div>
               <div class="d-flex avatar yellow">
@@ -156,9 +158,10 @@
                   <span>Terminverspätung</span>
                 </div>
               </div>
-              <mat-form-field class="text-template" appearance="standard" *ngIf="isEditText">
-                <textarea [(ngModel)]="customText" [defaultValue]="defaultText" matInput rows="14"></textarea>
-              </mat-form-field>
+              <div class="text-template" *ngIf="isEditText">
+                <ckeditor
+                  [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
+              </div>
               <!--            <div class="text-template" *ngIf="isEditText">-->
               <!--              -->
               <!--            </div>-->
@@ -188,10 +191,11 @@
               <span style="font-weight: 100">verschieben</span>
             </h1>
             <div class="schedule">
-              <div>Leia Skywalker</div>
-              <div>Luisenweg 8, 12387 Berlin</div>
-              <div>Paket Nummer 1</div>
-              <div>15.07.2020, 12:00 — 13:30</div>
+              <div>{{selectedAppointment.patientFirstName}} {{selectedAppointment.patientLastName}}</div>
+              <div>{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
+                , {{selectedAppointment.addressPlz}} Berlin</div>
+              <div>{{selectedAppointment.packageName}}</div>
+              <div>{{getTimeString(selectedAppointment.startTime, 'DD.MM.YYYY, hh:mm')}} — {{getEndTime(selectedAppointment.startTime, selectedAppointment.duration)}}</div>
             </div>
             <div>
               <div class="d-flex avatar pink">
@@ -210,7 +214,7 @@
                   <mat-icon>smartphone</mat-icon>
                 </div>
                 <div>
-                  0178 536247885
+                  {{selectedAppointment.patientNumber}}
                 </div>
               </div>
               <div class="d-flex avatar yellow">
@@ -221,9 +225,10 @@
                   Terminverschiebung
                 </div>
               </div>
-              <mat-form-field class="text-template" appearance="standard" *ngIf="isEditText">
-                <textarea [(ngModel)]="customText" [defaultValue]="defaultText" matInput rows="14"></textarea>
-              </mat-form-field>
+              <div class="text-template" *ngIf="isEditText">
+                <ckeditor
+                  [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
+              </div>
             </div>
           </div>
         </div>
@@ -251,10 +256,11 @@
               <div class="green-text">Daten erfolgreich übermittelt.</div>
             </div>
             <div class="schedule" *ngIf="!isSubmit">
-              <div>Leia Skywalker</div>
-              <div>Luisenweg 8, 12387 Berlin</div>
-              <div>Paket Nummer 1</div>
-              <div>15.07.2020, 12:00 — 13:30</div>
+              <div>{{selectedAppointment.patientFirstName}} {{selectedAppointment.patientLastName}}</div>
+              <div>{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
+                , {{selectedAppointment.addressPlz}} Berlin</div>
+              <div>{{selectedAppointment.packageName}}</div>
+              <div>{{getTimeString(selectedAppointment.startTime, 'DD.MM.YYYY, hh:mm')}} — {{getEndTime(selectedAppointment.startTime, selectedAppointment.duration)}}</div>
             </div>
             <div *ngIf="!isSubmit">
               <div class="d-flex avatar pink">
@@ -262,7 +268,7 @@
                   <mat-icon>email</mat-icon>
                 </div>
                 <div>
-                  muster@mustermann.de
+                  {{defaultEmail}}
                 </div>
               </div>
               <div class="d-flex avatar green">
@@ -270,7 +276,7 @@
                   <mat-icon>smartphone</mat-icon>
                 </div>
                 <div>
-                  0178 536247885
+                  {{selectedAppointment.patientNumber}}
                 </div>
               </div>
               <div class="d-flex avatar yellow">
@@ -316,9 +322,9 @@
                     </mat-form-field>
                   </div>
                 </div>
-                <div>
-                  Kommentar Lirum Larum Patientin gut drauf, fährt in den Urlaub und braucht den Bericht kurzfristig.
-                  Der Kommentar wird an das Labor übermittelt.
+                <div class="text-template" *ngIf="isEditText">
+                  <ckeditor
+                    [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
                 </div>
               </div>
             </div>
@@ -348,10 +354,11 @@
               <div class="green-text">E-Mail-Versand war erfolgreich.</div>
             </div>
             <div class="schedule" *ngIf="!isSubmit">
-              <div>Leia Skywalker</div>
-              <div>Luisenweg 8, 12387 Berlin</div>
-              <div>Paket Nummer 1</div>
-              <div>15.07.2020, 12:00 — 13:30</div>
+              <div>{{selectedAppointment.patientFirstName}} {{selectedAppointment.patientLastName}}</div>
+              <div>{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
+                , {{selectedAppointment.addressPlz}} Berlin</div>
+              <div>{{selectedAppointment.packageName}}</div>
+              <div>{{getTimeString(selectedAppointment.startTime, 'DD.MM.YYYY, hh:mm')}} — {{getEndTime(selectedAppointment.startTime, selectedAppointment.duration)}}</div>
             </div>
             <div *ngIf="!isSubmit">
               <div class="d-flex avatar pink">
@@ -359,7 +366,7 @@
                   <mat-icon>email</mat-icon>
                 </div>
                 <div>
-                  muster@mustermann.de
+                  {{defaultEmail}}
                 </div>
               </div>
               <div class="d-flex avatar green">
@@ -367,7 +374,7 @@
                   <mat-icon>smartphone</mat-icon>
                 </div>
                 <div>
-                  0178 536247885
+                  {{selectedAppointment.patientNumber}}
                 </div>
               </div>
               <div class="d-flex avatar yellow">
@@ -378,9 +385,10 @@
                   Patienten nicht angetroffen
                 </div>
               </div>
-              <mat-form-field class="text-template" appearance="standard" *ngIf="isEditText">
-                <textarea [(ngModel)]="customText" [defaultValue]="defaultText" matInput rows="14"></textarea>
-              </mat-form-field>
+              <div class="text-template" *ngIf="isEditText">
+                <ckeditor
+                  [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
+              </div>
             </div>
           </div>
         </div>
@@ -410,25 +418,11 @@
       <div class="main-body">
         <div class="calendar-container">
           <div class="calendar-body">
-            <div class="date-item">
-              <div class="date-item-date">13</div>
-              <div class="date-item-month">Juli</div>
-            </div>
-            <div class="date-item">
-              <div class="date-item-date">14</div>
-              <div class="date-item-month">Juli</div>
-            </div>
-            <div class="date-item active">
-              <div class="date-item-date">15</div>
-              <div class="date-item-month">Juli</div>
-            </div>
-            <div class="date-item">
-              <div class="date-item-date">16</div>
-              <div class="date-item-month">Juli</div>
-            </div>
-            <div class="date-item">
-              <div class="date-item-date">17</div>
-              <div class="date-item-month">Juli</div>
+            <div class="date-item" [ngClass]="{'active': index === 2}"
+                 *ngFor="let i of Arr(5).fill(1); let index = index;">
+              <div class="date-item-date">{{getDate(currentTime + (index - 2) * 86400 * 1000, 'date')}}</div>
+              <div
+                class="date-item-month">{{monthNames[getDate(currentTime + (index - 2) * 86400 * 1000, 'month')]}}</div>
             </div>
           </div>
           <div class="date-range-container" *ngIf="!isMobile">
@@ -440,66 +434,78 @@
           <div *ngFor="let hour of workingHourArray; let index = index;" class="time-label">
             <div class="time-label-item time-label-hour">
               <div>{{getFloor(workingStartHour / 2 + index)}}:{{'00'}}</div>
-              <div class="w-100 position-relative" *ngIf="index === 0 || index === 3">
-                <div class="appointment-container">
-                  <div class="appointment-inner-container"
-                       [ngClass]="{'border-green' : index === 0, 'border-pink': index === 3}">
-                    <div *ngIf="index === 0" class="appointment-status-green">Termin wahrgenommen</div>
-                    <div *ngIf="index === 3" class="appointment-status-pink">Patient vorbereitet</div>
-                    <div class="patient-name">Patientenname</div>
-                    <div class="patient-address">Marienstraße 4, 15387 Berlin</div>
-                    <div class="patient-package">Paket Nummer 1</div>
-                    <div class="patient-time">09:00 — 10:15</div>
+              <div class="w-100" *ngFor="let appointment of allAppointments">
+                <div class="w-100 position-relative"
+                     *ngIf="workingStartHour / 2 + index === getDate(appointment.startTime, 'hour')">
+                  <div class="appointment-container">
+                    <div class="appointment-inner-container"
+                         [ngClass]="{'border-green' : appointment.startTime < currentTime, 'border-pink': appointment.startTime > currentTime}">
+                      <div *ngIf="index === 0" class="appointment-status-green">Termin wahrgenommen</div>
+                      <div *ngIf="index === 3" class="appointment-status-pink">Patient vorbereitet</div>
+                      <div class="patient-name">{{appointment.patientFirstName}} {{appointment.patientLastName}}</div>
+                      <div class="patient-address">{{appointment.addressStreet}} {{appointment.addressOrt}}
+                        , {{appointment.addressPlz}} Berlin
+                      </div>
+                      <div class="patient-package">{{appointment.packageName}}</div>
+                      <div class="patient-time">{{getStartTime(appointment.startTime)}}
+                        — {{getEndTime(appointment.startTime, appointment.duration)}}</div>
+                    </div>
                   </div>
+                  <button class="detail-menu" mat-icon-button (click)="selectedAppointment = appointment" [matMenuTriggerFor]="menu">
+                    <mat-icon>more_horiz</mat-icon>
+                  </button>
                 </div>
-                <button class="detail-menu" mat-icon-button [matMenuTriggerFor]="menu">
-                  <mat-icon>more_horiz</mat-icon>
-                </button>
+              </div>
+
+            </div>
+            <div class="time-label-item">
+              <div
+                class="line-bar"
+                [ngClass]="{'active': now.getHours() === workingStartHour / 2 + index && now.getMinutes() <= 15}"
+              ></div>
+              <div class="current-time" *ngIf="now.getHours() === workingStartHour / 2 + index && now.getMinutes() <= 15">
+                {{getCurrentTimeFormat()}}
               </div>
             </div>
             <div class="time-label-item">
-              <div class="line-bar"></div>
-              <!--              <div class="appointment-container">-->
-              <!--                ddd-->
-              <!--              </div>-->
-            </div>
-            <div class="time-label-item">
-              <div class="double-line-bar" [ngClass]="{'active': index === 2}"></div>
-              <!--              <div *ngIf="index !== 2" class="appointment-container">-->
-              <!--                ddd-->
-              <!--              </div>-->
-              <div class="current-time" *ngIf="index === 2">
-                {{'11:30 AM'}}
+              <div
+                class="double-line-bar"
+                [ngClass]="{'active': now.getHours() === workingStartHour / 2 + index && now.getMinutes() > 15 && now.getMinutes() <= 30}"></div>
+              <div class="current-time" *ngIf="now.getHours() === workingStartHour / 2 + index && now.getMinutes() > 15 && now.getMinutes() <= 30">
+                {{getCurrentTimeFormat()}}
               </div>
             </div>
             <div class="time-label-item">
-              <div class="line-bar"></div>
-              <!--              <div class="appointment-container">-->
-              <!--                ddd-->
-              <!--              </div>-->
+              <div
+                class="line-bar"
+                [ngClass]="{'active': now.getHours() === workingStartHour / 2 + index && now.getMinutes() > 30 && now.getMinutes() <= 45}"
+              ></div>
+              <div class="current-time" *ngIf="now.getHours() === workingStartHour / 2 + index && now.getMinutes() > 30 && now.getMinutes() <= 45">
+                {{getCurrentTimeFormat()}}
+              </div>
             </div>
           </div>
         </div>
       </div>
       <mat-menu #menu="matMenu">
         <div class="d-flex flex-row">
-          <button class="panel-width" mat-menu-item (click)="isRightMenuOpen = true; isPatientPreparedMenuOpen = true">
+          <button class="panel-width" mat-menu-item (click)="openRightMenu(0)">
             <span>Patient vorbereitet</span>
           </button>
           <button class="ml-1" mat-icon-button>
             <mat-icon class="close-icon">close</mat-icon>
           </button>
         </div>
-        <button mat-menu-item (click)="isRightMenuOpen = true; isAppointmentDelayMenuOpen = true">
+        <button mat-menu-item (click)="openRightMenu(1)">
           <span>Termin Verspätung</span>
         </button>
-        <button mat-menu-item (click)="isRightMenuOpen = true; isShiftScheduleMenuOpen = true">
+        <button mat-menu-item (click)="openRightMenu(2)">
           <span>Termin verschieben</span>
         </button>
-        <button mat-menu-item (click)="isRightMenuOpen = true; isAppointmentTakenMenuOpen = true">
+        <button mat-menu-item (click)="openRightMenu(3)">
           <span>Termin wahrgenommen</span>
         </button>
-        <button mat-menu-item (click)="isRightMenuOpen = true; isPatientNotThereMenuOpen = true">
+        <button mat-menu-item (click)="openRightMenu(4)">
           <span>Patient nicht da</span>
         </button>
       </mat-menu>

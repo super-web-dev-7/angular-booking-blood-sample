@@ -31,3 +31,8 @@ exports.update = (req, res) => {
         res.json(rowsUpdated);
     });
 }
+
+exports.getWithQuery = async (req, res) => {
+    const templates = await Template.findAll({where: req.query});
+    res.status(200).json(templates);
+}

@@ -42,9 +42,11 @@ export class OverviewComponent implements OnInit {
   ];
 
   assign = [
-    {value: 1, viewValue: 'Welcome'},
-    {value: 2, viewValue: 'Confirmation of appointment'},
-    {value: 3, viewValue: 'Reminder of appointment'}
+    {value: 1, viewValue: 'Patient Prepared'},
+    {value: 2, viewValue: 'Appointment Delay'},
+    {value: 3, viewValue: 'Appointment Shift'},
+    {value: 4, viewValue: 'Appointment Taken'},
+    {value: 5, viewValue: 'Patient Not There'}
   ];
 
   orderStatus = {

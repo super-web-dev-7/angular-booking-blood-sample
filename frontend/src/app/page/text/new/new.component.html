@@ -75,7 +75,7 @@
             <mat-form-field class="mt-4 w-100">
               <mat-label>{{f.assign.value ? '' : 'Registrierung durch Patient'}}</mat-label>
               <mat-select formControlName="assign">
-                <mat-option *ngFor="let value of values" [value]="value.value">
+                <mat-option *ngFor="let value of values" [value]="value.viewValue">
                   {{value.viewValue}}
                 </mat-option>
               </mat-select>
