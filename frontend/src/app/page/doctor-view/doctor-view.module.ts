@@ -5,11 +5,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {DoctorViewRoutingModule} from './doctor-view-routing.module';
 import {MaterialModule} from '../../material/material.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [DashboardComponent],
   imports: [
     CommonModule,
     DoctorViewRoutingModule,

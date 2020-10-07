@@ -1,13 +1,16 @@
 import {PostalCode} from '../utils';
 import db from '../models';
+import fs from 'fs';
+import csv from 'csv-parser';
 
 const DistrictModel = db.districtModel;
+const ZipCodeModel = db.zipCodeModel;
 
-export const ping = (req, res, next) => {
+exports.ping = (req, res, next) => {
     res.send('Pong');
 };
 
-export const insertDistrict = () => {
+exports.insertDistrict = () => {
     for (let item of PostalCode) {
         const data = {
             name: item.letter,
@@ -15,4 +18,19 @@ export const insertDistrict = () => {
         };
         DistrictModel.create(data);
     }
+}
+
+exports.insertZipCode = async () => {
+    const data = [];
+    fs.createReadStream('src/utils/zip_codes.csv').pipe(csv()).on('data', async (row) => {
+        data.push(row);
+    }).on('end', async () => {
+        let i=0;
+        for (const item of data) {
+            console.log(i++);
+            await ZipCodeModel.create(item);
+        }
+        // ZipCodeModel.create(data)
+    })
+
 }

@@ -8,7 +8,8 @@ const jwt = () => {
             '/api/auth/login',
             '/api/auth/register',
             '/api/test/district/insert',
-            '/api/test/ping'
+            '/api/test/ping',
+            '/api/test/zipcode/insert'
         ]
     });
 };

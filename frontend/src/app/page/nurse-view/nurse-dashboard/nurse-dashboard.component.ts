@@ -107,6 +107,11 @@ export class NurseDashboardComponent implements OnInit {
     // });
   }
 
+  @HostListener('window:resize', [])
+  private onResize = () => {
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 599px)');
+  }
+
   getCurrentTimeFormat = () => {
     return moment(this.currentTime).format('LT');
   }
@@ -121,11 +126,6 @@ export class NurseDashboardComponent implements OnInit {
 
   getTimeString = (time, format) => {
     return moment(time).format(format);
-  }
-
-  @HostListener('window:resize', [])
-  private onResize = () => {
-    this.isMobile = this.breakpointObserver.isMatched('(max-width: 599px)');
   }
 
   getDate = (time, parameter) => {

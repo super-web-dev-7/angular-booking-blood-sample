@@ -11,6 +11,7 @@ import agency from './agency.model';
 import patient from './patient.model';
 import districtModel from './static-district.model';
 import appointmentModel from './appointment.model';
+import zipCodeModel from './zipcode.model';
 
 const sequelize = new Sequelize(config.mysql.database, config.mysql.user, config.mysql.password, {
     host: config.mysql.host,
@@ -33,6 +34,7 @@ db.agency = agency(sequelize, Sequelize);
 db.patient = patient(sequelize, Sequelize);
 db.districtModel = districtModel(sequelize, Sequelize);
 db.appointment = appointmentModel(sequelize, Sequelize);
+db.zipCodeModel = zipCodeModel(sequelize, Sequelize);
 
 // Relations
 db.patient.belongsTo(db.user);
