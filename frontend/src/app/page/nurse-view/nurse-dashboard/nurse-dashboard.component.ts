@@ -7,6 +7,7 @@ import {AuthService} from '../../../service/auth/auth.service';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 import * as moment from 'moment';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-nurse-dashboard',
@@ -47,11 +48,14 @@ export class NurseDashboardComponent implements OnInit {
   selectedAppointment: any;
   Editor = ClassicEditor;
 
+  appointmentForm: FormGroup;
+
   constructor(
     public authService: AuthService,
     public httpService: HttpService,
     public breakpointObserver: BreakpointObserver,
-    public router: Router
+    public router: Router,
+    public formBuilder: FormBuilder
   ) {
   }
 
@@ -59,6 +63,7 @@ export class NurseDashboardComponent implements OnInit {
     this.currentUser = this.authService.currentUserValue;
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 599px)');
 
+    this.initForm();
     this.now = new Date();
     this.currentTime = this.now.getTime();
     setInterval(() => {
@@ -110,6 +115,16 @@ export class NurseDashboardComponent implements OnInit {
   @HostListener('window:resize', [])
   private onResize = () => {
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 599px)');
+  }
+
+  initForm = () => {
+    this.appointmentForm = this.formBuilder.group({
+      pressure: [null, Validators.required],
+      pulse: [null, Validators.required],
+      oxygen: [null, Validators.required],
+      size: [null, Validators.required],
+      weight: [null, Validators.required],
+    });
   }
 
   getCurrentTimeFormat = () => {
@@ -224,11 +239,20 @@ export class NurseDashboardComponent implements OnInit {
     this.httpService.post(URL_JSON.BASE + 'sendEmail', data).subscribe(res => {
       this.close();
     });
-    // this.close();
   }
 
   appointmentTaken = () => {
-    this.isSubmit = true;
+    if (!this.appointmentForm.invalid) {
+      const data = {
+        email: this.customEmail ? this.customEmail : this.defaultEmail,
+        content: this.customText,
+        subject: 'Appointment Done'
+      };
+      this.httpService.post(URL_JSON.BASE + 'sendEmail', data).subscribe(res => {
+        // this.close();
+        this.isSubmit = true;
+      });
+    }
   }
 
   patientNotThere = () => {

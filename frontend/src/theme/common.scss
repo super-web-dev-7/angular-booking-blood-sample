@@ -269,6 +269,11 @@ button {
   border-radius: 25px !important;
 }
 
+.primary-button.mat-button-disabled {
+  background-color: #C7D7E3!important;
+  color: white!important;
+}
+
 .width-50 {
   width: calc(50% - 8px);
 }

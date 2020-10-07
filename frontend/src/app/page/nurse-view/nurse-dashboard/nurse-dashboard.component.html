@@ -287,51 +287,51 @@
                   Termin wahrgenommen
                 </div>
               </div>
-              <div *ngIf="isEditText" style="padding-right: 60px;">
+              <form [formGroup]="appointmentForm" *ngIf="isEditText" style="padding-right: 60px;">
                 <div class="row">
                   <div class="col-md-6">
                     <mat-form-field class="w-100">
                       <mat-label>Blutdruck</mat-label>
-                      <input autocomplete="off" matInput>
+                      <input autocomplete="off" matInput formControlName="pressure">
                     </mat-form-field>
                   </div>
                   <div class="col-md-6">
                     <mat-form-field class="w-100">
                       <mat-label>Puls</mat-label>
-                      <input autocomplete="off" matInput>
+                      <input autocomplete="off" matInput formControlName="pulse">
                     </mat-form-field>
                   </div>
                 </div>
                 <div>
                   <mat-form-field class="w-100">
                     <mat-label>Sauerstoffsättigung</mat-label>
-                    <input autocomplete="off" matInput>
+                    <input autocomplete="off" matInput formControlName="oxygen">
                   </mat-form-field>
                 </div>
                 <div class="row">
                   <div class="col-md-6">
                     <mat-form-field class="w-100">
                       <mat-label>Größe in cm</mat-label>
-                      <input autocomplete="off" matInput>
+                      <input autocomplete="off" matInput formControlName="size">
                     </mat-form-field>
                   </div>
                   <div class="col-md-6">
                     <mat-form-field class="w-100">
                       <mat-label>Gewicht in kg</mat-label>
-                      <input autocomplete="off" matInput>
+                      <input autocomplete="off" matInput formControlName="weight">
                     </mat-form-field>
                   </div>
                 </div>
-                <div class="text-template" *ngIf="isEditText">
-                  <ckeditor
-                    [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
-                </div>
+              </form>
+              <div class="text-template" *ngIf="isEditText">
+                <ckeditor
+                  [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
               </div>
             </div>
           </div>
         </div>
         <div class="button-container" *ngIf="!isSubmit">
-          <button mat-raised-button class="primary-button" color="primary" (click)="appointmentTaken()">Termin
+          <button [disabled]="appointmentForm.invalid" mat-raised-button class="primary-button" color="primary" (click)="appointmentTaken()">Termin
             erledigt
           </button>
         </div>
