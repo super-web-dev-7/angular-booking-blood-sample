@@ -332,3 +332,13 @@ table thead tr th {
   -ms-user-select: none;
   user-select: none;
 }
+.d-flex {
+  display: flex;
+}
+.d-block {
+  display: block;
+}
+.d-flex-between {
+  display: flex;
+  justify-content: space-between;
+}

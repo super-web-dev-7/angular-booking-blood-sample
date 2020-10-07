@@ -22,13 +22,13 @@
             <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="firstName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Vorname
-              <app-order-icon columnName="firstName" [orderStatus]="orderStatus"></app-order-icon>
-            </th>
-            <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
-          </ng-container>
+            <ng-container matColumnDef="firstName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Vorname
+                <app-order-icon columnName="firstName" [orderStatus]="orderStatus"></app-order-icon>
+              </th>
+              <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+            </ng-container>
 
           <ng-container matColumnDef="lastName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>

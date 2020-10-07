@@ -2,7 +2,7 @@
   <mat-sidenav [opened]="isOpen" [mode]="isMobile ? 'over' : 'side'" (closed)="isOpen = false" #sidenav>
     <app-sidebar (menuClick)="menuClick($event)"></app-sidebar>
   </mat-sidenav>
-  <mat-sidenav-content class="page-wrapper">
+  <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Doctor' ? '#F2F7FB' : '#fafafa'}">
     <div class="background-container" *ngIf="!isMobile"></div>
     <app-header (setOpen)="setOpen($event)" [isMobile]="isMobile"></app-header>
     <div class="main-content-container">

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {AG_Sidebar, Sidebar} from '../../../utils/sidebar';
+import {AG_Sidebar, Sidebar, DoctorSidebar} from '../../../utils/sidebar';
 import {AuthService} from '../../../service/auth/auth.service';
 
 @Component({
@@ -27,6 +27,8 @@ export class SidebarComponent implements OnInit {
       this.sidebar = Sidebar;
     } else if (this.currentUser.role === 'AG-Admin') {
       this.sidebar = AG_Sidebar;
+    } else if (this.currentUser.role === 'Doctor') {
+      this.sidebar = DoctorSidebar;
     }
     this.selected = '/' + this.router.url.split('/')[1];
   }
