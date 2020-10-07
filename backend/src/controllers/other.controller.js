@@ -9,6 +9,7 @@ const WorkingGroup = db.workingGroup;
 const Calendar = db.calendar;
 const Template = db.template;
 const Package = db.package;
+const ZipCode = db.zipCodeModel;
 
 exports.getSuperAdminDashboardValues = async (req, res) => {
     const response = {
@@ -52,5 +53,11 @@ exports.sendEmail = async (req, res) => {
     //     console.log(e)
     // });
     res.status(200).json({});
+}
+
+exports.checkPostalCode = async (req, res) => {
+    const zipcodeModel = await ZipCode.findOne({where: {plz: req.params.code}, raw: true,});
+    console.log(req.params.code, zipcodeModel);
+    res.status(200).json(zipcodeModel)
 }
 

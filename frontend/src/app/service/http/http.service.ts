@@ -32,6 +32,10 @@ export class HttpService {
     return this.http.post(`${url}`, data);
   }
 
+  checkPostalCode = (code) => {
+    return this.http.get(URL_JSON.ZIPCODE + '/' + code);
+  }
+
   // working-group
 
   // user
