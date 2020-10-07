@@ -99,6 +99,17 @@ export class NewComponent implements OnInit {
     return this.patientForm.controls;
   }
 
+  checkPostalCode = (type) => {
+    if (type === 'plz') {
+      this.httpService.checkPostalCode(this.pf.plz.value).subscribe((res: any) => {
+        this.pf.ort.setValue(res?.ort);
+        if (!res) {
+          this.pf.plz.setErrors(Validators.required);
+        }
+      });
+    }
+  }
+
   showAppointmentPopup = () => {
     this.isAppointmentPopup = !this.isAppointmentPopup;
     this.isPatientPopup = false;

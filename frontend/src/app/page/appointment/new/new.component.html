@@ -205,7 +205,9 @@
           </mat-form-field>
           <mat-form-field class="w-100 mr-3 ml-3">
             <mat-label>PLZ</mat-label>
-            <input autocomplete="off" matInput formControlName="plz">
+            <input autocomplete="off" type="number" matInput formControlName="plz" (keyup)="checkPostalCode('plz')">
+            <mat-icon *ngIf="pf.plz.touched && !pf.plz.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+            <mat-icon *ngIf="pf.plz.touched && pf.plz.errors" style="color: red" matSuffix>close</mat-icon>
           </mat-form-field>
           <mat-form-field class="w-100 mr-3 ml-3">
             <mat-label>Ort</mat-label>
