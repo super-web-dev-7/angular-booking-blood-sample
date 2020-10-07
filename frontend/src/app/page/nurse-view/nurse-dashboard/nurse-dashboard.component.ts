@@ -154,7 +154,6 @@ export class NurseDashboardComponent implements OnInit {
   openRightMenu = (index) => {
     this.isRightMenuOpen = true;
     this.defaultEmail = this.selectedAppointment.patientEmail;
-    console.log(this.textTemplate);
     if (index === 0) {
       this.isPatientPreparedMenuOpen = true;
       this.customText = this.getTemplate('Patient Prepared');

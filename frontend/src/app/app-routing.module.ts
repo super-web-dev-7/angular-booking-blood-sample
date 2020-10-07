@@ -113,6 +113,22 @@ const routes: Routes = [
     data: {
       userRole: ['Nurse']
     }
+  },
+  {
+    path: 'doctor',
+    loadChildren: () => import('./page/doctor-view/doctor-view.module').then(m => m.DoctorViewModule),
+    canActivate: [RoleGuard],
+    data: {
+      userRole: ['Doctor']
+    }
+  },
+  {
+    path: 'patient',
+    loadChildren: () => import('./page/patient-view/patient-view.module').then(m => m.PatientViewModule),
+    canActivate: [RoleGuard],
+    data: {
+      userRole: ['Patient']
+    }
   }
 ];
 
