@@ -106,11 +106,11 @@ export class NurseDashboardComponent implements OnInit {
   }
 
   getStartTime = (time) => {
-    return moment(time).format('hh:mm');
+    return moment(time).format('HH:mm');
   }
 
   getEndTime = (time, duration) => {
-    return moment(time + duration * 60 * 1000).format('hh:mm');
+    return moment(time + duration * 60 * 1000).format('HH:mm');
   }
 
   getTimeString = (time, format) => {

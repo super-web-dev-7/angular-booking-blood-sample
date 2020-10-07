@@ -155,7 +155,7 @@ export class NewComponent implements OnInit {
 
   getDate = time => {
     moment.locale('de');
-    return moment(time).format('ddd DD.MM.YYYY hh:mm');
+    return moment(time).format('ddd DD.MM.YYYY HH:mm');
   }
 
   getMillisecondsFromNumber = (num: any, plusDate) => {

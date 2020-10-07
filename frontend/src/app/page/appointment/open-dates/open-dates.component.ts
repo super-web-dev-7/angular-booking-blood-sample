@@ -73,7 +73,7 @@ export class OpenDatesComponent implements OnInit {
 
   getTime = (time) => {
     moment.locale('de');
-    return moment(time).format('hh:mm');
+    return moment(time).format('HH:mm');
   }
 
   onPaginateChange = ($event: PageEvent) => {
