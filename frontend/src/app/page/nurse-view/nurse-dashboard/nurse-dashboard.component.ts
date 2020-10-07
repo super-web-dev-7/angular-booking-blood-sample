@@ -38,6 +38,7 @@ export class NurseDashboardComponent implements OnInit {
   customText = 'Sehr geehrte Frau Skywalker, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Mit freundlichen Grüßen Schwester 1';
   isSubmit = false;
   allAppointments;
+  appointments = [];
   currentTime;
   now;
   Arr = Array;
@@ -66,9 +67,14 @@ export class NurseDashboardComponent implements OnInit {
     }, 1000);
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentByNurse/' + this.currentUser.id).subscribe((res: any) => {
       this.allAppointments = res;
-      console.log(this.allAppointments);
-      this.workingStartHour = res[0].workingTimeFrom;
-      this.workingEndHour = res[0].workingTimeUntil;
+      this.workingStartHour = res[0]?.workingTimeFrom;
+      this.workingEndHour = res[0]?.workingTimeUntil;
+      const today = new Date(this.now.getFullYear(), this.now.getMonth(), this.now.getDate(), 0, 0);
+      for (const appointment of this.allAppointments) {
+        if (appointment.startTime > today.getTime() && appointment.startTime < today.getTime() + 86400 * 1000) {
+          this.appointments.push(appointment);
+        }
+      }
       this.workingHourArray = new Array((this.workingEndHour - this.workingStartHour) / 2);
     });
     this.httpService.get(URL_JSON.TEMPLATE + '/getWithQuery?type=E-Mail&receiver=1').subscribe((res: any) => {

@@ -434,7 +434,7 @@
           <div *ngFor="let hour of workingHourArray; let index = index;" class="time-label">
             <div class="time-label-item time-label-hour">
               <div>{{getFloor(workingStartHour / 2 + index)}}:{{'00'}}</div>
-              <div class="w-100" *ngFor="let appointment of allAppointments">
+              <div class="w-100" *ngFor="let appointment of appointments">
                 <div class="w-100 position-relative"
                      *ngIf="workingStartHour / 2 + index === getDate(appointment.startTime, 'hour')">
                   <div class="appointment-container">
