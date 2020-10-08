@@ -61,3 +61,7 @@ exports.checkPostalCode = async (req, res) => {
     res.status(200).json(zipcodeModel)
 }
 
+exports.getPostalCodeByName = async (req, res) => {
+
+}
+

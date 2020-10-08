@@ -176,6 +176,10 @@ exports.update = async (req, res) => {
         data.password = hash;
         User.update(data, {returning: true, where: {id}}).then((rowsUpdated) => {
             res.json(rowsUpdated);
+        }).catch(err => {
+            res.status(400).send({
+                message: err.errors[0].message || 'Some error occurred.'
+            })
         });
     })
 }

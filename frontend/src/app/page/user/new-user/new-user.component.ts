@@ -1,9 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 import {AuthService} from '../../../service/auth/auth.service';
+
 
 
 @Component({
@@ -32,15 +35,14 @@ export class NewUserComponent implements OnInit {
     public httpService: HttpService,
     public authService: AuthService,
     public dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public snackBar: MatSnackBar
   ) {
   }
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
-    if (this.currentUser.role === 'AG-Admin') {
-      this.roles.splice(0, 2);
-    }
+
     this.userForm = this.formBuilder.group({
       firstName: [this.data?.firstName, Validators.required],
       lastName: [this.data?.lastName, Validators.required],
@@ -49,24 +51,15 @@ export class NewUserComponent implements OnInit {
       password: [null, Validators.required],
       isActive: [this.data ? this.data?.isActive : false, Validators.required]
     });
-    // this.selectedAllocation = this.data?.working_group ? this.data.working_group.id : 0;
-    this.selectedRole = this.data ? this.roles.findIndex(item => item.name === this.data.role) + 1 : null;
-    // this.httpService.get(URL_JSON.GROUP + '/get').subscribe((res: any) => {
-    //   this.allocations = res;
-    //   this.allocations.unshift({
-    //     id: 0,
-    //     name: 'Keine'
-    //   });
-    // });
+    if (this.currentUser.role === 'AG-Admin') {
+      this.roles.splice(0, 2);
+    }
+    this.selectedRole = this.data ? this.roles[this.roles.findIndex(item => item.name === this.data.role)].id : null;
   }
 
   get f(): any {
     return this.userForm.controls;
   }
-
-  // selectAllocation = (id) => {
-  //   this.selectedAllocation = id;
-  // }
 
   selectRole = (id) => {
     this.selectedRole = id;
@@ -86,9 +79,7 @@ export class NewUserComponent implements OnInit {
     if (this.userForm.invalid) {
       return;
     }
-    // if (!this.selectedAllocation) {
-    //   this.selectedAllocation = 0;
-    // }
+
     if (!this.selectedRole) {
       return;
     }
@@ -106,10 +97,14 @@ export class NewUserComponent implements OnInit {
       this.httpService.update(URL_JSON.USER + '/update/' + this.data.id, data).subscribe(() => {
         const response = Object.assign(data, {id: this.data.id});
         this.dialogRef.close(response);
+      }, () => {
+        this.snackBar.open('Dieser User ist bereits im System vorhanden.', '',{duration: 2000});
       });
     } else {
       this.httpService.create(URL_JSON.USER, data).subscribe(res => {
         this.dialogRef.close(res);
+      }, () => {
+        this.snackBar.open('Dieser User ist bereits im System vorhanden.', '',{duration: 2000});
       });
     }
   }

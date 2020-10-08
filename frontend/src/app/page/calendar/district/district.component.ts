@@ -126,7 +126,6 @@ export class DistrictComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // result.zipcode = JSON.parse(result.zipcode);
         const index = this.allDistrict.findIndex(item => item.id === result.id);
         const district = this.allDistrict[index];
         this.allDistrict[index] = {...district, ...result};

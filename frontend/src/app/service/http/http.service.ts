@@ -33,7 +33,11 @@ export class HttpService {
   }
 
   checkPostalCode = (code) => {
-    return this.http.get(URL_JSON.ZIPCODE + '/' + code);
+    return this.http.get(URL_JSON.ZIPCODE + '/checkPostalCode/' + code);
+  }
+
+  getPostalCodeByName = (name) => {
+    return this.http.get(URL_JSON.ZIPCODE + '/getPostalCodeByName?name=' + name);
   }
 
   // working-group

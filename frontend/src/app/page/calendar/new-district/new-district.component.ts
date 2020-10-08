@@ -11,8 +11,6 @@ import {HttpService} from '../../../service/http/http.service';
 })
 export class NewDistrictComponent implements OnInit {
 
-  // additionalZipCodeCount = [];
-  // additionalZipCode = [];
   districtForm: FormGroup;
   public districtSearchControl = new FormControl();
   allStaticDistrict = [];
@@ -36,14 +34,6 @@ export class NewDistrictComponent implements OnInit {
       this.allStaticDistrict = res;
       this.allStaticDistrict$ = res;
     });
-    if (this.data) {
-      // for (let i  = 0; i < this.data.zipcode.length - 1; i++) {
-      //   this.additionalZipCodeCount.push(this.additionalZipCodeCount.length);
-      // }
-      // const zipcode = [...this.data.zipcode];
-      // zipcode.shift();
-      // this.additionalZipCode = zipcode;
-    }
     this.districtSearchControl.valueChanges.subscribe(() => {
       let search = this.districtSearchControl.value;
       search = search.toLowerCase();
@@ -54,37 +44,26 @@ export class NewDistrictComponent implements OnInit {
   get f(): any {
     return this.districtForm.controls;
   }
-  //
-  // addZipCode = () => {
-  //   this.additionalZipCodeCount.push(this.additionalZipCodeCount.length);
-  //   this.additionalZipCode.push({from: '', to: ''});
-  // }
+
+  changeDropdownList = () => {
+    if (this.f.name.value) {
+      this.httpService.getPostalCodeByName(this.f.name.value).subscribe((res: any) => {
+        console.log(res);
+      });
+    }
+  }
 
   onSubmit = () => {
     if (this.districtForm.invalid) {
       return;
     }
-    // const zipcode = [
-    //   {
-    //     from: this.f.from.value,
-    //     to: this.f.to.value
-    //   }
-    // ];
-    // for (const item of this.additionalZipCode) {
-    //   if (item.from === '' || item.to === '') {
-    //     continue;
-    //   }
-    //   zipcode.push({from: item.from, to: item.to});
-    // }
     const data = {
       name: this.f.name.value,
       model: this.f.model.value,
       isActive: this.f.isActive.value,
-      // zipcode: JSON.stringify(zipcode)
     };
     if (this.data) {
       this.httpService.update(URL_JSON.DISTRICT + '/update/' + this.data.id, data).subscribe(res => {
-        // const response = Object.assign(data, {id: this.data.id});
         this.dialogRef.close(res);
       });
     } else {
@@ -97,12 +76,4 @@ export class NewDistrictComponent implements OnInit {
   close = () => {
     this.dialogRef.close();
   }
-
-  // onChangeValue = (event, index, type) => {
-  //   if (type === 0) {
-  //     this.additionalZipCode[index].from = event.target.value;
-  //   } else {
-  //     this.additionalZipCode[index].to = event.target.value;
-  //   }
-  // }
 }

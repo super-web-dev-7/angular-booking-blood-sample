@@ -66,7 +66,7 @@ exports.update = async (req, res) => {
         District.update(data, {returning: true, where: {id}}).then(async () => {
             DistrictModel.hasMany(District, {foreignKey: 'model'});
             District.belongsTo(DistrictModel, {foreignKey: 'model'});
-            const updatedDistrict = await District.findByPk(id, {include: [DistrictModel]})
+            const updatedDistrict = await District.findByPk(id, {include: [DistrictModel]});
             res.json(updatedDistrict);
         });
     } else {
@@ -80,16 +80,16 @@ exports.update = async (req, res) => {
                     District.update(data, {returning: true, where: {id}}).then(async () => {
                         DistrictModel.hasMany(District, {foreignKey: 'model'});
                         District.belongsTo(DistrictModel, {foreignKey: 'model'});
-                        const updatedDistrict = await District.findByPk(id, {include: [DistrictModel]})
+                        const updatedDistrict = await District.findByPk(id, {include: [DistrictModel]});
                         res.json(updatedDistrict);
-                    })
+                    });
                 } else {
-                    District.update({...data, isActive: true}, {returning: true, where: {id}}).then(async (rowsUpdated) => {
+                    District.update({...data, isActive: true}, {returning: true, where: {id}}).then(async () => {
                         DistrictModel.hasMany(District, {foreignKey: 'model'});
                         District.belongsTo(DistrictModel, {foreignKey: 'model'});
-                        const updatedDistrict = await District.findByPk(id, {include: [DistrictModel]})
+                        const updatedDistrict = await District.findByPk(id, {include: [DistrictModel]});
                         res.json(updatedDistrict);
-                    })
+                    });
                 }
             }
         }
