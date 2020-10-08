@@ -38,8 +38,13 @@ export class NewDistrictComponent implements OnInit {
       this.allStaticDistrict = res;
       this.allStaticDistrict$ = res;
       if (this.data) {
-        const currentModel = this.allStaticDistrict$.find(item => item.city === this.data.city && item.district === this.data.district);
-        this.f.model.setValue(currentModel.id);
+        const currentModel = {
+          id: 0,
+          city: this.data.city,
+          district: this.data.district
+        };
+        this.allStaticDistrict$.unshift(currentModel);
+        this.f.model.setValue(0);
       }
     });
     this.districtSearchControl.valueChanges.subscribe(() => {

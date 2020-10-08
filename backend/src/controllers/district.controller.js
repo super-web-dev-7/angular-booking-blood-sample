@@ -3,6 +3,7 @@ import db from '../models';
 const District = db.district;
 const Calendar = db.calendar;
 const DistrictModel = db.districtModel;
+const sequelize = db.sequelize;
 
 exports.create = (req, res) => {
     const newDistrict = req.body;
@@ -83,6 +84,16 @@ exports.update = async (req, res) => {
 }
 
 exports.getModel = async (req, res) => {
-    const allModels = await DistrictModel.findAll({where: {}, group: ['district']});
+    // const allModels = await DistrictModel.findAll({where: {}, group: ['district']});
+    const allModels = await sequelize.query(`
+    SELECT * 
+    FROM district_models 
+    WHERE ( 
+        city NOT IN (SELECT city FROM districts) OR 
+        district NOT IN (SELECT district FROM districts)
+        ) 
+    GROUP BY district, city`,
+        {type: db.Sequelize.QueryTypes.SELECT}
+    );
     res.status(200).json(allModels);
 }
