@@ -61,14 +61,39 @@ exports.delete = async (req, res) => {
 
 exports.update = async (req, res) => {
     const data = req.body;
-    const id = req.params.id;
-    District.update(data, {returning: true, where: {id}}).then(async (rowsUpdated) => {
-        // res.json(rowsUpdated);
-        DistrictModel.hasMany(District, {foreignKey: 'model'});
-        District.belongsTo(DistrictModel, {foreignKey: 'model'});
-        const updatedDistrict = await District.findByPk(id, {include: [DistrictModel]})
-        res.json(updatedDistrict);
-    });
+    const id = parseInt(req.params.id, 10);
+    if (data.isActive) {
+        District.update(data, {returning: true, where: {id}}).then(async () => {
+            DistrictModel.hasMany(District, {foreignKey: 'model'});
+            District.belongsTo(DistrictModel, {foreignKey: 'model'});
+            const updatedDistrict = await District.findByPk(id, {include: [DistrictModel]})
+            res.json(updatedDistrict);
+        });
+    } else {
+        const allCalendar = await Calendar.findAll({raw: true});
+        for (const calendar of allCalendar) {
+            let districtIds = JSON.parse(calendar.district_id);
+            if (districtIds.includes(id)) {
+                if (districtIds.length > 2) {
+                    districtIds = districtIds.filter(item => item !== id);
+                    Calendar.update({district_id: JSON.stringify(districtIds)}, {where: {id: calendar.id}});
+                    District.update(data, {returning: true, where: {id}}).then(async () => {
+                        DistrictModel.hasMany(District, {foreignKey: 'model'});
+                        District.belongsTo(DistrictModel, {foreignKey: 'model'});
+                        const updatedDistrict = await District.findByPk(id, {include: [DistrictModel]})
+                        res.json(updatedDistrict);
+                    })
+                } else {
+                    District.update({...data, isActive: true}, {returning: true, where: {id}}).then(async (rowsUpdated) => {
+                        DistrictModel.hasMany(District, {foreignKey: 'model'});
+                        District.belongsTo(DistrictModel, {foreignKey: 'model'});
+                        const updatedDistrict = await District.findByPk(id, {include: [DistrictModel]})
+                        res.json(updatedDistrict);
+                    })
+                }
+            }
+        }
+    }
 }
 
 exports.getModel = async (req, res) => {

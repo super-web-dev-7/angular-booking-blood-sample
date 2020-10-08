@@ -106,7 +106,11 @@ export class DistrictComponent implements OnInit {
     const data = {
       isActive: event.checked
     };
-    this.httpService.update(URL_JSON.DISTRICT + '/update/' + id, data).subscribe(res => {
+    this.httpService.update(URL_JSON.DISTRICT + '/update/' + id, data).subscribe((result: any) => {
+      const index = this.allDistrict.findIndex(item => item.id === result.id);
+      const district = this.allDistrict[index];
+      this.allDistrict[index] = {...district, ...result};
+      this.dataSource.data = this.allDistrict;
     });
   }
 
