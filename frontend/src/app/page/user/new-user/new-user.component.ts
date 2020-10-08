@@ -98,13 +98,13 @@ export class NewUserComponent implements OnInit {
         const response = Object.assign(data, {id: this.data.id});
         this.dialogRef.close(response);
       }, () => {
-        this.snackBar.open('Dieser User ist bereits im System vorhanden.', '',{duration: 2000});
+        this.snackBar.open('Dieser User ist bereits im System vorhanden.', '', {duration: 2000});
       });
     } else {
       this.httpService.create(URL_JSON.USER, data).subscribe(res => {
         this.dialogRef.close(res);
       }, () => {
-        this.snackBar.open('Dieser User ist bereits im System vorhanden.', '',{duration: 2000});
+        this.snackBar.open('Dieser User ist bereits im System vorhanden.', '', {duration: 2000});
       });
     }
   }

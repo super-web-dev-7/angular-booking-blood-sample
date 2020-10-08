@@ -217,6 +217,10 @@ exports.updatePatientById = async (req, res) => {
             };
             Patient.update(patientData, {returning: true, where: {user_id: id}}).then();
             res.json(data);
+        }).catch(err => {
+            res.status(400).send({
+                message: err.errors[0].message || 'Some error occurred.'
+            });
         });
     });
 }
