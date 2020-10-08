@@ -22,6 +22,28 @@ exports.get = async (req, res) => {
     res.status(200).json(allDistrict);
 }
 
+exports.getUnassigned = async (req, res) => {
+    DistrictModel.hasMany(District, {foreignKey: 'model'});
+    District.belongsTo(DistrictModel, {foreignKey: 'model'});
+    const allDistrict = await District.findAll({where: {}, include: [DistrictModel]});
+    const unassignedDistrict = [];
+    for (const district of allDistrict) {
+        let include = false;
+        const allCalendars = await Calendar.findAll();
+        for (const calendar of allCalendars) {
+            const districtIds = JSON.parse(calendar.district_id);
+            if (districtIds.includes(district.id)) {
+                include = true;
+                break;
+            }
+        }
+        if (!include) {
+            unassignedDistrict.push(district);
+        }
+    }
+    res.status(200).json(unassignedDistrict);
+}
+
 exports.delete = async (req, res) => {
     const allCalendar = await Calendar.findAll({where: {}});
     for (const calendar of allCalendar) {

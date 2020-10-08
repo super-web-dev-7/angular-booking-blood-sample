@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import db from '../models';
+import Sequelize from "sequelize";
 
 const User = db.user;
 const WorkingGroup = db.workingGroup;
@@ -8,6 +9,8 @@ const Calendar = db.calendar;
 const Agency = db.agency;
 const Patient = db.patient;
 const Appointment = db.appointment;
+const sequelize = db.sequelize;
+// const Op = db.sequelize;
 
 exports.create = (req, res) => {
     const newUser = req.body;
@@ -33,7 +36,7 @@ exports.createPatient = (req, res) => {
         lastName: req.body.lastName,
         phoneNumber: req.body.phoneNumber,
         isActive: true
-    }
+    };
     bcrypt.hash(newUser.password, saltRounds, (err, hash) => {
         newUser.password = hash;
         User.create(newUser).then(data => {
@@ -98,6 +101,11 @@ exports.getAgAdminInWorkingGroup = async (req, res) => {
         }
     }
     res.status(200).json(agAdmin);
+}
+
+exports.unassignedInCalendar = async (req, res) => {
+    const allNurses = await sequelize.query(`SELECT * FROM users WHERE role="Nurse" AND id NOT IN (SELECT nurse FROM calendars)`, {type: Sequelize.QueryTypes.SELECT})
+    res.status(200).json(allNurses);
 }
 
 exports.delete = async (req, res) => {

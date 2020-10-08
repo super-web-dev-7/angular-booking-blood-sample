@@ -10,6 +10,7 @@ router.route('/delete/:id').delete(userController.delete);
 router.route('/update/:id').put(userController.update);
 router.route('/getPatientById/:id').get(userController.getPatientById);
 router.route('/updatePatientById/:id').put(userController.updatePatientById);
-router.route('/getWorkingGroup').get(userController.getAgAdminInWorkingGroup)
+router.route('/getWorkingGroup').get(userController.getAgAdminInWorkingGroup);
+router.route('/unassignedInCalendar').get(userController.unassignedInCalendar);
 
 export default router;

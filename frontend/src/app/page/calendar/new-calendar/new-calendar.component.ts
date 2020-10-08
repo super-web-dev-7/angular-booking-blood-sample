@@ -31,9 +31,15 @@ export class NewCalendarComponent implements OnInit {
   ngOnInit(): void {
     this.httpService.get(URL_JSON.DISTRICT + '/unassigned').subscribe((res: any) => {
       this.districts = res;
+      if (this.data) {
+        this.districts = [...this.data.districts, ...this.districts];
+      }
     });
-    this.httpService.get(URL_JSON.USER + '/get?role=Nurse').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.USER + '/unassignedInCalendar?role=Nurse').subscribe((res: any) => {
       this.nurses = res;
+      if (this.data) {
+        this.nurses.unshift(this.data.user);
+      }
     });
 
     this.scheduleForm = this.formBuilder.group({
@@ -77,7 +83,8 @@ export class NewCalendarComponent implements OnInit {
     if (this.scheduleForm.invalid) {
       return;
     }
-    if (this.selectedDistrict.length === 0 || !this.selectedNurse) {
+    if (this.selectedDistrict.length < 2 || !this.selectedNurse) {
+      console.log('errr')
       return;
     }
 
