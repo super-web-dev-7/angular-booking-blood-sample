@@ -4,19 +4,19 @@
     <div>
       <button
         class="custom-button-pink"
-        [routerLink]="'/user/new'"
+        (click)="visibleChange()"
         mat-stroked-button
         *ngIf="currentUser.role === 'Doctor'"
       >Patientenrückfragen</button>
       <button
         class="custom-button-green"
-        [routerLink]="'/user/new'"
+        (click)="visibleChange()"
         mat-stroked-button
         *ngIf="currentUser.role === 'Doctor'"
       >Anamnesefreigaben</button>
       <button
         class="custom-button-light-green"
-        [routerLink]="'/user/new'"
+        (click)="visibleChange()"
         mat-stroked-button
         *ngIf="currentUser.role === 'Doctor'"
       >Termine</button>
@@ -26,7 +26,7 @@
       <mat-icon>search</mat-icon>
     </div>
   </div>
-  <div class="table-container mt-5">
+  <div class="table-container mt-5" *ngIf="visibleP">
     <mat-card class="table-card mat-card-radius" style="position: relative">
       <div>
         <table mat-table [dataSource]="dataSourceP" matSort (matSortChange)="onSort($event)">
@@ -73,7 +73,7 @@
               <button mat-icon-button aria-label="more" (click)="editItem(element.id)" *ngIf="element.id !== 1">
                 <img src="/assets/images/chat_icon.svg" alt="edit">
               </button>
-              <button mat-icon-button aria-label="more" (click)="editItem(element.id)" *ngIf="element.id === 1">
+              <button mat-icon-button aria-label="more" (click)="searchItem(element.id)" *ngIf="element.id === 1">
                 <mat-icon>search</mat-icon>
               </button>
             </td>
@@ -83,10 +83,17 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       </div>
+      <button
+        class="custom-doctor-button"
+        mat-stroked-button
+        style="background-color: #F389CC;right: -180px;"
+      >
+        Patientenrückfragen
+      </button>
     </mat-card>
   </div>
-  <div class="table-container mt-5">
-    <mat-card class="table-card mat-card-radius">
+  <div class="table-container mt-5" *ngIf="visibleA">
+    <mat-card class="table-card mat-card-radius" style="position: relative">
       <div>
         <table mat-table [dataSource]="dataSourceA" matSort (matSortChange)="onSort($event)">
           <ng-container matColumnDef="no">
@@ -142,10 +149,17 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       </div>
+      <button
+        class="custom-doctor-button"
+        mat-stroked-button
+        style="background-color: #50E3C2;right: -180px;"
+      >
+        Anamnesefreigaben
+      </button>
     </mat-card>
   </div>
-  <div class="table-container mt-5 mb-201">
-    <mat-card class="table-card mat-card-radius">
+  <div class="table-container mt-5 mb-201" *ngIf="visibleE">
+    <mat-card class="table-card mat-card-radius" style="position: relative">
       <div>
         <table mat-table [dataSource]="dataSourceE" matSort (matSortChange)="onSort($event)">
           <ng-container matColumnDef="no">
@@ -225,6 +239,13 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumnsE;"></tr>
         </table>
       </div>
+      <button
+        class="custom-doctor-button"
+        mat-stroked-button
+        style="background-color: #89DF8C;right: -97px;"
+      >
+        Termine
+      </button>
     </mat-card>
   </div>
 </div>

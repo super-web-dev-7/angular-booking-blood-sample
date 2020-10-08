@@ -34,12 +34,14 @@ table td {
 .mr-10 {
   margin-right: 10px;
 }
-.custom-doctor-button-pink {
-  background-color: #F389CC;
+.custom-doctor-button {
   border-radius: 18px !important;
-  height: 60px;
+  height: 71px;
   font-size: 1rem;
-  padding-left: 20px;
+  padding-left: 40px;
   color: #FFFFFF;
-  margin-left: -20px;
+  position: absolute;
+  top: 0;
+  z-index: -1;
 }
+

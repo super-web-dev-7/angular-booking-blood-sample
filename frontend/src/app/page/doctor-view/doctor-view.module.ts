@@ -9,11 +9,17 @@ import { DoctorDashboardComponent } from './doctor-dashboard/doctor-dashboard.co
 import {SharedModule} from '../../shared/shared.module';
 import { LaboratoryReportComponent } from './laboratory-report/laboratory-report.component';
 import { ArchiveComponent } from './archive/archive.component';
+import { SearchModalComponent } from './doctor-dashboard/search-modal/search-modal.component';
 
 
 
 @NgModule({
-  declarations: [DoctorDashboardComponent, LaboratoryReportComponent, ArchiveComponent],
+  declarations: [
+    DoctorDashboardComponent,
+    LaboratoryReportComponent,
+    ArchiveComponent,
+    SearchModalComponent
+  ],
   imports: [
     CommonModule,
     DoctorViewRoutingModule,
