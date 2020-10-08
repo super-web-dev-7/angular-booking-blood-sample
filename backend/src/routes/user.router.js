@@ -12,5 +12,6 @@ router.route('/getPatientById/:id').get(userController.getPatientById);
 router.route('/updatePatientById/:id').put(userController.updatePatientById);
 router.route('/getWorkingGroup').get(userController.getAgAdminInWorkingGroup);
 router.route('/unassignedInCalendar').get(userController.unassignedInCalendar);
+router.route('/unassignedInAgency').get(userController.unassignedInAgency);
 
 export default router;

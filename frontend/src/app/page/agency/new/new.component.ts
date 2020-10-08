@@ -40,8 +40,11 @@ export class NewComponent implements OnInit {
       password: [null, Validators.required]
     });
 
-    this.httpService.get(URL_JSON.USER + '/get?role=Doctor').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.USER + '/unassignedInAgency?role=Doctor').subscribe((res: any) => {
       this.doctors = res;
+      if (this.data) {
+        this.doctors = [...this.data.doctors, this.doctors];
+      }
     });
     this.httpService.get(URL_JSON.GROUP + '/get_unused').subscribe((res: any) => {
       this.groups = res;

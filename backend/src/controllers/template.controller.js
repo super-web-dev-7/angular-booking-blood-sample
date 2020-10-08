@@ -1,6 +1,7 @@
 import db from '../models';
 
 const Template = db.template;
+const TemplateAction = db.templateAction;
 
 exports.create = (req, res) => {
     const newTemplate = req.body;
@@ -35,4 +36,10 @@ exports.update = (req, res) => {
 exports.getWithQuery = async (req, res) => {
     const templates = await Template.findAll({where: req.query});
     res.status(200).json(templates);
+}
+
+exports.getActions = async (req, res) => {
+    const allActions = await TemplateAction.findAll({raw: true});
+    console.log(allActions);
+    res.status(200).json(allActions);
 }

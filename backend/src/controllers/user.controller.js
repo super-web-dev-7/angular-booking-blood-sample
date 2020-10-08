@@ -108,6 +108,26 @@ exports.unassignedInCalendar = async (req, res) => {
     res.status(200).json(allNurses);
 }
 
+exports.unassignedInAgency = async (req, res) => {
+    const allDoctors = await User.findAll({where: req.query});
+    const unassignedDoctors = [];
+    for (const doctor of allDoctors) {
+        let include = false;
+        const allAgency = await Agency.findAll();
+        for (const agency of allAgency) {
+            const doctorIds = JSON.parse(agency.doctors_id);
+            if (doctorIds.includes(doctor.id)) {
+                include = true;
+                break;
+            }
+        }
+        if (!include) {
+            unassignedDoctors.push(doctor);
+        }
+    }
+    res.status(200).json(unassignedDoctors);
+}
+
 exports.delete = async (req, res) => {
     const user = await User.findByPk(req.params.id);
     if (user.role === 'Nurse') {
