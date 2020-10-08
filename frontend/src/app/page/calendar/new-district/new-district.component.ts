@@ -37,7 +37,7 @@ export class NewDistrictComponent implements OnInit {
     this.districtSearchControl.valueChanges.subscribe(() => {
       let search = this.districtSearchControl.value;
       search = search.toLowerCase();
-      this.allStaticDistrict = this.allStaticDistrict$.filter(item => item.name.toLowerCase().indexOf(search) > -1);
+      this.allStaticDistrict = this.allStaticDistrict$.filter(item => item.district.toLowerCase().indexOf(search) > -1);
     });
   }
 

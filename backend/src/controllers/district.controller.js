@@ -98,8 +98,5 @@ exports.update = async (req, res) => {
 
 exports.getModel = async (req, res) => {
     const allModels = await DistrictModel.findAll({where: {}});
-    for (let model of allModels) {
-        model.zipcode = JSON.parse(model.zipcode);
-    }
     res.status(200).json(allModels);
 }

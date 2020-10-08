@@ -10,13 +10,16 @@ exports.ping = (req, res, next) => {
     res.send('Pong');
 };
 
-exports.insertDistrict = () => {
-    for (let item of PostalCode) {
-        const data = {
-            name: item.letter,
-            zipcode: JSON.stringify(item.values)
-        };
-        DistrictModel.create(data);
+exports.insertDistrict = async () => {
+    for (let postalCode of PostalCode) {
+        for (const code of postalCode.values) {
+            const data = {
+                city: 'Berlin',
+                district: postalCode.letter,
+                zipcode: code
+            }
+            await DistrictModel.create(data);
+        }
     }
 }
 
