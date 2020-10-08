@@ -4,19 +4,19 @@
     <div>
       <button
         class="custom-button-pink"
-        (click)="visibleChange()"
+        [routerLink]="'/doctor/dashboard/patient-inquiry'"
         mat-stroked-button
         *ngIf="currentUser.role === 'Doctor'"
       >Patientenrückfragen</button>
       <button
         class="custom-button-green"
-        (click)="visibleChange()"
+        [routerLink]="'/doctor/dashboard/anamnes-release'"
         mat-stroked-button
         *ngIf="currentUser.role === 'Doctor'"
       >Anamnesefreigaben</button>
       <button
         class="custom-button-light-green"
-        (click)="visibleChange()"
+        [routerLink]="'/doctor/dashboard/event'"
         mat-stroked-button
         *ngIf="currentUser.role === 'Doctor'"
       >Termine</button>
@@ -26,7 +26,7 @@
       <mat-icon>search</mat-icon>
     </div>
   </div>
-  <div class="table-container mt-5" *ngIf="visibleP">
+  <div class="table-container mt-5">
     <mat-card class="table-card mat-card-radius" style="position: relative">
       <div>
         <table mat-table [dataSource]="dataSourceP" matSort (matSortChange)="onSort($event)">
@@ -70,10 +70,10 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: center"> Anfrage bearbeiten </th>
             <td mat-cell *matCellDef="let element" style="text-align: center">
-              <button mat-icon-button aria-label="more" (click)="editItem(element.id)" *ngIf="element.id !== 1">
+              <button mat-icon-button aria-label="more" (click)="openAnswer()" *ngIf="element.id !== 1">
                 <img src="/assets/images/chat_icon.svg" alt="edit">
               </button>
-              <button mat-icon-button aria-label="more" (click)="searchItem(element.id)" *ngIf="element.id === 1">
+              <button mat-icon-button aria-label="more" (click)="searchItem()" *ngIf="element.id === 1">
                 <mat-icon>search</mat-icon>
               </button>
             </td>
@@ -92,7 +92,7 @@
       </button>
     </mat-card>
   </div>
-  <div class="table-container mt-5" *ngIf="visibleA">
+  <div class="table-container mt-5">
     <mat-card class="table-card mat-card-radius" style="position: relative">
       <div>
         <table mat-table [dataSource]="dataSourceA" matSort (matSortChange)="onSort($event)">
@@ -136,10 +136,10 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: center"> Anamnesebogen prüfen </th>
             <td mat-cell *matCellDef="let element" style="text-align: center">
-              <button mat-icon-button aria-label="more" (click)="editItem(element.id)" *ngIf="element.id !== 1">
+              <button mat-icon-button aria-label="more" (click)="checkAnamnes()" *ngIf="element.id !== 1">
                 <img src="/assets/images/edit.svg" alt="edit">
               </button>
-              <button mat-icon-button aria-label="more" (click)="editItem(element.id)" *ngIf="element.id === 1">
+              <button mat-icon-button aria-label="more" (click)="anamnesView()" *ngIf="element.id === 1">
                 <mat-icon>search</mat-icon>
               </button>
             </td>
@@ -158,7 +158,7 @@
       </button>
     </mat-card>
   </div>
-  <div class="table-container mt-5 mb-201" *ngIf="visibleE">
+  <div class="table-container mt-5 mb-201">
     <mat-card class="table-card mat-card-radius" style="position: relative">
       <div>
         <table mat-table [dataSource]="dataSourceE" matSort (matSortChange)="onSort($event)">
