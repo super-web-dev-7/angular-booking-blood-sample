@@ -56,8 +56,7 @@ exports.createPatient = (req, res) => {
                 otherCity: req.body.otherCity,
                 otherPostalCode: req.body.otherPostalCode
             };
-            Patient.create(newPatientData).then(patientData => {
-                console.log(patientData);
+            Patient.create(newPatientData).then(() => {
             })
             res.send(data);
         }).catch(err => {
@@ -186,7 +185,6 @@ exports.update = async (req, res) => {
 
 exports.updatePatientById = async (req, res) => {
     const body = req.body;
-    console.log(body)
     const id = req.params.id;
     bcrypt.hash(body.password, saltRounds, function (err, hash) {
         body.password = hash;
@@ -197,8 +195,6 @@ exports.updatePatientById = async (req, res) => {
             password: body.password,
             phoneNumber: body.phoneNumber
         };
-        console.log(id)
-        console.log(data);
         User.update(data, {returning: true, where: {id}}).then((rowsUpdated) => {
             const patientData = {
                 salutation: body.salutation,

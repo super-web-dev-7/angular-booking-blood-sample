@@ -32,7 +32,6 @@ exports.sendEmail = async (req, res) => {
         from: process.env.OWNER_EMAIL,
         html: data.content
     }
-    console.log(process.env.SMTP_HOST, process.env.SMTP_USER, process.env.SMTP_PASS)
     const transporter = nodeMailer.createTransport({
         host: process.env.SMTP_HOST,
         port: 587,
@@ -57,7 +56,6 @@ exports.sendEmail = async (req, res) => {
 
 exports.checkPostalCode = async (req, res) => {
     const zipcodeModel = await ZipCode.findOne({where: {plz: req.params.code}, raw: true,});
-    console.log(req.params.code, zipcodeModel);
     res.status(200).json(zipcodeModel)
 }
 

@@ -218,7 +218,6 @@ export class NewComponent implements OnInit {
       return;
     }
     if (!this.selectedAgency || !this.selectedPackage || !this.selectedTime) {
-      console.log('select invaild');
       return;
     }
     const data = {
@@ -228,7 +227,6 @@ export class NewComponent implements OnInit {
       packageId: this.selectedPackage,
       time: this.selectedTime
     };
-    console.log(data);
     if (this.data) {
     } else {
       this.httpService.create(URL_JSON.APPOINTMENT, data).subscribe(res => {

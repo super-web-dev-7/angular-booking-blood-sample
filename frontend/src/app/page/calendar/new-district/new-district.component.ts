@@ -1,8 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 import {URL_JSON} from '../../../utils/url_json';
 import {HttpService} from '../../../service/http/http.service';
+
 
 @Component({
   selector: 'app-new-district',
@@ -20,19 +23,24 @@ export class NewDistrictComponent implements OnInit {
     public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<any>,
     public httpService: HttpService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public snackBar: MatSnackBar
   ) {
   }
 
   ngOnInit(): void {
     this.districtForm = this.formBuilder.group({
       name: [this.data?.name, Validators.required],
-      model: [this.data?.model, Validators.required],
+      model: [null, Validators.required],
       isActive: [this.data ? this.data?.isActive : false, Validators.required]
     });
     this.httpService.get(URL_JSON.DISTRICT + '/get_model').subscribe((res: any) => {
       this.allStaticDistrict = res;
       this.allStaticDistrict$ = res;
+      if (this.data) {
+        const currentModel = this.allStaticDistrict$.find(item => item.city === this.data.city && item.district === this.data.district);
+        this.f.model.setValue(currentModel.id);
+      }
     });
     this.districtSearchControl.valueChanges.subscribe(() => {
       let search = this.districtSearchControl.value;
@@ -48,7 +56,6 @@ export class NewDistrictComponent implements OnInit {
   changeDropdownList = () => {
     if (this.f.name.value) {
       this.httpService.getPostalCodeByName(this.f.name.value).subscribe((res: any) => {
-        console.log(res);
       });
     }
   }
@@ -57,14 +64,19 @@ export class NewDistrictComponent implements OnInit {
     if (this.districtForm.invalid) {
       return;
     }
+    const city = this.allStaticDistrict$.find(item => item.id === this.f.model.value).city;
+    const district = this.allStaticDistrict$.find(item => item.id === this.f.model.value).district;
     const data = {
       name: this.f.name.value,
-      model: this.f.model.value,
+      city,
+      district,
       isActive: this.f.isActive.value,
     };
     if (this.data) {
       this.httpService.update(URL_JSON.DISTRICT + '/update/' + this.data.id, data).subscribe(res => {
         this.dialogRef.close(res);
+      }, error => {
+        this.snackBar.open(error.error.message, '', {duration: 2000});
       });
     } else {
       this.httpService.create(URL_JSON.DISTRICT, data).subscribe(res => {

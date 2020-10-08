@@ -109,7 +109,6 @@ export class OpenDatesComponent implements OnInit {
   }
 
   detail = element => {
-    console.log(element);
     const dialogRef = this.dialog.open(AppointmentViewComponent, {
       width: '650px',
       position: {left: '15%'},
@@ -117,7 +116,6 @@ export class OpenDatesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      console.log('closed');
     });
   }
 }

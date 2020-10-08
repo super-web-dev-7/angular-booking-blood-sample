@@ -81,9 +81,7 @@ exports.getUnusedGroup = async (req, res) => {
     const allGroups = await WorkingGroup.findAll();
     const response = [];
     for (const group of allGroups) {
-        console.log(group.id)
         const agency = await Agency.findAll({where: {group_id: group.id}});
-        console.log(agency.length)
         if (agency.length === 0) {
             response.push(group);
         }

@@ -40,6 +40,5 @@ exports.getWithQuery = async (req, res) => {
 
 exports.getActions = async (req, res) => {
     const allActions = await TemplateAction.findAll({raw: true});
-    console.log(allActions);
     res.status(200).json(allActions);
 }

@@ -54,16 +54,9 @@ export class NewComponent implements OnInit {
     this.httpService.get(URL_JSON.CALENDAR + '/get_unused').subscribe((res: any) => {
       this.calendars = res;
       if (this.data) {
-        console.log(this.data);
         this.calendars.unshift(this.data.calendar);
       }
     });
-    // this.httpService.get(URL_JSON.AGENCY + '/get/unused').subscribe((res: any) => {
-    //   this.allAgency = res;
-    //   if (this.data) {
-    //     this.allAgency.unshift(this.data.agency);
-    //   }
-    // });
 
     this.selectedCalendar = this.data ? this.data?.calendar_id : 0;
     this.selectedAdmin = this.data ? this.data?.admin : [];
@@ -82,10 +75,6 @@ export class NewComponent implements OnInit {
     const password = Math.random().toString(36).slice(-8);
     this.userForm.controls.password.setValue(password);
   }
-
-  // selectAgency = id => {
-  //   this.selectedAgency = id;
-  // }
 
   showAddAdminPopup = () => {
     if (this.isAddAdminPopup) {

@@ -52,7 +52,6 @@ export class OverviewComponent implements OnInit {
       this.openDialog();
     }
     this.httpService.get(URL_JSON.AGENCY + '/get').subscribe((res: any) => {
-      console.log(res)
       this.dataSource.data = res;
       this.allAgency = res;
     });

@@ -16,16 +16,12 @@ exports.create = (req, res) => {
 };
 
 exports.get = async (req, res) => {
-    DistrictModel.hasMany(District, {foreignKey: 'model'});
-    District.belongsTo(DistrictModel, {foreignKey: 'model'});
-    const allDistrict = await District.findAll({where: {}, include: [DistrictModel]});
+    const allDistrict = await District.findAll({where: {}});
     res.status(200).json(allDistrict);
 }
 
 exports.getUnassigned = async (req, res) => {
-    DistrictModel.hasMany(District, {foreignKey: 'model'});
-    District.belongsTo(DistrictModel, {foreignKey: 'model'});
-    const allDistrict = await District.findAll({where: {}, include: [DistrictModel]});
+    const allDistrict = await District.findAll({where: {}});
     const unassignedDistrict = [];
     for (const district of allDistrict) {
         let include = false;
@@ -62,41 +58,31 @@ exports.delete = async (req, res) => {
 exports.update = async (req, res) => {
     const data = req.body;
     const id = parseInt(req.params.id, 10);
-    if (data.isActive) {
-        District.update(data, {returning: true, where: {id}}).then(async () => {
-            DistrictModel.hasMany(District, {foreignKey: 'model'});
-            District.belongsTo(DistrictModel, {foreignKey: 'model'});
-            const updatedDistrict = await District.findByPk(id, {include: [DistrictModel]});
-            res.json(updatedDistrict);
-        });
-    } else {
-        const allCalendar = await Calendar.findAll({raw: true});
-        for (const calendar of allCalendar) {
-            let districtIds = JSON.parse(calendar.district_id);
-            if (districtIds.includes(id)) {
-                if (districtIds.length > 2) {
-                    districtIds = districtIds.filter(item => item !== id);
-                    Calendar.update({district_id: JSON.stringify(districtIds)}, {where: {id: calendar.id}});
-                    District.update(data, {returning: true, where: {id}}).then(async () => {
-                        DistrictModel.hasMany(District, {foreignKey: 'model'});
-                        District.belongsTo(DistrictModel, {foreignKey: 'model'});
-                        const updatedDistrict = await District.findByPk(id, {include: [DistrictModel]});
-                        res.json(updatedDistrict);
-                    });
-                } else {
-                    District.update({...data, isActive: true}, {returning: true, where: {id}}).then(async () => {
-                        DistrictModel.hasMany(District, {foreignKey: 'model'});
-                        District.belongsTo(DistrictModel, {foreignKey: 'model'});
-                        const updatedDistrict = await District.findByPk(id, {include: [DistrictModel]});
-                        res.json(updatedDistrict);
-                    });
+    if (!data.isActive) {
+        const district = await District.findByPk(id, {raw: true});
+        if (district.isActive) {
+            const allCalendar = await Calendar.findAll({raw: true});
+            for (const calendar of allCalendar) {
+                let districtIds = JSON.parse(calendar.district_id);
+                if (districtIds.includes(id)) {
+                    if (districtIds.length > 2) {
+                        districtIds = districtIds.filter(item => item !== id);
+                        await Calendar.update({district_id: JSON.stringify(districtIds)}, {where: {id: calendar.id}});
+                    } else {
+                        res.status(400).json({message: 'You can\'t inactive this.'});
+                        return;
+                    }
                 }
             }
         }
     }
+    District.update(data, {returning: true, where: {id}}).then(async () => {
+        const updatedDistrict = await District.findByPk(id);
+        res.json(updatedDistrict);
+    });
 }
 
 exports.getModel = async (req, res) => {
-    const allModels = await DistrictModel.findAll({where: {}});
+    const allModels = await DistrictModel.findAll({where: {}, group: ['district']});
     res.status(200).json(allModels);
 }

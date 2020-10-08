@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {newArray} from '@angular/compiler/src/util';
 
 import {HttpService} from '../../../service/http/http.service';
@@ -25,7 +26,8 @@ export class NewCalendarComponent implements OnInit {
     public httpService: HttpService,
     public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -84,7 +86,7 @@ export class NewCalendarComponent implements OnInit {
       return;
     }
     if (this.selectedDistrict.length < 2 || !this.selectedNurse) {
-      console.log('errr')
+      this.snackBar.open('Please select district and nurse exactly. You must select 2 or more districts.');
       return;
     }
 
