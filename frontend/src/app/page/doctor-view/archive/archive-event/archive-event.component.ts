@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import {AuthService} from '../../../service/auth/auth.service';
+import {AuthService} from '../../../../service/auth/auth.service';
 import {MatDialog} from '@angular/material/dialog';
-import {laboratoryData} from '../../../utils/mock_data';
+import {archiveEventData} from '../../../../utils/mock_data';
 
 @Component({
-  selector: 'app-laboratory-report',
-  templateUrl: './laboratory-report.component.html',
-  styleUrls: ['./laboratory-report.component.scss']
+  selector: 'app-archive-event',
+  templateUrl: './archive-event.component.html',
+  styleUrls: ['./archive-event.component.scss']
 })
-export class LaboratoryReportComponent implements OnInit {
+export class ArchiveEventComponent implements OnInit {
   currentUser: any;
   filterValue = null;
   dataSource = new MatTableDataSource<any>();
@@ -27,7 +27,7 @@ export class LaboratoryReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
-    this.dataSource.data = laboratoryData;
+    this.dataSource.data = archiveEventData;
   }
 
   filter = () => {

@@ -16,6 +16,12 @@ import { AnamnesReleaseComponent } from './doctor-dashboard/anamnes-release/anam
 import { EventComponent } from './doctor-dashboard/event/event.component';
 import { AnamnesViewComponent } from './doctor-dashboard/anamnes-release/anamnes-view/anamnes-view.component';
 import { AnamnesCheckComponent } from './doctor-dashboard/anamnes-release/anamnes-check/anamnes-check.component';
+import { ViewAppointmentComponent } from './doctor-dashboard/event/view-appointment/view-appointment.component';
+import { ViewPopupComponent } from './doctor-dashboard/answer-inquiry/view-popup/view-popup.component';
+import { SuccessDialogComponent } from './doctor-dashboard/answer-inquiry/success-dialog/success-dialog.component';
+import { ArchivePatientComponent } from './archive/archive-patient/archive-patient.component';
+import { ArchiveAnamnesComponent } from './archive/archive-anamnes/archive-anamnes.component';
+import { ArchiveEventComponent } from './archive/archive-event/archive-event.component';
 
 
 
@@ -30,7 +36,13 @@ import { AnamnesCheckComponent } from './doctor-dashboard/anamnes-release/anamne
     AnamnesReleaseComponent,
     EventComponent,
     AnamnesViewComponent,
-    AnamnesCheckComponent
+    AnamnesCheckComponent,
+    ViewAppointmentComponent,
+    ViewPopupComponent,
+    SuccessDialogComponent,
+    ArchivePatientComponent,
+    ArchiveAnamnesComponent,
+    ArchiveEventComponent,
   ],
   imports: [
     CommonModule,

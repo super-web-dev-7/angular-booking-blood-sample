@@ -7,6 +7,9 @@ import {ArchiveComponent} from './archive/archive.component';
 import {PatinetInquiryComponent} from './doctor-dashboard/patinet-inquiry/patinet-inquiry.component';
 import {AnamnesReleaseComponent} from './doctor-dashboard/anamnes-release/anamnes-release.component';
 import {EventComponent} from './doctor-dashboard/event/event.component';
+import {ArchivePatientComponent} from './archive/archive-patient/archive-patient.component';
+import {ArchiveAnamnesComponent} from './archive/archive-anamnes/archive-anamnes.component';
+import {ArchiveEventComponent} from './archive/archive-event/archive-event.component';
 
 const routes: Routes = [
   {
@@ -32,6 +35,18 @@ const routes: Routes = [
   {
     path: 'archive',
     component: ArchiveComponent
+  },
+  {
+    path: 'archive/patient-inquiry',
+    component: ArchivePatientComponent
+  },
+  {
+    path: 'archive/anamnes-release',
+    component: ArchiveAnamnesComponent
+  },
+  {
+    path: 'archive/events',
+    component: ArchiveEventComponent
   }
 ];
 

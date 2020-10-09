@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-answer-inquiry',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnswerInquiryComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public dialog: MatDialog,
+    private dialogRef: MatDialogRef<AnswerInquiryComponent>
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  openSuccess = () => {
+    this.dialogRef.close(true);
+  }
+
+  afterClosed = (dialogRef) => {
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
 }

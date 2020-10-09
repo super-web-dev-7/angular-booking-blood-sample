@@ -1,37 +1,15 @@
-<h3 class="header-title">Dashboard</h3>
+<h3 class="header-title">Abgeschlossene Anamnesefreigaben</h3>
 <div class="main-container mt-5">
   <div class="table-toolbar">
-    <div>
-      <button
-        class="custom-button-pink"
-        [routerLink]="'/doctor/dashboard/patient-inquiry'"
-        mat-stroked-button
-        *ngIf="currentUser.role === 'Doctor'"
-      >Patientenrückfragen</button>
-      <button
-        class="custom-button"
-        [routerLink]="'/doctor/dashboard/anamnes-release'"
-        mat-stroked-button
-        style="margin-left: 15px"
-        *ngIf="currentUser.role === 'Doctor'"
-      >Anamnesefreigaben</button>
-      <button
-        class="custom-button"
-        [routerLink]="'/doctor/dashboard/event'"
-        mat-stroked-button
-        style="margin-left: 15px"
-        *ngIf="currentUser.role === 'Doctor'"
-      >Termine</button>
-    </div>
     <div class="search-field-container">
       <input type="text" placeholder="Suchen ..." [(ngModel)]="filterValue" (ngModelChange)="filter()">
       <mat-icon>search</mat-icon>
     </div>
   </div>
   <div class="table-container mt-5">
-    <mat-card class="table-card mat-card-radius" style="position: relative">
+    <mat-card class="table-card mat-card-radius">
       <div>
-        <table mat-table [dataSource]="dataSourceP" matSort (matSortChange)="onSort($event)">
+        <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSort($event)">
           <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef> # </th>
             <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
@@ -59,23 +37,16 @@
               <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.id !== 1">
+              <span>
                 {{element.status}}
-              </span>
-              <span *ngIf="element.id === 1" class="spec-text">
-                <img src="/assets/images/info_icon.svg" alt="info" class="mr-10" style="margin-left: -10px">
-                {{"In Bearbeitung durch Dr. Med. Jessica Johns"}}
               </span>
             </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Anfrage bearbeiten </th>
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Anamnesebogen ansehen </th>
             <td mat-cell *matCellDef="let element" style="text-align: center">
-              <button mat-icon-button aria-label="more" (click)="openAnswer()" *ngIf="element.id !== 1">
-                <img src="/assets/images/chat_icon.svg" alt="edit">
-              </button>
-              <button mat-icon-button aria-label="more" (click)="searchItem()" *ngIf="element.id === 1">
+              <button mat-icon-button aria-label="more" (click)="anamnesView()">
                 <mat-icon>search</mat-icon>
               </button>
             </td>
@@ -85,13 +56,6 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       </div>
-      <button
-        class="custom-doctor-button"
-        mat-stroked-button
-        style="background-color: #F389CC;right: -180px;"
-      >
-        Patientenrückfragen
-      </button>
     </mat-card>
   </div>
 </div>

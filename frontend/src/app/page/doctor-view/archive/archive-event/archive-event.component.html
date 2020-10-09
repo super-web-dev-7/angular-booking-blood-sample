@@ -1,4 +1,4 @@
-<h3 class="header-title">Laborberichte</h3>
+<h3 class="header-title">Abgeschlossene Termine / Befunde erstellt</h3>
 <div class="main-container mt-5">
   <div class="table-toolbar">
     <div class="search-field-container">
@@ -68,10 +68,10 @@
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Befund erstellen </th>
+            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Aktionen </th>
             <td mat-cell *matCellDef="let element" style="text-align: center">
               <button mat-icon-button aria-label="more" (click)="editItem()">
-                <img src="/assets/images/edit.svg" alt="edit">
+                <mat-icon>search</mat-icon>
               </button>
             </td>
           </ng-container>
@@ -83,3 +83,4 @@
     </mat-card>
   </div>
 </div>
+

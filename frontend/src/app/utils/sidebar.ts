@@ -290,11 +290,11 @@ export const DoctorSidebar = [
     children: [
       {
         name: 'Patientenrückfragen',
-        link: '/patient-injury'
+        link: '/patient-inquiry'
       },
       {
         name: 'Anamnesefreigaben',
-        link: '/anamnese-release'
+        link: '/anamnes-release'
       },
       {
         name: 'Termine',

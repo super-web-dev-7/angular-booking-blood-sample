@@ -5,6 +5,7 @@ import {patientInjuryData} from '../../../../utils/mock_data';
 import {MatTableDataSource} from '@angular/material/table';
 import {SearchModalComponent} from '../search-modal/search-modal.component';
 import {AnswerInquiryComponent} from '../answer-inquiry/answer-inquiry.component';
+import {SuccessDialogComponent} from '../answer-inquiry/success-dialog/success-dialog.component';
 
 @Component({
   selector: 'app-patinet-inquiry',
@@ -60,7 +61,14 @@ export class PatinetInquiryComponent implements OnInit {
     dialogRef = this.dialog.open(AnswerInquiryComponent, {
       width: '1347px',
     });
-    this.afterClosed(dialogRef);
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.dialog.open(SuccessDialogComponent, {
+          width: '662px',
+          height: '308px'
+        });
+      }
+    });
   }
 
 }

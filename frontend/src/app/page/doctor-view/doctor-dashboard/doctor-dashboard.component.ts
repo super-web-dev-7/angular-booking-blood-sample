@@ -7,6 +7,7 @@ import {SearchModalComponent} from './search-modal/search-modal.component';
 import {AnswerInquiryComponent} from './answer-inquiry/answer-inquiry.component';
 import {AnamnesViewComponent} from './anamnes-release/anamnes-view/anamnes-view.component';
 import {AnamnesCheckComponent} from './anamnes-release/anamnes-check/anamnes-check.component';
+import {ViewAppointmentComponent} from './event/view-appointment/view-appointment.component';
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -85,6 +86,15 @@ export class DoctorDashboardComponent implements OnInit {
     dialogRef = this.dialog.open(AnamnesCheckComponent, {
       width: '1347px',
       height: '858px'
+    });
+    this.afterClosed(dialogRef);
+  }
+
+  viewAppointment = () => {
+    let dialogRef: MatDialogRef<any>;
+    dialogRef = this.dialog.open(ViewAppointmentComponent, {
+      width: '827px',
+      height: '718px'
     });
     this.afterClosed(dialogRef);
   }

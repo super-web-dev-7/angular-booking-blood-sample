@@ -3,8 +3,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {AuthService} from '../../../../service/auth/auth.service';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {eventData} from '../../../../utils/mock_data';
-import {SearchModalComponent} from '../search-modal/search-modal.component';
-import {AnswerInquiryComponent} from '../answer-inquiry/answer-inquiry.component';
+import {ViewAppointmentComponent} from './view-appointment/view-appointment.component';
 
 @Component({
   selector: 'app-event',
@@ -41,23 +40,16 @@ export class EventComponent implements OnInit {
   editItem = (id) => {
   }
 
-  searchItem = () => {
-    let dialogRef: MatDialogRef<any>;
-    dialogRef = this.dialog.open(SearchModalComponent, {
-      width: '827px',
-    });
-    this.afterClosed(dialogRef);
-  }
-
   afterClosed = (dialogRef) => {
     dialogRef.afterClosed().subscribe(result => {
     });
   }
 
-  openAnswer = () => {
+  viewAppointment = () => {
     let dialogRef: MatDialogRef<any>;
-    dialogRef = this.dialog.open(AnswerInquiryComponent, {
-      width: '1347px',
+    dialogRef = this.dialog.open(ViewAppointmentComponent, {
+      width: '827px',
+      height: '718px'
     });
     this.afterClosed(dialogRef);
   }
