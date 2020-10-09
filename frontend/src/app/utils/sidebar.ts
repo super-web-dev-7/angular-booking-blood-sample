@@ -79,7 +79,7 @@ export const Sidebar = [
     ]
   },
   {
-    name: 'PayPal',
+    name: 'Heidelpay',
     icon: 'paypal.png',
     role: '',
     children: [],
@@ -115,13 +115,6 @@ export const Sidebar = [
     role: '',
     children: [],
     link: '/interface'
-  },
-  {
-    name: 'Credentials der Schnittstellen',
-    icon: 'notification.svg',
-    role: '',
-    children: [],
-    link: '/credential'
   }
 ];
 
