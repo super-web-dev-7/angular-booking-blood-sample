@@ -1,10 +1,12 @@
 import db from '../models';
+import Sequelize from "sequelize";
 
 const WorkingGroup = db.workingGroup;
 const Calendar = db.calendar;
 const User = db.user;
 const Package = db.package;
 const Agency = db.agency;
+const AgencyGroup = db.agencyGroup;
 
 exports.create = (req, res) => {
     const newGroup = req.body;
@@ -21,7 +23,7 @@ exports.get = async (req, res) => {
     Calendar.hasMany(WorkingGroup, {foreignKey: 'calendar_id'});
     WorkingGroup.belongsTo(Calendar, {foreignKey: 'calendar_id'});
     const id = parseInt(req.query.admin);
-    const allWorkingGroup = await WorkingGroup.findAll({where: {}, include: [Calendar]});
+    const allWorkingGroup = await WorkingGroup.findAll({where: {}, include: [Calendar], raw: true, nest: true});
     const response = [];
     for (let workingGroup of allWorkingGroup) {
         const admins = [];
@@ -29,12 +31,17 @@ exports.get = async (req, res) => {
         if (id && !workingGroup.admin.includes(id)) {
             continue;
         }
-        const agency = await Agency.findOne({where: {group_id: workingGroup.id}});
+        const agencyGroup = await AgencyGroup.findOne({where: {groupId: workingGroup.id}, raw: true});
+        let agency;
+        if (agencyGroup) {
+            agency = await Agency.findByPk(agencyGroup.agencyId, {raw: true});
+        }
+
         for (const item of workingGroup.admin) {
             const user = await User.findByPk(item);
             admins.push(user);
         }
-        response.push({...workingGroup.dataValues, admins, agency: agency});
+        response.push({...workingGroup, admins, agency: agency});
     }
     res.status(200).json(response)
 }
@@ -45,8 +52,8 @@ exports.delete = async (req, res) => {
         res.status(400).json({message: 'This item can\'t delete.', status: 400});
         return;
     }
-    const allAgency = await Agency.findAll({where: {group_id: req.params.id}});
-    if (allAgency.length > 0) {
+    const allAgencyGroup = await AgencyGroup.findAll({where: {groupId: req.params.id}});
+    if (allAgencyGroup.length > 0) {
         res.status(400).json({message: 'This item can\'t delete.', status: 400});
         return;
     }
@@ -78,13 +85,6 @@ exports.update = async (req, res) => {
 }
 
 exports.getUnusedGroup = async (req, res) => {
-    const allGroups = await WorkingGroup.findAll();
-    const response = [];
-    for (const group of allGroups) {
-        const agency = await Agency.findAll({where: {group_id: group.id}});
-        if (agency.length === 0) {
-            response.push(group);
-        }
-    }
-    res.status(200).json(response);
+    const allGroups = await db.sequelize.query(`SELECT * FROM working_groups WHERE id NOT IN (SELECT groupId FROM agency_groups)`, {type: Sequelize.QueryTypes.SELECT});
+    res.status(200).json(allGroups);
 }

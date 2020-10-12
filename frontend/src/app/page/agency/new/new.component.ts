@@ -13,7 +13,7 @@ export class NewComponent implements OnInit {
 
   isAddAdminPopup = false;
   selectedDoctors = [];
-  selectedGroup = null;
+  selectedGroup = [];
   doctors = [];
   groups = [];
   agencyForm: FormGroup;
@@ -49,10 +49,15 @@ export class NewComponent implements OnInit {
     this.httpService.get(URL_JSON.GROUP + '/get_unused').subscribe((res: any) => {
       this.groups = res;
       if (this.data) {
-        this.groups.unshift(this.data.working_group);
+        this.groups = [...this.data.groups, ...this.groups];
       }
     });
-    this.selectedGroup = this.data ? this.data?.group_id : 0;
+    if (this.data) {
+      for (const group of this.data.groups) {
+        this.selectedGroup.push(group.id);
+      }
+    }
+    // this.selectedGroup = this.data ? this.data?.group_id : [];
     this.selectedDoctors = this.data ? this.data?.doctors_id : [];
   }
 
@@ -96,7 +101,11 @@ export class NewComponent implements OnInit {
   }
 
   selectGroup = (id) => {
-    this.selectedGroup = id;
+    if (this.selectedGroup.includes(id)) {
+      this.selectedGroup.splice(this.selectedGroup.indexOf(id), 1);
+    } else {
+      this.selectedGroup.push(id);
+    }
   }
 
   close = () => {
@@ -114,7 +123,7 @@ export class NewComponent implements OnInit {
     const data = {
       name: this.f.name.value,
       doctors_id: this.selectedDoctors,
-      group_id: this.selectedGroup
+      group_ids: this.selectedGroup
     };
     if (this.data) {
       this.httpService.update(URL_JSON.AGENCY + '/update/' + this.data.id, data).subscribe(result => {
