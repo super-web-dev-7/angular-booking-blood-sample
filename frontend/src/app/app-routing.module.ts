@@ -125,6 +125,7 @@ const routes: Routes = [
   },
   {
     path: 'patient',
+    component: MainLayoutComponent,
     loadChildren: () => import('./page/patient-view/patient-view.module').then(m => m.PatientViewModule),
     canActivate: [RoleGuard],
     data: {

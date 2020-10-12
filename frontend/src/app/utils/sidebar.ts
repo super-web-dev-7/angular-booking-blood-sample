@@ -303,3 +303,21 @@ export const DoctorSidebar = [
     ]
   }
 ];
+// patient sidebar
+export const PatientSidebar = [
+  {
+    name: 'Dashboard',
+    icon: 'dashboard.svg',
+    role: '',
+    link: '/patient',
+    children: []
+  },
+  {
+    name: 'Neuen Termin vereinbaren',
+    icon: 'calendar.svg',
+    role: '',
+    link: '/patient/new',
+    children: []
+  }
+];
+

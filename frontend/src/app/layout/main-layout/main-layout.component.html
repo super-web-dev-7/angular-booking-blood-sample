@@ -2,12 +2,13 @@
   <mat-sidenav [opened]="isOpen" [mode]="isMobile ? 'over' : 'side'" (closed)="isOpen = false" #sidenav>
     <app-sidebar (menuClick)="menuClick($event)"></app-sidebar>
   </mat-sidenav>
-  <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Doctor' ? '#F2F7FB' : '#fafafa'}">
+  <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Doctor' || currentUser.role === 'Patient' ? '#F2F7FB' : '#fafafa'}">
     <div class="background-container" *ngIf="!isMobile"></div>
     <app-header (setOpen)="setOpen($event)" [isMobile]="isMobile"></app-header>
     <div class="main-content-container">
       <div class="subheader">
-        <h1>Willkommen zurück, <b>{{currentUser.role}}</b>.</h1>
+        <h1 *ngIf="currentUser.role !== 'Patient'">Willkommen zurück, <b>{{currentUser.role}}</b>.</h1>
+        <h1 *ngIf="currentUser.role === 'Patient'">Hallo, <b>{{currentUser.role}}</b>.</h1>
       </div>
       <router-outlet></router-outlet>
     </div>
