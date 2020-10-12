@@ -219,6 +219,16 @@ button {
   }
 }
 
+.red-yellow {
+  .round {
+    background-color: #E87C6029;
+
+    mat-icon {
+      color: #E87C60
+    }
+  }
+}
+
 .green {
   .round {
     background-color: #E1F7F2;
@@ -342,15 +352,44 @@ table thead tr th {
   display: flex;
   justify-content: space-between;
 }
-.ml-5 {
-  margin-left: 5px;
-}
 .ml-10 {
-  margin-left: 10px;
+  margin-left: 10px!important;
 }
-.ml-20 {
-  margin-left: 20px;
+.ml-5 {
+  margin-left: 5px!important;
 }
 .mt-15 {
   margin-top: 15px;
+}
+.ml-20 {
+  margin-left: 20px!important;
+}
+.mt-20 {
+  margin-top: 20px!important;
+}
+.mt-24 {
+  margin-top: 24px!important;
+}
+.p-272140 {
+  font-size: 16px!important;
+  color: #272140!important;
+  margin-left: 20px!important;
+}
+.p-576E82 {
+  font-size: 16px!important;
+  margin-left: 20px!important;
+  color: #576E82!important;
+}
+.redYellow-custom-button {
+  background-color: #E87C60;
+  border-radius: 25px !important;
+  height: 50px;
+  color: #ffffff;
+  font-size: 1rem;
+}
+.pd-17 {
+  padding: 17px!important;
+}
+.p-white {
+  color: #ffffff!important;
 }

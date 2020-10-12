@@ -1,0 +1,51 @@
+<div class="pd-17">
+  <h1 style="margin-top: 9px">Termin  <span style="font-weight: 100"> stornieren</span></h1>
+  <div class="cancel-des">
+    <p>!</p>
+    <p class="ml-20">Bei einer Terminstornierung mit weniger als 48h Vorlauf vor Terminbeginn<br/>
+      fallen 30€ Aufwandsentschädigung an.
+    </p>
+  </div>
+  <div class="appointment-data">
+    <p class="p-272140">
+      12.09.2020 09:00 - 10:15
+    </p>
+    <p class="p-576E82">
+      Check-Up: Männergesundheit
+    </p>
+    <p class="p-272140">
+      Marienstraße 4, 15387 Berlin
+    </p>
+  </div>
+  <div class="add-message">
+    <div
+      class="d-flex avatar red-yellow justify-content-between"
+      (click)="openMessage()"
+    >
+      <div class="d-flex align-items-center">
+        <div class="round">
+          <mat-icon>stop_circle</mat-icon>
+        </div>
+        <div>Nachricht hinzufügen</div>
+      </div>
+    </div>
+    <div class="message-div" *ngIf="showMessage">
+      <p>Hallo,</p>
+      <p class="mt-24">
+        ich habe mich aus unerfindlichen Gründen gegen diesen Termin<br/> entschieden und bitte um Stornierung.
+      </p>
+      <p class="mt-24">
+        Vielen Dank.<br/> Mit freundlichen Grüßen<br/> Sebastian Naumann
+      </p>
+      <hr class="bottom-line" />
+    </div>
+  </div>
+  <div class="determine-button-group">
+    <button mat-stroked-button class="custom-button">
+      Abbrechen
+    </button>
+    <button mat-stroked-button class="redYellow-custom-button ml-20">
+      Termin verbindlich stornieren
+    </button>
+  </div>
+</div>

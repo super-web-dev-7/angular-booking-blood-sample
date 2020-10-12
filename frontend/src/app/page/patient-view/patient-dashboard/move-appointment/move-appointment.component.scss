@@ -1,0 +1,40 @@
+.appointment-data {
+  border-left: 2px solid #384C61;
+  margin-top: 47px;
+}
+.add-message {
+  margin-top: 40px;
+  .message-div {
+    margin-top: 13px;
+    width: 490px;
+    height: 220px;
+    padding-left: 76px;
+    p {
+      color: #A9BBC9;
+      font-size: 16px;
+    }
+    hr.bottom-line {
+      width: 210px;
+      border: 1px solid #A9BBC9;
+      float: left
+    }
+  }
+}
+.detail-options {
+  margin-top: 40px;
+}
+.determine-button-group {
+  display: flex;
+  margin-top: 40px;
+  margin-left: 280px;
+}
+.mat-expansion-panel {
+  box-shadow: none;
+}
+.move-appointment-button {
+  background-color: #C7D7E3;
+  border-radius: 25px !important;
+  height: 50px;
+  color: #ffffff;
+  font-size: 1rem;
+}

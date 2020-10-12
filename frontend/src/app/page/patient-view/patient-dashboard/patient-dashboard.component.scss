@@ -72,16 +72,6 @@
     border-left: 2px solid #ffffff;
   }
 }
-.p-272140 {
-  font-size: 16px;
-  color: #272140;
-  margin-left: 20px;
-}
-.p-576E82 {
-  font-size: 16px;
-  margin-left: 20px;
-  color: #576E82;
-}
 .p-blue {
   color: #4A90E2;
   font-size: 14px;
@@ -101,12 +91,6 @@
 .p-0-white {
   font-size: 14px;
   color: #ffffff;
-}
-.ml-20 {
-  margin-left: 20px!important;
-}
-.mt-20 {
-  margin-top: 20px!important;
 }
 .warning-div {
   width: 6px;
@@ -129,4 +113,15 @@
   border-radius: 0px 25px 25px 0px;
   width: 170px;
   height: 50px;
+}
+.mt-10-min {
+  margin-top: -10px;
+}
+.more-menu-div {
+  position: absolute!important;
+  top: 0px!important;
+  right: -30px!important;
+}
+.active-hover:hover {
+  color: #B9C8D4!important
 }

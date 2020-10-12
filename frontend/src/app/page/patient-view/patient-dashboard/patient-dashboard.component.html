@@ -80,7 +80,9 @@
         </div>
         <button
           mat-icon-button
+          class="mt-10-min"
           aria-label="more"
+          [matMenuTriggerFor]="appointment"
         >
           <mat-icon class="p-0">more_horiz</mat-icon>
         </button>
@@ -106,6 +108,7 @@
         <button
           mat-icon-button
           aria-label="more"
+          class="mt-10-min"
         >
           <mat-icon style="color: #ffffff">more_horiz</mat-icon>
         </button>
@@ -128,6 +131,7 @@
         <button
           mat-icon-button
           aria-label="more"
+          class="mt-10-min"
         >
           <mat-icon class="p-0">more_horiz</mat-icon>
         </button>
@@ -154,9 +158,59 @@
     <button
       mat-icon-button
       aria-label="more"
+      class="mt-10-min"
     >
       <mat-icon class="p-0">more_horiz</mat-icon>
     </button>
   </div>
   </div>
+  <mat-menu #appointment="matMenu" class="more-menu-div">
+    <div class="d-flex flex-row">
+      <button
+        class="panel-width"
+        mat-menu-item
+        (click)="cancelAppointment()"
+      >
+        <span class="active-hover">Termin stornieren</span>
+      </button>
+      <button class="ml-1" mat-icon-button>
+        <mat-icon class="close-icon">close</mat-icon>
+      </button>
+    </div>
+    <button
+      mat-menu-item
+      style="overflow: visible!important;"
+      (click)="moveAppointment()"
+    >
+      <span class="active-hover">
+        Termin verschieben /Abnahmeort ändern
+      </span>
+    </button>
+    <button
+      mat-menu-item
+      (click)="editAnamnesis()"
+    >
+      <span class="active-hover">Anamnese bearbeiten</span>
+    </button>
+    <button
+      mat-menu-item
+    >
+      <span class="active-hover">Neutermin vereinbaren</span>
+    </button>
+    <button
+      mat-menu-item
+      (click)="changePackage()"
+    >
+      <span class="active-hover">Paketwechsel</span>
+    </button>
+    <button mat-menu-item>
+      <span class="active-hover">Rückrufbitte Arzt</span>
+    </button>
+    <button mat-menu-item>
+      <span class="active-hover">Schwester anrufen</span>
+    </button>
+    <button mat-menu-item>
+      <span class="active-hover">Zahlungsstatus</span>
+    </button>
+  </mat-menu>
 </div>
