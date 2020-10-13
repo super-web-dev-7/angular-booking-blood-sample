@@ -4,6 +4,11 @@ import {CancelAppointmentComponent} from './cancel-appointment/cancel-appointmen
 import {MoveAppointmentComponent} from './move-appointment/move-appointment.component';
 import {EditAnamnesisComponent} from './edit-anamnesis/edit-anamnesis.component';
 import {ChangePackageComponent} from './change-package/change-package.component';
+import {CallbackDoctorComponent} from './callback-doctor/callback-doctor.component';
+import {CallSisterComponent} from './call-sister/call-sister.component';
+import {PaymentStatusComponent} from './payment-status/payment-status.component';
+import {NewAppointmentComponent} from '../new-appointment/new-appointment.component';
+import {AppointmentNewComponent} from '../new-appointment/appointment-new/appointment-new.component';
 
 @Component({
   selector: 'app-patient-dashboard',
@@ -55,6 +60,44 @@ export class PatientDashboardComponent implements OnInit {
 
   openPersonalInfo = () => {
     this.showDetail = !this.showDetail;
+  }
+
+  openCallbackDoctor = () => {
+    let dialogRef: MatDialogRef<any>;
+    dialogRef = this.dialog.open(CallbackDoctorComponent, {
+      width: '1182px',
+    });
+    dialogRef.afterClosed().subscribe(res => {});
+  }
+
+  callSister = () => {
+    let dialogRef: MatDialogRef<any>;
+    dialogRef = this.dialog.open(CallSisterComponent, {
+      width: '662px',
+    });
+    dialogRef.afterClosed().subscribe(res => {});
+  }
+
+  openPaymentStatus = () => {
+    let dialogRef: MatDialogRef<any>;
+    dialogRef = this.dialog.open(PaymentStatusComponent, {
+      width: '662px',
+    });
+    dialogRef.afterClosed().subscribe(res => {});
+  }
+
+  newAppointment = () => {
+    let dialogRef: MatDialogRef<any>;
+    dialogRef = this.dialog.open(NewAppointmentComponent, {
+      width: '662px',
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.dialog.open(AppointmentNewComponent, {
+          width: '1182px',
+        });
+      }
+    });
   }
 
 }

@@ -1,0 +1,22 @@
+.main-container-div {
+  margin-top: 47px;
+  .call-circle-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+  .call-circle-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .b-green {
+    background-color: #89DF8C;
+  }
+  .mt-82 {
+    margin-top: 82px;
+  }
+}

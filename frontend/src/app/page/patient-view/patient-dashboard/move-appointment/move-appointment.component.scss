@@ -1,5 +1,4 @@
-.appointment-data {
-  border-left: 2px solid #384C61;
+.main-container-div {
   margin-top: 47px;
 }
 .add-message {
@@ -20,21 +19,11 @@
     }
   }
 }
-.detail-options {
-  margin-top: 40px;
-}
 .determine-button-group {
   display: flex;
   margin-top: 40px;
-  margin-left: 280px;
+  float: right;
 }
 .mat-expansion-panel {
   box-shadow: none;
-}
-.move-appointment-button {
-  background-color: #C7D7E3;
-  border-radius: 25px !important;
-  height: 50px;
-  color: #ffffff;
-  font-size: 1rem;
 }

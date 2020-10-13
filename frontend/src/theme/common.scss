@@ -370,6 +370,12 @@ table thead tr th {
 .mt-24 {
   margin-top: 24px!important;
 }
+.mt-47 {
+  margin-top: 47px!important;
+}
+.mt-45 {
+  margin-top: 45px!important;
+}
 .p-272140 {
   font-size: 16px!important;
   color: #272140!important;
@@ -380,8 +386,25 @@ table thead tr th {
   margin-left: 20px!important;
   color: #576E82!important;
 }
+.p-0 {
+  color: #B9C8D4!important;
+}
 .redYellow-custom-button {
   background-color: #E87C60;
+  border-radius: 25px !important;
+  height: 50px;
+  color: #ffffff;
+  font-size: 1rem;
+}
+.custom-button-384 {
+  border-radius: 25px !important;
+  height: 50px;
+  color: #ffffff;
+  font-size: 1rem;
+  background-color: #384C61;
+}
+.custom-button-C7D {
+  background-color: #C7D7E3;
   border-radius: 25px !important;
   height: 50px;
   color: #ffffff;
@@ -392,4 +415,7 @@ table thead tr th {
 }
 .p-white {
   color: #ffffff!important;
+}
+.left-border-div {
+  border-left: 2px solid #384C61;
 }

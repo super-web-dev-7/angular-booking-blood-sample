@@ -11,6 +11,11 @@ import { MoveAppointmentComponent } from './patient-dashboard/move-appointment/m
 import { EditAnamnesisComponent } from './patient-dashboard/edit-anamnesis/edit-anamnesis.component';
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 import { ChangePackageComponent } from './patient-dashboard/change-package/change-package.component';
+import { NewAppointmentComponent } from './new-appointment/new-appointment.component';
+import { CallbackDoctorComponent } from './patient-dashboard/callback-doctor/callback-doctor.component';
+import { CallSisterComponent } from './patient-dashboard/call-sister/call-sister.component';
+import { PaymentStatusComponent } from './patient-dashboard/payment-status/payment-status.component';
+import { AppointmentNewComponent } from './new-appointment/appointment-new/appointment-new.component';
 
 
 
@@ -20,7 +25,12 @@ import { ChangePackageComponent } from './patient-dashboard/change-package/chang
     CancelAppointmentComponent,
     MoveAppointmentComponent,
     EditAnamnesisComponent,
-    ChangePackageComponent
+    ChangePackageComponent,
+    NewAppointmentComponent,
+    CallbackDoctorComponent,
+    CallSisterComponent,
+    PaymentStatusComponent,
+    AppointmentNewComponent
   ],
     imports: [
         CommonModule,

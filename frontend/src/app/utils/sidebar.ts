@@ -316,7 +316,7 @@ export const PatientSidebar = [
     name: 'Neuen Termin vereinbaren',
     icon: 'calendar.svg',
     role: '',
-    link: '/patient/new',
+    link: '/patient/new_appointment',
     children: []
   }
 ];

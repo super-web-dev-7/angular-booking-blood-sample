@@ -64,7 +64,7 @@
   <div class="main-content-div position-relative">
     <div class="d-flex">
       <div class="col-md-4">
-        <div class="notify-view">
+        <div class="notify-view position-relative">
           <div class="main-view" style="border-color: #4A90E2">
             <p class="p-blue" style="margin-left: 20px">
               Termin bestätigt
@@ -198,7 +198,11 @@
       </div>
     </div>
   </div>
-  <mat-menu #appointment="matMenu" class="more-menu-div">
+  <mat-menu
+    #appointment="matMenu"
+    class="more-menu-div position-absolute"
+    style="top: 0px;right: 0px"
+  >
     <div class="d-flex flex-row">
       <button
         class="panel-width"
@@ -228,6 +232,7 @@
     </button>
     <button
       mat-menu-item
+      (click)="newAppointment()"
     >
       <span class="active-hover">Neutermin vereinbaren</span>
     </button>
@@ -237,13 +242,22 @@
     >
       <span class="active-hover">Paketwechsel</span>
     </button>
-    <button mat-menu-item>
+    <button
+      mat-menu-item
+      (click)="openCallbackDoctor()"
+    >
       <span class="active-hover">Rückrufbitte Arzt</span>
     </button>
-    <button mat-menu-item>
+    <button
+      mat-menu-item
+      (click)="callSister()"
+    >
       <span class="active-hover">Schwester anrufen</span>
     </button>
-    <button mat-menu-item>
+    <button
+      mat-menu-item
+      (click)="openPaymentStatus()"
+    >
       <span class="active-hover">Zahlungsstatus</span>
     </button>
   </mat-menu>
