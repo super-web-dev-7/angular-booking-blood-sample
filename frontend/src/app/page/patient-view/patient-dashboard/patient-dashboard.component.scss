@@ -64,9 +64,12 @@
     padding: 27px;
     display: flex;
     justify-content: space-between;
-    width: 32%;
+    width: 99%;
     border-radius: 15px;
     background-color: #ffffff;
+  }
+  .w-32 {
+    width: 32% !important;
   }
   .main-view {
     border-left: 2px solid #ffffff;

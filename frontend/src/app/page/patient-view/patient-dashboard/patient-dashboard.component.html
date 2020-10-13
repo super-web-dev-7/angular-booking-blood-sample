@@ -61,108 +61,142 @@
       </div>
     </div>
   </div>
-  <div class="main-content-div">
-    <div class="d-flex-between">
-      <div class="notify-view">
-        <div class="main-view" style="border-color: #4A90E2">
-          <p class="p-blue" style="margin-left: 20px">
-            Termin bestätigt
-          </p>
-          <p class="p-272140">
-            12.09.2020 09:00 - 10:15
-          </p>
-          <p class="p-576E82">Check-Up: Männergesundheit</p>
-          <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
-          <button
-            mat-icon-button style="margin-left: 10px">
-            <mat-icon class="p-0">keyboard_arrow_down</mat-icon>
-          </button>
-        </div>
-        <button
-          mat-icon-button
-          class="mt-10-min"
-          aria-label="more"
-          [matMenuTriggerFor]="appointment"
-        >
-          <mat-icon class="p-0">more_horiz</mat-icon>
-        </button>
-      </div>
-      <div class="notify-view" style="background: #E87C60">
-        <div class="main-view" style="position: relative">
-          <div class="warning-div">
-            <img src="/assets/images/s_warning.svg" alt="warning" class="warning-icon">
+  <div class="main-content-div position-relative">
+    <div class="d-flex">
+      <div class="col-md-4">
+        <div class="notify-view">
+          <div class="main-view" style="border-color: #4A90E2">
+            <p class="p-blue" style="margin-left: 20px">
+              Termin bestätigt
+            </p>
+            <p class="p-272140">
+              12.09.2020 09:00 - 10:15
+            </p>
+            <p class="p-576E82">Check-Up: Männergesundheit</p>
+            <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+            <button
+              mat-icon-button style="margin-left: 10px">
+              <mat-icon class="p-0">keyboard_arrow_down</mat-icon>
+            </button>
           </div>
-          <p class="p-0-white ml-20" style="margin-top: -15px">
-            Nicht angetroffen
-          </p>
-          <p class="p-white ml-20">
-            Bitte neuen Termin wählen
-          </p>
-          <p class="p-white ml-20">Check-Up: Gutes Immunsystem</p>
-          <p class="p-white ml-20">Marienstraße 4, 15387 Berlin</p>
           <button
-            mat-icon-button style="margin-left: 10px">
-            <mat-icon style="color: white">keyboard_arrow_down</mat-icon>
+            mat-icon-button
+            class="mt-10-min"
+            aria-label="more"
+            [matMenuTriggerFor]="appointment"
+          >
+            <mat-icon class="p-0">more_horiz</mat-icon>
           </button>
         </div>
-        <button
-          mat-icon-button
-          aria-label="more"
-          class="mt-10-min"
-        >
-          <mat-icon style="color: #ffffff">more_horiz</mat-icon>
-        </button>
       </div>
-      <div class="notify-view">
-        <div class="main-view" style="border-color: #F389CC">
-          <p class="p-pink ml-20">
-            Labordaten übermittelt
-          </p>
-          <p class="p-272140">
-            08.09.2020 17:00 - 19:00
-          </p>
-          <p class="p-576E82">Check-Up: Gutes Immunsystem</p>
-          <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+      <div class="col-md-4">
+        <div class="notify-view" style="background: #E87C60;">
+          <div class="main-view" style="position: relative">
+            <div class="warning-div">
+              <img src="/assets/images/s_warning.svg" alt="warning" class="warning-icon">
+            </div>
+            <p class="p-0-white ml-20" style="margin-top: -15px">
+              Nicht angetroffen
+            </p>
+            <p class="p-white ml-20">
+              Bitte neuen Termin wählen
+            </p>
+            <p class="p-white ml-20">Check-Up: Gutes Immunsystem</p>
+            <p class="p-white ml-20">Marienstraße 4, 15387 Berlin</p>
+            <button
+              mat-icon-button style="margin-left: 10px">
+              <mat-icon style="color: white">keyboard_arrow_down</mat-icon>
+            </button>
+          </div>
           <button
-            mat-icon-button style="margin-left: 10px">
-            <mat-icon class="p-0">keyboard_arrow_down</mat-icon>
+            mat-icon-button
+            aria-label="more"
+            class="mt-10-min"
+          >
+            <mat-icon style="color: #ffffff">more_horiz</mat-icon>
           </button>
         </div>
-        <button
-          mat-icon-button
-          aria-label="more"
-          class="mt-10-min"
-        >
-          <mat-icon class="p-0">more_horiz</mat-icon>
-        </button>
+      </div>
+      <div class="col-md-4">
+        <div class="notify-view position-absolute" style="top: 0px;right:0px">
+          <div>
+            <div class="main-view" style="border-color: #F389CC">
+              <p class="p-pink ml-20">
+                Labordaten übermittelt
+              </p>
+              <p class="p-272140">
+                08.09.2020 17:00 - 19:00
+              </p>
+              <p class="p-576E82">Check-Up: Gutes Immunsystem</p>
+              <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+              <button
+                mat-icon-button
+                style="margin-left: 10px"
+                (click)="openPersonalInfo()"
+              >
+                <mat-icon class="p-0">{{showDetail ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
+              </button>
+            </div>
+            <div class="personal-info mt-15" *ngIf="showDetail">
+              <p class="p-272140">Sebastian Naumann</p>
+              <p class="p-272140">Männlich, 39 Jahre, 1.83m, 95kg</p>
+              <ul>
+                <li class="p-272140">Nicht-Raucher</li>
+                <li class="p-272140">Trinkt Alkohol unregelmäßig bis gar nicht</li>
+                <li class="p-272140">Nimmt Medikamente: gegen Diabetes</li>
+                <li class="p-272140">keine Herzinfarkte / Schlaganfälle in der<br/> Familie bekannt</li>
+                <li class="p-272140">Keine Vorerkrankungen bekannt</li>
+              </ul>
+              <div class="d-flex mt-20 ml-20">
+                <button mat-stroked-button class="custom-button">
+                  Rechnung
+                </button>
+                <button mat-stroked-button class="custom-button ml-20">
+                  Historie
+                </button>
+              </div>
+            </div>
+          </div>
+          <button
+            mat-icon-button
+            aria-label="more"
+            class="mt-10-min"
+          >
+            <mat-icon class="p-0">more_horiz</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
-    <div class="notify-view mt-20">
-    <div class="main-view" style="border-color: #89DF8C">
-      <p class="p-green ml-20">
-        Befund freigegeben
-      </p>
-      <p class="p-272140">
-        12.03.2020 10:00 - 11:15
-      </p>
-      <p class="p-576E82">Check-Up: Männergesundheit</p>
-      <p class="p-272140">Tannenallee 81, 14587 Berlin</p>
-      <button mat-stroked-button class="finding-green">
-        Befund unsehen
-      </button>
-      <button
-        mat-icon-button style="margin-left: 10px">
-        <mat-icon class="p-0">keyboard_arrow_down</mat-icon>
-      </button>
+    <div class="d-flex mt-20">
+      <div class="col-md-4">
+        <div class="notify-view">
+          <div class="main-view" style="border-color: #89DF8C">
+            <p class="p-green ml-20">
+              Befund freigegeben
+            </p>
+            <p class="p-272140">
+              12.03.2020 10:00 - 11:15
+            </p>
+            <p class="p-576E82">Check-Up: Männergesundheit</p>
+            <p class="p-272140">Tannenallee 81, 14587 Berlin</p>
+            <button mat-stroked-button class="finding-green">
+              Befund unsehen
+            </button>
+            <button
+              mat-icon-button style="margin-left: 10px">
+              <mat-icon class="p-0">keyboard_arrow_down</mat-icon>
+            </button>
+          </div>
+          <button
+            mat-icon-button
+            aria-label="more"
+            class="mt-10-min"
+          >
+            <mat-icon class="p-0">more_horiz</mat-icon>
+          </button>
+        </div>
+      </div>
     </div>
-    <button
-      mat-icon-button
-      aria-label="more"
-      class="mt-10-min"
-    >
-      <mat-icon class="p-0">more_horiz</mat-icon>
-    </button>
-  </div>
   </div>
   <mat-menu #appointment="matMenu" class="more-menu-div">
     <div class="d-flex flex-row">

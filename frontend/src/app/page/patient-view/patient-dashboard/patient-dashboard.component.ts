@@ -11,12 +11,14 @@ import {ChangePackageComponent} from './change-package/change-package.component'
   styleUrls: ['./patient-dashboard.component.scss']
 })
 export class PatientDashboardComponent implements OnInit {
+  showDetail: boolean;
 
   constructor(
     public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
+    this.showDetail = false;
   }
 
   cancelAppointment = () => {
@@ -49,6 +51,10 @@ export class PatientDashboardComponent implements OnInit {
       width: '1182px',
     });
     dialogRef.afterClosed().subscribe(res => {});
+  }
+
+  openPersonalInfo = () => {
+    this.showDetail = !this.showDetail;
   }
 
 }
