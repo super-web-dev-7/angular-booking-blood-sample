@@ -1,7 +1,7 @@
-<form [formGroup]="editAnamsForm">
+<form [formGroup]="editAnamsForm" (ngSubmit)="submit()">
 <div class="pd-17">
   <h1 style="margin-top: 9px">Anamnese  <span style="font-weight: 100"> bearbeiten</span></h1>
-  <div class="main-edit-container">
+  <div class="main-edit-container" *ngIf="!saved">
     <div class="left-div">
       <p>Ihre persönlichen Daten</p>
       <mat-form-field class="mt-4 w-90">
@@ -176,6 +176,25 @@
           Anamnesedaten speichern
         </button>
       </div>
+    </div>
+  </div>
+  <div class="mt-47" *ngIf="saved">
+    <div class="d-flex">
+      <mat-icon class="green-0">lens</mat-icon>
+      <p class="p-green ml-10"
+         style="margin-top: 3px">
+        Ihre Anamnese wurde geändert.<br/>
+        Bitte warten Sie auf die erneute Freigabe durch Ihren Arzt.<br/>
+        Ihr Termin bleibt bis dahin bestehen.
+      </p>
+    </div>
+    <div class="mt-47 float-right">
+      <button
+        mat-stroked-button
+        class="custom-button"
+        >
+        Schließen
+      </button>
     </div>
   </div>
 </div>

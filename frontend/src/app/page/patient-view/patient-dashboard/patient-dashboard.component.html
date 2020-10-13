@@ -64,7 +64,7 @@
   <div class="main-content-div position-relative">
     <div class="d-flex">
       <div class="col-md-4">
-        <div class="notify-view position-relative">
+        <div class="notify-view">
           <div class="main-view" style="border-color: #4A90E2">
             <p class="p-blue" style="margin-left: 20px">
               Termin bestätigt
@@ -151,7 +151,11 @@
                 <button mat-stroked-button class="custom-button">
                   Rechnung
                 </button>
-                <button mat-stroked-button class="custom-button ml-20">
+                <button
+                  mat-stroked-button
+                  class="custom-button ml-20"
+                  (click)="openHistory()"
+                >
                   Historie
                 </button>
               </div>
@@ -200,8 +204,9 @@
   </div>
   <mat-menu
     #appointment="matMenu"
-    class="more-menu-div position-absolute"
-    style="top: 0px;right: 0px"
+    class="more-menu-div"
+    xPosition="before"
+    yPosition="below"
   >
     <div class="d-flex flex-row">
       <button
@@ -221,7 +226,7 @@
       (click)="moveAppointment()"
     >
       <span class="active-hover">
-        Termin verschieben /Abnahmeort ändern
+        Termin verschieben /<br/> Abnahmeort ändern
       </span>
     </button>
     <button

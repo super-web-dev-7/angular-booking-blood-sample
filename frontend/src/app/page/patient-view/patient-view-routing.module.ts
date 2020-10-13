@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'new_appointment',
-    component: NewAppointmentComponent
+    component: PatientDashboardComponent
   }
 ];
 

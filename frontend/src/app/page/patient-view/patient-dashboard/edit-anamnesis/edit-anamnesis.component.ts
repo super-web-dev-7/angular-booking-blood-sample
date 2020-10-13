@@ -9,6 +9,7 @@ import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class EditAnamnesisComponent implements OnInit {
   editAnamsForm: FormGroup;
+  saved = false;
   public districtSearchControl = new FormControl();
   allStaticDistrict = [];
 
@@ -23,6 +24,10 @@ export class EditAnamnesisComponent implements OnInit {
       model: [this.data?.model, Validators.required],
       isActive: [this.data ? this.data?.isActive : false, Validators.required]
     });
+  }
+
+  submit = () => {
+    this.saved = true;
   }
 
 }

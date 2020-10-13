@@ -16,6 +16,7 @@ import { CallbackDoctorComponent } from './patient-dashboard/callback-doctor/cal
 import { CallSisterComponent } from './patient-dashboard/call-sister/call-sister.component';
 import { PaymentStatusComponent } from './patient-dashboard/payment-status/payment-status.component';
 import { AppointmentNewComponent } from './new-appointment/appointment-new/appointment-new.component';
+import { AppointmentHistoryComponent } from './patient-dashboard/appointment-history/appointment-history.component';
 
 
 
@@ -30,7 +31,8 @@ import { AppointmentNewComponent } from './new-appointment/appointment-new/appoi
     CallbackDoctorComponent,
     CallSisterComponent,
     PaymentStatusComponent,
-    AppointmentNewComponent
+    AppointmentNewComponent,
+    AppointmentHistoryComponent
   ],
     imports: [
         CommonModule,

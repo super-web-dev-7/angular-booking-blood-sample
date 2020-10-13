@@ -9,6 +9,8 @@ import {CallSisterComponent} from './call-sister/call-sister.component';
 import {PaymentStatusComponent} from './payment-status/payment-status.component';
 import {NewAppointmentComponent} from '../new-appointment/new-appointment.component';
 import {AppointmentNewComponent} from '../new-appointment/appointment-new/appointment-new.component';
+import {AppointmentHistoryComponent} from './appointment-history/appointment-history.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-patient-dashboard',
@@ -20,10 +22,25 @@ export class PatientDashboardComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
+    public router: Router,
   ) { }
 
   ngOnInit(): void {
     this.showDetail = false;
+    const url = this.router.url.split('/');
+    if (url[2] === 'new_appointment') {
+      this.openDialog();
+    }
+  }
+
+  openDialog = () => {
+    const dialogRef = this.dialog.open(NewAppointmentComponent, {
+      width: '662px'
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.router.navigateByUrl('/patient');
+    });
   }
 
   cancelAppointment = () => {
@@ -98,6 +115,14 @@ export class PatientDashboardComponent implements OnInit {
         });
       }
     });
+  }
+
+  openHistory = () => {
+    let dialogRef: MatDialogRef<any>;
+    dialogRef = this.dialog.open(AppointmentHistoryComponent, {
+      width: '662px',
+    });
+    dialogRef.afterClosed().subscribe(res => {});
   }
 
 }
