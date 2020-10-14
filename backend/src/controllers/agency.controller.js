@@ -36,7 +36,8 @@ exports.get = async (req, res) => {
 }
 
 exports.getAgencyInGroup = async (req, res) => {
-    const allAgency = await db.sequelize.query(`SELECT * FROM agencies WHERE id NOT IN (SELECT agencyId FROM working_group_agencies)`, {type: Sequelize.QueryTypes.SELECT});
+    const allAgency = await db.sequelize.query(`SELECT * FROM agencies WHERE id NOT IN (SELECT agencyId FROM working_group_agencies)`, {type: Sequelize.QueryTypes.SELECT, raw: true, nest: true});
+    console.log(allAgency)
     res.status(200).json(allAgency);
 }
 
