@@ -4,10 +4,11 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
+
 import {HttpService} from '../../../service/http/http.service';
 import {AuthService} from '../../../service/auth/auth.service';
 import {URL_JSON} from '../../../utils/url_json';
-import {NewComponent} from '../../working-group/new/new.component';
+import {ViewComponent} from '../view/view.component';
 
 @Component({
   selector: 'app-overview',
@@ -46,6 +47,17 @@ export class OverviewComponent implements OnInit {
     this.httpService.get(URL_JSON.GROUP + '/get').subscribe((res: any) => {
       this.dataSource.data = res;
       this.allGroup = res;
+    });
+  }
+
+  viewItem = (item) => {
+    console.log(item);
+    const dialogRef = this.dialog.open(ViewComponent, {
+      width: '900px'
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      // this.router.navigateByUrl('sms-history/overview');
     });
   }
 

@@ -33,7 +33,7 @@
           class="select-button"
           *ngFor="let doctor of doctors"
           [ngClass]="{'primary': selectedDoctors.includes(doctor.id)}"
-          (click)="selectAdmin(doctor.id)"
+          (click)="selectDoctor(doctor.id)"
         >
           Dr. med. {{doctor.firstName}} {{doctor.lastName}}
         </button>
@@ -82,28 +82,28 @@
       </mat-form-field>
       <button mat-stroked-button class="custom-button" (click)="generatePassword()">Generate Password</button>
     </form>
-    <mat-expansion-panel hideToggle>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          <div class="d-flex avatar green">
-            <div class="round">
-              <mat-icon>group</mat-icon>
-            </div>
-            <div>Arbeitsgruppe</div>
-          </div>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <div class="d-flex flex-wrap calendar-source-container">
-        <button
-          type="button"
-          mat-stroked-button
-          *ngFor="let group of groups"
-          [ngClass]="{'primary': selectedGroup.includes(group.id)}"
-          (click)="selectGroup(group.id)">
-          {{group.name}}
-        </button>
-      </div>
-    </mat-expansion-panel>
+<!--    <mat-expansion-panel hideToggle>-->
+<!--      <mat-expansion-panel-header>-->
+<!--        <mat-panel-title>-->
+<!--          <div class="d-flex avatar green">-->
+<!--            <div class="round">-->
+<!--              <mat-icon>group</mat-icon>-->
+<!--            </div>-->
+<!--            <div>Arbeitsgruppe</div>-->
+<!--          </div>-->
+<!--        </mat-panel-title>-->
+<!--      </mat-expansion-panel-header>-->
+<!--      <div class="d-flex flex-wrap calendar-source-container">-->
+<!--        <button-->
+<!--          type="button"-->
+<!--          mat-stroked-button-->
+<!--          *ngFor="let group of groups"-->
+<!--          [ngClass]="{'primary': selectedGroup.includes(group.id)}"-->
+<!--          (click)="selectGroup(group.id)">-->
+<!--          {{group.name}}-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </mat-expansion-panel>-->
   </mat-accordion>
   <div class="d-flex flex-column mt-4">
 

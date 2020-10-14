@@ -1,0 +1,49 @@
+<div class="p-2">
+  <h1>SMS Ansicht</h1>
+  <div class="row pt-3">
+    <div class="col-3">
+      <div class="d-flex avatar pink">
+        <div class="round">
+          <mat-icon>stop_circle</mat-icon>
+        </div>
+        <div>Automatisch</div>
+      </div>
+      <div class="d-flex avatar green">
+        <div class="round">
+          <mat-icon>group</mat-icon>
+        </div>
+        <div>Empfänger</div>
+      </div>
+      <div class="d-flex avatar yellow">
+        <div class="round">
+          <mat-icon svgIcon="time-icon" aria-hidden="false" aria-label="time"></mat-icon>
+        </div>
+        <div>Empfänger</div>
+      </div>
+    </div>
+    <div class="col-9 pt-3">
+      <p>Terminbestätigung 24h vor Termin <br><br></p>
+      <p ngnonbindable>
+        Sehr geehrter Herr Heinz,<br><br>
+        wir erinnern Sie freundlich an den morgigen Termin um 10:00 Uhr. Schwester Laura Morgenstern nimmt Ihren Termin wahr und übermittelt uns umgehend die Blutprobe. Anschließend werden wir Ihnen Ihre Testergebnisse innerhalb von 48h zusenden.
+        <br><br>
+        Herzliche Grüße <br> Ihr previmo-Team <br> {{'{previmo_signature}'}}
+      </p>
+      <p></p>
+      <p></p>
+    </div>
+  </div>
+  <div class="pt-5 float-right d-flex">
+    <div *ngIf="!success" class="d-flex align-items-center">
+      <div class="warning-status">!</div>
+      <div class="warning-color ml-2">Automatischer Versand fehlgeschlagen</div>
+    </div>
+    <div *ngIf="success" class="d-flex align-items-center">
+      <div class="success-status"></div>
+      <div class="success-color ml-2">Manueller Versand war erfolgreich</div>
+    </div>
+    <button *ngIf="!success" class="custom-button primary primary-button ml-2" mat-stroked-button>Manuell versenden</button>
+    <button class="custom-button ml-2" mat-stroked-button>Schließen</button>
+
+  </div>
+</div>

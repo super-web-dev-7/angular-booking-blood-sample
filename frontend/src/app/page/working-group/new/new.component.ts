@@ -21,8 +21,8 @@ export class NewComponent implements OnInit {
   calendars = [];
   groupForm: FormGroup;
   userForm: FormGroup;
-  // allAgency = [];
-  // selectedAgency = null;
+  allAgency = [];
+  selectedAgency = [];
   currentUser;
 
   constructor(
@@ -58,9 +58,23 @@ export class NewComponent implements OnInit {
       }
     });
 
+    this.httpService.get(URL_JSON.AGENCY + '/getAgencyInGroup').subscribe((res: any) => {
+      console.log(res);
+      this.allAgency = res;
+      if (this.data) {
+        for (const item of this.data.agency) {
+          this.allAgency.push(item.agency);
+        }
+      }
+    });
+
     this.selectedCalendar = this.data ? this.data?.calendar_id : 0;
     this.selectedAdmin = this.data ? this.data?.admin : [];
-    // this.selectedAgency = this.data?.agency.id;
+    if (this.data) {
+      for (const item of this.data.agency) {
+        this.selectedAgency.push(item.agencyId);
+      }
+    }
   }
 
   get f(): any {
@@ -89,6 +103,14 @@ export class NewComponent implements OnInit {
       this.selectedAdmin.splice(this.selectedAdmin.indexOf(id), 1);
     } else {
       this.selectedAdmin.push(id);
+    }
+  }
+
+  selectAgency = (id) => {
+    if (this.selectedAgency.includes(id)) {
+      this.selectedAgency.splice(this.selectedAgency.indexOf(id), 1);
+    } else {
+      this.selectedAgency.push(id);
     }
   }
 
@@ -130,7 +152,7 @@ export class NewComponent implements OnInit {
       isActive: this.f.isActive.value,
       admin: JSON.stringify(this.selectedAdmin),
       calendar_id: this.selectedCalendar,
-      // agency_id: this.selectedAgency
+      agencyIds: this.selectedAgency
     };
     if (this.data) {
       this.httpService.update(URL_JSON.GROUP + '/update/' + this.data.id, data).subscribe((result) => {

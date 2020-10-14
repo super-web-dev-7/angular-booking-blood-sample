@@ -434,29 +434,30 @@
           <div *ngFor="let hour of workingHourArray; let index = index;" class="time-label">
             <div class="time-label-item time-label-hour">
               <div>{{getFloor(workingStartHour / 2 + index)}}:{{'00'}}</div>
-              <div class="w-100" *ngFor="let appointment of appointments">
-                <div class="w-100 position-relative"
-                     *ngIf="workingStartHour / 2 + index === getDate(appointment.startTime, 'hour')">
-                  <div class="appointment-container">
-                    <div class="appointment-inner-container"
-                         [ngClass]="{'border-green' : appointment.startTime < currentTime, 'border-pink': appointment.startTime > currentTime}">
-                      <div *ngIf="index === 0" class="appointment-status-green">Termin wahrgenommen</div>
-                      <div *ngIf="index === 3" class="appointment-status-pink">Patient vorbereitet</div>
-                      <div class="patient-name">{{appointment.patientFirstName}} {{appointment.patientLastName}}</div>
-                      <div class="patient-address">{{appointment.addressStreet}} {{appointment.addressOrt}}
-                        , {{appointment.addressPlz}} Berlin
+              <div class="w-100">
+                <div class="w-100" *ngFor="let appointment of appointments">
+                  <div class="w-100 position-relative"
+                       *ngIf="workingStartHour / 2 + index === getDate(appointment.startTime, 'hour')">
+                    <div class="appointment-container">
+                      <div class="appointment-inner-container"
+                           [ngClass]="{'border-green' : appointment.startTime < currentTime, 'border-pink': appointment.startTime > currentTime}">
+                        <div *ngIf="index === 0" class="appointment-status-green">Termin wahrgenommen</div>
+                        <div *ngIf="index === 3" class="appointment-status-pink">Patient vorbereitet</div>
+                        <div class="patient-name">{{appointment.patientFirstName}} {{appointment.patientLastName}}</div>
+                        <div class="patient-address">{{appointment.addressStreet}} {{appointment.addressOrt}}
+                          , {{appointment.addressPlz}} Berlin
+                        </div>
+                        <div class="patient-package">{{appointment.packageName}}</div>
+                        <div class="patient-time">{{getStartTime(appointment.startTime)}}
+                          — {{getEndTime(appointment.startTime, appointment.duration)}}</div>
                       </div>
-                      <div class="patient-package">{{appointment.packageName}}</div>
-                      <div class="patient-time">{{getStartTime(appointment.startTime)}}
-                        — {{getEndTime(appointment.startTime, appointment.duration)}}</div>
                     </div>
+                    <button class="detail-menu" mat-icon-button (click)="selectedAppointment = appointment" [matMenuTriggerFor]="menu">
+                      <mat-icon>more_horiz</mat-icon>
+                    </button>
                   </div>
-                  <button class="detail-menu" mat-icon-button (click)="selectedAppointment = appointment" [matMenuTriggerFor]="menu">
-                    <mat-icon>more_horiz</mat-icon>
-                  </button>
                 </div>
               </div>
-
             </div>
             <div class="time-label-item">
               <div

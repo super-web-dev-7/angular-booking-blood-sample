@@ -1,9 +1,9 @@
 module.exports = (sequelize, Sequelize) => {
-    return sequelize.define('agency_group', {
-        agencyId: {
+    return sequelize.define('working_group_agency', {
+        groupId: {
             type: Sequelize.INTEGER
         },
-        groupId: {
+        agencyId: {
             type: Sequelize.INTEGER
         }
     });

@@ -11,7 +11,6 @@ import {NewComponent} from '../new/new.component';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 
-
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -99,29 +98,11 @@ export class OverviewComponent implements OnInit {
 
   onSort = (event) => {
     this.orderStatus = event;
-    const allAgency = [...this.allAgency];
-    if (event.active === 'workingGroup') {
-      allAgency.sort((a, b) => {
-        const x = a.working_group.name;
-        const y = b.working_group.name;
-        if (event.direction === 'asc') {
-          return x.localeCompare(y, 'de');
-        } else if (event.direction === 'desc') {
-          return y.localeCompare(x, 'de');
-        }
-      });
-    }
-    if (event.direction === '') {
-      this.dataSource.data = this.allAgency;
-    } else {
-      this.dataSource.data = allAgency;
-    }
   }
 
   filter = () => {
     this.dataSource.data = this.allAgency.filter(item => {
       return item.name.includes(this.filterValue) ||
-        item.working_group.name.includes(this.filterValue) ||
         JSON.stringify(item.doctors).includes(this.filterValue);
     });
   }

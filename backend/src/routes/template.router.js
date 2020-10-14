@@ -9,5 +9,6 @@ router.route('/delete/:id').delete(templateController.delete);
 router.route('/update/:id').put(templateController.update);
 router.route('/getWithQuery').get(templateController.getWithQuery);
 router.route('/getActions').get(templateController.getActions);
+router.route('/getAllKeywords').get(templateController.getKeywords);
 
 export default router;

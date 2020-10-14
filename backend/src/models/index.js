@@ -13,7 +13,8 @@ import districtModel from './static-district.model';
 import appointmentModel from './appointment.model';
 import zipCodeModel from './zipcode.model';
 import templateAction from './template-action.model';
-import agencyGroup from './agency_group.model';
+import workingGroupAgency from './working_group_agency.model';
+import templateKeyword from './template_keyword.model';
 
 const sequelize = new Sequelize(config.mysql.database, config.mysql.user, config.mysql.password, {
     host: config.mysql.host,
@@ -33,12 +34,13 @@ db.template = template(sequelize, Sequelize);
 db.workingGroup = workingGroup(sequelize, Sequelize);
 db.additionalPackage = additionalPackage(sequelize, Sequelize);
 db.agency = agency(sequelize, Sequelize);
-db.agencyGroup = agencyGroup(sequelize, Sequelize);
+db.workingGroupAgency = workingGroupAgency(sequelize, Sequelize);
 db.patient = patient(sequelize, Sequelize);
 db.districtModel = districtModel(sequelize, Sequelize);
 db.appointment = appointmentModel(sequelize, Sequelize);
 db.zipCodeModel = zipCodeModel(sequelize, Sequelize);
 db.templateAction = templateAction(sequelize, Sequelize);
+db.templatekeyword = templateKeyword(sequelize, Sequelize);
 
 // Relations
 db.patient.belongsTo(db.user);

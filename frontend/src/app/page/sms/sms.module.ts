@@ -7,10 +7,11 @@ import { OverviewComponent } from './overview/overview.component';
 import {SmsRoutingModule} from './sms-routing.module';
 import {MaterialModule} from '../../material/material.module';
 import {SharedModule} from '../../shared/shared.module';
+import { ViewComponent } from './view/view.component';
 
 
 @NgModule({
-  declarations: [OverviewComponent],
+  declarations: [OverviewComponent, ViewComponent],
   imports: [
     CommonModule,
     SmsRoutingModule,
@@ -19,6 +20,7 @@ import {SharedModule} from '../../shared/shared.module';
     RouterModule,
     ReactiveFormsModule,
     FormsModule
-  ]
+  ],
+  entryComponents: [ViewComponent]
 })
 export class SmsModule { }

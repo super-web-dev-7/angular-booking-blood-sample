@@ -1,11 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+
 import {HttpService} from '../../../service/http/http.service';
 import {AuthService} from '../../../service/auth/auth.service';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MustMatch} from '../../../shared/confirm-password.validator';
 import {URL_JSON} from '../../../utils/url_json';
-import {MatSnackBar} from "@angular/material/snack-bar";
+
 
 @Component({
   selector: 'app-new-patient',
