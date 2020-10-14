@@ -1,36 +1,26 @@
-<mat-card class="p-3">
-  <mat-card-header>
-    <mat-card-title>Login</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form [formGroup]="loginForm" (ngSubmit)="login()" class="d-flex flex-column login-form">
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" placeholder="Email">
-        <mat-error *ngIf="loginForm.get('email').hasError('email') && !loginForm.get('email').hasError('required')">
-          Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="loginForm.get('email').hasError('required')">
-          Email is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input type="password" matInput formControlName="password" placeholder="Password">
-        <mat-error *ngIf="loginForm.get('password').hasError('required')">
-          Password is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <button mat-raised-button color="primary" class="w-100">Login</button>
-      <mat-error *ngIf="error">{{error}}</mat-error>
-    </form>
-    <div class="mt-4 text-center">
-      <div class="text-secondary mb-1">
-        Don't have an account?
-      </div>
-      <div>
-        <a href="/register" class="black-link">Click here to create one</a>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+<form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+  <mat-card>
+    <mat-card-content>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" placeholder="Email">
+          <mat-error *ngIf="loginForm.get('email').hasError('email') && !loginForm.get('email').hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('email').hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input type="password" matInput formControlName="password" placeholder="Password">
+          <mat-error *ngIf="loginForm.get('password').hasError('required')">
+            Password is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-error *ngIf="error">{{error}}</mat-error>
+    </mat-card-content>
+  </mat-card>
+  <button mat-stroked-button class="custom-button-384 mt-47">Einloggen</button><br/>
+  <button mat-stroked-button class="custom-button mt-15">Passwort vergessen?</button>
+</form>
