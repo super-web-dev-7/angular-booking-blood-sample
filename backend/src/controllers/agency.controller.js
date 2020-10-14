@@ -20,7 +20,11 @@ exports.create = (req, res) => {
 };
 
 exports.get = async (req, res) => {
-    const allAgency = await Agency.findAll({raw: true});
+    const allAgency = await db.sequelize.query(`
+    SELECT agencies.id AS id, agencies.name AS name, agencies.doctors_id AS doctors_id, working_groups.calendar_id AS calendar_id
+    FROM agencies 
+    JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id 
+    JOIN working_groups ON working_group_agencies.groupId=working_groups.id`, {type: Sequelize.QueryTypes.SELECT, raw: true, nest: true});
     const response = [];
     for (const agency of allAgency) {
         let doctors;
@@ -37,7 +41,6 @@ exports.get = async (req, res) => {
 
 exports.getAgencyInGroup = async (req, res) => {
     const allAgency = await db.sequelize.query(`SELECT * FROM agencies WHERE id NOT IN (SELECT agencyId FROM working_group_agencies)`, {type: Sequelize.QueryTypes.SELECT, raw: true, nest: true});
-    console.log(allAgency)
     res.status(200).json(allAgency);
 }
 

@@ -10,7 +10,15 @@ const WorkingGroupAgency = db.workingGroupAgency;
 
 exports.create = (req, res) => {
     const newGroup = req.body;
-    WorkingGroup.create(newGroup).then(data => {
+    WorkingGroup.create(newGroup).then(async (data) => {
+        for (const agencyId of newGroup.agencyIds) {
+            await WorkingGroupAgency.create(
+                {
+                    groupId: data.id,
+                    agencyId: agencyId
+                }
+            );
+        }
         res.send(data)
     }).catch(err => {
         res.status(400).send({

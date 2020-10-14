@@ -64,7 +64,6 @@ export class NewCalendarComponent implements OnInit {
     this.selectedNurse = id;
   }
 
-
   get f(): any {
     return this.scheduleForm.controls;
   }
@@ -86,7 +85,9 @@ export class NewCalendarComponent implements OnInit {
       return;
     }
     if (this.selectedDistrict.length < 2 || !this.selectedNurse) {
-      this.snackBar.open('Please select district and nurse exactly. You must select 2 or more districts.');
+      this.snackBar.open(
+        'Please select district and nurse exactly. You must select 2 or more districts.', '',
+        {duration: 2000});
       return;
     }
 

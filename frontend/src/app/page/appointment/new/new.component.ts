@@ -30,6 +30,7 @@ export class NewComponent implements OnInit {
   allPatient = [];
   allPatient$ = [];
   selectedPTime = null;
+  allAppointment = [];
   constructor(
     public formBuilder: FormBuilder,
     public httpService: HttpService,
@@ -82,8 +83,11 @@ export class NewComponent implements OnInit {
       this.allPatient = res;
       this.allPatient$ = res;
     });
-    this.selectedPackage = this.data ? this.data?.calendar_id : null;
-    this.selectedAgency = this.data ? this.data?.agency : null;
+    this.httpService.get(URL_JSON.APPOINTMENT + '/get').subscribe((res: any) => {
+      this.allAppointment = res;
+    });
+    this.selectedPackage = null;
+    this.selectedAgency = null;
     this.patientSearchControl.valueChanges.subscribe(() => {
       let search = this.patientSearchControl.value;
       search = search.toLowerCase();
@@ -130,7 +134,7 @@ export class NewComponent implements OnInit {
 
   selectAgency = (agency) => {
     this.selectedAgency = agency.id;
-    this.httpService.get(URL_JSON.CALENDAR + '/getById/' + agency.working_group.calendar_id).subscribe((res: any) => {
+    this.httpService.get(URL_JSON.CALENDAR + '/getById/' + agency.calendar_id).subscribe((res: any) => {
       this.makeAppointmentTime(res);
     });
   }
@@ -148,7 +152,9 @@ export class NewComponent implements OnInit {
       let time = workingTimeFrom;
       while ((time + durationAppointment) < workingTimeUntil) {
         if (time > date.getTime()) {
-          this.allTimes.push(time);
+          if (this.allAppointment.findIndex(item => item.time === time && item.agencyId === this.selectedAgency) === -1) {
+            this.allTimes.push(time);
+          }
         }
         time += durationAppointment + restTime;
       }
