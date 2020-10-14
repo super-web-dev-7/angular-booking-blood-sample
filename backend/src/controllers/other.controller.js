@@ -1,4 +1,5 @@
 import db from '../models';
+import Axios from 'axios';
 // import * as sgMail from '@sendgrid/mail';
 // const sgMail = require('@sendgrid/mail');
 // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -25,7 +26,6 @@ exports.getSuperAdminDashboardValues = async (req, res) => {
 
 exports.sendEmail = async (req, res) => {
     const data = req.body;
-    console.log(data)
     const option = {
         to: data.email,
         subject: data.subject,
@@ -61,5 +61,25 @@ exports.checkPostalCode = async (req, res) => {
 
 exports.getPostalCodeByName = async (req, res) => {
 
+}
+
+exports.sendSMS = async (req, res) => {
+    const SMSData = {
+        recipientAddressList: ['8613124260482'],
+        messageContent: 'example message content',
+    };
+    Axios({
+        method: 'POST',
+        url: 'https://api.websms.com/rest/smsmessaging/text',
+        headers: {
+            'Content-Type': 'application/json',
+            'Host': 'api.websms.com',
+            'Accept': 'application/json',
+            'Authorization': 'Basic ' + process.env.SMS_BASIC_TOKEN
+        },
+        data: SMSData
+    }).then(res => {
+        console.log(res);
+    })
 }
 

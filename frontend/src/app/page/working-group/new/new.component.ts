@@ -59,7 +59,6 @@ export class NewComponent implements OnInit {
     });
 
     this.httpService.get(URL_JSON.AGENCY + '/getAgencyInGroup').subscribe((res: any) => {
-      console.log(res);
       this.allAgency = res;
       if (this.data) {
         for (const item of this.data.agency) {

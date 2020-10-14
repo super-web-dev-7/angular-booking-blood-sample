@@ -51,7 +51,6 @@ export class OverviewComponent implements OnInit {
   }
 
   viewItem = (item) => {
-    console.log(item);
     const dialogRef = this.dialog.open(ViewComponent, {
       width: '900px'
     });

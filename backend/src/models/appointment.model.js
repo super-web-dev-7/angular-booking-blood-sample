@@ -14,6 +14,9 @@ module.exports = (sequelize, Sequelize) => {
         // },
         time: {
             type: Sequelize.BIGINT
+        },
+        ready: {
+            type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false
         }
     });
 };

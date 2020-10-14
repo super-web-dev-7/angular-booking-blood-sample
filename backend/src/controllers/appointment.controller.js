@@ -62,7 +62,7 @@ exports.update = async (req, res) => {
 
 exports.getAppointmentByNurse = async (req, res) => {
     const allAppointment = await sequelize.query(`
-        SELECT appointments.id AS id, appointments.time AS startTime,
+        SELECT appointments.id AS id, appointments.time AS startTime, appointments.ready AS ready,
             users.id AS patientId, users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.id AS patientDetailId, patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt, 
             packages.id AS packageId, packages.name AS packageName,
@@ -78,4 +78,10 @@ exports.getAppointmentByNurse = async (req, res) => {
         WHERE calendars.nurse=${req.params.id}
     `, {type: Sequelize.QueryTypes.SELECT});
     res.status(200).json(allAppointment);
+}
+
+exports.appointmentReady = async (req, res) => {
+    const id = req.params.id;
+    await Appointment.update(req.body, {where: {id}});
+    res.status(200).json({id, ready: req.body.ready});
 }

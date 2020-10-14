@@ -62,7 +62,6 @@ exports.update = async (req, res) => {
         if (data.agencyIds) {
             await WorkingGroupAgency.destroy({where: {groupId: id}});
             for (const agencyId of data.agencyIds) {
-                console.log(agencyId)
                 await WorkingGroupAgency.create(
                     {
                         groupId: id,

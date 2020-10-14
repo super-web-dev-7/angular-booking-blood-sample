@@ -440,9 +440,9 @@
                        *ngIf="workingStartHour / 2 + index === getDate(appointment.startTime, 'hour')">
                     <div class="appointment-container">
                       <div class="appointment-inner-container"
-                           [ngClass]="{'border-green' : appointment.startTime < currentTime, 'border-pink': appointment.startTime > currentTime}">
-                        <div *ngIf="index === 0" class="appointment-status-green">Termin wahrgenommen</div>
-                        <div *ngIf="index === 3" class="appointment-status-pink">Patient vorbereitet</div>
+                           [ngClass]="{'border-green' : !appointment.ready, 'border-pink': appointment.ready}">
+                        <div *ngIf="!appointment.ready" class="appointment-status-green">Termin wahrgenommen</div>
+                        <div *ngIf="appointment.ready" class="appointment-status-pink">Patient vorbereitet</div>
                         <div class="patient-name">{{appointment.patientFirstName}} {{appointment.patientLastName}}</div>
                         <div class="patient-address">{{appointment.addressStreet}} {{appointment.addressOrt}}
                           , {{appointment.addressPlz}} Berlin

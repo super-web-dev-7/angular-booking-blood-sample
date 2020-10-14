@@ -89,7 +89,6 @@ export class NurseDashboardComponent implements OnInit {
     });
 
     this.httpService.get(URL_JSON.TEMPLATE + '/getAllKeywords').subscribe((res: any) => {
-      console.log(res);
       this.allKeywords = res;
     });
   }
@@ -201,7 +200,14 @@ export class NurseDashboardComponent implements OnInit {
   }
 
   patientPrepared = () => {
-    this.close();
+    const data = {
+      ready: true
+    };
+    this.httpService.update(URL_JSON.APPOINTMENT + '/ready/' + this.selectedAppointment.id, data).subscribe((res: any) => {
+      const index = this.allAppointments.findIndex(item => item.id === this.selectedAppointment.id);
+      this.allAppointments[index].ready = res.ready;
+      this.close();
+    });
   }
 
   appointmentDelay = () => {
