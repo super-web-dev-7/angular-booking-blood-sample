@@ -1,0 +1,37 @@
+h1 {
+  font-size: 36px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.custom-button {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+::ng-deep .mat-checkbox-inner-container {
+  height: 25px!important;
+  width: 25px!important;
+}
+
+.checkbox-container {
+  border: 1px solid #CFDCE6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  margin-right: 8px;
+  cursor: pointer;
+  .check-mark {
+    width: 12px;
+    height: 12px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+  }
+}
+.checkbox-label {
+  white-space: nowrap;
+}
