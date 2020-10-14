@@ -219,3 +219,16 @@ export const archiveEventData = [
     status: 'Befund erstellt'
   }
 ];
+export const userMockData = {
+  email: 'test@mail.com',
+  phone: '12323343209',
+  password: 'ddddddd',
+  mr: 'Mr',
+  firstName: 'Sebastian',
+  lastName: 'Naumann',
+  street: 'Mimiweg 12',
+  home_num: '12357',
+  city: 'Berlin',
+  birthday: '27.01.1987 (33 Jahre)',
+  sex: 'Männlich'
+};

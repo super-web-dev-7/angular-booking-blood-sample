@@ -6,6 +6,7 @@ import {HeaderComponent} from './header/header.component';
 import {SidebarComponent} from './sidebar/sidebar.component';
 import {MaterialModule} from '../../material/material.module';
 import {MainLayoutComponent} from './main-layout.component';
+import {PatientViewModule} from '../../page/patient-view/patient-view.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import {MainLayoutComponent} from './main-layout.component';
     CommonModule,
     RouterModule,
     MaterialModule,
+    PatientViewModule,
   ]
 })
 export class MainLayoutModule { }

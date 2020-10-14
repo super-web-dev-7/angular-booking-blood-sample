@@ -17,23 +17,30 @@ import { CallSisterComponent } from './patient-dashboard/call-sister/call-sister
 import { PaymentStatusComponent } from './patient-dashboard/payment-status/payment-status.component';
 import { AppointmentNewComponent } from './new-appointment/appointment-new/appointment-new.component';
 import { AppointmentHistoryComponent } from './patient-dashboard/appointment-history/appointment-history.component';
+import { PatientSidebarComponent } from './patient-sidebar/patient-sidebar.component';
+import { EditProfileComponent } from './patient-sidebar/edit-profile/edit-profile.component';
 
 
 
 @NgModule({
-  declarations: [
-    PatientDashboardComponent,
-    CancelAppointmentComponent,
-    MoveAppointmentComponent,
-    EditAnamnesisComponent,
-    ChangePackageComponent,
-    NewAppointmentComponent,
-    CallbackDoctorComponent,
-    CallSisterComponent,
-    PaymentStatusComponent,
-    AppointmentNewComponent,
-    AppointmentHistoryComponent
-  ],
+    declarations: [
+        PatientDashboardComponent,
+        CancelAppointmentComponent,
+        MoveAppointmentComponent,
+        EditAnamnesisComponent,
+        ChangePackageComponent,
+        NewAppointmentComponent,
+        CallbackDoctorComponent,
+        CallSisterComponent,
+        PaymentStatusComponent,
+        AppointmentNewComponent,
+        AppointmentHistoryComponent,
+        PatientSidebarComponent,
+        EditProfileComponent
+    ],
+    exports: [
+        PatientSidebarComponent
+    ],
     imports: [
         CommonModule,
         MaterialModule,

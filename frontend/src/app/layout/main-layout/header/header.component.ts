@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
 
   @Input() isMobile;
   @Output() setOpen = new EventEmitter();
+  @Output() setRightOpen = new EventEmitter();
   currentUser: any;
 
   constructor(
@@ -26,6 +27,10 @@ export class HeaderComponent implements OnInit {
 
   openSidebar = () => {
     this.setOpen.emit(true);
+  }
+
+  openRightSidebar = () => {
+    this.setRightOpen.emit(true);
   }
 
   logout = () => {

@@ -12,6 +12,7 @@ import {AuthService} from '../../service/auth/auth.service';
 export class MainLayoutComponent implements OnInit {
 
   isOpen = true;
+  isRightSidebarOpen = false;
   isMobile = false;
   currentUser: any;
 
@@ -35,6 +36,14 @@ export class MainLayoutComponent implements OnInit {
 
   setOpen = ($event: any) => {
     this.isOpen = true;
+  }
+
+  setRightOpen = (event) => {
+    this.isRightSidebarOpen = event;
+  }
+
+  closeRightSide = (event) => {
+    this.isRightSidebarOpen = event;
   }
 
   menuClick = (link) => {
