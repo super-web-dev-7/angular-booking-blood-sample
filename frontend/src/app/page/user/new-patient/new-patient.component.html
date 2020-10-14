@@ -71,7 +71,9 @@
     <div class="col-md-4">
       <mat-form-field class="mt-4">
         <mat-label>PLZ</mat-label>
-        <input formControlName="plz" autocomplete="off" matInput>
+        <input formControlName="plz" type="number" autocomplete="off" matInput (keyup)="checkPostalCode('plz')">
+        <mat-icon *ngIf="f.plz.touched && !f.plz.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+        <mat-icon *ngIf="f.plz.touched && f.plz.errors" style="color: red" matSuffix>close</mat-icon>
       </mat-form-field>
     </div>
     <div class="col-md-4">
@@ -148,15 +150,17 @@
   <div [ngClass]="{'justify-content-end mt-5': !f.differentPlace.value, 'justify-content-between mt-3': f.differentPlace.value}" class=" d-flex" >
     <div *ngIf="f.differentPlace.value" style="width: 210px;">
       <mat-form-field class="">
-        <mat-label>Street</mat-label>
+        <mat-label>Straße</mat-label>
         <input autocomplete="off" type="text" matInput formControlName="otherStreet">
       </mat-form-field>
       <mat-form-field class="">
-        <mat-label>Postal Code</mat-label>
-        <input autocomplete="off" type="number" matInput formControlName="otherPostalCode">
+        <mat-label>PLZ</mat-label>
+        <input autocomplete="off" type="number" matInput formControlName="otherPostalCode" (keyup)="checkPostalCode('otherPostalCode')">
+        <mat-icon *ngIf="f.otherPostalCode.touched && !f.otherPostalCode.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+        <mat-icon *ngIf="f.otherPostalCode.touched && f.otherPostalCode.errors" style="color: red" matSuffix>close</mat-icon>
       </mat-form-field>
       <mat-form-field class="">
-        <mat-label>City</mat-label>
+        <mat-label>Ort</mat-label>
         <input autocomplete="off" type="text" matInput formControlName="otherCity">
       </mat-form-field>
     </div>

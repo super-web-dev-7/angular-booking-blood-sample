@@ -1,0 +1,40 @@
+.avatar {
+  margin-bottom: 20px;
+}
+
+.warning-status {
+  border-radius: 50%;
+  background-color: #E87C60;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.warning-status {
+  background-color: #E87C60;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.success-status {
+  background-color: #89DF8C;
+}
+
+.warning-status, .success-status {
+  width: 24px;
+  height: 24px;
+  font-size: 20px;
+  border-radius: 50%;
+}
+
+.custom-button {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.success-color {
+  color: #76D279;
+}

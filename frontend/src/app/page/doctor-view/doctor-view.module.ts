@@ -22,6 +22,7 @@ import { SuccessDialogComponent } from './doctor-dashboard/answer-inquiry/succes
 import { ArchivePatientComponent } from './archive/archive-patient/archive-patient.component';
 import { ArchiveAnamnesComponent } from './archive/archive-anamnes/archive-anamnes.component';
 import { ArchiveEventComponent } from './archive/archive-event/archive-event.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 

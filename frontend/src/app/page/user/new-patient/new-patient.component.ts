@@ -1,10 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+
 import {HttpService} from '../../../service/http/http.service';
 import {AuthService} from '../../../service/auth/auth.service';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MustMatch} from '../../../shared/confirm-password.validator';
 import {URL_JSON} from '../../../utils/url_json';
+
 
 @Component({
   selector: 'app-new-patient',
@@ -27,7 +30,8 @@ export class NewPatientComponent implements OnInit {
     public httpService: HttpService,
     public authService: AuthService,
     public dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -77,6 +81,25 @@ export class NewPatientComponent implements OnInit {
     const password = Math.random().toString(36).slice(-8);
     this.f.password.setValue(password);
     this.f.confirmPassword.setValue(password);
+  }
+
+  checkPostalCode = (type) => {
+    if (type === 'plz') {
+      this.httpService.checkPostalCode(this.f.plz.value).subscribe((res: any) => {
+        this.f.ort.setValue(res?.ort);
+        if (!res) {
+          this.f.plz.setErrors(Validators.required);
+        }
+      });
+    }
+    if (type === 'otherPostalCode') {
+      this.httpService.checkPostalCode(this.f.otherPostalCode.value).subscribe((res: any) => {
+        this.f.otherCity.setValue(res?.ort);
+        if (!res) {
+          this.f.otherPostalCode.setErrors(Validators.required);
+        }
+      });
+    }
   }
 
   close = () => {
@@ -130,10 +153,14 @@ export class NewPatientComponent implements OnInit {
       this.httpService.update(URL_JSON.USER + '/update/patient/' + this.data.user_id, data).subscribe((res: any) => {
         res.id = this.data.user_id;
         this.dialogRef.close(res);
+      }, () => {
+        this.snackBar.open('Dieser User ist bereits im System vorhanden.', '', { duration: 2000 });
       });
     } else {
       this.httpService.create(URL_JSON.USER + '/patient', data).subscribe(res => {
         this.dialogRef.close(res);
+      }, () => {
+        this.snackBar.open('Dieser User ist bereits im System vorhanden.', '', {duration: 2000});
       });
     }
   }

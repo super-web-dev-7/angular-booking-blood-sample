@@ -8,5 +8,6 @@ router.route('/get').get(districtController.get);
 router.route('/delete/:id').delete(districtController.delete);
 router.route('/update/:id').put(districtController.update);
 router.route('/get_model').get(districtController.getModel)
+router.route('/unassigned').get(districtController.getUnassigned)
 
 export default router;

@@ -21,7 +21,7 @@ exports.create = async (req, res) => {
 }
 
 exports.get = async (req, res) => {
-    const allAppointment = await Appointment.findAll({where: {}, include: [User, Package, Agency]});
+    const allAppointment = await Appointment.findAll({where: {}, include: [User, Package, Agency], raw: true, nest: true});
     let response = [];
     for (const appointment of allAppointment) {
         const doctors_id = JSON.parse(appointment.agency.doctors_id);
@@ -40,11 +40,12 @@ exports.get = async (req, res) => {
         SELECT users.id, users.email, users.firstName, users.lastName, users.phoneNumber FROM users
         JOIN calendars ON users.id = calendars.nurse
         JOIN working_groups ON working_groups.calendar_id = calendars.id
-        JOIN agencies ON agencies.group_id = working_groups.id
-        WHERE agencies.group_id = ${appointment.agency.group_id}
-        `);
+        JOIN working_group_agencies ON working_group_agencies.groupId=working_groups.id
+        JOIN agencies ON agencies.id=working_group_agencies.agencyId
+        WHERE working_group_agencies.agencyId = ${appointment.agency.id}
+        `, {type: Sequelize.QueryTypes.SELECT});
         const patient = await Patient.findOne({where: {user_id: appointment.user.id}});
-        response.push({...appointment.dataValues, doctors, nurse: nurse[0][0], patient})
+        response.push({...appointment, doctors, patient, nurse: nurse[0]})
     }
     res.status(200).json(response);
 }
@@ -68,12 +69,13 @@ exports.getAppointmentByNurse = async (req, res) => {
             calendars.id AS calendarId, calendars.duration_appointment AS duration, calendars.working_time_from AS workingTimeFrom, calendars.working_time_until AS workingTimeUntil
         FROM appointments
         JOIN agencies ON appointments.agencyId=agencies.id
-        JOIN working_groups ON agencies.group_id=working_groups.id
+        JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id
+        JOIN working_groups ON working_group_agencies.groupId=working_groups.id
         JOIN calendars ON working_groups.calendar_id=calendars.id
         JOIN users ON appointments.userId=users.id
         JOIN patients ON patients.user_id=users.id
         JOIN packages ON appointments.packageId=packages.id
-        WHERE calendars.nurse=11
+        WHERE calendars.nurse=${req.params.id}
     `, {type: Sequelize.QueryTypes.SELECT});
     res.status(200).json(allAppointment);
 }

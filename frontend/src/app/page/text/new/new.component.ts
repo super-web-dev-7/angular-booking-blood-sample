@@ -44,12 +44,14 @@ export class NewComponent implements OnInit {
   ];
 
   values = [
-    {value: 1, viewValue: 'Patient Prepared'},
     {value: 2, viewValue: 'Appointment Delay'},
     {value: 3, viewValue: 'Appointment Shift'},
     {value: 4, viewValue: 'Appointment Taken'},
     {value: 5, viewValue: 'Patient Not There'}
   ];
+
+  actions = [];
+  allActions = [];
 
   Editor = ClassicEditor;
   template = {
@@ -69,6 +71,9 @@ export class NewComponent implements OnInit {
       assign: [this.data?.assign, Validators.required],
       message: [this.data?.message, Validators.required]
     });
+    this.httpService.get(URL_JSON.TEMPLATE + '/getActions').subscribe((res: any) => {
+      this.allActions = res;
+    });
     this.selectedShipment = this.data ? this.data.type === 'SMS' ? 1 : 2 : null;
     this.selectedReceiver = this.data?.receiver;
   }
@@ -79,10 +84,20 @@ export class NewComponent implements OnInit {
 
   selectShipment = (id) => {
     this.selectedShipment = id;
+    this.selectActions();
   }
 
   selectReceiver = (id) => {
     this.selectedReceiver = id;
+    this.selectActions();
+  }
+
+  selectActions = () => {
+    if (this.selectedReceiver && this.selectedShipment) {
+      const shipment = this.selectedShipment === 1 ? 'sms' : 'email';
+      const receiver = this.selectedReceiver === 1 ? 'patient' : this.selectedReceiver === 2 ? 'nurse' : 'doctor';
+      this.actions = this.allActions.filter(item => item[shipment] && item[receiver]);
+    }
   }
 
   create = () => {

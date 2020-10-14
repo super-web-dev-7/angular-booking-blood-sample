@@ -1,6 +1,8 @@
 import db from '../models';
 
 const Template = db.template;
+const TemplateAction = db.templateAction;
+const TemplateKeyword = db.templatekeyword;
 
 exports.create = (req, res) => {
     const newTemplate = req.body;
@@ -35,4 +37,14 @@ exports.update = (req, res) => {
 exports.getWithQuery = async (req, res) => {
     const templates = await Template.findAll({where: req.query});
     res.status(200).json(templates);
+}
+
+exports.getActions = async (req, res) => {
+    const allActions = await TemplateAction.findAll({raw: true});
+    res.status(200).json(allActions);
+}
+
+exports.getKeywords = async (req, res) => {
+    const allKeywords = await TemplateKeyword.findAll({raw: true});
+    res.status(200).json(allKeywords);
 }

@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {newArray} from '@angular/compiler/src/util';
 
 import {HttpService} from '../../../service/http/http.service';
@@ -25,15 +26,22 @@ export class NewCalendarComponent implements OnInit {
     public httpService: HttpService,
     public formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<any>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
-    this.httpService.get(URL_JSON.DISTRICT + '/get').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.DISTRICT + '/unassigned').subscribe((res: any) => {
       this.districts = res;
+      if (this.data) {
+        this.districts = [...this.data.districts, ...this.districts];
+      }
     });
-    this.httpService.get(URL_JSON.USER + '/get?role=Nurse').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.USER + '/unassignedInCalendar?role=Nurse').subscribe((res: any) => {
       this.nurses = res;
+      if (this.data) {
+        this.nurses.unshift(this.data.user);
+      }
     });
 
     this.scheduleForm = this.formBuilder.group({
@@ -77,7 +85,8 @@ export class NewCalendarComponent implements OnInit {
     if (this.scheduleForm.invalid) {
       return;
     }
-    if (this.selectedDistrict.length === 0 || !this.selectedNurse) {
+    if (this.selectedDistrict.length < 2 || !this.selectedNurse) {
+      this.snackBar.open('Please select district and nurse exactly. You must select 2 or more districts.');
       return;
     }
 

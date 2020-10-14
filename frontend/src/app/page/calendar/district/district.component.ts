@@ -37,7 +37,7 @@ export class DistrictComponent implements OnInit {
     public router: Router,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
-    public httpService: HttpService
+    public httpService: HttpService,
   ) {
   }
 
@@ -63,7 +63,7 @@ export class DistrictComponent implements OnInit {
   filter = () => {
     this.dataSource.data = this.allDistrict.filter(item => {
       return item.name.includes(this.filterValue)
-        || item.district_model.name.includes(this.filterValue);
+        || item.district.includes(this.filterValue);
     });
   }
 
@@ -106,7 +106,17 @@ export class DistrictComponent implements OnInit {
     const data = {
       isActive: event.checked
     };
-    this.httpService.update(URL_JSON.DISTRICT + '/update/' + id, data).subscribe(res => {
+    this.httpService.update(URL_JSON.DISTRICT + '/update/' + id, data).subscribe((result: any) => {
+      const index = this.allDistrict.findIndex(item => item.id === id);
+      const district = this.allDistrict[index];
+      this.allDistrict[index] = {...district, ...data};
+      this.dataSource.data = this.allDistrict;
+    }, error => {
+      this.snackBar.open(error.error.message, '', {duration: 2000});
+      const index = this.allDistrict.findIndex(item => item.id === id);
+      const district = this.allDistrict[index];
+      this.allDistrict[index] = {...district, ...{isActive: !data.isActive}};
+      this.dataSource.data = this.allDistrict;
     });
   }
 
@@ -122,7 +132,6 @@ export class DistrictComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // result.zipcode = JSON.parse(result.zipcode);
         const index = this.allDistrict.findIndex(item => item.id === result.id);
         const district = this.allDistrict[index];
         this.allDistrict[index] = {...district, ...result};
@@ -146,8 +155,8 @@ export class DistrictComponent implements OnInit {
       });
     } else if (event.active === 'model') {
       districts.sort((a, b) => {
-        const x = a.district_model.name;
-        const y = b.district_model.name;
+        const x = a.district;
+        const y = b.district;
         if (event.direction === 'desc') {
           return x < y ? 1 : -1;
         } else if (event.direction === 'asc') {

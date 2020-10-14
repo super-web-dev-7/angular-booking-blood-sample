@@ -6,5 +6,6 @@ const router = Router();
 
 router.route('/ping').get(testController.ping);
 router.route('/district/insert').get(testController.insertDistrict);
+router.route('/zipcode/insert').get(testController.insertZipCode);
 
 export default router;

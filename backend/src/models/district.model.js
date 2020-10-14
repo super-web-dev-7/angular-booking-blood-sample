@@ -4,8 +4,11 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             unique: true
         },
-        model: {
-            type: Sequelize.INTEGER
+        city: {
+            type: Sequelize.STRING
+        },
+        district: {
+            type: Sequelize.STRING
         },
         isActive: {
             type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false

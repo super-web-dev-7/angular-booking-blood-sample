@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import db from '../models';
+import Sequelize from "sequelize";
 
 const User = db.user;
 const WorkingGroup = db.workingGroup;
@@ -8,6 +9,8 @@ const Calendar = db.calendar;
 const Agency = db.agency;
 const Patient = db.patient;
 const Appointment = db.appointment;
+const sequelize = db.sequelize;
+// const Op = db.sequelize;
 
 exports.create = (req, res) => {
     const newUser = req.body;
@@ -33,7 +36,7 @@ exports.createPatient = (req, res) => {
         lastName: req.body.lastName,
         phoneNumber: req.body.phoneNumber,
         isActive: true
-    }
+    };
     bcrypt.hash(newUser.password, saltRounds, (err, hash) => {
         newUser.password = hash;
         User.create(newUser).then(data => {
@@ -53,8 +56,7 @@ exports.createPatient = (req, res) => {
                 otherCity: req.body.otherCity,
                 otherPostalCode: req.body.otherPostalCode
             };
-            Patient.create(newPatientData).then(patientData => {
-                console.log(patientData);
+            Patient.create(newPatientData).then(() => {
             })
             res.send(data);
         }).catch(err => {
@@ -98,6 +100,31 @@ exports.getAgAdminInWorkingGroup = async (req, res) => {
         }
     }
     res.status(200).json(agAdmin);
+}
+
+exports.unassignedInCalendar = async (req, res) => {
+    const allNurses = await sequelize.query(`SELECT * FROM users WHERE role="Nurse" AND id NOT IN (SELECT nurse FROM calendars)`, {type: Sequelize.QueryTypes.SELECT})
+    res.status(200).json(allNurses);
+}
+
+exports.unassignedInAgency = async (req, res) => {
+    const allDoctors = await User.findAll({where: req.query});
+    const unassignedDoctors = [];
+    for (const doctor of allDoctors) {
+        let include = false;
+        const allAgency = await Agency.findAll();
+        for (const agency of allAgency) {
+            const doctorIds = JSON.parse(agency.doctors_id);
+            if (doctorIds.includes(doctor.id)) {
+                include = true;
+                break;
+            }
+        }
+        if (!include) {
+            unassignedDoctors.push(doctor);
+        }
+    }
+    res.status(200).json(unassignedDoctors);
 }
 
 exports.delete = async (req, res) => {
@@ -148,13 +175,16 @@ exports.update = async (req, res) => {
         data.password = hash;
         User.update(data, {returning: true, where: {id}}).then((rowsUpdated) => {
             res.json(rowsUpdated);
+        }).catch(err => {
+            res.status(400).send({
+                message: err.errors[0].message || 'Some error occurred.'
+            })
         });
     })
 }
 
 exports.updatePatientById = async (req, res) => {
     const body = req.body;
-    console.log(body)
     const id = req.params.id;
     bcrypt.hash(body.password, saltRounds, function (err, hash) {
         body.password = hash;
@@ -165,8 +195,6 @@ exports.updatePatientById = async (req, res) => {
             password: body.password,
             phoneNumber: body.phoneNumber
         };
-        console.log(id)
-        console.log(data);
         User.update(data, {returning: true, where: {id}}).then((rowsUpdated) => {
             const patientData = {
                 salutation: body.salutation,
@@ -185,6 +213,10 @@ exports.updatePatientById = async (req, res) => {
             };
             Patient.update(patientData, {returning: true, where: {user_id: id}}).then();
             res.json(data);
+        }).catch(err => {
+            res.status(400).send({
+                message: err.errors[0].message || 'Some error occurred.'
+            });
         });
     });
 }

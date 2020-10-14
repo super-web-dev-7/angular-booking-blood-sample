@@ -99,6 +99,17 @@ export class NewComponent implements OnInit {
     return this.patientForm.controls;
   }
 
+  checkPostalCode = (type) => {
+    if (type === 'plz') {
+      this.httpService.checkPostalCode(this.pf.plz.value).subscribe((res: any) => {
+        this.pf.ort.setValue(res?.ort);
+        if (!res) {
+          this.pf.plz.setErrors(Validators.required);
+        }
+      });
+    }
+  }
+
   showAppointmentPopup = () => {
     this.isAppointmentPopup = !this.isAppointmentPopup;
     this.isPatientPopup = false;
@@ -207,7 +218,6 @@ export class NewComponent implements OnInit {
       return;
     }
     if (!this.selectedAgency || !this.selectedPackage || !this.selectedTime) {
-      console.log('select invaild');
       return;
     }
     const data = {
@@ -217,7 +227,6 @@ export class NewComponent implements OnInit {
       packageId: this.selectedPackage,
       time: this.selectedTime
     };
-    console.log(data);
     if (this.data) {
     } else {
       this.httpService.create(URL_JSON.APPOINTMENT, data).subscribe(res => {

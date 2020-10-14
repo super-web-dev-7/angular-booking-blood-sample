@@ -43,7 +43,7 @@
                 <button mat-icon-button>
                   <img src="assets/images/menu.svg" alt="icon">
                 </button>
-                <img class="logo" src="assets/images/logo.png" alt="logo">
+                <img class="logo" src="assets/images/logo.svg" alt="logo">
               </div>
               <img class="avatar"
                    src="/assets/images/avatar.png" alt="user-avatar">
@@ -287,51 +287,51 @@
                   Termin wahrgenommen
                 </div>
               </div>
-              <div *ngIf="isEditText" style="padding-right: 60px;">
+              <form [formGroup]="appointmentForm" *ngIf="isEditText" style="padding-right: 60px;">
                 <div class="row">
                   <div class="col-md-6">
                     <mat-form-field class="w-100">
                       <mat-label>Blutdruck</mat-label>
-                      <input autocomplete="off" matInput>
+                      <input autocomplete="off" matInput formControlName="pressure">
                     </mat-form-field>
                   </div>
                   <div class="col-md-6">
                     <mat-form-field class="w-100">
                       <mat-label>Puls</mat-label>
-                      <input autocomplete="off" matInput>
+                      <input autocomplete="off" matInput formControlName="pulse">
                     </mat-form-field>
                   </div>
                 </div>
                 <div>
                   <mat-form-field class="w-100">
                     <mat-label>Sauerstoffsättigung</mat-label>
-                    <input autocomplete="off" matInput>
+                    <input autocomplete="off" matInput formControlName="oxygen">
                   </mat-form-field>
                 </div>
                 <div class="row">
                   <div class="col-md-6">
                     <mat-form-field class="w-100">
                       <mat-label>Größe in cm</mat-label>
-                      <input autocomplete="off" matInput>
+                      <input autocomplete="off" matInput formControlName="size">
                     </mat-form-field>
                   </div>
                   <div class="col-md-6">
                     <mat-form-field class="w-100">
                       <mat-label>Gewicht in kg</mat-label>
-                      <input autocomplete="off" matInput>
+                      <input autocomplete="off" matInput formControlName="weight">
                     </mat-form-field>
                   </div>
                 </div>
-                <div class="text-template" *ngIf="isEditText">
-                  <ckeditor
-                    [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
-                </div>
+              </form>
+              <div class="text-template" *ngIf="isEditText">
+                <ckeditor
+                  [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
               </div>
             </div>
           </div>
         </div>
         <div class="button-container" *ngIf="!isSubmit">
-          <button mat-raised-button class="primary-button" color="primary" (click)="appointmentTaken()">Termin
+          <button [disabled]="appointmentForm.invalid" mat-raised-button class="primary-button" color="primary" (click)="appointmentTaken()">Termin
             erledigt
           </button>
         </div>
@@ -408,7 +408,7 @@
             <button mat-icon-button (click)="isOpen = true">
               <img src="assets/images/menu.svg" alt="icon">
             </button>
-            <img class="logo" src="assets/images/logo.png" alt="logo">
+            <img class="logo" src="assets/images/logo.svg" alt="logo">
           </div>
           <img (click)="isRightMenuOpen = true; isProfileMenuOpen = true;" class="avatar"
                src="/assets/images/avatar.png" alt="user-avatar">
@@ -434,29 +434,30 @@
           <div *ngFor="let hour of workingHourArray; let index = index;" class="time-label">
             <div class="time-label-item time-label-hour">
               <div>{{getFloor(workingStartHour / 2 + index)}}:{{'00'}}</div>
-              <div class="w-100" *ngFor="let appointment of appointments">
-                <div class="w-100 position-relative"
-                     *ngIf="workingStartHour / 2 + index === getDate(appointment.startTime, 'hour')">
-                  <div class="appointment-container">
-                    <div class="appointment-inner-container"
-                         [ngClass]="{'border-green' : appointment.startTime < currentTime, 'border-pink': appointment.startTime > currentTime}">
-                      <div *ngIf="index === 0" class="appointment-status-green">Termin wahrgenommen</div>
-                      <div *ngIf="index === 3" class="appointment-status-pink">Patient vorbereitet</div>
-                      <div class="patient-name">{{appointment.patientFirstName}} {{appointment.patientLastName}}</div>
-                      <div class="patient-address">{{appointment.addressStreet}} {{appointment.addressOrt}}
-                        , {{appointment.addressPlz}} Berlin
+              <div class="w-100">
+                <div class="w-100" *ngFor="let appointment of appointments">
+                  <div class="w-100 position-relative"
+                       *ngIf="workingStartHour / 2 + index === getDate(appointment.startTime, 'hour')">
+                    <div class="appointment-container">
+                      <div class="appointment-inner-container"
+                           [ngClass]="{'border-green' : appointment.startTime < currentTime, 'border-pink': appointment.startTime > currentTime}">
+                        <div *ngIf="index === 0" class="appointment-status-green">Termin wahrgenommen</div>
+                        <div *ngIf="index === 3" class="appointment-status-pink">Patient vorbereitet</div>
+                        <div class="patient-name">{{appointment.patientFirstName}} {{appointment.patientLastName}}</div>
+                        <div class="patient-address">{{appointment.addressStreet}} {{appointment.addressOrt}}
+                          , {{appointment.addressPlz}} Berlin
+                        </div>
+                        <div class="patient-package">{{appointment.packageName}}</div>
+                        <div class="patient-time">{{getStartTime(appointment.startTime)}}
+                          — {{getEndTime(appointment.startTime, appointment.duration)}}</div>
                       </div>
-                      <div class="patient-package">{{appointment.packageName}}</div>
-                      <div class="patient-time">{{getStartTime(appointment.startTime)}}
-                        — {{getEndTime(appointment.startTime, appointment.duration)}}</div>
                     </div>
+                    <button class="detail-menu" mat-icon-button (click)="selectedAppointment = appointment" [matMenuTriggerFor]="menu">
+                      <mat-icon>more_horiz</mat-icon>
+                    </button>
                   </div>
-                  <button class="detail-menu" mat-icon-button (click)="selectedAppointment = appointment" [matMenuTriggerFor]="menu">
-                    <mat-icon>more_horiz</mat-icon>
-                  </button>
                 </div>
               </div>
-
             </div>
             <div class="time-label-item">
               <div

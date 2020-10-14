@@ -65,7 +65,8 @@
               <app-order-icon columnName="agency" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element">
-              {{element.agency?.name}}
+              {{element.agency[0]?.agency.name}}
+              {{element.agency.length > 1 ? '(+' + (element.agency.length - 1) + ')' : ''}}
             </td>
           </ng-container>
 

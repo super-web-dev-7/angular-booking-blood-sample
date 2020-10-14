@@ -9,6 +9,7 @@ const WorkingGroup = db.workingGroup;
 const Calendar = db.calendar;
 const Template = db.template;
 const Package = db.package;
+const ZipCode = db.zipCodeModel;
 
 exports.getSuperAdminDashboardValues = async (req, res) => {
     const response = {
@@ -31,7 +32,6 @@ exports.sendEmail = async (req, res) => {
         from: process.env.OWNER_EMAIL,
         html: data.content
     }
-    console.log(process.env.SMTP_HOST, process.env.SMTP_USER, process.env.SMTP_PASS)
     const transporter = nodeMailer.createTransport({
         host: process.env.SMTP_HOST,
         port: 587,
@@ -52,5 +52,14 @@ exports.sendEmail = async (req, res) => {
     //     console.log(e)
     // });
     res.status(200).json({});
+}
+
+exports.checkPostalCode = async (req, res) => {
+    const zipcodeModel = await ZipCode.findOne({where: {plz: req.params.code}, raw: true,});
+    res.status(200).json(zipcodeModel)
+}
+
+exports.getPostalCodeByName = async (req, res) => {
+
 }
 
