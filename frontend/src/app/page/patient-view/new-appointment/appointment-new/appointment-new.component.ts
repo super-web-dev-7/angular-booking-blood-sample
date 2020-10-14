@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-appointment-new',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppointmentNewComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private dialogRef: MatDialogRef<AppointmentNewComponent>
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  close = () => {
+    this.dialogRef.close(false);
   }
 
 }

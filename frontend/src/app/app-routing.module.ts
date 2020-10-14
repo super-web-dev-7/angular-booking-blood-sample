@@ -9,6 +9,8 @@ import {RegisterComponent} from './page/register/register.component';
 
 import {AuthGuard} from './guard/auth.guard';
 import {RoleGuard} from './guard/role.guard';
+import {PatientLayoutComponent} from './layout/patient-layout/patient-layout.component';
+import {DoctorLayoutComponent} from "./layout/doctor-layout/doctor-layout.component";
 
 const routes: Routes = [
   {
@@ -116,7 +118,7 @@ const routes: Routes = [
   },
   {
     path: 'doctor',
-    component: MainLayoutComponent,
+    component: DoctorLayoutComponent,
     loadChildren: () => import('./page/doctor-view/doctor-view.module').then(m => m.DoctorViewModule),
     canActivate: [RoleGuard],
     data: {
@@ -125,7 +127,7 @@ const routes: Routes = [
   },
   {
     path: 'patient',
-    component: MainLayoutComponent,
+    component: PatientLayoutComponent,
     loadChildren: () => import('./page/patient-view/patient-view.module').then(m => m.PatientViewModule),
     canActivate: [RoleGuard],
     data: {

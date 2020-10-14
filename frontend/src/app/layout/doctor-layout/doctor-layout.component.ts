@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {AuthService} from '../../service/auth/auth.service';
 import {Router} from '@angular/router';
 
-import {AuthService} from '../../service/auth/auth.service';
-
 @Component({
-  selector: 'app-main-layout',
-  templateUrl: './main-layout.component.html',
-  styleUrls: ['./main-layout.component.scss']
+  selector: 'app-doctor-layout',
+  templateUrl: './doctor-layout.component.html',
+  styleUrls: ['./doctor-layout.component.scss']
 })
-export class MainLayoutComponent implements OnInit {
-
+export class DoctorLayoutComponent implements OnInit {
   isOpen = true;
   isMobile = false;
   currentUser: any;
@@ -47,4 +45,5 @@ export class MainLayoutComponent implements OnInit {
       this.router.navigateByUrl(link);
     }
   }
+
 }

@@ -1,0 +1,21 @@
+<mat-sidenav-container>
+  <mat-sidenav
+    [opened]="isOpen"
+    [mode]="isMobile ? 'over' : 'side'"
+    (closed)="isOpen = false"
+    #sidenav
+  >
+    <app-doctor-sidebar (menuClick)="menuClick($event)"></app-doctor-sidebar>
+  </mat-sidenav>
+  <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Doctor' ? '#F2F7FB' : '#fafafa'}">
+    <div class="background-container" *ngIf="!isMobile"></div>
+    <app-doctor-header (setOpen)="setOpen($event)" [isMobile]="isMobile"></app-doctor-header>
+    <div class="main-content-container">
+      <div class="subheader">
+        <h1>Willkommen zurück, <b>{{currentUser.role}}</b>.</h1>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

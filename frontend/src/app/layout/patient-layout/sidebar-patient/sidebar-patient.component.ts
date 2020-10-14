@@ -1,16 +1,14 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
-
-import {AG_Sidebar, Sidebar} from '../../../utils/sidebar';
 import {AuthService} from '../../../service/auth/auth.service';
+import {PatientSidebar} from '../../../utils/sidebar';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  selector: 'app-sidebar-patient',
+  templateUrl: './sidebar-patient.component.html',
+  styleUrls: ['./sidebar-patient.component.scss']
 })
-export class SidebarComponent implements OnInit {
-
+export class SidebarPatientComponent implements OnInit {
   sidebar;
   selected;
   currentUser;
@@ -23,10 +21,8 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
-    if (this.currentUser.role === 'Superadmin') {
-      this.sidebar = Sidebar;
-    } else if (this.currentUser.role === 'AG-Admin') {
-      this.sidebar = AG_Sidebar;
+    if (this.currentUser.role === 'Patient') {
+      this.sidebar = PatientSidebar;
     }
     this.selected = '/' + this.router.url.split('/')[1];
   }
@@ -35,4 +31,5 @@ export class SidebarComponent implements OnInit {
     this.menuClick.emit(link);
     this.selected = selected;
   }
+
 }

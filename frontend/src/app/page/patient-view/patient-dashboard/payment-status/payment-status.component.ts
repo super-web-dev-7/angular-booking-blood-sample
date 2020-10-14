@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-payment-status',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaymentStatusComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private dialogRef: MatDialogRef<PaymentStatusComponent>
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  close = () => {
+    this.dialogRef.close(false);
   }
 
 }

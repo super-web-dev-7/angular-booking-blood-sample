@@ -1,4 +1,4 @@
-<mat-sidenav-container (backdropClick)="rightSide.close()">
+<mat-sidenav-container>
   <mat-sidenav
     [opened]="isOpen"
     [mode]="isMobile ? 'over' : 'side'"
@@ -7,18 +7,9 @@
   >
     <app-sidebar (menuClick)="menuClick($event)"></app-sidebar>
   </mat-sidenav>
-  <mat-sidenav
-    [opened]="isRightSidebarOpen && currentUser.role === 'Patient'"
-    [mode]="'over'"
-    #rightSide
-    position="end"
-    (closed)="isRightSidebarOpen = false"
-  >
-    <app-patient-sidebar (closeSide)="closeRightSide($event)"></app-patient-sidebar>
-  </mat-sidenav>
   <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Doctor' || currentUser.role === 'Patient' ? '#F2F7FB' : '#fafafa'}">
     <div class="background-container" *ngIf="!isMobile"></div>
-    <app-header (setOpen)="setOpen($event)" [isMobile]="isMobile" (setRightOpen)="setRightOpen($event)"></app-header>
+    <app-header (setOpen)="setOpen($event)" [isMobile]="isMobile"></app-header>
     <div class="main-content-container">
       <div class="subheader">
         <h1 *ngIf="currentUser.role !== 'Patient'">Willkommen zurück, <b>{{currentUser.role}}</b>.</h1>

@@ -1,0 +1,33 @@
+<mat-sidenav-container (backdropClick)="rightSide.close()">
+  <mat-sidenav
+    [opened]="isOpen"
+    [mode]="isMobile ? 'over' : 'side'"
+    (closed)="isOpen = false"
+    #sidenav
+  >
+    <app-sidebar-patient (menuClick)="menuClick($event)"></app-sidebar-patient>
+  </mat-sidenav>
+  <mat-sidenav
+    [opened]="isRightSidebarOpen && currentUser.role === 'Patient'"
+    [mode]="'over'"
+    #rightSide
+    position="end"
+    (closed)="isRightSidebarOpen = false"
+  >
+    <app-patient-sidebar (closeSide)="closeRightSide($event)"></app-patient-sidebar>
+  </mat-sidenav>
+  <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Patient' ? '#F2F7FB' : '#fafafa'}">
+    <div class="background-container" *ngIf="!isMobile"></div>
+    <app-patient-header (setOpen)="setOpen($event)" [isMobile]="isMobile" (setRightOpen)="setRightOpen($event)"></app-patient-header>
+    <div class="main-content-container">
+      <div class="subheader">
+        <h1>Hallo, <b>{{currentUser.role}}</b>.</h1>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+

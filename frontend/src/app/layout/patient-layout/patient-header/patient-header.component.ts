@@ -1,15 +1,13 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AuthService} from '../../../service/auth/auth.service';
 import {Router} from '@angular/router';
 
-import {AuthService} from '../../../service/auth/auth.service';
-
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: 'app-patient-header',
+  templateUrl: './patient-header.component.html',
+  styleUrls: ['./patient-header.component.scss']
 })
-export class HeaderComponent implements OnInit {
-
+export class PatientHeaderComponent implements OnInit {
   @Input() isMobile;
   @Output() setOpen = new EventEmitter();
   @Output() setRightOpen = new EventEmitter();
@@ -29,8 +27,7 @@ export class HeaderComponent implements OnInit {
     this.setOpen.emit(true);
   }
 
-  logout = () => {
-    this.authService.logout();
-    this.router.navigateByUrl('/login');
+  openRightSidebar = () => {
+    this.setRightOpen.emit(true);
   }
 }

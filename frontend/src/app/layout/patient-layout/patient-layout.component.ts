@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {AuthService} from '../../service/auth/auth.service';
 import {Router} from '@angular/router';
 
-import {AuthService} from '../../service/auth/auth.service';
-
 @Component({
-  selector: 'app-main-layout',
-  templateUrl: './main-layout.component.html',
-  styleUrls: ['./main-layout.component.scss']
+  selector: 'app-patient-layout',
+  templateUrl: './patient-layout.component.html',
+  styleUrls: ['./patient-layout.component.scss']
 })
-export class MainLayoutComponent implements OnInit {
-
+export class PatientLayoutComponent implements OnInit {
   isOpen = true;
+  isRightSidebarOpen = false;
   isMobile = false;
   currentUser: any;
 
@@ -35,6 +34,14 @@ export class MainLayoutComponent implements OnInit {
 
   setOpen = ($event: any) => {
     this.isOpen = true;
+  }
+
+  setRightOpen = (event) => {
+    this.isRightSidebarOpen = event;
+  }
+
+  closeRightSide = (event) => {
+    this.isRightSidebarOpen = event;
   }
 
   menuClick = (link) => {

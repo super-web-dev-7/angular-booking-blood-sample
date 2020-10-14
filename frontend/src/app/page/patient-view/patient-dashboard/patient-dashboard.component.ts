@@ -64,7 +64,13 @@ export class PatientDashboardComponent implements OnInit {
     dialogRef = this.dialog.open(EditAnamnesisComponent, {
       width: '1060px',
     });
-    dialogRef.afterClosed().subscribe(res => {});
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        dialogRef = this.dialog.open(EditAnamnesisComponent, {
+          width: '662px'
+        });
+      }
+    });
   }
 
   changePackage = () => {

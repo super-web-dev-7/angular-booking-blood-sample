@@ -1,0 +1,21 @@
+<div class="sidebar-container">
+  <div class="logo-container">
+    <img src="/assets/images/logo.svg" alt="logo">
+  </div>
+  <div>
+    <ul class="ul-0">
+      <li *ngFor="let item of sidebar">
+        <a *ngIf="item.children.length === 0 && currentUser.role === 'Patient'" class="ul-1-a" (click)="changeRoute(item.link, item.link)" routerLinkActive="active">
+          <div [ngClass]="{'icon-container': selected === item.link}" *ngIf="item.name === 'Dashboard'">
+            <img class="icon-item" [src]="'/assets/images/' + item.icon" alt="menu-icon">
+          </div>
+          <div class="icon-container-0" *ngIf="item.name !== 'Dashboard'">
+            <img [src]="'/assets/images/' + item.icon" alt="menu-icon">
+          </div>
+          <span>{{item.name}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+

@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-edit-anamnesis',
@@ -15,7 +15,8 @@ export class EditAnamnesisComponent implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<EditAnamnesisComponent>
   ) { }
 
   ngOnInit(): void {
@@ -28,6 +29,10 @@ export class EditAnamnesisComponent implements OnInit {
 
   submit = () => {
     this.saved = true;
+  }
+
+  close = () => {
+    this.dialogRef.close(false);
   }
 
 }

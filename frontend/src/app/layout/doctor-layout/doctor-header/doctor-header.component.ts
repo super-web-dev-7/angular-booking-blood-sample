@@ -1,14 +1,14 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {AuthService} from '../../../service/auth/auth.service';
 import {Router} from '@angular/router';
 
-import {AuthService} from '../../../service/auth/auth.service';
-
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: 'app-doctor-header',
+  templateUrl: './doctor-header.component.html',
+  styleUrls: ['./doctor-header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class DoctorHeaderComponent implements OnInit {
+
 
   @Input() isMobile;
   @Output() setOpen = new EventEmitter();

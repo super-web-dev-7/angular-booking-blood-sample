@@ -1,15 +1,14 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
-
-import {AG_Sidebar, Sidebar} from '../../../utils/sidebar';
 import {AuthService} from '../../../service/auth/auth.service';
+import {AG_Sidebar, DoctorSidebar, Sidebar} from '../../../utils/sidebar';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  selector: 'app-doctor-sidebar',
+  templateUrl: './doctor-sidebar.component.html',
+  styleUrls: ['./doctor-sidebar.component.scss']
 })
-export class SidebarComponent implements OnInit {
+export class DoctorSidebarComponent implements OnInit {
 
   sidebar;
   selected;
@@ -27,6 +26,8 @@ export class SidebarComponent implements OnInit {
       this.sidebar = Sidebar;
     } else if (this.currentUser.role === 'AG-Admin') {
       this.sidebar = AG_Sidebar;
+    } else if (this.currentUser.role === 'Doctor') {
+      this.sidebar = DoctorSidebar;
     }
     this.selected = '/' + this.router.url.split('/')[1];
   }
@@ -35,4 +36,5 @@ export class SidebarComponent implements OnInit {
     this.menuClick.emit(link);
     this.selected = selected;
   }
+
 }

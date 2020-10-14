@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-change-package',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChangePackageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private dialogRef: MatDialogRef<ChangePackageComponent>
+  ) { }
 
   ngOnInit(): void {
   }
 
+  close = () => {
+    this.dialogRef.close(false);
+  }
 }

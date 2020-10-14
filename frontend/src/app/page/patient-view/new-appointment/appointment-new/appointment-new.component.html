@@ -136,8 +136,17 @@
     <div class="d-flex-between mt-37">
       <div></div>
       <div class="d-flex">
-        <button mat-stroked-button class="custom-button">Abbrechen</button>
-        <button mat-stroked-button class="custom-package-button ml-10">
+        <button
+          mat-stroked-button
+          (click)="close()"
+          class="custom-button"
+        >
+          Abbrechen
+        </button>
+        <button
+          mat-stroked-button
+          class="custom-package-button ml-10"
+        >
           Termin buchen
         </button>
       </div>

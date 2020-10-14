@@ -26,4 +26,8 @@ export class NewAppointmentComponent implements OnInit {
     this.dialogRef.close(true);
   }
 
+  close = () => {
+    this.dialogRef.close(false);
+  }
+
 }

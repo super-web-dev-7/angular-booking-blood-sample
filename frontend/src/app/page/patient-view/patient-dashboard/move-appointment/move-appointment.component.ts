@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-move-appointment',
@@ -13,6 +13,7 @@ export class MoveAppointmentComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<MoveAppointmentComponent>
   ) { }
 
   ngOnInit(): void {
@@ -26,6 +27,10 @@ export class MoveAppointmentComponent implements OnInit {
 
   get f(): any {
     return this.moveForm.controls;
+  }
+
+  close = () => {
+    this.dialogRef.close(false);
   }
 
 }

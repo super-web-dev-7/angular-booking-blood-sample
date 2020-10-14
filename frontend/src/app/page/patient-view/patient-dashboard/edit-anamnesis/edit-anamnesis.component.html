@@ -166,7 +166,11 @@
         </div>
       </div>
       <div class="d-flex mt-85 ml-166">
-        <button mat-stroked-button class="custom-button">
+        <button
+          mat-stroked-button
+          class="custom-button"
+          (click)="close()"
+        >
           Abbrechen
         </button>
         <button
@@ -192,6 +196,7 @@
       <button
         mat-stroked-button
         class="custom-button"
+        (click)="close()"
         >
         Schließen
       </button>
