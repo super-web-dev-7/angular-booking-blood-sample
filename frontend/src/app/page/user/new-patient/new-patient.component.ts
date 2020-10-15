@@ -86,9 +86,15 @@ export class NewPatientComponent implements OnInit {
   }
 
   getAgeType = (date) => {
-    const selectedDate = new Date(date);
     const today = new Date();
-    return moment(selectedDate).format('DD/MM/YYYY') + `  (${today.getFullYear() - selectedDate.getFullYear()} Jahre)`;
+    const birthDate = new Date(date);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))
+    {
+      age--;
+    }
+    return moment(birthDate).format('DD/MM/YYYY') + `  (${age > 0 ? age : 0} Jahre)`;
   }
 
   setDateAndAge = event => {
