@@ -5,6 +5,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-new',
@@ -43,13 +44,6 @@ export class NewComponent implements OnInit {
     }
   ];
 
-  values = [
-    {value: 2, viewValue: 'Appointment Delay'},
-    {value: 3, viewValue: 'Appointment Shift'},
-    {value: 4, viewValue: 'Appointment Taken'},
-    {value: 5, viewValue: 'Patient Not There'}
-  ];
-
   actions = [];
   allActions = [];
 
@@ -62,6 +56,7 @@ export class NewComponent implements OnInit {
     public formBuilder: FormBuilder,
     public httpService: HttpService,
     public dialogRef: MatDialogRef<any>,
+    public snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
@@ -122,6 +117,8 @@ export class NewComponent implements OnInit {
     } else {
       this.httpService.create(URL_JSON.TEMPLATE, data).subscribe(() => {
         this.dialogRef.close();
+      }, error => {
+        this.snackBar.open(error.error.message, '', {duration: 2000});
       });
     }
   }

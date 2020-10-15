@@ -4,7 +4,9 @@
   <form [formGroup]="appointmentForm">
     <mat-form-field class="w-100 mt-4">
       <mat-label>PLZ</mat-label>
-      <input formControlName="name" autocomplete="off" matInput>
+      <input formControlName="name" autocomplete="off" type="number" matInput (keyup)="checkPostalCode('appointment')">
+      <mat-icon *ngIf="f.name.touched && !f.name.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+      <mat-icon *ngIf="f.name.touched && f.name.errors" style="color: red" matSuffix>close</mat-icon>
     </mat-form-field>
   </form>
 
@@ -205,7 +207,7 @@
           </mat-form-field>
           <mat-form-field class="w-100 mr-3 ml-3">
             <mat-label>PLZ</mat-label>
-            <input autocomplete="off" type="number" matInput formControlName="plz" (keyup)="checkPostalCode('plz')">
+            <input autocomplete="off" type="number" matInput formControlName="plz" (keyup)="checkPostalCode('patient')">
             <mat-icon *ngIf="pf.plz.touched && !pf.plz.errors" style="color: greenyellow" matSuffix>done</mat-icon>
             <mat-icon *ngIf="pf.plz.touched && pf.plz.errors" style="color: red" matSuffix>close</mat-icon>
           </mat-form-field>

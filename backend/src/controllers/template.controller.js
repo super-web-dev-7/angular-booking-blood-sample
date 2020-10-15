@@ -4,8 +4,13 @@ const Template = db.template;
 const TemplateAction = db.templateAction;
 const TemplateKeyword = db.templatekeyword;
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
     const newTemplate = req.body;
+    const templates = await Template.findAll({where: {assign: newTemplate.assign}});
+    if (templates.length > 0) {
+        res.status(400).json({message: 'Template was duplicated.'});
+        return;
+    }
     Template.create(newTemplate).then(data => {
         res.send(data);
     }).catch(err => {

@@ -104,13 +104,20 @@ export class NewComponent implements OnInit {
   }
 
   checkPostalCode = (type) => {
-    if (type === 'plz') {
+    if (type === 'patient') {
       this.httpService.checkPostalCode(this.pf.plz.value).subscribe((res: any) => {
         this.pf.ort.setValue(res?.ort);
         if (!res) {
           this.pf.plz.setErrors(Validators.required);
         }
       });
+    }
+    if (type === 'appointment') {
+      this.httpService.checkPostalCode(this.f.name.value).subscribe((res: any) => {
+        if (!res || res?.ort !== 'Berlin') {
+          this.f.name.setErrors(Validators.required);
+        }
+      })
     }
   }
 
@@ -242,7 +249,7 @@ export class NewComponent implements OnInit {
   }
 
   addPatient = () => {
-    if (this.pf.invalid) {
+    if (this.patientForm.invalid) {
       return;
     }
     const data = {
