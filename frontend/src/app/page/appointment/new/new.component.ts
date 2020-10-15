@@ -109,6 +109,8 @@ export class NewComponent implements OnInit {
         this.pf.ort.setValue(res?.ort);
         if (!res) {
           this.pf.plz.setErrors(Validators.required);
+        } else {
+          this.pf.plz.setErrors(null);
         }
       });
     }
@@ -116,8 +118,10 @@ export class NewComponent implements OnInit {
       this.httpService.checkPostalCode(this.f.name.value).subscribe((res: any) => {
         if (!res || res?.ort !== 'Berlin') {
           this.f.name.setErrors(Validators.required);
+        } else {
+          this.f.name.setErrors(null);
         }
-      })
+      });
     }
   }
 

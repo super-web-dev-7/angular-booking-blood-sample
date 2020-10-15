@@ -101,6 +101,8 @@ export class NewPatientComponent implements OnInit {
         this.f.ort.setValue(res?.ort);
         if (!res) {
           this.f.plz.setErrors(Validators.required);
+        } else {
+          this.f.plz.setErrors(null);
         }
       });
     }
@@ -109,6 +111,8 @@ export class NewPatientComponent implements OnInit {
         this.f.otherCity.setValue(res?.ort);
         if (!res) {
           this.f.otherPostalCode.setErrors(Validators.required);
+        } else {
+          this.f.otherPostalCode.setErrors(null);
         }
       });
     }

@@ -50,7 +50,7 @@ export class OverviewComponent implements OnInit {
     if (url[2] === 'new') {
       this.openDialog();
     }
-    this.httpService.get(URL_JSON.AGENCY + '/get').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.AGENCY + '/getAll').subscribe((res: any) => {
       this.dataSource.data = res;
       this.allAgency = res;
     });

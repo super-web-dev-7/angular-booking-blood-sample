@@ -2,10 +2,10 @@ import {Component, Inject, OnInit} from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
-import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-new',
