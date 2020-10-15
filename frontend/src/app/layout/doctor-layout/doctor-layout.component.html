@@ -1,15 +1,28 @@
 <mat-sidenav-container>
   <mat-sidenav
     [opened]="isOpen"
-    [mode]="isMobile ? 'over' : 'side'"
+    [mode]="isMobile || isTablet ? 'over' : 'side'"
     (closed)="isOpen = false"
     #sidenav
   >
-    <app-doctor-sidebar (menuClick)="menuClick($event)"></app-doctor-sidebar>
+    <!--<div *ngIf="isMobile || isTablet else desktopView;">mobile test</div>-->
+    <app-left-sidebar *ngIf="isMobile || isTablet else desktopView;"></app-left-sidebar>
+    <ng-template  #desktopView>
+      <app-doctor-sidebar (menuClick)="menuClick($event)"></app-doctor-sidebar>
+    </ng-template>
+  </mat-sidenav>
+  <mat-sidenav
+    [opened]="isRightSidebarOpen && currentUser.role === 'Doctor'"
+    [mode]="'over'"
+    #rightSide
+    position="end"
+    (closed)="isRightSidebarOpen = false"
+  >
+    <app-right-sidebar (closeSide)="closeRightSide($event)"></app-right-sidebar>
   </mat-sidenav>
   <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Doctor' ? '#F2F7FB' : '#fafafa'}">
-    <div class="background-container" *ngIf="!isMobile"></div>
-    <app-doctor-header (setOpen)="setOpen($event)" [isMobile]="isMobile"></app-doctor-header>
+    <div class="background-container" *ngIf="!isMobile && !isTablet"></div>
+    <app-doctor-header (setOpen)="setOpen($event)" [isMobile]="isMobile" (setRightSideOpen)="setRightSideOpen($event)"></app-doctor-header>
     <div class="main-content-container">
       <div class="subheader">
         <h1>Willkommen zurück, <b>{{currentUser.role}}</b>.</h1>

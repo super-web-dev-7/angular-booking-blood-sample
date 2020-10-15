@@ -8,7 +8,15 @@
 }
 
 .mobile-height {
-  height: 50px;
+  height: 100px;
+}
+
+.menu-icon {
+  width: 30px;
+  height: 24px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-left: 25px;
 }
 
 .web-height {
@@ -26,8 +34,23 @@
 
 .logo-container {
   color: var(--primary-color);
-  img {
+  margin-top: 48px;
+  img.logo {
     width: 111px;
     height: 32px;
+  }
+}
+
+.tablet-header-button-384 {
+  height: 35px;
+  color: #ffffff;
+  background-color: #384C61;
+  border-radius: 23px;
+  font-size: 14px;
+  margin-right: 5px;
+}
+@media only screen and (max-width: 1023px) {
+  .mobile-space {
+    margin-top: 55px;
   }
 }

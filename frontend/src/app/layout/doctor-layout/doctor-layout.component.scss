@@ -39,3 +39,19 @@ mat-sidenav-container {
     padding: 3px;
   }
 }
+@media only screen and (max-width: 1023px) {
+  .subheader {
+    margin-top: 30px;
+    color: #384C61!important;
+    h1 {
+      font-size: 36px;
+    }
+    h3 {
+      font-size: 36px;
+    }
+  }
+  .main-content-container {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}

@@ -5,6 +5,7 @@ import { DoctorSidebarComponent } from './doctor-sidebar/doctor-sidebar.componen
 import { DoctorHeaderComponent } from './doctor-header/doctor-header.component';
 import {MaterialModule} from '../../material/material.module';
 import {RouterModule} from '@angular/router';
+import {DoctorViewModule} from '../../page/doctor-view/doctor-view.module';
 
 
 
@@ -14,10 +15,11 @@ import {RouterModule} from '@angular/router';
     DoctorSidebarComponent,
     DoctorHeaderComponent
   ],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    RouterModule
-  ]
+    imports: [
+        CommonModule,
+        MaterialModule,
+        RouterModule,
+        DoctorViewModule
+    ]
 })
 export class DoctorLayoutModule { }

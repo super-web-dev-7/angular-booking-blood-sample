@@ -22,7 +22,8 @@ import { SuccessDialogComponent } from './doctor-dashboard/answer-inquiry/succes
 import { ArchivePatientComponent } from './archive/archive-patient/archive-patient.component';
 import { ArchiveAnamnesComponent } from './archive/archive-anamnes/archive-anamnes.component';
 import { ArchiveEventComponent } from './archive/archive-event/archive-event.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { RightSidebarComponent } from './right-sidebar/right-sidebar.component';
+import { LeftSidebarComponent } from './left-sidebar/left-sidebar.component';
 
 
 
@@ -44,6 +45,12 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ArchivePatientComponent,
     ArchiveAnamnesComponent,
     ArchiveEventComponent,
+    RightSidebarComponent,
+    LeftSidebarComponent,
+  ],
+  exports: [
+    RightSidebarComponent,
+    LeftSidebarComponent
   ],
   imports: [
     CommonModule,

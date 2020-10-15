@@ -26,7 +26,7 @@
       <mat-icon>search</mat-icon>
     </div>
   </div>
-  <div class="table-container mt-5">
+  <div class="table-container mt-54">
     <mat-card class="table-card mat-card-radius" style="position: relative">
       <div>
         <table mat-table [dataSource]="dataSourceP" matSort (matSortChange)="onSort($event)">
@@ -84,15 +84,14 @@
         </table>
       </div>
       <button
-        class="custom-doctor-button"
+        class="custom-doctor-button pink-b-0"
         mat-stroked-button
-        style="background-color: #F389CC;right: -180px;"
       >
-        Patientenrückfragen
+        <span>Patientenrückfragen</span>
       </button>
     </mat-card>
   </div>
-  <div class="table-container mt-5">
+  <div class="table-container mt-30">
     <mat-card class="table-card mat-card-radius" style="position: relative">
       <div>
         <table mat-table [dataSource]="dataSourceA" matSort (matSortChange)="onSort($event)">
@@ -150,15 +149,14 @@
         </table>
       </div>
       <button
-        class="custom-doctor-button"
+        class="custom-doctor-button blue-b-0"
         mat-stroked-button
-        style="background-color: #50E3C2;right: -180px;"
       >
-        Anamnesefreigaben
+        <span>Anamnesefreigaben</span>
       </button>
     </mat-card>
   </div>
-  <div class="table-container mt-5 mb-201">
+  <div class="table-container mt-30 mb-201">
     <mat-card class="table-card mat-card-radius" style="position: relative">
       <div>
         <table mat-table [dataSource]="dataSourceE" matSort (matSortChange)="onSort($event)">
@@ -240,11 +238,10 @@
         </table>
       </div>
       <button
-        class="custom-doctor-button"
+        class="custom-doctor-button green-b-0"
         mat-stroked-button
-        style="background-color: #89DF8C;right: -97px;"
       >
-        Termine
+        <span>Termine</span>
       </button>
     </mat-card>
   </div>
