@@ -31,9 +31,16 @@ exports.delete = async (req, res) => {
     })
 }
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
     const data = req.body;
     const id = req.params.id;
+    const templates = await Template.findAll({where: {assign: data.assign}, raw: true, nest: true});
+    for (const template of templates) {
+        if (template.id.toString() !== id) {
+            res.status(400).json({message: 'Template was duplicated.'});
+            return;
+        }
+    }
     Template.update(data, {returning: true, where: {id}}).then((rowsUpdated) => {
         res.json(rowsUpdated);
     });

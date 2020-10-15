@@ -218,8 +218,11 @@
         </div>
         <div class="d-flex">
           <mat-form-field class="w-100 mr-3 ml-3">
-            <mat-label>Alter</mat-label>
-            <input type="number" autocomplete="off" matInput formControlName="age">
+            <mat-label>Geburtsdatum</mat-label>
+            <input matInput autocomplete="off" disabled formControlName="ageView" />
+            <input style="display: none;" matInput [matDatepicker]="picker" formControlName="age" autocomplete="off" (dateChange)="setDateAndAge($event)" disabled>
+            <mat-icon matSuffix (click)="picker.open()">event</mat-icon>
+            <mat-datepicker #picker disabled="false"></mat-datepicker>
           </mat-form-field>
           <mat-form-field class="width-50 mr-3 ml-3">
             <mat-label>Geschlecht</mat-label>

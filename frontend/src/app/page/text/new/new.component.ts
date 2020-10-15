@@ -68,9 +68,13 @@ export class NewComponent implements OnInit {
     });
     this.httpService.get(URL_JSON.TEMPLATE + '/getActions').subscribe((res: any) => {
       this.allActions = res;
+      this.selectedShipment = this.data ? this.data.type === 'SMS' ? 1 : 2 : null;
+      this.selectedReceiver = this.data?.receiver;
+      if (this.data) {
+        this.selectActions();
+        this.f.assign.setValue(this.data.assign);
+      }
     });
-    this.selectedShipment = this.data ? this.data.type === 'SMS' ? 1 : 2 : null;
-    this.selectedReceiver = this.data?.receiver;
   }
 
   get f(): any {
@@ -113,6 +117,8 @@ export class NewComponent implements OnInit {
       this.httpService.update(URL_JSON.TEMPLATE + '/update/' + this.data.id, data).subscribe(() => {
         const response = Object.assign(data, {id: this.data.id});
         this.dialogRef.close(response);
+      }, error => {
+        this.snackBar.open(error.error.message, '', {duration: 2000});
       });
     } else {
       this.httpService.create(URL_JSON.TEMPLATE, data).subscribe(() => {

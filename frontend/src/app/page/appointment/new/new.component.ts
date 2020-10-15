@@ -62,6 +62,7 @@ export class NewComponent implements OnInit {
       ort: [null, Validators.required],
       salutation: [null, Validators.required],
       age: [null, Validators.required],
+      ageView: [null, Validators.required],
       gender: [null, Validators.required],
       differentPlace: [false, Validators.required],
       customerStore: [false, Validators.required],
@@ -101,6 +102,22 @@ export class NewComponent implements OnInit {
 
   get pf(): any {
     return this.patientForm.controls;
+  }
+
+  getAgeType = (date) => {
+    const today = new Date();
+    const birthDate = new Date(date);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))
+    {
+      age--;
+    }
+    return moment(birthDate).format('DD/MM/YYYY') + `  (${age > 0 ? age : 0} Jahre)`;
+  }
+
+  setDateAndAge = event => {
+    this.pf.ageView.setValue(this.getAgeType(event.value));
   }
 
   checkPostalCode = (type) => {
