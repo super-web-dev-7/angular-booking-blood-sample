@@ -3,9 +3,12 @@
   <div class="table-toolbar">
     <div>
       <button class="custom-button mr-3" [ngClass]="{'selected': selectedButton === 0}" (click)="selectButton(0)" mat-stroked-button>Alle</button>
-      <button class="custom-button mr-3" [ngClass]="{'selected': selectedButton === 1}" (click)="selectButton(1)" mat-stroked-button>Agenture 1</button>
-      <button class="custom-button mr-3" [ngClass]="{'selected': selectedButton === 2}" (click)="selectButton(2)" mat-stroked-button>Agenture 2</button>
-      <button class="custom-button" [ngClass]="{'selected': selectedButton === 3}" (click)="selectButton(3)" mat-stroked-button>Agenture 3</button>
+      <button class="custom-button mr-3"
+              *ngFor="let agency of agencies"
+              [ngClass]="{'selected': selectedButton === agency.id}"
+              (click)="selectButton(agency.id)"
+              mat-stroked-button
+      >{{agency.name}}</button>
     </div>
     <div class="d-flex">
       <div class="search-field-container">

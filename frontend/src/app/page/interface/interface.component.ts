@@ -15,7 +15,7 @@ export class InterfaceComponent implements OnInit {
     },
     {
       id: 2,
-      name: 'PayPal'
+      name: 'Heidelpay'
     },
     {
       id: 3,

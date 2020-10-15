@@ -37,6 +37,7 @@ export class OpenDatesComponent implements OnInit {
   };
 
   title = 'Offene';
+  agencies = [];
 
   constructor(
     public router: Router,
@@ -61,8 +62,13 @@ export class OpenDatesComponent implements OnInit {
       this.title = 'Abgeschlossene';
     }
     this.httpService.get(URL_JSON.APPOINTMENT + '/get').subscribe((res: any) => {
-      this.dataSource.data = res;
       this.allAppointment = res;
+      for (const appointment of this.allAppointment) {
+        if (!this.agencies.includes(item => item.id === appointment.agency.id)) {
+          this.agencies.push(appointment.agency);
+        }
+      }
+      this.dataSource.data = res;
     });
   }
 
@@ -83,6 +89,12 @@ export class OpenDatesComponent implements OnInit {
 
   selectButton = (id) => {
     this.selectedButton = id;
+    console.log(id);
+    if (id === 0) {
+      this.dataSource.data = this.allAppointment;
+      return;
+    }
+    this.dataSource.data = this.allAppointment.filter(item => item.agency.id === id);
   }
 
   delete = (id) => {

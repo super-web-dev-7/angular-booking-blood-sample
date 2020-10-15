@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import * as moment from 'moment';
 
 import {HttpService} from '../../../service/http/http.service';
 import {AuthService} from '../../../service/auth/auth.service';
@@ -50,6 +51,7 @@ export class NewPatientComponent implements OnInit {
       salutation: [this.data?.salutation, Validators.required],
       street: [this.data?.street, Validators.required],
       age: [this.data?.age, Validators.required],
+      ageView: [this.data ? this.getAgeType(this.data.age) : null, Validators.required],
       gender: [this.data?.gender, Validators.required],
       plz: [this.data?.plz, Validators.required],
       ort: [this.data?.ort, Validators.required],
@@ -81,6 +83,16 @@ export class NewPatientComponent implements OnInit {
     const password = Math.random().toString(36).slice(-8);
     this.f.password.setValue(password);
     this.f.confirmPassword.setValue(password);
+  }
+
+  getAgeType = (date) => {
+    const selectedDate = new Date(date);
+    const today = new Date();
+    return moment(selectedDate).format('DD/MM/YYYY') + `  (${today.getFullYear() - selectedDate.getFullYear()} Jahre)`;
+  }
+
+  setDateAndAge = event => {
+    this.f.ageView.setValue(this.getAgeType(event.value));
   }
 
   checkPostalCode = (type) => {
@@ -150,7 +162,7 @@ export class NewPatientComponent implements OnInit {
       otherPostalCode: this.f.otherPostalCode.value
     };
     if (this.data) {
-      this.httpService.update(URL_JSON.USER + '/update/patient/' + this.data.user_id, data).subscribe((res: any) => {
+      this.httpService.update(URL_JSON.USER + '/updatePatientById/' + this.data.user_id, data).subscribe((res: any) => {
         res.id = this.data.user_id;
         this.dialogRef.close(res);
       }, () => {
