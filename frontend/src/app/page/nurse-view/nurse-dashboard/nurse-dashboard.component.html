@@ -417,17 +417,19 @@
       </div>
       <div class="main-body">
         <div class="calendar-container">
-          <div class="calendar-body">
-            <div class="date-item" [ngClass]="{'active': index === 2}"
+          <div class="calendar-body disable-user-select">
+            <button mat-icon-button (click)="prevDay()"><mat-icon>skip_previous</mat-icon></button>
+            <div class="date-item" (click)="selectDay(index)" [ngClass]="{'active': index === 2}"
                  *ngFor="let i of Arr(5).fill(1); let index = index;">
-              <div class="date-item-date">{{getDate(currentTime + (index - 2) * 86400 * 1000, 'date')}}</div>
+              <div class="date-item-date">{{getDate(currentDay + (index - 2) * 86400 * 1000, 'date')}}</div>
               <div
-                class="date-item-month">{{monthNames[getDate(currentTime + (index - 2) * 86400 * 1000, 'month')]}}</div>
+                class="date-item-month">{{monthNames[getDate(currentDay + (index - 2) * 86400 * 1000, 'month')]}}</div>
             </div>
+            <button mat-icon-button (click)="nextDay()"><mat-icon>skip_next</mat-icon></button>
           </div>
-          <div class="date-range-container" *ngIf="!isMobile">
-            <div class="date-range-5 active">5 Tage</div>
-            <div class="date-range-month">Monat</div>
+          <div class="date-range-container disable-user-select" *ngIf="!isMobile">
+            <div class="date-range-5 active" (click)="setCalendarRange(0)">5 Tage</div>
+            <div class="date-range-month" (click)="setCalendarRange(1)">Monat</div>
           </div>
         </div>
         <div class="schedule-container">

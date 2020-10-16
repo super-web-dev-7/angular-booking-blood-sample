@@ -41,7 +41,7 @@ exports.get = async (req, res) => {
         if (id && !workingGroup.admin.includes(id)) {
             continue;
         }
-        const workingGroupAgency = await WorkingGroupAgency.findAll({where: {groupId: workingGroup.id}, include: [Agency], raw: true, nest: true})
+        const workingGroupAgency = await WorkingGroupAgency.findAll({where: {groupId: workingGroup.id}, include: [Agency], raw: true, nest: true});
 
         for (const item of workingGroup.admin) {
             const user = await User.findByPk(item);

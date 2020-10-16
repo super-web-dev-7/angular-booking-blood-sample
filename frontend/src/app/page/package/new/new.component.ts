@@ -13,7 +13,7 @@ import {URL_JSON} from '../../../utils/url_json';
 })
 export class NewComponent implements OnInit {
 
-  selectedGroup = null;
+  selectedGroup = [];
   selectedStatus = null;
   isActive = false;
   content = null;
@@ -50,7 +50,9 @@ export class NewComponent implements OnInit {
       specialPrice: [this.data?.special_price]
     });
     if (this.data) {
-      this.selectedGroup = this.data.group_id;
+      for (const group of this.data.working_groups) {
+        this.selectedGroup.push(group.groupId);
+      }
       this.selectedStatus = this.data.status;
       if (this.data.special_price) {
         this.isActive = true;
@@ -64,7 +66,11 @@ export class NewComponent implements OnInit {
   }
 
   selectGroup = (id) => {
-    this.selectedGroup = id;
+    if (this.selectedGroup.includes(id)) {
+      this.selectedGroup.splice(this.selectedGroup.indexOf(id), 1);
+    } else {
+      this.selectedGroup.push(id);
+    }
   }
 
   selectStatus = (id) => {

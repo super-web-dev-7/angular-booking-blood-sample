@@ -77,7 +77,7 @@ export class NewComponent implements OnInit {
     this.httpService.get(URL_JSON.AGENCY + '/get').subscribe((res: any) => {
       this.agencies = res;
     });
-    this.httpService.get(URL_JSON.PACKAGE + '/get').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.PACKAGE + '/getWithQuery?status=Public&status=Intern').subscribe((res: any) => {
       this.packages = res;
     });
     this.httpService.get(URL_JSON.USER + '/get?role=Patient').subscribe((res: any) => {

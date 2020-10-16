@@ -172,6 +172,7 @@
           flex-direction: column;
           align-items: center;
           color: #CAD2E1;
+          cursor: pointer;
 
           .date-item-date {
             font-size: 20px;
@@ -345,6 +346,8 @@
   .main-content-container {
     .main-body {
       .calendar-container {
+        padding-left: 20px;
+        padding-right: 20px;
         .calendar-body {
           width: 100%;
         }

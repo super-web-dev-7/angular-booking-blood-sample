@@ -42,6 +42,7 @@ export class NurseDashboardComponent implements OnInit {
   allAppointments;
   appointments = [];
   currentTime;
+  currentDay;
   now;
   Arr = Array;
   monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -68,6 +69,7 @@ export class NurseDashboardComponent implements OnInit {
     this.initForm();
     this.now = new Date();
     this.currentTime = this.now.getTime();
+    this.currentDay = this.now.getTime();
     setInterval(() => {
       this.now = new Date();
       this.currentTime = this.now.getTime();
@@ -76,12 +78,7 @@ export class NurseDashboardComponent implements OnInit {
       this.allAppointments = res;
       this.workingStartHour = res[0]?.workingTimeFrom;
       this.workingEndHour = res[0]?.workingTimeUntil;
-      const today = new Date(this.now.getFullYear(), this.now.getMonth(), this.now.getDate(), 0, 0);
-      for (const appointment of this.allAppointments) {
-        if (appointment.startTime > today.getTime() && appointment.startTime < today.getTime() + 86400 * 1000) {
-          this.appointments.push(appointment);
-        }
-      }
+      this.getCurrentDayAppointment();
       this.workingHourArray = new Array(Math.ceil((this.workingEndHour - this.workingStartHour) / 2));
     });
     this.httpService.get(URL_JSON.TEMPLATE + '/getWithQuery?receiver=1').subscribe((res: any) => {
@@ -92,6 +89,17 @@ export class NurseDashboardComponent implements OnInit {
     this.httpService.get(URL_JSON.TEMPLATE + '/getAllKeywords').subscribe((res: any) => {
       this.allKeywords = res;
     });
+  }
+
+  getCurrentDayAppointment = () => {
+    const currentDay = new Date(this.currentDay);
+    const currentDayStart = new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate(), 0, 0);
+    this.appointments = [];
+    for (const appointment of this.allAppointments) {
+      if (appointment.startTime > currentDayStart.getTime() && appointment.startTime < currentDayStart.getTime() + 86400 * 1000) {
+        this.appointments.push(appointment);
+      }
+    }
   }
 
   @HostListener('window:resize', [])
@@ -146,6 +154,29 @@ export class NurseDashboardComponent implements OnInit {
   getFloor = (value) => {
     const floor = Math.floor(value);
     return floor < 10 ? '0' + floor : floor.toString();
+  }
+
+  prevDay = () => {
+    this.currentDay -= 86400 * 1000;
+    this.getCurrentDayAppointment();
+  }
+
+  nextDay = () => {
+    this.currentDay += 86400 * 1000;
+    this.getCurrentDayAppointment();
+  }
+
+  selectDay = (index) => {
+    this.currentDay += (index - 2) * 86400 * 1000;
+    this.getCurrentDayAppointment();
+  }
+
+  setCalendarRange = index => {
+    if (index === 0) {
+      console.log('5day');
+    } else {
+      console.log('month');
+    }
   }
 
   openRightMenu = (index) => {
