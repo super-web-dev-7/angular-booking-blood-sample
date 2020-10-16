@@ -50,7 +50,7 @@
               Termindatum
               <app-order-icon columnName="appointmentDate" [orderStatus]="orderStatus"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element"> {{element.appointmentDate}} </td>
+            <td mat-cell *matCellDef="let element" class="t-width"> {{element.appointmentDate}} </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
@@ -58,7 +58,7 @@
               Status
               <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="t-width">
               <span *ngIf="element.id !== 1">
                 {{element.status}}
               </span>
@@ -86,11 +86,10 @@
         </table>
       </div>
       <button
-        class="custom-doctor-button"
+        class="custom-doctor-button pink-b-0"
         mat-stroked-button
-        style="background-color: #F389CC;right: -180px;"
       >
-        Patientenrückfragen
+        <span>Patientenrückfragen</span>
       </button>
     </mat-card>
   </div>

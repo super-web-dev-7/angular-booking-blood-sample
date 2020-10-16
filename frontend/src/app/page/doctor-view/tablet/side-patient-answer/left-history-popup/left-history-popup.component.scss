@@ -1,16 +1,14 @@
-.left-side-container {
-  width: 350px;
+.tablet-left-container {
+  width: 288px;
   height: 100vh;
-  background-color: #ffffff;
-  display: flex;
-  justify-content: center;
+  background-color: #E1EAF1;
   position: absolute;
   top: 0px;
   left: 0px;
   z-index: 2000!important;
   .main-div {
-    margin-top: 85px;
-    margin-left: 30px;
+    margin-top: 115px;
+    margin-left: 38px;
     h1 {
       font-size: 30px;
       color: #384C61

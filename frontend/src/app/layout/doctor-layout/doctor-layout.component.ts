@@ -15,12 +15,18 @@ export class DoctorLayoutComponent implements OnInit {
   isTablet = false;
   currentUser: any;
   isRightSidebarOpen = false;
-  isPatientInquiryOpen = false;
   openMedicalHistory = false;
   openContactHistory = false;
   openPatientCall = false;
   openCheckContact = false;
   openCallPatient = false;
+  openPatientInquiry = false;
+  openRightMenu = false;
+  openPatientAnswer = false;
+  viewAnamnes = false;
+  checkAnamnes = false;
+  viewAppointment = false;
+  tHistory = false;
 
   constructor(
     public breakpointObserver: BreakpointObserver,
@@ -67,6 +73,23 @@ export class DoctorLayoutComponent implements OnInit {
         this.openCallPatient = true;
       }
     });
+    this.sharedService.tabletSide.subscribe(res => {
+      if (res === 'inquiry') {
+        this.openPatientInquiry = true;
+      } else if (res === 'answer') {
+        this.openPatientAnswer = true;
+      } else if (res === 'v-anam') {
+        this.viewAnamnes = true;
+      } else if (res === 'c-anam') {
+        this.checkAnamnes = true;
+      } else if (res === 'v-appointment') {
+        this.viewAppointment = true;
+      }
+      this.isRightSidebarOpen = true;
+    });
+    this.sharedService.tabletLeftSide.subscribe(res => {
+      this.tHistory = true;
+    });
   }
 
   setOpen = ($event: any) => {
@@ -75,10 +98,16 @@ export class DoctorLayoutComponent implements OnInit {
 
   setRightSideOpen = (event) => {
     this.isRightSidebarOpen = event;
+    this.openRightMenu = true;
   }
 
   closeRightSide = (event) => {
     this.isRightSidebarOpen = event;
+    this.openPatientInquiry = false;
+    this.openPatientAnswer = false;
+    this.viewAnamnes = false;
+    this.checkAnamnes = false;
+    this.viewAppointment = false;
   }
 
   closeLeftSide = (event) => {

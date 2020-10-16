@@ -3,6 +3,7 @@
 <app-patient-recall *ngIf="openPatientCall"></app-patient-recall>
 <app-view-contact-history *ngIf="openCheckContact"></app-view-contact-history>
 <app-call-patient *ngIf="openCallPatient"></app-call-patient>
+<app-left-history-popup *ngIf="tHistory"></app-left-history-popup>
 <mat-sidenav-container>
   <mat-sidenav
     [opened]="isOpen"
@@ -10,7 +11,6 @@
     (closed)="isOpen = false"
     #sidenav
   >
-    <!--<div *ngIf="isMobile || isTablet else desktopView;">mobile test</div>-->
     <app-left-sidebar *ngIf="isMobile || isTablet else desktopView;" (closeSide)="closeLeftSide($event)"></app-left-sidebar>
     <ng-template  #desktopView>
       <app-doctor-sidebar (menuClick)="menuClick($event)"></app-doctor-sidebar>
@@ -23,7 +23,12 @@
     position="end"
     (closed)="isRightSidebarOpen = false"
   >
-    <app-right-sidebar (closeSide)="closeRightSide($event)"></app-right-sidebar>
+    <app-right-sidebar (closeSide)="closeRightSide($event)" *ngIf="openRightMenu"></app-right-sidebar>
+    <app-side-patient-inquiry *ngIf="openPatientInquiry" (closeSide)="closeRightSide($event)"></app-side-patient-inquiry>
+    <app-side-patient-answer *ngIf="openPatientAnswer" (closeSide) ="closeRightSide($event)"></app-side-patient-answer>
+    <app-side-medical-history *ngIf="viewAnamnes" (closeSide)="closeRightSide($event)"></app-side-medical-history>
+    <app-side-check-anamnes *ngIf="checkAnamnes" (closeSide)="closeRightSide($event)"></app-side-check-anamnes>
+    <app-side-view-appointment *ngIf="viewAppointment" (closeSide)="closeRightSide($event)"></app-side-view-appointment>
   </mat-sidenav>
   <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Doctor' ? '#F2F7FB' : '#fafafa'}">
     <div class="background-container" *ngIf="!isMobile && !isTablet"></div>

@@ -5,6 +5,8 @@ import {AuthService} from '../../../../service/auth/auth.service';
 import {patientAnamnesData} from '../../../../utils/mock_data';
 import {AnamnesViewComponent} from './anamnes-view/anamnes-view.component';
 import {AnamnesCheckComponent} from './anamnes-check/anamnes-check.component';
+import {BreakpointObserver} from '@angular/cdk/layout';
+import {SharedService} from '../../../../service/shared/shared.service';
 
 @Component({
   selector: 'app-anamnes-release',
@@ -22,15 +24,19 @@ export class AnamnesReleaseComponent implements OnInit {
   pageSize = 5;
   dataSourceA = new MatTableDataSource<any>();
   displayedColumns: string[] = ['no', 'patientName', 'appointmentDate', 'status', 'actions'];
+  isTablet = false;
 
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
+    public breakpointObserver: BreakpointObserver,
+    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
     this.dataSourceA.data = patientAnamnesData;
+    this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
   }
 
   filter = () => {
@@ -48,20 +54,30 @@ export class AnamnesReleaseComponent implements OnInit {
   }
 
   anamnesView = () => {
-    let dialogRef: MatDialogRef<any>;
-    dialogRef = this.dialog.open(AnamnesViewComponent, {
-      width: '827px',
-      height: '844px'
-    });
-    this.afterClosed(dialogRef);
+    this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
+    if (this.isTablet) {
+      this.sharedService.tabletSide.emit('v-anam');
+    } else {
+      let dialogRef: MatDialogRef<any>;
+      dialogRef = this.dialog.open(AnamnesViewComponent, {
+        width: '827px',
+        height: '844px'
+      });
+      this.afterClosed(dialogRef);
+    }
   }
 
   checkAnamnes = () => {
-    let dialogRef: MatDialogRef<any>;
-    dialogRef = this.dialog.open(AnamnesCheckComponent, {
-      width: '1347px',
-      position: { top: '2%', left: '22%'}
-    });
-    this.afterClosed(dialogRef);
+    this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
+    if (this.isTablet) {
+      this.sharedService.tabletSide.emit('c-anam');
+    } else {
+      let dialogRef: MatDialogRef<any>;
+      dialogRef = this.dialog.open(AnamnesCheckComponent, {
+        width: '1347px',
+        position: {top: '2%', left: '22%'}
+      });
+      this.afterClosed(dialogRef);
+    }
   }
 }

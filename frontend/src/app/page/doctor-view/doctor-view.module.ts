@@ -27,9 +27,16 @@ import { SidePatientInquiryComponent } from './tablet/side-patient-inquiry/side-
 import { MedicalHistoryLeftComponent } from './doctor-dashboard/answer-inquiry/left-popup/medical-history-left/medical-history-left.component';
 import { ContactHistoryLeftComponent } from './doctor-dashboard/answer-inquiry/left-popup/contact-history-left/contact-history-left.component';
 import { PatientRecallComponent } from './doctor-dashboard/answer-inquiry/left-popup/patient-recall/patient-recall.component';
-import {NgxMatSelectSearchModule} from "ngx-mat-select-search";
 import { ViewContactHistoryComponent } from './doctor-dashboard/anamnes-release/anamnes-check/view-contact-history/view-contact-history.component';
 import { CallPatientComponent } from './doctor-dashboard/anamnes-release/anamnes-check/call-patient/call-patient.component';
+import { SidePatientAnswerComponent } from './tablet/side-patient-answer/side-patient-answer.component';
+import { SideMedicalHistoryComponent } from './tablet/side-medical-history/side-medical-history.component';
+import { SideCheckAnamnesComponent } from './tablet/side-check-anamnes/side-check-anamnes.component';
+import { SideViewAppointmentComponent } from './tablet/side-view-appointment/side-view-appointment.component';
+import { LeftAnamneseComponent } from './tablet/side-patient-answer/left-anamnese/left-anamnese.component';
+import { LeftHistoryPopupComponent } from './tablet/side-patient-answer/left-history-popup/left-history-popup.component';
+import { LeftRecallComponent } from './tablet/side-patient-answer/left-recall/left-recall.component';
+import { LeftMessagePopupComponent } from './tablet/side-patient-answer/left-message-popup/left-message-popup.component';
 
 
 
@@ -58,6 +65,14 @@ import { CallPatientComponent } from './doctor-dashboard/anamnes-release/anamnes
     PatientRecallComponent,
     ViewContactHistoryComponent,
     CallPatientComponent,
+    SidePatientAnswerComponent,
+    SideMedicalHistoryComponent,
+    SideCheckAnamnesComponent,
+    SideViewAppointmentComponent,
+    LeftAnamneseComponent,
+    LeftHistoryPopupComponent,
+    LeftRecallComponent,
+    LeftMessagePopupComponent,
   ],
   exports: [
     RightSidebarComponent,
@@ -66,7 +81,13 @@ import { CallPatientComponent } from './doctor-dashboard/anamnes-release/anamnes
     ContactHistoryLeftComponent,
     PatientRecallComponent,
     ViewContactHistoryComponent,
-    CallPatientComponent
+    CallPatientComponent,
+    SidePatientInquiryComponent,
+    SidePatientAnswerComponent,
+    SideMedicalHistoryComponent,
+    SideCheckAnamnesComponent,
+    SideViewAppointmentComponent,
+    LeftHistoryPopupComponent
   ],
   imports: [
     CommonModule,
@@ -76,7 +97,6 @@ import { CallPatientComponent } from './doctor-dashboard/anamnes-release/anamnes
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
-    NgxMatSelectSearchModule
   ]
 })
 export class DoctorViewModule { }

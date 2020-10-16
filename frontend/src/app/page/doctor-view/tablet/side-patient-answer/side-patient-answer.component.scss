@@ -47,3 +47,17 @@ h1 {
 .mr-10 {
   margin-right: 10px;
 }
+.success-message {
+  display: flex;
+  .green-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #76D279;
+  }
+  p {
+    margin-left: 10px;
+    color: #76D279;
+    font-size: 16px;
+  }
+}
