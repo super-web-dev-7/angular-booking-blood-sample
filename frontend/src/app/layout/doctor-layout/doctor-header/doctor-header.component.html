@@ -12,8 +12,15 @@
     <button
       mat-stroked-button
       class="tablet-header-button-384"
-      *ngIf="isTablet"
+      (click)="laboratory()"
+      *ngIf="isTablet && url === '/doctor'"
     >Laborberichte</button>
+    <button
+      mat-stroked-button
+      class="tablet-header-button-384"
+      (click)="dashboard()"
+      *ngIf="isTablet && url !== '/doctor'"
+    >Dashboard</button>
     <div class="user-info">
       <img
         src="/assets/images/avatar.png"

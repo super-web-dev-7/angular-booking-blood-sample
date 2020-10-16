@@ -48,7 +48,7 @@
               Termindatum
               <app-order-icon columnName="appointmentDate" [orderStatus]="orderStatus"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element"> {{element.appointmentDate}} </td>
+            <td mat-cell *matCellDef="let element" class="t-width"> {{element.appointmentDate}} </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
@@ -56,7 +56,7 @@
               Status
               <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="t-width">
               <span *ngIf="element.id !== 1">
                 {{element.status}}
               </span>
@@ -113,7 +113,7 @@
               Termindatum
               <app-order-icon columnName="appointmentDate" [orderStatus]="orderStatus"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element"> {{element.appointmentDate}} </td>
+            <td mat-cell *matCellDef="let element" class="t-width"> {{element.appointmentDate}} </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
@@ -121,7 +121,7 @@
               Status
               <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" class="t-width">
               <span *ngIf="element.id !== 1">
                 {{element.status}}
               </span>

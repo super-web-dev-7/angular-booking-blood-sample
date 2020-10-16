@@ -60,7 +60,7 @@ export class AnamnesReleaseComponent implements OnInit {
     let dialogRef: MatDialogRef<any>;
     dialogRef = this.dialog.open(AnamnesCheckComponent, {
       width: '1347px',
-      height: '858px'
+      position: { top: '2%', left: '22%'}
     });
     this.afterClosed(dialogRef);
   }

@@ -1,6 +1,17 @@
 table td {
   padding-right: 0;
 }
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.mat-header-cell {
+  font-size: 14px;
+  font-weight: 500;
+}
+.mat-cell, .mat-footer-cell {
+  font-size: 12px;
+}
 .custom-button-light-green {
   background-color: #89DF8C;
   border-radius: 25px !important;

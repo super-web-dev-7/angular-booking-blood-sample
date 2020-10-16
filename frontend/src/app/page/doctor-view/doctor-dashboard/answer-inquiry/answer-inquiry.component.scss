@@ -100,8 +100,10 @@ p {
   padding: 16px;
 }
 .determine-buttons {
-  display: flex;
-  justify-content: space-between;
-  margin-left: -15px;
-  margin-top: 140px;
+  float: right;
+  margin-top: 80px;
+}
+.active-button {
+  background-color: #384C61;
+  color: #ffffff;
 }

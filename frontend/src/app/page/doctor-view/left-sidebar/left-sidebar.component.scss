@@ -13,11 +13,13 @@
     li {
       padding: 15px 30px 15px 30px;
       cursor: pointer;
+      outline: none!important;
     }
     li.sub-menu {
       margin-left: 15px;
       font-size: 20px;
       color: #A1B8CF;
+      outline: none!important;
     }
 
     li:hover {

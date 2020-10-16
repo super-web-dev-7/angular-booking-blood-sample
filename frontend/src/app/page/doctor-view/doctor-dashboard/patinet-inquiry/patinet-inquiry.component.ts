@@ -59,7 +59,7 @@ export class PatinetInquiryComponent implements OnInit {
   openAnswer = () => {
     let dialogRef: MatDialogRef<any>;
     dialogRef = this.dialog.open(AnswerInquiryComponent, {
-      width: '1347px',
+      width: '1347px', position: { top: '5%', left: '21%'}
     });
     dialogRef.afterClosed().subscribe(res => {
       if (res) {

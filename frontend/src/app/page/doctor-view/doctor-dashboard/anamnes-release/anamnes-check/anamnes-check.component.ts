@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SharedService} from '../../../../../service/shared/shared.service';
 
 @Component({
   selector: 'app-anamnes-check',
@@ -6,10 +7,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./anamnes-check.component.scss']
 })
 export class AnamnesCheckComponent implements OnInit {
-
-  constructor() { }
+  isCheckContact = false;
+  isCallPatient = false;
+  constructor(
+    private sharedService: SharedService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  openCheckContact = () => {
+    this.isCheckContact = true;
+    this.isCallPatient = true;
+    this.sharedService.check.emit('v-contact');
+  }
+
+  openCallPatient = () => {
+    this.isCallPatient = true;
+    this.isCheckContact = false;
+    this.sharedService.check.emit('call-patient');
   }
 
 }

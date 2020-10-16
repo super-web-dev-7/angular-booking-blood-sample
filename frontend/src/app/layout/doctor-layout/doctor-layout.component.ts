@@ -2,6 +2,7 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {AuthService} from '../../service/auth/auth.service';
 import {Router} from '@angular/router';
+import {SharedService} from '../../service/shared/shared.service';
 
 @Component({
   selector: 'app-doctor-layout',
@@ -14,10 +15,17 @@ export class DoctorLayoutComponent implements OnInit {
   isTablet = false;
   currentUser: any;
   isRightSidebarOpen = false;
+  isPatientInquiryOpen = false;
+  openMedicalHistory = false;
+  openContactHistory = false;
+  openPatientCall = false;
+  openCheckContact = false;
+  openCallPatient = false;
 
   constructor(
     public breakpointObserver: BreakpointObserver,
     public authService: AuthService,
+    private sharedService: SharedService,
     public router: Router
   ) {
     breakpointObserver.observe([
@@ -30,12 +38,35 @@ export class DoctorLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.openMedicalHistory = false;
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet || this.isMobile) {
       this.isOpen = false;
     }
-    console.log('############', this.isMobile, this.isTablet, this.isOpen);
+    this.sharedService.answer.subscribe(res => {
+      if (res === 'medical') {
+        this.openMedicalHistory = true;
+      } else if (res === 'contact') {
+        this.openContactHistory = true;
+      } else {
+        this.openPatientCall = true;
+      }
+    });
+    this.sharedService.closeHistory.subscribe(res => {
+      this.openMedicalHistory = false;
+      this.openContactHistory = false;
+      this.openPatientCall = false;
+      this.openCallPatient = false;
+      this.openCheckContact = false;
+    });
+    this.sharedService.check.subscribe(res => {
+      if (res === 'v-contact') {
+        this.openCheckContact = true;
+      } else {
+        this.openCallPatient = true;
+      }
+    });
   }
 
   setOpen = ($event: any) => {
@@ -48,6 +79,10 @@ export class DoctorLayoutComponent implements OnInit {
 
   closeRightSide = (event) => {
     this.isRightSidebarOpen = event;
+  }
+
+  closeLeftSide = (event) => {
+    this.isOpen = event;
   }
 
   menuClick = (link) => {

@@ -1,0 +1,15 @@
+.side-container {
+  width: 480px;
+  height: 100%;
+  background-color: #ffffff;
+  padding: 33px;
+  .close {
+    position: absolute;
+    top: 28px;
+    right: 0px;
+  }
+  .main-side-container {
+    padding-left: 30px;
+    margin-top: 82px;
+  }
+}

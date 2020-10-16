@@ -8,6 +8,7 @@ import {AnswerInquiryComponent} from './answer-inquiry/answer-inquiry.component'
 import {AnamnesViewComponent} from './anamnes-release/anamnes-view/anamnes-view.component';
 import {AnamnesCheckComponent} from './anamnes-release/anamnes-check/anamnes-check.component';
 import {ViewAppointmentComponent} from './event/view-appointment/view-appointment.component';
+import {BreakpointObserver} from "@angular/cdk/layout";
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -28,10 +29,11 @@ export class DoctorDashboardComponent implements OnInit {
   pageSize = 5;
   displayedColumns: string[] = ['no', 'patientName', 'appointmentDate', 'status', 'actions'];
   displayedColumnsE: string[] = ['no', 'date', 'time', 'package', 'appointmentLocation', 'doctorLast', 'status', 'actions'];
-
+  isTablet = false;
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
+    public breakpointObserver: BreakpointObserver,
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +41,7 @@ export class DoctorDashboardComponent implements OnInit {
     this.dataSourceP.data = patientInjuryData;
     this.dataSourceA.data = patientAnamnesData;
     this.dataSourceE.data = eventData;
+    this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
   }
 
 
@@ -52,11 +55,16 @@ export class DoctorDashboardComponent implements OnInit {
   }
 
   searchItem = () => {
-    let dialogRef: MatDialogRef<any>;
-    dialogRef = this.dialog.open(SearchModalComponent, {
-      width: '827px',
-    });
-    this.afterClosed(dialogRef);
+    this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
+    if (this.isTablet) {
+
+    } else {
+      let dialogRef: MatDialogRef<any>;
+      dialogRef = this.dialog.open(SearchModalComponent, {
+        width: '827px',
+      });
+      this.afterClosed(dialogRef);
+    }
   }
 
   afterClosed = (dialogRef) => {
@@ -67,7 +75,7 @@ export class DoctorDashboardComponent implements OnInit {
   openAnswer = () => {
     let dialogRef: MatDialogRef<any>;
     dialogRef = this.dialog.open(AnswerInquiryComponent, {
-      width: '1347px',
+      width: '1347px', position: { top: '5%', left: '21%'}
     });
     this.afterClosed(dialogRef);
   }
@@ -85,7 +93,7 @@ export class DoctorDashboardComponent implements OnInit {
     let dialogRef: MatDialogRef<any>;
     dialogRef = this.dialog.open(AnamnesCheckComponent, {
       width: '1347px',
-      height: '858px'
+      position: { top: '2%', left: '22%'}
     });
     this.afterClosed(dialogRef);
   }

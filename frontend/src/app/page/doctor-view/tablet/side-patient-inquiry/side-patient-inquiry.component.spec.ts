@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewPopupComponent } from './view-popup.component';
+import { SidePatientInquiryComponent } from './side-patient-inquiry.component';
 
-describe('ViewPopupComponent', () => {
-  let component: ViewPopupComponent;
-  let fixture: ComponentFixture<ViewPopupComponent>;
+describe('SidePatientInquiryComponent', () => {
+  let component: SidePatientInquiryComponent;
+  let fixture: ComponentFixture<SidePatientInquiryComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewPopupComponent ]
+      declarations: [ SidePatientInquiryComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ViewPopupComponent);
+    fixture = TestBed.createComponent(SidePatientInquiryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

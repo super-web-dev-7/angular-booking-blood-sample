@@ -1,3 +1,8 @@
+<app-medical-history-left *ngIf="openMedicalHistory"></app-medical-history-left>
+<app-contact-history-left *ngIf="openContactHistory"></app-contact-history-left>
+<app-patient-recall *ngIf="openPatientCall"></app-patient-recall>
+<app-view-contact-history *ngIf="openCheckContact"></app-view-contact-history>
+<app-call-patient *ngIf="openCallPatient"></app-call-patient>
 <mat-sidenav-container>
   <mat-sidenav
     [opened]="isOpen"
@@ -6,7 +11,7 @@
     #sidenav
   >
     <!--<div *ngIf="isMobile || isTablet else desktopView;">mobile test</div>-->
-    <app-left-sidebar *ngIf="isMobile || isTablet else desktopView;"></app-left-sidebar>
+    <app-left-sidebar *ngIf="isMobile || isTablet else desktopView;" (closeSide)="closeLeftSide($event)"></app-left-sidebar>
     <ng-template  #desktopView>
       <app-doctor-sidebar (menuClick)="menuClick($event)"></app-doctor-sidebar>
     </ng-template>

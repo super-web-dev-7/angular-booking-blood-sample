@@ -15,6 +15,8 @@
           class="custom-button-default ml-10"
           style="margin-left: 10px"
           mat-stroked-button
+          (click)="openCheckContact()"
+          [ngClass]="{'active-button': isCheckContact}"
         >
           Kontakthistorie ansehen
         </button>
@@ -30,6 +32,7 @@
           class="custom-button-default ml-10"
           style="margin-left: 10px;background: #89DF8C;color:#FFFFFF"
           mat-stroked-button
+          (click)="openCallPatient()"
         >
           Sebastian Naumann
         </button>
