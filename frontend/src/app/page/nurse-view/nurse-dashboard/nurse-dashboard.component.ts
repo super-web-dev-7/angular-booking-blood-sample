@@ -82,10 +82,11 @@ export class NurseDashboardComponent implements OnInit {
           this.appointments.push(appointment);
         }
       }
-      this.workingHourArray = new Array((this.workingEndHour - this.workingStartHour) / 2);
+      this.workingHourArray = new Array(Math.ceil((this.workingEndHour - this.workingStartHour) / 2));
     });
-    this.httpService.get(URL_JSON.TEMPLATE + '/getWithQuery?type=E-Mail&receiver=1').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.TEMPLATE + '/getWithQuery?receiver=1').subscribe((res: any) => {
       this.textTemplate = res;
+      console.log(this.textTemplate);
     });
 
     this.httpService.get(URL_JSON.TEMPLATE + '/getAllKeywords').subscribe((res: any) => {
