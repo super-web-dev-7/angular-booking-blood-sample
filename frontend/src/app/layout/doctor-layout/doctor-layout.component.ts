@@ -27,6 +27,9 @@ export class DoctorLayoutComponent implements OnInit {
   checkAnamnes = false;
   viewAppointment = false;
   tHistory = false;
+  tAnamnes = false;
+  tMessage = false;
+  tRecall = false;
 
   constructor(
     public breakpointObserver: BreakpointObserver,
@@ -65,6 +68,10 @@ export class DoctorLayoutComponent implements OnInit {
       this.openPatientCall = false;
       this.openCallPatient = false;
       this.openCheckContact = false;
+      this.tHistory = false;
+      this.tAnamnes = false;
+      this.tRecall = false;
+      this.tMessage = false;
     });
     this.sharedService.check.subscribe(res => {
       if (res === 'v-contact') {
@@ -88,7 +95,15 @@ export class DoctorLayoutComponent implements OnInit {
       this.isRightSidebarOpen = true;
     });
     this.sharedService.tabletLeftSide.subscribe(res => {
-      this.tHistory = true;
+      if (res === 't-history') {
+        this.tHistory = true;
+      } else if (res === 't-anamnes') {
+        this.tAnamnes = true;
+      } else if (res === 't-recall') {
+        this.tRecall = true;
+      } else if (res === 't-mail') {
+        this.tMessage = true;
+      }
     });
   }
 

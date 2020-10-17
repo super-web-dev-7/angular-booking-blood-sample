@@ -8,11 +8,19 @@ import {SharedService} from '../../../../service/shared/shared.service';
 })
 export class SidePatientAnswerComponent implements OnInit {
   @Output() closeSide = new EventEmitter();
+  isAnamnes = false;
+  isSideHistory = false;
+  isSuccess = false;
   constructor(
     public sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
+    this.isSuccess = false;
+    this.sharedService.closeHistory.subscribe(res => {
+      this.isAnamnes = false;
+      this.isSideHistory = false;
+    });
   }
 
   close = () => {
@@ -20,7 +28,27 @@ export class SidePatientAnswerComponent implements OnInit {
   }
 
   openSideHistory = () => {
-    this.sharedService.tabletLeftSide.emit();
+    this.sharedService.tabletLeftSide.emit('t-history');
+    this.isSideHistory = true;
+    this.isAnamnes = false;
+  }
+
+  openAnamneses = () => {
+    this.sharedService.tabletLeftSide.emit('t-anamnes');
+    this.isAnamnes = true;
+    this.isSideHistory = false;
+  }
+
+  openRecall = () => {
+    this.sharedService.tabletLeftSide.emit('t-recall');
+  }
+
+  openMessage = () => {
+    this.sharedService.tabletLeftSide.emit('t-mail');
+  }
+
+  submit = () => {
+    this.isSuccess = true;
   }
 
 }

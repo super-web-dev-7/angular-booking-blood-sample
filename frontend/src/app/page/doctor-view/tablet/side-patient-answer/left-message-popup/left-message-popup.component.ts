@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SharedService} from '../../../../../service/shared/shared.service';
 
 @Component({
   selector: 'app-left-message-popup',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LeftMessagePopupComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public sharedService: SharedService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  close = () => {
+    this.sharedService.closeHistory.emit('t-history');
   }
 
 }

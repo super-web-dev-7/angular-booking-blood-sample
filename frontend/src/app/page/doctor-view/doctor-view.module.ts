@@ -37,6 +37,7 @@ import { LeftAnamneseComponent } from './tablet/side-patient-answer/left-anamnes
 import { LeftHistoryPopupComponent } from './tablet/side-patient-answer/left-history-popup/left-history-popup.component';
 import { LeftRecallComponent } from './tablet/side-patient-answer/left-recall/left-recall.component';
 import { LeftMessagePopupComponent } from './tablet/side-patient-answer/left-message-popup/left-message-popup.component';
+import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 
 
 
@@ -87,7 +88,10 @@ import { LeftMessagePopupComponent } from './tablet/side-patient-answer/left-mes
     SideMedicalHistoryComponent,
     SideCheckAnamnesComponent,
     SideViewAppointmentComponent,
-    LeftHistoryPopupComponent
+    LeftHistoryPopupComponent,
+    LeftAnamneseComponent,
+    LeftRecallComponent,
+    LeftMessagePopupComponent
   ],
   imports: [
     CommonModule,
@@ -97,6 +101,7 @@ import { LeftMessagePopupComponent } from './tablet/side-patient-answer/left-mes
     ReactiveFormsModule,
     FormsModule,
     SharedModule,
+    NgxMatSelectSearchModule,
   ]
 })
 export class DoctorViewModule { }

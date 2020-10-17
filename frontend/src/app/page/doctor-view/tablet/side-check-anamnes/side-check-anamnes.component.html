@@ -2,7 +2,7 @@
   <button mat-icon-button class="close" (click)="close()">
     <mat-icon>clear</mat-icon>
   </button>
-  <div class="main-side-container">
+  <div class="main-side-container" *ngIf="!isSuccess">
     <h1>Anamnesebogen<span style="font-weight: 100">prüfen</span></h1>
     <div class="left-border-div mt-38">
       <p class="p-272140">12.09.2020 09:00 - 10:15</p>
@@ -17,6 +17,8 @@
         <button
           class="custom-button-default ml-10"
           mat-stroked-button
+          (click)="openSideHistory()"
+          [ngClass]="{'active-button': isSideHistory}"
         >
           Kontakthistorie ansehen
         </button>
@@ -32,6 +34,7 @@
           class="custom-button-default ml-10"
           style="background: #89DF8C;color:#FFFFFF"
           mat-stroked-button
+          (click)="openRecall()"
         >
           Sebastian Naumann
         </button>
@@ -54,8 +57,9 @@
           class="custom-button-default ml-10"
           style="background: #F389CC;color:#FFFFFF"
           mat-stroked-button
+          (click)="openMessage()"
         >
-          Sebastian Naumann
+          Nachricht schreiben
         </button>
       </div>
     </div>
@@ -91,6 +95,7 @@
       <button
         mat-stroked-button
         class="custom-button-384"
+        (click)="submit()"
       >
         Anamnese freigeben
       </button>
@@ -102,6 +107,13 @@
       >
         Termin stornieren
       </button>
+    </div>
+  </div>
+  <div class="main-side-container" *ngIf="isSuccess">
+    <h1>Anamnesebogen<span style="font-weight: 100">prüfen</span></h1>
+    <div class="success-message mt-47">
+      <div class="green-dot"></div>
+      <p>Sie haben den Anamnesebogen des Patienten<br/> freigegeben.</p>
     </div>
   </div>
 </div>

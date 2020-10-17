@@ -4,6 +4,9 @@
 <app-view-contact-history *ngIf="openCheckContact"></app-view-contact-history>
 <app-call-patient *ngIf="openCallPatient"></app-call-patient>
 <app-left-history-popup *ngIf="tHistory"></app-left-history-popup>
+<app-left-anamnese *ngIf="tAnamnes"></app-left-anamnese>
+<app-left-recall *ngIf="tRecall"></app-left-recall>
+<app-left-message-popup *ngIf="tMessage"></app-left-message-popup>
 <mat-sidenav-container>
   <mat-sidenav
     [opened]="isOpen"
