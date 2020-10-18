@@ -1,0 +1,55 @@
+.patient-popup-container {
+  width: 495px;
+  height: 100%;
+  padding: 33px;
+  background-color: #ffffff;
+  .close {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 29px;
+    right: 33px;
+    mat-icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+  .main-side-container {
+    padding-left: 31px;
+    margin-top: 82px;
+  }
+}
+h1 {
+  font-size: 36px;
+}
+.warning-div {
+  width: 6px;
+  height: 15px;
+  background-color: #384C61;
+  padding-left: 5px;
+  margin-top: 13px;
+}
+.warning-icon {
+  width: 15px;
+  height: 15px;
+  margin-left: -4px;
+  margin-top: -5px;
+}
+.add-message {
+  margin-top: 40px;
+  .message-div {
+    margin-top: 13px;
+    width: 354px;
+    height: 220px;
+    padding-left: 76px;
+    p {
+      color: #A9BBC9;
+      font-size: 16px;
+    }
+    hr.bottom-line {
+      width: 210px;
+      border: 1px solid #A9BBC9;
+      float: left
+    }
+  }
+}

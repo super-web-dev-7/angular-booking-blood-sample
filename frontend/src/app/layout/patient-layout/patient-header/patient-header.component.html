@@ -1,17 +1,34 @@
 <div class="header-container" [ngClass]="{'web-height': !isMobile, 'mobile-height': isMobile} ">
   <div class="logo-container">
-    <button *ngIf="isMobile" class="ml-3" mat-icon-button aria-label="more" (click)="openSidebar()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <img *ngIf="isMobile" src="assets/images/logo.svg" alt="logo">
+    <img src="/assets/images/Menu%20Icon.svg"
+         alt="menu"
+         class="menu-icon"
+         (click)="openSidebar()"
+         *ngIf="isTablet || isMobile"
+    />
+    <img *ngIf="isMobile || isTablet" src="assets/images/logo.svg" alt="logo">
   </div>
-  <div class="d-flex align-items-center">
+  <div class="d-flex align-items-center mobile-space">
+    <button
+      mat-stroked-button
+      class="tablet-button-384"
+      *ngIf="isMobile || isTablet"
+    >
+     + Neu
+    </button>
     <div class="user-info">
-      <img src="/assets/images/avatar.png" alt="user-avatar">
-      <span *ngIf="!isMobile" class="ml-2 text-capitalize">{{currentUser.role}}</span>
+      <img src="/assets/images/avatar.png" alt="user-avatar" *ngIf="!isTablet&&!isMobile">
+      <img
+        src="/assets/images/avatar.png"
+        alt="user-avatar"
+        style="cursor: pointer"
+        (click)="openRightSidebar()"
+        *ngIf="isTablet || isMobile"
+      />
+      <span *ngIf="!isMobile && !isTablet" class="ml-2 text-capitalize">{{currentUser.role}}</span>
     </div>
     <button
-      *ngIf="!isMobile && currentUser.role === 'Patient'"
+      *ngIf="!isMobile && !isTablet"
       (click)="openRightSidebar()"
       class="ml-3"
       mat-icon-button

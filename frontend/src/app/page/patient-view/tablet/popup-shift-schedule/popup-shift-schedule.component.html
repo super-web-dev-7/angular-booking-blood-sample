@@ -1,0 +1,97 @@
+<form [formGroup]="moveForm">
+<div class="patient-popup-container">
+  <button mat-icon-button class="close" (click)="close()">
+    <mat-icon>clear</mat-icon>
+  </button>
+  <div class="main-side-container">
+    <h1>Termin <span style="font-weight: 100">verschieben</span></h1>
+    <div class="left-border-div mt-38 position-relative">
+      <p class="p-272140">12.09.2020 09:00 - 10:15</p>
+      <p class="p-576E82">Check-Up: Männergesundheit</p>
+      <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+    </div>
+  </div>
+  <div class="mt-47">
+    <mat-accordion>
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="d-flex avatar pink">
+              <div class="round">
+                <mat-icon>place</mat-icon>
+              </div>
+              <div>Adresse ändern</div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="d-flex flex-wrap expansion-panel-container">
+          <div style="margin-left: 76px">
+            <div class="d-flex-between w-100">
+              <mat-form-field class="w-45">
+                <mat-label>PLZ</mat-label>
+                <input formControlName="zipcode" autocomplete="off" matInput>
+              </mat-form-field>
+              <mat-form-field class="w-45">
+                <mat-label>Ort</mat-label>
+                <input formControlName="place" autocomplete="off" matInput>
+              </mat-form-field>
+            </div>
+            <mat-form-field class="full-width">
+              <mat-label>Straße Hausnummer</mat-label>
+              <input formControlName="street" autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="d-flex avatar green">
+              <div class="round">
+                <img src="/assets/images/clock_icon.svg" alt="clock">
+              </div>
+              <div>Neuen Termin auswählen</div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="d-flex avatar yellow justify-content-between">
+              <div class="d-flex align-items-center">
+                <div class="round">
+                  <mat-icon>stop_circle</mat-icon>
+                </div>
+                <div>Nachricht hinzufügen</div>
+              </div>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="d-flex flex-wrap expansion-panel-container">
+          <mat-form-field
+            appearance="fill"
+            style="width: 100%;margin-left:76px"
+          >
+            <mat-label>Please text here</mat-label>
+            <textarea
+              matInput
+              formControlName="message"
+              placeholder="Hallo"
+              rows="13"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div class="text-center" style="margin-top: 150px">
+    <button
+      mat-stroked-button
+      class="custom-button-C7D"
+      >
+      Termin verschieben
+    </button>
+  </div>
+</div>
+</form>

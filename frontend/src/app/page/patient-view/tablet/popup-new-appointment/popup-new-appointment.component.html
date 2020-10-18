@@ -1,0 +1,25 @@
+<form [formGroup]="appointmentForm" class="p-2">
+<div class="patient-popup-container">
+  <button mat-icon-button class="close" (click)="close()">
+    <mat-icon>clear</mat-icon>
+  </button>
+  <div class="main-side-container">
+    <h1>Neuer <span style="font-weight: 100">Termin</span></h1>
+    <div class="mt-47">
+      <mat-form-field class="w-100">
+        <mat-label>Bitte PLZ eingeben</mat-label>
+        <input formControlName="zipcode" autocomplete="off" matInput>
+      </mat-form-field>
+    </div>
+    <div class="text-center" style="margin-top: 400px">
+      <button
+        mat-stroked-button
+        class="custom-button-384"
+        (click)="arrangeAppointment()"
+      >
+        Nach Terminen suchen
+      </button>
+    </div>
+  </div>
+</div>
+</form>

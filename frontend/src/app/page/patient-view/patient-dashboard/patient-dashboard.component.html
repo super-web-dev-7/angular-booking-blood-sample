@@ -1,4 +1,4 @@
-<h3 class="header-title">Dashboard</h3>
+<h3 class="header-title" *ngIf="!isTablet && !isMobile">Dashboard</h3>
 <div class="main-container">
   <div class="notify-container">
     <div class="d-flex-between">
@@ -60,7 +60,7 @@
     </div>
   </div>
   <div class="main-content-div position-relative">
-    <div class="d-flex">
+    <div class="row">
       <div class="col-md-4">
         <div class="notify-view">
           <div class="main-view" style="border-color: #4A90E2">
@@ -99,8 +99,8 @@
             <p class="p-white ml-20">
               Bitte neuen Termin wählen
             </p>
-            <p class="p-white ml-20">Check-Up: Gutes Immunsystem</p>
-            <p class="p-white ml-20">Marienstraße 4, 15387 Berlin</p>
+            <p class="p-white-14 ml-20">Check-Up: Gutes Immunsystem</p>
+            <p class="p-white-14 ml-20">Marienstraße 4, 15387 Berlin</p>
             <button
               mat-icon-button style="margin-left: 10px">
               <mat-icon style="color: white">keyboard_arrow_down</mat-icon>
@@ -116,7 +116,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="notify-view position-absolute" style="top: 0px">
+        <div class="notify-view" style="top: 0px">
           <div>
             <div class="main-view" style="border-color: #F389CC">
               <p class="p-pink ml-20">
@@ -169,7 +169,7 @@
         </div>
       </div>
     </div>
-    <div class="d-flex mt-20">
+    <div class="row mt-20">
       <div class="col-md-4">
         <div class="notify-view">
           <div class="main-view" style="border-color: #89DF8C">
@@ -264,4 +264,5 @@
       <span class="active-hover">Zahlungsstatus</span>
     </button>
   </mat-menu>
+</div>
 </div>

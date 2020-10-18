@@ -123,6 +123,7 @@ export class DoctorLayoutComponent implements OnInit {
     this.viewAnamnes = false;
     this.checkAnamnes = false;
     this.viewAppointment = false;
+    this.openRightMenu = false;
   }
 
   closeLeftSide = (event) => {

@@ -18,9 +18,9 @@ mat-sidenav-container {
   border-bottom-left-radius: 135px;
   z-index: -1;
 }
-
 .subheader {
-  color: white;
+  color: #ffffff;
+  margin-top: 0px;
   h1 {
     font-size: 36px;
   }
@@ -34,8 +34,19 @@ mat-sidenav-container {
   padding-right: 100px;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1023px) {
   .main-content-container {
-    padding: 3px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .subheader {
+    color: #384C61;
+    margin-top: 35px;
+    h1 {
+      font-size: 36px;
+    }
+    h3 {
+      font-size: 20px;
+    }
   }
 }

@@ -2,7 +2,7 @@ import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@ang
 import {AuthService} from '../../../service/auth/auth.service';
 import {Router} from '@angular/router';
 import {BreakpointObserver} from '@angular/cdk/layout';
-import {SharedService} from "../../../service/shared/shared.service";
+import {SharedService} from '../../../service/shared/shared.service';
 
 @Component({
   selector: 'app-doctor-header',

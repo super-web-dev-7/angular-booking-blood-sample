@@ -1,11 +1,14 @@
 <mat-sidenav-container (backdropClick)="rightSide.close()">
   <mat-sidenav
     [opened]="isOpen"
-    [mode]="isMobile ? 'over' : 'side'"
+    [mode]="isMobile || isTablet ? 'over' : 'side'"
     (closed)="isOpen = false"
     #sidenav
   >
-    <app-sidebar-patient (menuClick)="menuClick($event)"></app-sidebar-patient>
+    <app-patient-left-sidebar *ngIf="isMobile || isTablet else desktopView;" (closeSide)="closeLeftSide($event)"></app-patient-left-sidebar>
+    <ng-template  #desktopView>
+      <app-sidebar-patient (menuClick)="menuClick($event)"></app-sidebar-patient>
+    </ng-template>
   </mat-sidenav>
   <mat-sidenav
     [opened]="isRightSidebarOpen && currentUser.role === 'Patient'"
@@ -14,14 +17,24 @@
     position="end"
     (closed)="isRightSidebarOpen = false"
   >
-    <app-patient-sidebar (closeSide)="closeRightSide($event)"></app-patient-sidebar>
+    <app-patient-sidebar (closeSide)="closeRightSide($event)" *ngIf="menuOpen"></app-patient-sidebar>
+    <app-popup-cancel-appointment (closeSide)="closeRightSide($event)" *ngIf="openCancelAppointment"></app-popup-cancel-appointment>
+    <app-popup-call-sister (closeSide)="closeRightSide($event)" *ngIf="openCallSister"></app-popup-call-sister>
+    <app-popup-callback-doctor (closeSide)="closeRightSide($event)" *ngIf="openCallback"></app-popup-callback-doctor>
+    <app-popup-change-package (closeSide)="closeRightSide($event)" *ngIf="openPackage"></app-popup-change-package>
+    <app-popup-edit-anamnes (closeSide)="closeRightSide($event)" *ngIf="openEdit"></app-popup-edit-anamnes>
+    <app-popup-payment-status (closeSide)="closeRightSide($event)" *ngIf="openPayment"></app-popup-payment-status>
+    <app-popup-shift-schedule (closeSide)="closeRightSide($event)" *ngIf="openMove"></app-popup-shift-schedule>
+    <app-popup-new-appointment (closeSide)="closeRightSide($event)" *ngIf="openNewPopup"></app-popup-new-appointment>
+    <app-popup-arrange-appointment (closeSide)="closeRightSide($event)" *ngIf="openArrange"></app-popup-arrange-appointment>
   </mat-sidenav>
   <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Patient' ? '#F2F7FB' : '#fafafa'}">
-    <div class="background-container" *ngIf="!isMobile"></div>
+    <div class="background-container" *ngIf="!isMobile && !isTablet"></div>
     <app-patient-header (setOpen)="setOpen($event)" [isMobile]="isMobile" (setRightOpen)="setRightOpen($event)"></app-patient-header>
     <div class="main-content-container">
       <div class="subheader">
-        <h1>Hallo, <b>{{currentUser.role}}</b>.</h1>
+        <h1 *ngIf="isTablet"><b>Hallo {{currentUser.role}}</b>, Dashboard</h1>
+        <h1 *ngIf="!isTablet">Hallo, <b>{{currentUser.role}}</b>.</h1>
       </div>
       <router-outlet></router-outlet>
     </div>

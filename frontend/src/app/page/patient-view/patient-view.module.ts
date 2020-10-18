@@ -19,6 +19,15 @@ import { AppointmentNewComponent } from './new-appointment/appointment-new/appoi
 import { AppointmentHistoryComponent } from './patient-dashboard/appointment-history/appointment-history.component';
 import { PatientSidebarComponent } from './patient-sidebar/patient-sidebar.component';
 import { EditProfileComponent } from './patient-sidebar/edit-profile/edit-profile.component';
+import { PopupCancelAppointmentComponent } from './tablet/popup-cancel-appointment/popup-cancel-appointment.component';
+import { PopupShiftScheduleComponent } from './tablet/popup-shift-schedule/popup-shift-schedule.component';
+import { PopupEditAnamnesComponent } from './tablet/popup-edit-anamnes/popup-edit-anamnes.component';
+import { PopupChangePackageComponent } from './tablet/popup-change-package/popup-change-package.component';
+import { PopupCallbackDoctorComponent } from './tablet/popup-callback-doctor/popup-callback-doctor.component';
+import { PopupCallSisterComponent } from './tablet/popup-call-sister/popup-call-sister.component';
+import { PopupPaymentStatusComponent } from './tablet/popup-payment-status/popup-payment-status.component';
+import { PopupNewAppointmentComponent } from './tablet/popup-new-appointment/popup-new-appointment.component';
+import { PopupArrangeAppointmentComponent } from './tablet/popup-arrange-appointment/popup-arrange-appointment.component';
 
 
 
@@ -36,11 +45,29 @@ import { EditProfileComponent } from './patient-sidebar/edit-profile/edit-profil
         AppointmentNewComponent,
         AppointmentHistoryComponent,
         PatientSidebarComponent,
-        EditProfileComponent
+        EditProfileComponent,
+        PopupCancelAppointmentComponent,
+        PopupShiftScheduleComponent,
+        PopupEditAnamnesComponent,
+        PopupChangePackageComponent,
+        PopupCallbackDoctorComponent,
+        PopupCallSisterComponent,
+        PopupPaymentStatusComponent,
+        PopupNewAppointmentComponent,
+        PopupArrangeAppointmentComponent
     ],
-    exports: [
-        PatientSidebarComponent
-    ],
+  exports: [
+    PatientSidebarComponent,
+    PopupCancelAppointmentComponent,
+    PopupCallSisterComponent,
+    PopupCallbackDoctorComponent,
+    PopupChangePackageComponent,
+    PopupEditAnamnesComponent,
+    PopupPaymentStatusComponent,
+    PopupShiftScheduleComponent,
+    PopupNewAppointmentComponent,
+    PopupArrangeAppointmentComponent
+  ],
     imports: [
         CommonModule,
         MaterialModule,

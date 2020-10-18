@@ -405,6 +405,12 @@ table thead tr th {
 .ml-20 {
   margin-left: 20px!important;
 }
+.ml-16 {
+  margin-left: 16px!important;
+}
+.mt-13 {
+  margin-top: 13px;
+}
 .mt-20 {
   margin-top: 20px!important;
 }
@@ -431,17 +437,21 @@ table thead tr th {
   color: #272140!important;
   margin-left: 20px!important;
 }
+.p-272140-10 {
+  font-size: 10px!important;
+  color: #272140!important;
+}
 .p-272140-tablet {
   font-size: 16px!important;
   color: #272140!important;
 }
 .p-576E82 {
-  font-size: 16px!important;
+  font-size: 14px!important;
   margin-left: 20px!important;
   color: #576E82!important;
 }
 .p-576E82-tablet {
-  font-size: 16px!important;
+  font-size: 14px!important;
   color: #576E82!important;
 }
 .p-0 {
@@ -467,6 +477,14 @@ table thead tr th {
   height: 50px;
   color: #ffffff;
   font-size: 1rem;
+}
+.tablet-header-button-384 {
+  height: 35px;
+  color: #ffffff;
+  background-color: #384C61;
+  border-radius: 23px;
+  font-size: 14px;
+  margin-right: 5px;
 }
 .pd-17 {
   padding: 17px!important;

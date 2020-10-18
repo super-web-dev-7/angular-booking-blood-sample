@@ -1,0 +1,36 @@
+.patient-popup-container {
+  width: 495px;
+  height: 100%;
+  padding: 33px;
+  background-color: #ffffff;
+  .close {
+    width: 14px;
+    height: 14px;
+    position: absolute;
+    top: 29px;
+    right: 33px;
+    mat-icon {
+      width: 14px;
+      height: 14px;
+    }
+  }
+  .main-side-container {
+    padding-left: 31px;
+    margin-top: 82px;
+  }
+}
+h1 {
+  font-size: 36px;
+}
+.mat-expansion-panel {
+  box-shadow: none;
+}
+.full-width {
+  width: 100%
+}
+.w-90 {
+  width: 90%;
+}
+.w-45 {
+  width: 45%
+}

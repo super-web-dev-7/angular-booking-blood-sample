@@ -6,6 +6,7 @@ import { PatientHeaderComponent } from './patient-header/patient-header.componen
 import {MaterialModule} from '../../material/material.module';
 import {RouterModule} from '@angular/router';
 import {PatientViewModule} from '../../page/patient-view/patient-view.module';
+import { PatientLeftSidebarComponent } from './patient-left-sidebar/patient-left-sidebar.component';
 
 
 
@@ -13,7 +14,8 @@ import {PatientViewModule} from '../../page/patient-view/patient-view.module';
   declarations: [
     PatientLayoutComponent,
     SidebarPatientComponent,
-    PatientHeaderComponent
+    PatientHeaderComponent,
+    PatientLeftSidebarComponent
   ],
   imports: [
     CommonModule,

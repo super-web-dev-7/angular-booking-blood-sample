@@ -10,6 +10,9 @@ export class SharedService {
   public check: EventEmitter<any>;
   public tabletSide: EventEmitter<any>;
   public tabletLeftSide: EventEmitter<any>;
+  public patientLeft: EventEmitter<any>;
+  public patientPopup: EventEmitter<any>;
+  public closePopup: EventEmitter<any>;
 
   constructor() {
     this.test = new EventEmitter<any>();
@@ -18,5 +21,8 @@ export class SharedService {
     this.check = new EventEmitter<any>();
     this.tabletSide = new EventEmitter<any>();
     this.tabletLeftSide = new EventEmitter<any>();
+    this.patientLeft = new EventEmitter<any>();
+    this.patientPopup = new EventEmitter<any>();
+    this.closePopup = new EventEmitter<any>();
   }
 }
