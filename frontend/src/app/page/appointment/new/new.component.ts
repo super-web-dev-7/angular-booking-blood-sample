@@ -170,6 +170,7 @@ export class NewComponent implements OnInit {
   makeAppointmentTime = calendar  => {
     const date = new Date();
     this.allTimes = [];
+    this.randomTimes = [];
     const currentDay = date.getDay();
     let plusDate = 0;
     const durationAppointment = calendar.duration_appointment * 60 * 1000;

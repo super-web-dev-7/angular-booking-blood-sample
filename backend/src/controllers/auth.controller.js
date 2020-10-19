@@ -7,6 +7,13 @@ const User = db.user;
 const Op = db.Sequelize.Op;
 
 const saltRounds = 10;
+const sessionTimeByRole = {
+    'Superadmin': 480,
+    'AG-Admin': 480,
+    'Nurse': 480,
+    'Doctor': 30,
+    'Patient': 30
+}
 
 exports.register = (req, res) => {
     const newUser = req.body;
@@ -37,7 +44,8 @@ exports.login = async (req, res) => {
                 email: user.email,
                 role: user.role
             }, config.jwtSecret, {
-                expiresIn: 86400 * 30    //expires in 24 hours
+                // expiresIn: 35
+                expiresIn: sessionTimeByRole[user.role] * 60
             });
             res.json({token});
         } else {
@@ -51,4 +59,18 @@ exports.login = async (req, res) => {
             message: 'Incorrect Username Or password!'
         });
     }
+}
+
+exports.resetToken = async (req, res) => {
+    const email = req.body.email;
+    const user = await User.findOne({where: {email}});
+    const token = jwt.sign({
+        id: user.id,
+        email: user.email,
+        role: user.role
+    }, config.jwtSecret, {
+        // expiresIn: 35
+        expiresIn: sessionTimeByRole[user.role] * 60
+    });
+    res.json({token});
 }

@@ -22,7 +22,7 @@ exports.get = async (req, res) => {
 }
 
 exports.getUnassigned = async (req, res) => {
-    const allDistrict = await District.findAll({where: {}});
+    const allDistrict = await District.findAll({where: {isActive: true}});
     const unassignedDistrict = [];
     for (const district of allDistrict) {
         let include = false;

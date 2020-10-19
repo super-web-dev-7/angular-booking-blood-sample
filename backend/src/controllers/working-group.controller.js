@@ -5,6 +5,7 @@ const WorkingGroup = db.workingGroup;
 const Calendar = db.calendar;
 const User = db.user;
 const Package = db.package;
+const PackageGroup = db.packageGroup;
 const Agency = db.agency;
 const WorkingGroupAgency = db.workingGroupAgency;
 
@@ -53,8 +54,8 @@ exports.get = async (req, res) => {
 }
 
 exports.delete = async (req, res) => {
-    const allPackage = await Package.findAll({where: {group_id: req.params.id}});
-    if (allPackage.length > 0) {
+    const allPackageGroup = await PackageGroup.findAll({where: {groupId: req.params.id}});
+    if (allPackageGroup.length > 0) {
         res.status(400).json({message: 'This item can\'t delete.', status: 400});
         return;
     }

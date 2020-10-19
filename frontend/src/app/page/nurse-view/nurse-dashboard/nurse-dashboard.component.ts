@@ -1,21 +1,22 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {MatDialog} from '@angular/material/dialog';
 import * as moment from 'moment';
 
 import {AuthService} from '../../../service/auth/auth.service';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
-
+import {SessionExpireAlertComponent} from '../../../components/session-expire-alert/session-expire-alert.component';
 
 @Component({
   selector: 'app-nurse-dashboard',
   templateUrl: './nurse-dashboard.component.html',
   styleUrls: ['./nurse-dashboard.component.scss']
 })
-export class NurseDashboardComponent implements OnInit {
+export class NurseDashboardComponent implements OnInit, OnDestroy {
 
   isOpen = false;
   isRightMenuOpen = false;
@@ -52,19 +53,28 @@ export class NurseDashboardComponent implements OnInit {
   allKeywords = [];
 
   appointmentForm: FormGroup;
+  showAlert = false;
+  subsVar: any;
 
   constructor(
     public authService: AuthService,
     public httpService: HttpService,
     public breakpointObserver: BreakpointObserver,
     public router: Router,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public dialog: MatDialog
   ) {
   }
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 599px)');
+    let dialog;
+    this.subsVar = this.authService.showExpireAlertSubject.subscribe(value => {
+      if (value) {
+        dialog = this.dialog.open(SessionExpireAlertComponent, {disableClose: true});
+      }
+    });
 
     this.initForm();
     this.now = new Date();
@@ -83,12 +93,17 @@ export class NurseDashboardComponent implements OnInit {
     });
     this.httpService.get(URL_JSON.TEMPLATE + '/getWithQuery?receiver=1').subscribe((res: any) => {
       this.textTemplate = res;
-      console.log(this.textTemplate);
     });
 
     this.httpService.get(URL_JSON.TEMPLATE + '/getAllKeywords').subscribe((res: any) => {
       this.allKeywords = res;
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subsVar) {
+      this.subsVar.unsubscribe();
+    }
   }
 
   getCurrentDayAppointment = () => {
@@ -228,7 +243,6 @@ export class NurseDashboardComponent implements OnInit {
 
   logout = () => {
     this.authService.logout();
-    this.router.navigateByUrl('/login');
   }
 
   patientPrepared = () => {

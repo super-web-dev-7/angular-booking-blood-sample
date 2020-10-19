@@ -89,7 +89,6 @@ export class OpenDatesComponent implements OnInit {
 
   selectButton = (id) => {
     this.selectedButton = id;
-    console.log(id);
     if (id === 0) {
       this.dataSource.data = this.allAppointment;
       return;

@@ -44,10 +44,15 @@ exports.get = async (req, res) => {
 }
 
 exports.getWithQuery = async (req, res) => {
-    WorkingGroup.hasMany(Package, {foreignKey: 'group_id'});
-    Package.belongsTo(WorkingGroup, {foreignKey: 'group_id'});
-    const allPackage = await Package.findAll({where: {status: req.query.status}, include: [WorkingGroup]});
-    res.status(200).json(allPackage);
+    WorkingGroup.hasMany(PackageGroup, {foreignKey: 'groupId'});
+    PackageGroup.belongsTo(WorkingGroup, {foreignKey: 'groupId'});
+    const allPackage = await Package.findAll({where: {status: req.query.status}, raw: true, nest: true});
+    const response = [];
+    for (const packageOne of allPackage) {
+        const working_groups = await PackageGroup.findAll({where: {packageId: packageOne.id}, include: [WorkingGroup], raw: true, nest: true});
+        response.push({...packageOne, working_groups})
+    }
+    res.status(200).json(response);
 }
 
 exports.delete = async (req, res) => {

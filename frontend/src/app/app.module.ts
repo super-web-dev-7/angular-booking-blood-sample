@@ -20,6 +20,7 @@ import {MainLayoutModule} from './layout/main-layout/main-layout.module';
 import {SharedModule} from './shared/shared.module';
 import { AgDashboardComponent } from './page/ag-dashboard/ag-dashboard.component';
 import { ChartComponent } from './components/chart/chart.component';
+import { SessionExpireAlertComponent } from './components/session-expire-alert/session-expire-alert.component';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { ChartComponent } from './components/chart/chart.component';
     AuthComponent,
     AgDashboardComponent,
     ChartComponent,
+    SessionExpireAlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +44,7 @@ import { ChartComponent } from './components/chart/chart.component';
     SharedModule,
     NgCircleProgressModule
   ],
+  entryComponents: [SessionExpireAlertComponent],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
   ],

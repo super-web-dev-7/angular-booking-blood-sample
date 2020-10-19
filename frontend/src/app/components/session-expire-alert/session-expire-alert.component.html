@@ -1,0 +1,6 @@
+<h1 mat-dialog-title>Warning</h1>
+<div mat-dialog-content>Sie werden in {{remainSecond}} Sekunden ausgeloggt. Möchten Sie die Session fortsetzen?</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close (click)="resetToken()">YES</button>
+  <button mat-button mat-dialog-close (click)="removeToken()">NO</button>
+</div>
