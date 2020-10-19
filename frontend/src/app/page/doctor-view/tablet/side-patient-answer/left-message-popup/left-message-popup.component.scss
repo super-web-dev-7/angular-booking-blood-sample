@@ -34,3 +34,40 @@
   background-color: #ffffff;
   border: 1px solid #CFDCE6;
 }
+@media only screen and (max-width: 767px) {
+  .tablet-left-container {
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2000!important;
+    .main-message-div {
+      margin-top: 115px;
+      margin-left: 15px;
+      h1 {
+        font-size: 30px;
+        color: #384C61;
+        margin-left: 23px;
+      }
+      p {
+        color: #272140;
+        font-size: 16px;
+        margin-left: 23px;
+      }
+    }
+  }
+  .close {
+    position: absolute;
+    top: 48px;
+    right: 33px;
+  }
+  .text-area {
+    margin-top: 61px;
+    width: 80%;
+    height: 400px;
+    background-color: #ffffff;
+    border: 1px solid #CFDCE6;
+  }
+}

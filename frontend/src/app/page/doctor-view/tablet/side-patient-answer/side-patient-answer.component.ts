@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, OnInit, Output} from '@angular/core';
 import {SharedService} from '../../../../service/shared/shared.service';
 import {BreakpointObserver} from '@angular/cdk/layout';
 
@@ -13,6 +13,7 @@ export class SidePatientAnswerComponent implements OnInit {
   isSideHistory = false;
   isSuccess = false;
   isMobile = false;
+  isTablet = false;
   constructor(
     public sharedService: SharedService,
     public breakpointObserver: BreakpointObserver
@@ -21,6 +22,7 @@ export class SidePatientAnswerComponent implements OnInit {
   ngOnInit(): void {
     this.isSuccess = false;
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
+    this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.sharedService.closeHistory.subscribe(res => {
       this.isAnamnes = false;
       this.isSideHistory = false;
@@ -66,6 +68,7 @@ export class SidePatientAnswerComponent implements OnInit {
   openMessage = () => {
     if (this.isMobile) {
       this.close();
+      this.sharedService.tabletLeftSide.emit('t-mail');
     } else {
       this.sharedService.tabletLeftSide.emit('t-mail');
       this.isSideHistory = false;
@@ -74,6 +77,11 @@ export class SidePatientAnswerComponent implements OnInit {
 
   submit = () => {
     this.isSuccess = true;
+  }
+  @HostListener('window:resize', [])
+  private onResize = () => {
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
+    this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
   }
 
 }

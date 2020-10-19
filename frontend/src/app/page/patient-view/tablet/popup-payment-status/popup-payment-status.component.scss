@@ -4,15 +4,9 @@
   padding: 33px;
   background-color: #ffffff;
   .close {
-    width: 14px;
-    height: 14px;
     position: absolute;
     top: 29px;
     right: 33px;
-    mat-icon {
-      width: 14px;
-      height: 14px;
-    }
   }
   .main-side-container {
     padding-left: 31px;
@@ -37,15 +31,9 @@ h1 {
     padding: 24px!important;
     top:50px;
     .close {
-      width: 14px;
-      height: 14px;
       position: absolute!important;
       top: 24px!important;
       right: 24px!important;
-      mat-icon {
-        width: 14px;
-        height: 14px;
-      }
     }
     .main-side-container {
       margin-top: 26px;

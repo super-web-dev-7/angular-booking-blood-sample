@@ -3,13 +3,19 @@
     <mat-icon>clear</mat-icon>
   </button>
   <div class="main-message-div">
-    <h1>
+    <h1 *ngIf="isTablet">
       Nachricht
     </h1>
-    <p class="p-272140-tablet mt-38">
+    <h1 *ngIf="isMobile">Nachricht <span style="font-weight: 100">schreiben</span></h1>
+    <p class="p-272140-tablet mt-38" *ngIf="isTablet">
       Patienten-Nachricht via<br/> E-Mail beantworten
     </p>
-    <div class="text-area">
+    <p class="p-272140-tablet mt-38" *ngIf="isMobile">
+      Patienten-Nachricht via E-Mail beantworten
+    </p>
+    <div style="width: 100%;justify-content: center;display: flex">
+      <div class="text-area">
+      </div>
     </div>
     <div class="mt-47 text-center">
       <button
