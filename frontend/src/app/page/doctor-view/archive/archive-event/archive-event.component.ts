@@ -34,6 +34,7 @@ export class ArchiveEventComponent implements OnInit {
   }
 
   onSort = (event) => {
+    this.orderStatus = event;
   }
 
   editItem = () => {

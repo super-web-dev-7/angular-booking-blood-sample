@@ -33,6 +33,7 @@ export class ArchiveAnamnesComponent implements OnInit {
   }
 
   onSort = (event) => {
+    this.orderStatus = event;
   }
 
   anamnesView = () => {

@@ -34,6 +34,7 @@ export class LaboratoryReportComponent implements OnInit {
   }
 
   onSort = (event) => {
+    this.orderStatus = event;
   }
 
   editItem = () => {

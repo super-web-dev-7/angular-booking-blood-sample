@@ -53,6 +53,7 @@ export class DoctorDashboardComponent implements OnInit {
   }
 
   onSort = (event) => {
+    this.orderStatus = event;
   }
 
   editItem = (id) => {

@@ -44,6 +44,7 @@ export class AnamnesReleaseComponent implements OnInit {
   }
 
   onSort = (event) => {
+    this.orderStatus = event;
   }
 
   editItem = (id) => {

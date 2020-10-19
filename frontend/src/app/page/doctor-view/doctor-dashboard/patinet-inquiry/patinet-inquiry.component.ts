@@ -44,6 +44,7 @@ export class PatinetInquiryComponent implements OnInit {
   }
 
   onSort = (event) => {
+    this.orderStatus = event;
   }
 
   editItem = (id) => {

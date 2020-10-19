@@ -33,6 +33,7 @@ export class ArchivePatientComponent implements OnInit {
   }
 
   onSort = (event) => {
+    this.orderStatus = event;
   }
 
   searchItem = () => {

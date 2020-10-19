@@ -42,6 +42,7 @@ export class EventComponent implements OnInit {
   }
 
   onSort = (event) => {
+    this.orderStatus = event;
   }
 
   editItem = (id) => {
