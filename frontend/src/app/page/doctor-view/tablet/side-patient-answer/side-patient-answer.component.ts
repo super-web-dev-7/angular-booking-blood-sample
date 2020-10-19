@@ -32,8 +32,8 @@ export class SidePatientAnswerComponent implements OnInit {
   }
 
   openSideHistory = () => {
-    this.close();
     if (this.isMobile) {
+      this.close();
       this.sharedService.answer.emit('contact');
     } else {
       this.sharedService.tabletLeftSide.emit('t-history');
@@ -43,8 +43,8 @@ export class SidePatientAnswerComponent implements OnInit {
   }
 
   openAnamneses = () => {
-    this.close();
     if (this.isMobile) {
+      this.close();
       this.sharedService.answer.emit('medical');
     } else {
       this.sharedService.tabletLeftSide.emit('t-anamnes');
@@ -54,19 +54,21 @@ export class SidePatientAnswerComponent implements OnInit {
   }
 
   openRecall = () => {
-    this.close();
     if (this.isMobile) {
+      this.close();
       this.sharedService.answer.emit('call');
     } else {
       this.sharedService.tabletLeftSide.emit('t-recall');
+      this.isSideHistory = false;
     }
   }
 
   openMessage = () => {
-    this.close();
     if (this.isMobile) {
+      this.close();
     } else {
       this.sharedService.tabletLeftSide.emit('t-mail');
+      this.isSideHistory = false;
     }
   }
 

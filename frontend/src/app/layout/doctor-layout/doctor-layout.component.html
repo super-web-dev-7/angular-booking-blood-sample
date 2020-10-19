@@ -25,7 +25,7 @@
     #rightSide
     position="end"
     (closed)="isRightSidebarOpen = false"
-    [ngClass]="{'side-top': isMobile}"
+    [ngClass]="{'side-top': isMobile && !openRightMenu}"
   >
     <app-right-sidebar (closeSide)="closeRightSide($event)" *ngIf="openRightMenu"></app-right-sidebar>
     <app-side-patient-inquiry *ngIf="openPatientInquiry" (closeSide)="closeRightSide($event)"></app-side-patient-inquiry>
