@@ -78,7 +78,9 @@ export class AnamnesReleaseComponent implements OnInit {
         width: '1347px',
         position: {top: '2%', left: '22%'}
       });
-      this.afterClosed(dialogRef);
+      dialogRef.afterClosed().subscribe(res => {
+        this.sharedService.closeHistory.emit();
+      });
     }
   }
 

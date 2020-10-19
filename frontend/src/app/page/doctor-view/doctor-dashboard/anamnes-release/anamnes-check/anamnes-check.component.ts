@@ -8,22 +8,22 @@ import {SharedService} from '../../../../../service/shared/shared.service';
 })
 export class AnamnesCheckComponent implements OnInit {
   isCheckContact = false;
-  isCallPatient = false;
   constructor(
     private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
+    this.sharedService.closeHistory.subscribe(res => {
+      this.isCheckContact = false;
+    });
   }
 
   openCheckContact = () => {
     this.isCheckContact = true;
-    this.isCallPatient = true;
     this.sharedService.check.emit('v-contact');
   }
 
   openCallPatient = () => {
-    this.isCallPatient = true;
     this.isCheckContact = false;
     this.sharedService.check.emit('call-patient');
   }

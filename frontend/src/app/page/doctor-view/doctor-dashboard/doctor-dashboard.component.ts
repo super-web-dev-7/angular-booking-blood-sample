@@ -87,7 +87,9 @@ export class DoctorDashboardComponent implements OnInit {
       dialogRef = this.dialog.open(AnswerInquiryComponent, {
         width: '1347px', position: {top: '5%', left: '21%'}
       });
-      this.afterClosed(dialogRef);
+      dialogRef.afterClosed().subscribe(res => {
+        this.sharedService.closeHistory.emit();
+      });
     }
   }
 
@@ -116,7 +118,9 @@ export class DoctorDashboardComponent implements OnInit {
         width: '1347px',
         position: {top: '2%', left: '22%'}
       });
-      this.afterClosed(dialogRef);
+      dialogRef.afterClosed().subscribe(res => {
+        this.sharedService.closeHistory.emit();
+      });
     }
   }
 

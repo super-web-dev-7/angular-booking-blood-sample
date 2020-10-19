@@ -56,10 +56,16 @@ export class DoctorLayoutComponent implements OnInit {
     this.sharedService.answer.subscribe(res => {
       if (res === 'medical') {
         this.openMedicalHistory = true;
+        this.openContactHistory = false;
+        this.openPatientCall = false;
       } else if (res === 'contact') {
         this.openContactHistory = true;
-      } else {
+        this.openMedicalHistory = false;
+        this.openPatientCall = false;
+      } else if (res === 'call') {
         this.openPatientCall = true;
+        this.openMedicalHistory = false;
+        this.openContactHistory = false;
       }
     });
     this.sharedService.closeHistory.subscribe(res => {
@@ -76,8 +82,10 @@ export class DoctorLayoutComponent implements OnInit {
     this.sharedService.check.subscribe(res => {
       if (res === 'v-contact') {
         this.openCheckContact = true;
+        this.openCallPatient = false;
       } else {
         this.openCallPatient = true;
+        this.openCheckContact = false;
       }
     });
     this.sharedService.tabletSide.subscribe(res => {

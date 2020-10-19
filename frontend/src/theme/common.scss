@@ -473,7 +473,7 @@ table thead tr th {
   height: 50px;
   color: #ffffff;
   font-size: 1rem;
-  background-color: #384C61;
+  background-color: var(--primary-color);
 }
 .custom-button-C7D {
   background-color: #C7D7E3;
@@ -485,7 +485,7 @@ table thead tr th {
 .tablet-header-button-384 {
   height: 35px;
   color: #ffffff;
-  background-color: #384C61;
+  background-color: var(--primary-color);
   border-radius: 23px;
   font-size: 14px;
   margin-right: 5px;

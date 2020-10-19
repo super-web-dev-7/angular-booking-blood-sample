@@ -83,6 +83,7 @@ export class PatinetInquiryComponent implements OnInit {
             height: '308px'
           });
         }
+        this.sharedService.closeHistory.emit();
       });
     }
   }
