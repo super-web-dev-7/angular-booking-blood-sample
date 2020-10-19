@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
@@ -8,6 +8,8 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 })
 export class PopupShiftScheduleComponent implements OnInit {
   moveForm: FormGroup;
+  @Input() isMobile;
+  @Input() isTablet;
 
   @Output() closeSide = new EventEmitter();
   constructor(

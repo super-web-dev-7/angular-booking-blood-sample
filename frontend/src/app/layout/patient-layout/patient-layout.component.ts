@@ -27,6 +27,8 @@ export class PatientLayoutComponent implements OnInit {
   openNewAppointment = false;
   openArrange = false;
   openHistory = false;
+  title: string;
+  titleEnd: string;
 
   constructor(
     public authService: AuthService,
@@ -46,6 +48,8 @@ export class PatientLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.isOpen = true;
+    this.title = 'dashboard';
+    this.titleEnd = '';
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet || this.isMobile) {
@@ -54,24 +58,40 @@ export class PatientLayoutComponent implements OnInit {
     this.sharedService.patientPopup.subscribe(res => {
       if (res === 'cancel') {
         this.openCancelAppointment = true;
+        this.title = 'Termin';
+        this.titleEnd = 'stornieren';
       } else if (res === 'move') {
         this.openMove = true;
+        this.title = 'Termin';
+        this.titleEnd = 'verschieben';
       } else if (res === 'edit') {
         this.openEdit = true;
+        this.title = 'Anamnese';
+        this.titleEnd = 'bearbeiten';
       } else if (res === 'callback') {
         this.openCallback = true;
+        this.title = 'Rückrufbitte';
+        this.titleEnd = 'Arzt';
       } else if (res === 'sister') {
         this.openCallSister = true;
+        this.title = 'Schwester';
+        this.titleEnd = 'anrufen';
       } else if (res === 'package') {
         this.openPackage = true;
+        this.title = 'Paket';
+        this.titleEnd = 'wechseln';
       } else if (res === 'payment') {
         this.openPayment = true;
+        this.title = 'Zahlungs';
+        this.titleEnd = 'status';
       } else if (res === 'new') {
         this.openNewPopup = true;
       } else if (res === 'arrange') {
         this.openArrange = true;
       } else if (res === 'history') {
         this.openHistory = true;
+        this.title = 'Termin';
+        this.titleEnd = 'Historie';
       }
       this.isRightSidebarOpen = true;
     });
@@ -99,6 +119,8 @@ export class PatientLayoutComponent implements OnInit {
     this.menuOpen = false;
     this.openArrange = false;
     this.openHistory = false;
+    this.title = 'dashboard';
+    this.titleEnd = '';
   }
 
   closeLeftSide = (event) => {

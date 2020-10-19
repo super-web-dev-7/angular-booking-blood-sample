@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {MatDialogRef} from '@angular/material/dialog';
@@ -13,8 +13,8 @@ export class PopupCancelAppointmentComponent implements OnInit {
   cancelForm: FormGroup;
   showMessage: boolean;
   success = false;
-  isMobile = false;
-  isTablet = false;
+  @Input() isMobile;
+  @Input() isTablet;
   constructor(
     public formBuilder: FormBuilder,
     public breakpointObserver: BreakpointObserver,
@@ -25,8 +25,6 @@ export class PopupCancelAppointmentComponent implements OnInit {
     this.cancelForm = this.formBuilder.group({
       message: ['']
     });
-    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
-    this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
   }
 
   close = () => {
@@ -44,11 +42,4 @@ export class PopupCancelAppointmentComponent implements OnInit {
   get f(): any {
     return this.cancelForm.controls;
   }
-
-  @HostListener('window:resize', [])
-  private onResize = () => {
-    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
-    this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-  }
-
 }

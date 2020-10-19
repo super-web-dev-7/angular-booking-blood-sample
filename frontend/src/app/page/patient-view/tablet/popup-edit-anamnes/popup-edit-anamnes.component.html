@@ -4,7 +4,7 @@
     <mat-icon>clear</mat-icon>
   </button>
   <div class="main-side-container" *ngIf="!saved">
-    <h1>Anamnese <span style="font-weight: 100">bearbeiten</span></h1>
+    <h1 *ngIf="isTablet">Anamnese <span style="font-weight: 100">bearbeiten</span></h1>
     <p class="p-272140 mt-38">Ihre persönlichen Daten</p>
     <mat-form-field class="mt-4 w-90">
       <mat-label>Sebastian Naumann</mat-label>

@@ -13,7 +13,6 @@ import {AppointmentHistoryComponent} from './appointment-history/appointment-his
 import {Router} from '@angular/router';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {SharedService} from '../../../service/shared/shared.service';
-import {PopupCancelAppointmentComponent} from "../tablet/popup-cancel-appointment/popup-cancel-appointment.component";
 
 @Component({
   selector: 'app-patient-dashboard',

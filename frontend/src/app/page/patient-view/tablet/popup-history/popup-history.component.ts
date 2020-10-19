@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-popup-history',
@@ -7,6 +7,8 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class PopupHistoryComponent implements OnInit {
   @Output() closeSide = new EventEmitter();
+  @Input() isMobile;
+  @Input() isTablet;
   constructor() { }
 
   ngOnInit(): void {
