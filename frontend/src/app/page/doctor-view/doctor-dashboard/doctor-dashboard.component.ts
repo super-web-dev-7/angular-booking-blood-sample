@@ -10,6 +10,7 @@ import {AnamnesCheckComponent} from './anamnes-release/anamnes-check/anamnes-che
 import {ViewAppointmentComponent} from './event/view-appointment/view-appointment.component';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {SharedService} from '../../../service/shared/shared.service';
+import {SearchInputComponent} from './search-input/search-input.component';
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -31,6 +32,7 @@ export class DoctorDashboardComponent implements OnInit {
   displayedColumns: string[] = ['no', 'patientName', 'appointmentDate', 'status', 'actions'];
   displayedColumnsE: string[] = ['no', 'date', 'time', 'package', 'appointmentLocation', 'doctorLast', 'status', 'actions'];
   isTablet = false;
+  isMobile = false;
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
@@ -58,7 +60,8 @@ export class DoctorDashboardComponent implements OnInit {
 
   searchItem = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
+    if (this.isTablet || this.isMobile) {
       this.sharedService.tabletSide.emit('inquiry');
     } else {
       let dialogRef: MatDialogRef<any>;
@@ -76,7 +79,8 @@ export class DoctorDashboardComponent implements OnInit {
 
   openAnswer = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
+    if (this.isTablet || this.isMobile) {
       this.sharedService.tabletSide.emit('answer');
     } else {
       let dialogRef: MatDialogRef<any>;
@@ -103,7 +107,8 @@ export class DoctorDashboardComponent implements OnInit {
 
   checkAnamnes = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
+    if (this.isTablet || this.isMobile) {
       this.sharedService.tabletSide.emit('c-anam');
     } else {
       let dialogRef: MatDialogRef<any>;
@@ -117,7 +122,8 @@ export class DoctorDashboardComponent implements OnInit {
 
   viewAppointment = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
+    if (this.isTablet || this.isMobile) {
       this.sharedService.tabletSide.emit('v-appointment');
     } else {
       let dialogRef: MatDialogRef<any>;
@@ -126,5 +132,13 @@ export class DoctorDashboardComponent implements OnInit {
       });
       this.afterClosed(dialogRef);
     }
+  }
+
+  openSearchDialog = () => {
+    let dialogRef: MatDialogRef<any>;
+    dialogRef = this.dialog.open(SearchInputComponent, {
+      width: '100vw', maxWidth: '100vw', maxHeight: '100%', position: {top: '-10px'}
+    });
+    this.afterClosed(dialogRef);
   }
 }

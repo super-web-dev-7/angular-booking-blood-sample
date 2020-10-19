@@ -61,7 +61,15 @@ h1 {
     font-size: 16px;
   }
 }
+
 .active-button {
   background-color: #384C61;
   color: #ffffff;
+}
+
+@media only screen and (max-width: 600px) {
+  .side-container {
+    width: 100vw;
+    padding: 0;
+  }
 }

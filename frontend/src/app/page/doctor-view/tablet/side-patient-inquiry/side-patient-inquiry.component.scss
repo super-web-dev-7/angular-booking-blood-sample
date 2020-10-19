@@ -47,3 +47,9 @@ h1 {
 .mr-10 {
   margin-right: 10px;
 }
+@media only screen and (max-width: 600px) {
+  .side-container {
+    width: 100vw;
+    padding: 0;
+  }
+}

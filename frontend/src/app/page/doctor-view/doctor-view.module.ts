@@ -38,6 +38,7 @@ import { LeftHistoryPopupComponent } from './tablet/side-patient-answer/left-his
 import { LeftRecallComponent } from './tablet/side-patient-answer/left-recall/left-recall.component';
 import { LeftMessagePopupComponent } from './tablet/side-patient-answer/left-message-popup/left-message-popup.component';
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
+import { SearchInputComponent } from './doctor-dashboard/search-input/search-input.component';
 
 
 
@@ -74,6 +75,7 @@ import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
     LeftHistoryPopupComponent,
     LeftRecallComponent,
     LeftMessagePopupComponent,
+    SearchInputComponent,
   ],
   exports: [
     RightSidebarComponent,

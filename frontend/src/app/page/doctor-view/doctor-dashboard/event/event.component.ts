@@ -6,6 +6,7 @@ import {eventData} from '../../../../utils/mock_data';
 import {ViewAppointmentComponent} from './view-appointment/view-appointment.component';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {SharedService} from '../../../../service/shared/shared.service';
+import {SearchInputComponent} from '../search-input/search-input.component';
 
 @Component({
   selector: 'app-event',
@@ -62,5 +63,13 @@ export class EventComponent implements OnInit {
       });
       this.afterClosed(dialogRef);
     }
+  }
+
+  openSearchDialog = () => {
+    let dialogRef: MatDialogRef<any>;
+    dialogRef = this.dialog.open(SearchInputComponent, {
+      width: '100vw', maxWidth: '100vw', maxHeight: '100%', position: {top: '-10px'}
+    });
+    this.afterClosed(dialogRef);
   }
 }

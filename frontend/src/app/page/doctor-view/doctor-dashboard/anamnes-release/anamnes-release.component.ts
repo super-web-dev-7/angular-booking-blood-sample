@@ -7,6 +7,7 @@ import {AnamnesViewComponent} from './anamnes-view/anamnes-view.component';
 import {AnamnesCheckComponent} from './anamnes-check/anamnes-check.component';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {SharedService} from '../../../../service/shared/shared.service';
+import {SearchInputComponent} from '../search-input/search-input.component';
 
 @Component({
   selector: 'app-anamnes-release',
@@ -79,5 +80,13 @@ export class AnamnesReleaseComponent implements OnInit {
       });
       this.afterClosed(dialogRef);
     }
+  }
+
+  openSearchDialog = () => {
+    let dialogRef: MatDialogRef<any>;
+    dialogRef = this.dialog.open(SearchInputComponent, {
+      width: '100vw', maxWidth: '100vw', maxHeight: '100%', position: {top: '-10px'}
+    });
+    this.afterClosed(dialogRef);
   }
 }

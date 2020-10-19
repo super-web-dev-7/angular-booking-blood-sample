@@ -8,6 +8,7 @@ import {AnswerInquiryComponent} from '../answer-inquiry/answer-inquiry.component
 import {SuccessDialogComponent} from '../answer-inquiry/success-dialog/success-dialog.component';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {SharedService} from '../../../../service/shared/shared.service';
+import {SearchInputComponent} from '../search-input/search-input.component';
 
 @Component({
   selector: 'app-patinet-inquiry',
@@ -85,5 +86,11 @@ export class PatinetInquiryComponent implements OnInit {
       });
     }
   }
-
+  openSearchDialog = () => {
+    let dialogRef: MatDialogRef<any>;
+    dialogRef = this.dialog.open(SearchInputComponent, {
+      width: '100vw', maxWidth: '100vw', maxHeight: '100%', position: {top: '-10px'}
+    });
+    this.afterClosed(dialogRef);
+  }
 }

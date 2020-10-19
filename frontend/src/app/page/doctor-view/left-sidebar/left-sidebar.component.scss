@@ -28,3 +28,9 @@
     }
   }
 }
+
+@media only screen and (max-width: 767px) {
+  .doctor-left-sidebar {
+    width: 100vw;
+  }
+}

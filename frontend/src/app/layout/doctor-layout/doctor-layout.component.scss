@@ -55,3 +55,16 @@ mat-sidenav-container {
     padding-right: 30px;
   }
 }
+
+.side-top {
+  top: 260px;
+  border-radius: 10px;
+}
+
+@media only screen and (max-width: 767px) {
+  mat-sidenav-container {
+    ::ng-deep .mat-drawer-backdrop {
+      display: none;
+    }
+  }
+}
