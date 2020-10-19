@@ -1,13 +1,18 @@
 :host {
-  padding: 100px 10px;
+  padding: 170px 10px 55px 10px;
   display: flex;
   justify-content: center;
 }
 .login-form {
-  min-width: 300px;
+  width: 375px;
   //height: 300px;
-  //align-items: center;
+  align-items: center;
   justify-content: center;
+}
+mat-card {
+  height: 254px!important;
+  border-radius: 23px;
+  align-items: center;
 }
 
 button {
@@ -15,11 +20,18 @@ button {
 }
 
 mat-form-field {
-  margin: 10px 0 5px;
+  width: 290px;
+  margin-top: 15px;
 }
 
 mat-card-title, mat-card-header {
   display: flex;
   justify-content: center;
+}
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px!important;
+  margin-left: 26px!important;
 }
 
