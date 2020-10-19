@@ -22,37 +22,25 @@
 h1 {
   font-size: 36px;
 }
-.warning-div {
-  width: 6px;
-  height: 15px;
+.before-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
   background-color: #384C61;
-  padding-left: 5px;
-  margin-top: 13px;
+  left: -6px;
 }
-.warning-icon {
-  width: 15px;
-  height: 15px;
-  margin-left: -4px;
-  margin-top: -5px;
+.location-a {
+  top: 120px;
 }
-.add-message {
-  margin-top: 40px;
-  .message-div {
-    margin-top: 13px;
-    width: 354px;
-    height: 220px;
-    opacity: 1;
-    padding-left: 76px;
-    p {
-      color: #A9BBC9;
-      font-size: 16px;
-    }
-    hr.bottom-line {
-      width: 210px;
-      border: 1px solid #A9BBC9;
-      float: left
-    }
-  }
+.location-b {
+  top: 205px;
+}
+.location-c {
+  top: 264px;
+}
+.location-d {
+  top: 327px
 }
 @media only screen and (max-width: 767px) {
   .patient-popup-container {

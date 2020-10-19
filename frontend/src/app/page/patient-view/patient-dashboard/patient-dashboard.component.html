@@ -1,7 +1,7 @@
 <h3 class="header-title" *ngIf="!isTablet && !isMobile">Dashboard</h3>
 <div class="main-container">
   <div class="notify-container">
-    <div class="d-flex-between">
+    <div class="d-flex-between" *ngIf="!isMobile">
       <div class="notify-board">
         <div class="d-flex a-center">
           <div class="n-circle" style="background: #4A90E2">
@@ -30,7 +30,7 @@
         <p class="p-0">0</p>
       </div>
     </div>
-    <div class="d-flex-between mt-15">
+    <div class="d-flex-between mt-15" *ngIf="!isMobile">
       <div class="notify-board">
         <div class="d-flex a-center">
           <div class="n-circle" style="background: #89DF8C">
@@ -116,7 +116,7 @@
         </div>
       </div>
       <div class="col-md-4">
-        <div class="notify-view" style="top: 0px">
+        <div class="notify-view additional-class">
           <div>
             <div class="main-view" style="border-color: #F389CC">
               <p class="p-pink ml-20">
@@ -169,7 +169,7 @@
         </div>
       </div>
     </div>
-    <div class="row mt-20">
+    <div class="row row-space">
       <div class="col-md-4">
         <div class="notify-view">
           <div class="main-view" style="border-color: #89DF8C">
@@ -198,6 +198,13 @@
           </button>
         </div>
       </div>
+    </div>
+    <div class="d-center mt-38" *ngIf="isMobile">
+      <button
+        mat-stroked-button
+        class="custom-button-384">
+        Neuen Termin vereinbaren
+      </button>
     </div>
   </div>
   <mat-menu

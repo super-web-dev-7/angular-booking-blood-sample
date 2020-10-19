@@ -28,6 +28,7 @@ import { PopupCallSisterComponent } from './tablet/popup-call-sister/popup-call-
 import { PopupPaymentStatusComponent } from './tablet/popup-payment-status/popup-payment-status.component';
 import { PopupNewAppointmentComponent } from './tablet/popup-new-appointment/popup-new-appointment.component';
 import { PopupArrangeAppointmentComponent } from './tablet/popup-arrange-appointment/popup-arrange-appointment.component';
+import { PopupHistoryComponent } from './tablet/popup-history/popup-history.component';
 
 
 
@@ -54,20 +55,22 @@ import { PopupArrangeAppointmentComponent } from './tablet/popup-arrange-appoint
         PopupCallSisterComponent,
         PopupPaymentStatusComponent,
         PopupNewAppointmentComponent,
-        PopupArrangeAppointmentComponent
+        PopupArrangeAppointmentComponent,
+        PopupHistoryComponent
     ],
-  exports: [
-    PatientSidebarComponent,
-    PopupCancelAppointmentComponent,
-    PopupCallSisterComponent,
-    PopupCallbackDoctorComponent,
-    PopupChangePackageComponent,
-    PopupEditAnamnesComponent,
-    PopupPaymentStatusComponent,
-    PopupShiftScheduleComponent,
-    PopupNewAppointmentComponent,
-    PopupArrangeAppointmentComponent
-  ],
+    exports: [
+        PatientSidebarComponent,
+        PopupCancelAppointmentComponent,
+        PopupCallSisterComponent,
+        PopupCallbackDoctorComponent,
+        PopupChangePackageComponent,
+        PopupEditAnamnesComponent,
+        PopupPaymentStatusComponent,
+        PopupShiftScheduleComponent,
+        PopupNewAppointmentComponent,
+        PopupArrangeAppointmentComponent,
+        PopupHistoryComponent
+    ],
     imports: [
         CommonModule,
         MaterialModule,

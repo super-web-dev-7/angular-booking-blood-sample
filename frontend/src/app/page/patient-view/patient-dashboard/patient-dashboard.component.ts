@@ -13,6 +13,7 @@ import {AppointmentHistoryComponent} from './appointment-history/appointment-his
 import {Router} from '@angular/router';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {SharedService} from '../../../service/shared/shared.service';
+import {PopupCancelAppointmentComponent} from "../tablet/popup-cancel-appointment/popup-cancel-appointment.component";
 
 @Component({
   selector: 'app-patient-dashboard',
@@ -53,7 +54,8 @@ export class PatientDashboardComponent implements OnInit {
 
   cancelAppointment = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
+    if (this.isTablet || this.isMobile) {
       this.sharedService.patientPopup.emit('cancel');
     } else {
       let dialogRef: MatDialogRef<any>;
@@ -67,7 +69,7 @@ export class PatientDashboardComponent implements OnInit {
 
   moveAppointment = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    if (this.isTablet || this.isMobile) {
       this.sharedService.patientPopup.emit('move');
     } else {
       let dialogRef: MatDialogRef<any>;
@@ -81,7 +83,7 @@ export class PatientDashboardComponent implements OnInit {
 
   editAnamnesis = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    if (this.isTablet || this.isMobile) {
       this.sharedService.patientPopup.emit('edit');
     } else {
       let dialogRef: MatDialogRef<any>;
@@ -100,7 +102,7 @@ export class PatientDashboardComponent implements OnInit {
 
   changePackage = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    if (this.isTablet || this.isMobile) {
       this.sharedService.patientPopup.emit('package');
     } else {
       let dialogRef: MatDialogRef<any>;
@@ -118,7 +120,7 @@ export class PatientDashboardComponent implements OnInit {
 
   openCallbackDoctor = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    if (this.isTablet || this.isMobile) {
       this.sharedService.patientPopup.emit('callback');
     } else {
       let dialogRef: MatDialogRef<any>;
@@ -132,7 +134,7 @@ export class PatientDashboardComponent implements OnInit {
 
   callSister = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    if (this.isTablet || this.isMobile) {
       this.sharedService.patientPopup.emit('sister');
     } else {
       let dialogRef: MatDialogRef<any>;
@@ -146,7 +148,7 @@ export class PatientDashboardComponent implements OnInit {
 
   openPaymentStatus = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    if (this.isTablet || this.isMobile) {
       this.sharedService.patientPopup.emit('payment');
     } else {
       let dialogRef: MatDialogRef<any>;
@@ -160,7 +162,7 @@ export class PatientDashboardComponent implements OnInit {
 
   newAppointment = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    if (this.isTablet || this.isMobile) {
       this.sharedService.patientPopup.emit('new');
     } else {
       let dialogRef: MatDialogRef<any>;
@@ -179,7 +181,7 @@ export class PatientDashboardComponent implements OnInit {
 
   openHistory = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    if (this.isTablet || this.isMobile) {
       this.sharedService.patientPopup.emit('history');
     } else {
       let dialogRef: MatDialogRef<any>;

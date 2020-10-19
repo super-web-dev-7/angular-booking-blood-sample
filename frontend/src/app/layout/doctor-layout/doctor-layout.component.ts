@@ -117,7 +117,7 @@ export class DoctorLayoutComponent implements OnInit {
   }
 
   closeRightSide = (event) => {
-    this.isRightSidebarOpen = event;
+    this.isRightSidebarOpen = false;
     this.openPatientInquiry = false;
     this.openPatientAnswer = false;
     this.viewAnamnes = false;

@@ -174,3 +174,37 @@
 .mat-icon {
 
 }
+.row-space {
+  margin-top: 20px;
+}
+.additional-class {
+  top: 0px;
+  width: calc(100% - 30px) !important;
+  left: 15px!important;
+  position: absolute!important;
+}
+@media only screen and (max-width: 1023px) {
+  .personal-info {
+    .p-272140 {
+      font-size: 14px!important;
+      color: #272140
+    }
+  }
+  .notify-view {
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    width: 99%;
+    border-radius: 15px;
+    background-color: #ffffff;
+    margin-top: 15px;
+  }
+  .additional-class {
+    position: relative!important;
+    width: 100% !important;
+    left: 0px!important;
+  }
+  .row-space {
+    margin-top: 0px!important;
+  }
+}

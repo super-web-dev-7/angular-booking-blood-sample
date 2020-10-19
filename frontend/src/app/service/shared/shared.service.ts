@@ -12,7 +12,7 @@ export class SharedService {
   public tabletLeftSide: EventEmitter<any>;
   public patientLeft: EventEmitter<any>;
   public patientPopup: EventEmitter<any>;
-  public closePopup: EventEmitter<any>;
+  public patientMobile: EventEmitter<any>;
 
   constructor() {
     this.test = new EventEmitter<any>();
@@ -23,6 +23,6 @@ export class SharedService {
     this.tabletLeftSide = new EventEmitter<any>();
     this.patientLeft = new EventEmitter<any>();
     this.patientPopup = new EventEmitter<any>();
-    this.closePopup = new EventEmitter<any>();
+    this.patientMobile = new EventEmitter<any>();
   }
 }

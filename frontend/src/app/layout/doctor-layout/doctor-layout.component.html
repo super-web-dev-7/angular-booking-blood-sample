@@ -7,7 +7,7 @@
 <app-left-anamnese *ngIf="tAnamnes"></app-left-anamnese>
 <app-left-recall *ngIf="tRecall"></app-left-recall>
 <app-left-message-popup *ngIf="tMessage"></app-left-message-popup>
-<mat-sidenav-container>
+<mat-sidenav-container (backdropClick)="closeRightSide($event)">
   <mat-sidenav
     [opened]="isOpen"
     [mode]="isMobile || isTablet ? 'over' : 'side'"

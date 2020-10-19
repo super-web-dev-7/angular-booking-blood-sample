@@ -1,4 +1,4 @@
-<mat-sidenav-container (backdropClick)="rightSide.close()">
+<mat-sidenav-container (backdropClick)="closeRightSide($event)">
   <mat-sidenav
     [opened]="isOpen"
     [mode]="isMobile || isTablet ? 'over' : 'side'"
@@ -14,6 +14,7 @@
     [opened]="isRightSidebarOpen && currentUser.role === 'Patient'"
     [mode]="'over'"
     #rightSide
+    [ngClass]="{'mobile-mat-sidenav': isMobile && !menuOpen}"
     position="end"
     (closed)="isRightSidebarOpen = false"
   >
@@ -27,14 +28,17 @@
     <app-popup-shift-schedule (closeSide)="closeRightSide($event)" *ngIf="openMove"></app-popup-shift-schedule>
     <app-popup-new-appointment (closeSide)="closeRightSide($event)" *ngIf="openNewPopup"></app-popup-new-appointment>
     <app-popup-arrange-appointment (closeSide)="closeRightSide($event)" *ngIf="openArrange"></app-popup-arrange-appointment>
+    <app-popup-history (closeSide)="closeRightSide($event)" *ngIf="openHistory"></app-popup-history>
   </mat-sidenav>
-  <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Patient' ? '#F2F7FB' : '#fafafa'}">
+  <mat-sidenav-content
+    class="page-wrapper"
+    [ngStyle]="{'background' : currentUser.role === 'Patient' ? '#F2F7FB' : '#fafafa'}">
     <div class="background-container" *ngIf="!isMobile && !isTablet"></div>
     <app-patient-header (setOpen)="setOpen($event)" [isMobile]="isMobile" (setRightOpen)="setRightOpen($event)"></app-patient-header>
     <div class="main-content-container">
       <div class="subheader">
-        <h1 *ngIf="isTablet"><b>Hallo {{currentUser.role}}</b>, Dashboard</h1>
-        <h1 *ngIf="!isTablet">Hallo, <b>{{currentUser.role}}</b>.</h1>
+        <h1 *ngIf="isTablet || isMobile"><b>Hallo {{currentUser.role}}</b>, Dashboard</h1>
+        <h1 *ngIf="!isTablet && !isMobile">Hallo, <b>{{currentUser.role}}</b>.</h1>
       </div>
       <router-outlet></router-outlet>
     </div>

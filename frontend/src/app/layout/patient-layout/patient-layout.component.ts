@@ -26,6 +26,7 @@ export class PatientLayoutComponent implements OnInit {
   openNewPopup = false;
   openNewAppointment = false;
   openArrange = false;
+  openHistory = false;
 
   constructor(
     public authService: AuthService,
@@ -69,6 +70,8 @@ export class PatientLayoutComponent implements OnInit {
         this.openNewPopup = true;
       } else if (res === 'arrange') {
         this.openArrange = true;
+      } else if (res === 'history') {
+        this.openHistory = true;
       }
       this.isRightSidebarOpen = true;
     });
@@ -84,7 +87,7 @@ export class PatientLayoutComponent implements OnInit {
   }
 
   closeRightSide = (event) => {
-    this.isRightSidebarOpen = event;
+    this.isRightSidebarOpen = false;
     this.openCancelAppointment = false;
     this.openMove = false;
     this.openEdit = false;
@@ -95,6 +98,7 @@ export class PatientLayoutComponent implements OnInit {
     this.openNewPopup = false;
     this.menuOpen = false;
     this.openArrange = false;
+    this.openHistory = false;
   }
 
   closeLeftSide = (event) => {

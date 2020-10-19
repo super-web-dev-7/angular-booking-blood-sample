@@ -50,3 +50,16 @@ mat-sidenav-container {
     }
   }
 }
+@media only screen and (max-width: 767px) {
+  .main-content-container {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  ::ng-deep .mobile-mat-sidenav {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 183px!important;
+    border-radius: 20px;
+  }
+}
