@@ -1,0 +1,157 @@
+table td {
+  padding-right: 0;
+}
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.mat-header-cell {
+  font-size: 14px;
+  font-weight: 500;
+}
+.mat-cell, .mat-footer-cell {
+  font-size: 12px;
+}
+.custom-button-pink {
+  background-color: #F389CC;
+  border-radius: 25px !important;
+  height: 50px;
+  font-size: 1rem;
+  color: #FFFFFF;
+}
+.custom-button-green {
+  background-color: #50E3C2;
+  border-radius: 25px !important;
+  height: 50px;
+  font-size: 1rem;
+  color: #FFFFFF;
+  margin-left: 15px;
+}
+.custom-button-light-green {
+  background-color: #89DF8C;
+  border-radius: 25px !important;
+  height: 50px;
+  font-size: 1rem;
+  color: #FFFFFF;
+  margin-left: 15px;
+}
+.mb-201 {
+  margin-bottom: 201px;
+}
+.spec-text {
+  color: #E87C60;
+  display: flex;
+}
+.mr-10 {
+  margin-right: 10px;
+}
+.custom-doctor-button {
+  border-radius: 18px !important;
+  height: 71px;
+  font-size: 1rem;
+  padding-left: 40px;
+  color: #FFFFFF;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+.mt-54 {
+  margin-top: 54px;
+}
+.mt-30 {
+  margin-top: 30px;
+}
+.pink-b-0 {
+  background-color: #F389CC;
+  right: -180px;
+}
+.blue-b-0 {
+  background-color: #50E3C2;
+  right: -180px;
+}
+.green-b-0 {
+  background-color: #89DF8C;
+  right: -97px;
+}
+
+@media only screen and (max-width: 1023px) {
+  .pink-b-0 {
+    background-color: #F389CC;
+    left: 0px
+  }
+  .blue-b-0 {
+    background-color: #50E3C2;
+    left: 0px
+  }
+  .green-b-0 {
+    background-color: #89DF8C;
+    left: 0px
+  }
+  .custom-doctor-button {
+    border-radius: 18px !important;
+    height: 70px;
+    font-size: 1rem;
+    color: #FFFFFF;
+    padding-top: -10px!important;
+    padding-left: 10px!important;
+    padding-right: 10px!important;
+    position: absolute;
+    top: -42px;
+    z-index: -1;
+    span {
+      position: relative;
+      top: -12px;
+    }
+  }
+  .mt-30 {
+    margin-top: 60px;
+  }
+  .mt-54 {
+    margin-top: 64px;
+  }
+  .custom-button-green {
+    background-color: #50E3C2;
+    border-radius: 25px !important;
+    height: 50px;
+    font-size: 1rem;
+    color: #FFFFFF;
+    margin-left: 10px!important;
+  }
+  .custom-button-light-green {
+    background-color: #89DF8C;
+    border-radius: 25px !important;
+    height: 50px;
+    font-size: 1rem;
+    color: #FFFFFF;
+    margin-left: 10px!important;
+  }
+  .t-width {
+    width: 24% !important;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .custom-button-green {
+    margin-left: 0!important;
+  }
+  .custom-button-light-green {
+    margin-left: 0!important;
+  }
+}
+::ng-deep .mat-sort-header-arrow[style] {
+
+  // Hide default arrow stem
+  .mat-sort-header-stem {
+    display: none;
+  }
+  .mat-sort-header-indicator {
+    opacity: 1;
+    color: black;
+    font-weight: bold;
+
+    // Hide default arrow as its composed of left, right and middle
+    .mat-sort-header-pointer-left, .mat-sort-header-pointer-right, .mat-sort-header-pointer-middle  {
+      display: none;
+    }
+  }
+}

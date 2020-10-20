@@ -1,0 +1,83 @@
+<form [formGroup]="cancelForm" (ngSubmit)="submit()">
+  <div class="pd-17">
+    <h1 style="margin-top: 9px">Termin  <span style="font-weight: 100"> stornieren</span></h1>
+    <div class="mt-47" *ngIf="!success">
+      <div class="cancel-des">
+        <p>!</p>
+        <p class="ml-20">Bei einer Terminstornierung mit weniger als 48h Vorlauf vor Terminbeginn<br/>
+          fallen 30€ Aufwandsentschädigung an.
+        </p>
+      </div>
+      <div class="appointment-data">
+        <p class="p-272140">
+          12.09.2020 09:00 - 10:15
+        </p>
+        <p class="p-576E82">
+          Check-Up: Männergesundheit
+        </p>
+        <p class="p-272140">
+          Marienstraße 4, 15387 Berlin
+        </p>
+      </div>
+      <div class="add-message">
+        <div
+          class="d-flex avatar red-yellow justify-content-between"
+          (click)="openMessage()"
+        >
+          <div class="d-flex align-items-center">
+            <div class="round">
+              <mat-icon>stop_circle</mat-icon>
+            </div>
+            <div>Nachricht hinzufügen</div>
+          </div>
+        </div>
+        <div class="message-div" *ngIf="showMessage">
+          <mat-form-field appearance="fill" style="width: 100%">
+            <mat-label>Please text here</mat-label>
+            <textarea
+              matInput
+              formControlName="message"
+              placeholder="Hallo"
+              rows="13"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="mt-45 float-right">
+        <div class="determine-button-group">
+          <button
+            mat-stroked-button
+            class="custom-button"
+            (click)="close()"
+          >
+            Abbrechen
+          </button>
+          <button
+            mat-stroked-button
+            class="redYellow-custom-button ml-20"
+          >
+            Termin verbindlich stornieren
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mt-47" *ngIf="success">
+      <div class="d-flex">
+        <mat-icon class="green-0">lens</mat-icon>
+        <p
+          class="p-green ml-10"
+          style="margin-top: 3px"
+        >Ihr Termin wurde storniert.</p>
+      </div>
+      <div class="mt-45 float-right">
+        <button
+          mat-stroked-button
+          class="custom-button"
+          (click)="close()"
+          >
+          Schließen
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,168 @@
+<div class="pd-17">
+  <h1>Paket  <span style="font-weight: 100"> wechseln</span></h1>
+  <div class="main-container-div">
+    <div class="left-border-div">
+      <p class="p-272140">
+        12.09.2020 09:00 - 10:15
+      </p>
+      <p class="p-576E82">
+        Check-Up: Männergesundheit
+      </p>
+      <p class="p-272140">
+        Marienstraße 4, 15387 Berlin
+      </p>
+    </div>
+    <div class="notify-container">
+      <div class="d-flex-between">
+        <div class="notify-board" style="background: #4A90E2">
+          <div class="d-flex a-center">
+            <div class="n-circle" style="background: #ffffff">
+              <img src="/assets/images/blue-male.svg" alt="mail">
+            </div>
+            <p class="p-white" style="margin-left: 15px">Männermedizin</p>
+          </div>
+          <mat-icon class="p-white">done</mat-icon>
+        </div>
+        <div class="notify-board">
+          <div class="d-flex a-center">
+            <div class="n-circle" style="background: #F389CC">
+              <mat-icon style="color: white">search</mat-icon>
+            </div>
+            <p style="margin-left: 15px">Gesundheits-Check-Up</p>
+          </div>
+          <mat-icon class="p-0">more_horiz</mat-icon>
+        </div>
+        <div class="notify-board">
+          <div class="d-flex a-center">
+            <div class="n-circle" style="background: #E87C60">
+              <mat-icon class="p-white">bug_report</mat-icon>
+            </div>
+            <p style="margin-left: 15px">Corona</p>
+          </div>
+          <mat-icon class="p-0">more_horiz</mat-icon>
+        </div>
+      </div>
+      <div class="d-flex mt-15">
+        <div class="notify-board">
+          <div class="d-flex a-center">
+            <div class="n-circle" style="background: #89DF8C">
+              <p style="color:#ffffff">+</p>
+            </div>
+            <p style="margin-left: 15px">Gutes Immunsystem</p>
+          </div>
+          <mat-icon class="p-0">more_horiz</mat-icon>
+        </div>
+        <div class="notify-board ml-20">
+          <div class="d-flex a-center">
+            <div class="n-circle" style="background: #ffffff">
+              <img src="/assets/images/fire.svg" alt="mail">
+            </div>
+            <p style="margin-left: 15px">Sexuelle Gesundheit</p>
+          </div>
+          <mat-icon class="p-0">more_horiz</mat-icon>
+        </div>
+      </div>
+    </div>
+    <div class="detail-options">
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="d-flex avatar pink">
+                <div class="round">
+                  <mat-icon>group_work</mat-icon>
+                </div>
+                <div>Zusatzpakete</div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="d-flex flex-wrap expansion-panel-container">
+            <div style="margin-left: 76px">
+              <button
+                type="button"
+                mat-stroked-button
+                class="select-button"
+              >
+                Paket1
+              </button>
+              <button
+                type="button"
+                mat-stroked-button
+                style="background: #384C61"
+                class="select-button"
+              >
+                Paket2
+              </button>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="d-flex avatar green">
+                <div class="round">
+                  <img src="/assets/images/clock_icon.svg" alt="clock">
+                </div>
+                <div>Neuen Termin auswählen</div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="d-flex avatar yellow justify-content-between">
+                <div class="d-flex align-items-center">
+                  <div class="round">
+                    <mat-icon>euro_symbol</mat-icon>
+                  </div>
+                  <div>Zahlungsmittel</div>
+                </div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="d-flex flex-wrap expansion-panel-container">
+            <mat-form-field appearance="fill" style="margin-left: 76px">
+              <mat-label>Heidelpay</mat-label>
+              <mat-select>
+                <mat-option value="option">Option</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="d-flex avatar blue justify-content-between">
+                <div class="d-flex align-items-center">
+                  <div class="round">
+                    <mat-icon>lens</mat-icon>
+                  </div>
+                  <div>Nachricht hinzufügen</div>
+                </div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <div class="d-flex-between mt-37">
+      <div></div>
+      <div class="d-flex">
+        <button
+          mat-stroked-button
+          (click)="close()"
+          class="custom-button"
+        >
+          Abbrechen
+        </button>
+        <button
+          mat-stroked-button
+          class="custom-package-button ml-10"
+        >
+          Paket wechseln
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

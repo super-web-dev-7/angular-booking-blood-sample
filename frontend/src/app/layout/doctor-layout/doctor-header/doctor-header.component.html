@@ -1,0 +1,39 @@
+<div class="header-container" [ngClass]="{'web-height': !isMobile, 'mobile-height': isMobile} ">
+  <div class="logo-container">
+    <img src="/assets/images/Menu%20Icon.svg"
+         alt="menu"
+         class="menu-icon"
+         (click)="openSidebar()"
+         *ngIf="isTablet || isMobile"
+    />
+    <img *ngIf="isMobile || isTablet" src="assets/images/logo.svg" alt="logo" class="logo">
+  </div>
+  <div class="d-flex align-items-center mobile-space">
+    <button
+      mat-stroked-button
+      class="tablet-header-button-384"
+      (click)="laboratory()"
+      *ngIf="isTablet && url === '/doctor'"
+    >Laborberichte</button>
+    <button
+      mat-stroked-button
+      class="tablet-header-button-384"
+      (click)="dashboard()"
+      *ngIf="isTablet && url !== '/doctor'"
+    >Dashboard</button>
+    <div class="user-info">
+      <img
+        src="/assets/images/avatar.png"
+        alt="user-avatar"
+        style="cursor: pointer"
+        (click)="openRightSidebar()"
+        *ngIf="isTablet || isMobile"
+      />
+      <img src="/assets/images/avatar.png" alt="user-avatar" *ngIf="!isTablet && !isMobile"/>
+      <span *ngIf="!isMobile && !isTablet" class="ml-2 text-capitalize">{{currentUser.role}}</span>
+    </div>
+    <button *ngIf="!isMobile && !isTablet" (click)="logout()" class="ml-3" mat-icon-button aria-label="more">
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+  </div>
+</div>

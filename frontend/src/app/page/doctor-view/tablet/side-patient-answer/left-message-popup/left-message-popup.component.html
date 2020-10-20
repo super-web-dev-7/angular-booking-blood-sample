@@ -1,0 +1,33 @@
+<div class="tablet-left-container">
+  <button mat-icon-button class="close" (click)="close()">
+    <mat-icon>clear</mat-icon>
+  </button>
+  <div class="main-message-div">
+    <h1 *ngIf="isTablet">
+      Nachricht
+    </h1>
+    <h1 *ngIf="isMobile">Nachricht <span style="font-weight: 100">schreiben</span></h1>
+    <p class="p-272140-tablet mt-38" *ngIf="isTablet">
+      Patienten-Nachricht via<br/> E-Mail beantworten
+    </p>
+    <p class="p-272140-tablet mt-38" *ngIf="isMobile">
+      Patienten-Nachricht via E-Mail beantworten
+    </p>
+    <div style="width: 100%;justify-content: center;display: flex">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label></mat-label>
+        <textarea [(ngModel)]="content" matInput rows="25"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="mt-47 text-center">
+      <button
+        mat-stroked-button
+        class="custom-button-384"
+        >
+        Nachricht versenden
+      </button>
+    </div>
+  </div>
+</div>
+
+

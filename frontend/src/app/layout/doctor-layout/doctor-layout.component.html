@@ -1,0 +1,48 @@
+<app-medical-history-left *ngIf="openMedicalHistory"></app-medical-history-left>
+<app-contact-history-left *ngIf="openContactHistory"></app-contact-history-left>
+<app-patient-recall *ngIf="openPatientCall"></app-patient-recall>
+<app-view-contact-history *ngIf="openCheckContact"></app-view-contact-history>
+<app-call-patient *ngIf="openCallPatient"></app-call-patient>
+<app-left-history-popup *ngIf="tHistory"></app-left-history-popup>
+<app-left-anamnese *ngIf="tAnamnes"></app-left-anamnese>
+<app-left-recall *ngIf="tRecall"></app-left-recall>
+<app-left-message-popup *ngIf="tMessage"></app-left-message-popup>
+<mat-sidenav-container (backdropClick)="closeRightSide($event)">
+  <mat-sidenav
+    [opened]="isOpen"
+    [mode]="isMobile || isTablet ? 'over' : 'side'"
+    (closed)="isOpen = false"
+    #sidenav
+  >
+    <app-left-sidebar *ngIf="isMobile || isTablet else desktopView;" (closeSide)="closeLeftSide($event)"></app-left-sidebar>
+    <ng-template  #desktopView>
+      <app-doctor-sidebar (menuClick)="menuClick($event)"></app-doctor-sidebar>
+    </ng-template>
+  </mat-sidenav>
+  <mat-sidenav
+    [opened]="isRightSidebarOpen && currentUser.role === 'Doctor'"
+    [mode]="'over'"
+    #rightSide
+    position="end"
+    (closed)="isRightSidebarOpen = false"
+    [ngClass]="{'side-top': isMobile && !openRightMenu}"
+  >
+    <app-right-sidebar (closeSide)="closeRightSide($event)" *ngIf="openRightMenu"></app-right-sidebar>
+    <app-side-patient-inquiry *ngIf="openPatientInquiry" (closeSide)="closeRightSide($event)"></app-side-patient-inquiry>
+    <app-side-patient-answer *ngIf="openPatientAnswer" (closeSide) ="closeRightSide($event)"></app-side-patient-answer>
+    <app-side-medical-history *ngIf="viewAnamnes" (closeSide)="closeRightSide($event)"></app-side-medical-history>
+    <app-side-check-anamnes *ngIf="checkAnamnes" (closeSide)="closeRightSide($event)"></app-side-check-anamnes>
+    <app-side-view-appointment *ngIf="viewAppointment" (closeSide)="closeRightSide($event)"></app-side-view-appointment>
+  </mat-sidenav>
+  <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Doctor' ? '#F2F7FB' : '#fafafa'}">
+    <div class="background-container" *ngIf="!isMobile && !isTablet"></div>
+    <app-doctor-header (setOpen)="setOpen($event)" [isMobile]="isMobile" (setRightSideOpen)="setRightSideOpen($event)"></app-doctor-header>
+    <div class="main-content-container">
+      <div class="subheader">
+        <h1>Willkommen zurück, <span class="d-none d-sm-block"><b>{{currentUser.role}}</b>.</span></h1>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

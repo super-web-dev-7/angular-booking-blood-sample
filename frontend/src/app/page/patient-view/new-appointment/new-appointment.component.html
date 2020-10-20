@@ -1,0 +1,29 @@
+<form [formGroup]="appointmentForm" class="p-2">
+<div class="pd-17">
+  <h1 style="margin-top: 9px">Neuer  <span style="font-weight: 100"> Termin</span></h1>
+  <div class="mt-47">
+    <mat-form-field class="w-100">
+      <mat-label>Bitte PLZ eingeben</mat-label>
+      <input formControlName="zipcode" autocomplete="off" matInput>
+    </mat-form-field>
+    <div style="margin-top: 101px" class="float-right">
+      <div class="d-flex">
+        <button
+          mat-stroked-button
+          (click)="close()"
+          class="custom-button"
+        >
+          Abbrechen
+        </button>
+        <button
+          mat-stroked-button
+          class="custom-button-384 ml-10"
+          (click)="newAppointment()"
+        >
+          Nach Terminen suchen
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>

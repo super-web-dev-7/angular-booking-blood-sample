@@ -1,0 +1,70 @@
+mat-sidenav-container {
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  position: relative;
+}
+
+.background-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 450px;
+  width: 100%;
+  background: transparent linear-gradient(246deg, #395A7E 0%, #384C61 100%) 0 0 no-repeat padding-box;
+  background-size: 100% 450px;
+  border-bottom-left-radius: 135px;
+  z-index: -1;
+}
+
+.subheader {
+  color: white;
+  h1 {
+    font-size: 36px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+}
+
+.main-content-container {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+@media only screen and (max-width: 600px) {
+  .main-content-container {
+    padding: 3px;
+  }
+}
+@media only screen and (max-width: 1023px) {
+  .subheader {
+    margin-top: 30px;
+    color: #384C61!important;
+    h1 {
+      font-size: 36px;
+    }
+    h3 {
+      font-size: 36px;
+    }
+  }
+  .main-content-container {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+.side-top {
+  top: 250px;
+  border-radius: 10px;
+}
+
+@media only screen and (max-width: 767px) {
+  mat-sidenav-container {
+    ::ng-deep .mat-drawer-backdrop {
+      display: none;
+    }
+  }
+}

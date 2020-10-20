@@ -3,20 +3,17 @@ module.exports = (sequelize, Sequelize) => {
         name: {
             type: Sequelize.STRING,
         },
-        // agency_id: {
-        //     type: Sequelize.INTEGER
-        // },
-        // package_id: {
-        //     type: Sequelize.INTEGER
-        // },
-        // user_id: {
-        //     type: Sequelize.INTEGER
-        // },
         time: {
             type: Sequelize.BIGINT
         },
         ready: {
             type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false
+        },
+        adminStatus: {
+            type: Sequelize.ENUM('upcoming', 'confirmed', 'canceled', 'successful'), defaultValue: 'upcoming'
+        },
+        medical_report: {
+            type: Sequelize.ENUM('open', 'closed'), defaultValue: 'open'
         }
     });
 };

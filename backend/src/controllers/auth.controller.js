@@ -74,3 +74,19 @@ exports.resetToken = async (req, res) => {
     });
     res.json({token});
 }
+
+exports.forgotPassword = async (req, res) => {
+    const resetPassword = generateKey(6);
+    const hash = bcrypt.hashSync(resetPassword, saltRounds);
+    const updated = await User.update({password: hash}, {where: {email: req.body.email}});
+}
+
+function generateKey(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}

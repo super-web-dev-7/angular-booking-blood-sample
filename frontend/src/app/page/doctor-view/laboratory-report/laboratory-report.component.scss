@@ -1,0 +1,84 @@
+table td {
+  padding-right: 0;
+}
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.mat-header-cell {
+  font-size: 14px;
+  font-weight: 500;
+}
+.mat-cell, .mat-footer-cell {
+  font-size: 12px;
+}
+.search-container {
+  position: relative;
+  height: 50px;
+  width: 300px;
+
+  input {
+    width: 100%;
+    height: 50px;
+    color: var(--primary-color);
+    padding: 5px 40px 5px 20px;
+    border: 0;
+    border-radius: 25px;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  mat-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+@media only screen and (max-width: 1023px) {
+  .search-container {
+    position: relative;
+    height: 50px;
+    width: 100%!important;
+
+    input {
+      width: 100%;
+      height: 50px;
+      color: var(--primary-color);
+      padding: 5px 40px 5px 20px;
+      border: 0;
+      border-radius: 25px;
+    }
+
+    input:focus {
+      outline: none;
+    }
+
+    mat-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+::ng-deep .mat-sort-header-arrow[style] {
+
+  // Hide default arrow stem
+  .mat-sort-header-stem {
+    display: none;
+  }
+  .mat-sort-header-indicator {
+    opacity: 1;
+    color: black;
+    font-weight: bold;
+
+    // Hide default arrow as its composed of left, right and middle
+    .mat-sort-header-pointer-left, .mat-sort-header-pointer-right, .mat-sort-header-pointer-middle  {
+      display: none;
+    }
+  }
+}
+

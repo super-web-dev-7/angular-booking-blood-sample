@@ -1,0 +1,36 @@
+.doctor-left-sidebar {
+  background-color: #384C61;
+  padding: 24px;
+  width: 350px;
+  height: 100%;
+  ul {
+    list-style-type: none;
+    font-size: 22px;
+    font-weight: 100;
+    padding: 0;
+    color: #ffffff;
+
+    li {
+      padding: 15px 30px 15px 30px;
+      cursor: pointer;
+      outline: none!important;
+    }
+    li.sub-menu {
+      margin-left: 15px;
+      font-size: 20px;
+      color: #A1B8CF;
+      outline: none!important;
+    }
+
+    li:hover {
+      opacity: 0.7;
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .doctor-left-sidebar {
+    width: 100vw;
+  }
+}

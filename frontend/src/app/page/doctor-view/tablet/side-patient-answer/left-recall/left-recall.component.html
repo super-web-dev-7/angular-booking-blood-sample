@@ -1,0 +1,56 @@
+<form [formGroup]="PatientCallForm" (ngSubmit)="submit()">
+  <div class="tablet-side-container">
+    <button mat-icon-button class="close" (click)="close()">
+      <mat-icon>clear</mat-icon>
+    </button>
+    <div class="main-div">
+      <h1> Rückruf</h1>
+      <div class="mt-47">
+        <button
+          class="call-button"
+        >
+          <mat-icon>phone</mat-icon>
+        </button>
+        <p style="margin: 22px auto!important;text-align: center">
+          Sebastian Naumann<br/> 01786573652
+        </p>
+        <div class="select-form">
+          <mat-form-field class="mt-45" style="width: 100%">
+            <mat-label>Uhrzeit</mat-label>
+            <mat-select formControlName="model">
+              <mat-option *ngFor="let model of allStaticDistrict">
+                {{''}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="textarea-form">
+          <mat-form-field
+            appearance="fill"
+            class="mt-20"
+            style="width: 100%"
+          >
+            <mat-label></mat-label>
+            <textarea
+              matInput
+              formControlName="message"
+              placeholder=""
+              rows="5"
+            ></textarea>
+          </mat-form-field>
+        </div>
+        <div class="mt-15">
+          <mat-checkbox class="example-margin">Patienten nicht erreicht</mat-checkbox>
+        </div>
+        <div style="margin-top: 100px;text-align: center">
+          <button
+            mat-stroked-button
+            class="custom-button-384"
+          >
+            Speichern
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

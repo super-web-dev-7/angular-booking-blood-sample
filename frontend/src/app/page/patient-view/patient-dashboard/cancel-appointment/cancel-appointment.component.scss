@@ -1,0 +1,35 @@
+.cancel-des {
+  display: flex;
+  p {
+    font-size: 16px;
+    color: #384C61
+  }
+}
+.appointment-data {
+  border-left: 2px solid #384C61;
+  margin-top: 38px;
+}
+.add-message {
+  margin-top: 40px;
+  .message-div {
+    margin-top: 13px;
+    width: 490px;
+    height: 220px;
+    padding-left: 76px;
+    p {
+      color: #A9BBC9;
+      font-size: 16px;
+    }
+    hr.bottom-line {
+      width: 210px;
+      border: 1px solid #A9BBC9;
+      float: left
+    }
+  }
+}
+.determine-button-group {
+  display: flex;
+}
+h1 {
+  font-size: 36px!important;
+}

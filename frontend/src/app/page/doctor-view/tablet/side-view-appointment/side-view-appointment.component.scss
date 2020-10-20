@@ -1,0 +1,82 @@
+.side-container {
+  width: 480px;
+  height: 100vh;
+  background-color: #ffffff;
+  padding: 33px;
+  .close {
+    position: absolute;
+    top: 28px;
+    right: 33px;
+  }
+  .main-side-container {
+    padding-left: 30px;
+    margin-top: 82px;
+    .option-buttons-div {
+      margin-bottom: 11px;
+      .option-button-div {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}
+h1 {
+  font-size: 36px;
+}
+.doctor-search-button {
+  background-color: #E1EAF1;
+  border-radius: 50% !important;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.custom-button-default {
+  background-color: #E1EAF1;
+  width: 242px;
+  border-radius: 25px !important;
+  height: 50px;
+  font-size: 1rem;
+  color: #384C61;
+}
+.org-text {
+  color: #E87C60;
+  align-items: center;
+}
+.mr-10 {
+  margin-right: 10px;
+}
+.result-text {
+  width: 270px;
+}
+.personal-div {
+  margin-top: 33px;
+  width: 372px;
+  display: flex;
+
+  .user-avatar {
+    width: 78px;
+
+    .avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+  }
+
+  .comment-div {
+    width: 294px;
+
+    p {
+      font-size: 16px;
+      color: #272140;
+    }
+  }
+}
+@media only screen and (max-width: 600px) {
+  .side-container {
+    width: 100vw;
+    padding: 0;
+  }
+}

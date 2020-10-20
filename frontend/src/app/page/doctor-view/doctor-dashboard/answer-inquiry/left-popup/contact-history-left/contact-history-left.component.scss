@@ -1,0 +1,52 @@
+.left-side-container {
+  width: 350px;
+  height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 2000!important;
+  .main-div {
+    margin-top: 95px;
+    h1 {
+      font-size: 30px;
+      color: #384C61
+    }
+    p {
+      color: #272140;
+      font-size: 16px;
+    }
+  }
+}
+.close {
+  position: absolute;
+  top: 48px;
+  right: 33px;
+}
+.before-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #384C61;
+  left: -6px;
+}
+.location-a {
+  top: 120px;
+}
+.location-b {
+  top: 205px;
+}
+.location-c {
+  top: 264px;
+}
+.location-d {
+  top: 327px
+}
+@media only screen and (max-width: 767px) {
+  .left-side-container {
+    width: 100vw;
+  }
+}

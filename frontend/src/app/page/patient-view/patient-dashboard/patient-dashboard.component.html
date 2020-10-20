@@ -1,0 +1,275 @@
+<h3 class="header-title" *ngIf="!isTablet && !isMobile">Dashboard</h3>
+<div class="main-container">
+  <div class="notify-container">
+    <div class="d-flex-between" *ngIf="!isMobile">
+      <div class="notify-board">
+        <div class="d-flex a-center">
+          <div class="n-circle" style="background: #4A90E2">
+            <img src="/assets/images/male.svg" alt="mail">
+          </div>
+          <p style="margin-left: 15px">Männermedizin</p>
+        </div>
+        <p>1</p>
+      </div>
+      <div class="notify-board">
+        <div class="d-flex a-center">
+          <div class="n-circle" style="background: #F389CC">
+            <mat-icon style="color: white">search</mat-icon>
+          </div>
+          <p style="margin-left: 15px">Gesundheits-Check-Up</p>
+        </div>
+        <p class="p-0">0</p>
+      </div>
+      <div class="notify-board">
+        <div class="d-flex a-center">
+          <div class="n-circle" style="background: #E87C60">
+            <mat-icon style="color: white">bug_report</mat-icon>
+          </div>
+          <p style="margin-left: 15px">Corona</p>
+        </div>
+        <p class="p-0">0</p>
+      </div>
+    </div>
+    <div class="d-flex-between mt-15" *ngIf="!isMobile">
+      <div class="notify-board">
+        <div class="d-flex a-center">
+          <div class="n-circle" style="background: #89DF8C">
+            <p style="color:#ffffff">+</p>
+          </div>
+          <p style="margin-left: 15px">Gutes Immunsystem</p>
+        </div>
+        <p>1</p>
+      </div>
+      <div class="notify-board">
+        <div class="d-flex a-center">
+          <div class="n-circle" style="background: #ffffff">
+            <img src="/assets/images/fire.svg" alt="mail">
+          </div>
+          <p style="margin-left: 15px">Sexuelle Gesundheit</p>
+        </div>
+        <p class="p-0">0</p>
+      </div>
+      <div class="notify-board-basis">
+        <div class="d-flex a-center">
+          <div class="n-circle" style="background: #ffffff">
+            <img src="/assets/images/heart.svg" alt="mail">
+          </div>
+          <p style="margin-left: 15px">Basis</p>
+        </div>
+        <p class="p-0">0</p>
+    </div>
+  </div>
+  <div class="main-content-div position-relative">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="notify-view">
+          <div class="main-view" style="border-color: #4A90E2">
+            <p class="p-blue" style="margin-left: 20px">
+              Termin bestätigt
+            </p>
+            <p class="p-272140">
+              12.09.2020 09:00 - 10:15
+            </p>
+            <p class="p-576E82">Check-Up: Männergesundheit</p>
+            <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+            <button
+              mat-icon-button style="margin-left: 10px">
+              <mat-icon class="p-0">keyboard_arrow_down</mat-icon>
+            </button>
+          </div>
+          <button
+            mat-icon-button
+            class="mt-10-min"
+            aria-label="more"
+            [matMenuTriggerFor]="appointment"
+          >
+            <mat-icon class="p-0">more_horiz</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="notify-view" style="background: #E87C60;">
+          <div class="main-view" style="position: relative">
+            <div class="warning-div">
+              <img src="/assets/images/s_warning.svg" alt="warning" class="warning-icon">
+            </div>
+            <p class="p-0-white ml-20" style="margin-top: -15px">
+              Nicht angetroffen
+            </p>
+            <p class="p-white ml-20">
+              Bitte neuen Termin wählen
+            </p>
+            <p class="p-white-14 ml-20">Check-Up: Gutes Immunsystem</p>
+            <p class="p-white-14 ml-20">Marienstraße 4, 15387 Berlin</p>
+            <button
+              mat-icon-button style="margin-left: 10px">
+              <mat-icon style="color: white">keyboard_arrow_down</mat-icon>
+            </button>
+          </div>
+          <button
+            mat-icon-button
+            aria-label="more"
+            class="mt-10-min"
+          >
+            <mat-icon style="color: #ffffff">more_horiz</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="notify-view additional-class">
+          <div>
+            <div class="main-view" style="border-color: #F389CC">
+              <p class="p-pink ml-20">
+                Labordaten übermittelt
+              </p>
+              <p class="p-272140">
+                08.09.2020 17:00 - 19:00
+              </p>
+              <p class="p-576E82">Check-Up: Gutes Immunsystem</p>
+              <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+              <button
+                mat-icon-button
+                style="margin-left: 10px"
+                (click)="openPersonalInfo()"
+              >
+                <mat-icon class="p-0">{{showDetail ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
+              </button>
+            </div>
+            <div class="personal-info mt-15" *ngIf="showDetail">
+              <p class="p-272140">Sebastian Naumann</p>
+              <p class="p-272140">Männlich, 39 Jahre, 1.83m, 95kg</p>
+              <ul>
+                <li class="p-272140">Nicht-Raucher</li>
+                <li class="p-272140">Trinkt Alkohol unregelmäßig bis gar nicht</li>
+                <li class="p-272140">Nimmt Medikamente: gegen Diabetes</li>
+                <li class="p-272140">keine Herzinfarkte / Schlaganfälle in der<br/> Familie bekannt</li>
+                <li class="p-272140">Keine Vorerkrankungen bekannt</li>
+              </ul>
+              <div class="d-flex mt-20 ml-20">
+                <button mat-stroked-button class="custom-button">
+                  Rechnung
+                </button>
+                <button
+                  mat-stroked-button
+                  class="custom-button ml-20"
+                  (click)="openHistory()"
+                >
+                  Historie
+                </button>
+              </div>
+            </div>
+          </div>
+          <button
+            mat-icon-button
+            aria-label="more"
+            class="mt-10-min"
+          >
+            <mat-icon class="p-0">more_horiz</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row row-space">
+      <div class="col-md-4">
+        <div class="notify-view">
+          <div class="main-view" style="border-color: #89DF8C">
+            <p class="p-green ml-20">
+              Befund freigegeben
+            </p>
+            <p class="p-272140">
+              12.03.2020 10:00 - 11:15
+            </p>
+            <p class="p-576E82">Check-Up: Männergesundheit</p>
+            <p class="p-272140">Tannenallee 81, 14587 Berlin</p>
+            <button mat-stroked-button class="finding-green">
+              Befund unsehen
+            </button>
+            <button
+              mat-icon-button style="margin-left: 10px">
+              <mat-icon class="p-0">keyboard_arrow_down</mat-icon>
+            </button>
+          </div>
+          <button
+            mat-icon-button
+            aria-label="more"
+            class="mt-10-min"
+          >
+            <mat-icon class="p-0">more_horiz</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="d-center mt-38" *ngIf="isMobile">
+      <button
+        mat-stroked-button
+        class="custom-button-384">
+        Neuen Termin vereinbaren
+      </button>
+    </div>
+  </div>
+  <mat-menu
+    #appointment="matMenu"
+    class="more-menu-div"
+    xPosition="before"
+    yPosition="below"
+  >
+    <div class="d-flex flex-row">
+      <button
+        class="panel-width"
+        mat-menu-item
+        (click)="cancelAppointment()"
+      >
+        <span class="active-hover">Termin stornieren</span>
+      </button>
+      <button class="ml-1" mat-icon-button>
+        <mat-icon class="close-icon">close</mat-icon>
+      </button>
+    </div>
+    <button
+      mat-menu-item
+      style="overflow: visible!important;"
+      (click)="moveAppointment()"
+    >
+      <span class="active-hover">
+        Termin verschieben /<br/> Abnahmeort ändern
+      </span>
+    </button>
+    <button
+      mat-menu-item
+      (click)="editAnamnesis()"
+    >
+      <span class="active-hover">Anamnese bearbeiten</span>
+    </button>
+    <button
+      mat-menu-item
+      (click)="newAppointment()"
+    >
+      <span class="active-hover">Neutermin vereinbaren</span>
+    </button>
+    <button
+      mat-menu-item
+      (click)="changePackage()"
+    >
+      <span class="active-hover">Paketwechsel</span>
+    </button>
+    <button
+      mat-menu-item
+      (click)="openCallbackDoctor()"
+    >
+      <span class="active-hover">Rückrufbitte Arzt</span>
+    </button>
+    <button
+      mat-menu-item
+      (click)="callSister()"
+    >
+      <span class="active-hover">Schwester anrufen</span>
+    </button>
+    <button
+      mat-menu-item
+      (click)="openPaymentStatus()"
+    >
+      <span class="active-hover">Zahlungsstatus</span>
+    </button>
+  </mat-menu>
+</div>
+</div>

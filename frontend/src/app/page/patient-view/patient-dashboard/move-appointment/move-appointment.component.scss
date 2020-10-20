@@ -1,0 +1,41 @@
+.main-container-div {
+  margin-top: 47px;
+}
+.add-message {
+  margin-top: 40px;
+  .message-div {
+    margin-top: 13px;
+    width: 490px;
+    height: 220px;
+    padding-left: 76px;
+    p {
+      color: #A9BBC9;
+      font-size: 16px;
+    }
+    hr.bottom-line {
+      width: 210px;
+      border: 1px solid #A9BBC9;
+      float: left
+    }
+  }
+}
+.determine-button-group {
+  display: flex;
+  margin-top: 40px;
+  float: right;
+}
+.mat-expansion-panel {
+  box-shadow: none;
+}
+.full-width {
+  width: 100%
+}
+.w-90 {
+  width: 90%;
+}
+.w-45 {
+  width: 45%
+}
+h1 {
+  font-size: 36px!important;
+}

@@ -1,0 +1,207 @@
+<form [formGroup]="editAnamsForm" (ngSubmit)="submit()">
+<div class="pd-17">
+  <h1 style="margin-top: 9px">Anamnese  <span style="font-weight: 100"> bearbeiten</span></h1>
+  <div class="main-edit-container" *ngIf="!saved">
+    <div class="left-div">
+      <p>Ihre persönlichen Daten</p>
+      <mat-form-field class="mt-4 w-90">
+        <mat-label>Sebastian Naumann</mat-label>
+        <input formControlName="name" autocomplete="off" matInput>
+      </mat-form-field>
+      <div class="d-flex-between w-90">
+        <mat-form-field class="w-45">
+          <mat-label>Männlich</mat-label>
+          <mat-select formControlName="model">
+            <mat-option>
+              <ngx-mat-select-search [formControl]="districtSearchControl"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let model of allStaticDistrict">
+              {{''}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-45">
+          <mat-label>39 Jahre</mat-label>
+          <mat-select formControlName="model">
+            <mat-option>
+              <ngx-mat-select-search [formControl]="districtSearchControl"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let model of allStaticDistrict">
+              {{''}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="d-flex-between w-90">
+        <mat-form-field class="w-45">
+          <mat-label>1,83</mat-label>
+          <mat-select formControlName="model">
+            <mat-option>
+              <ngx-mat-select-search [formControl]="districtSearchControl"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let model of allStaticDistrict">
+              {{''}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-45">
+          <mat-label>95 kg</mat-label>
+          <mat-select formControlName="model">
+            <mat-option>
+              <ngx-mat-select-search [formControl]="districtSearchControl"></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let model of allStaticDistrict">
+              {{''}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="right-dev">
+      <div class="d-flex-between align-items-center">
+        <p>Rauchen Sie?</p>
+        <div class="d-flex">
+          <button
+            mat-stroked-button
+            class="custom-button-384C61">
+            Ja
+          </button>
+          <button
+            mat-stroked-button
+            class="custom-button-37 ml-5"
+          >
+            Nein
+          </button>
+        </div>
+      </div>
+      <div class="d-flex-between align-items-center mt-18">
+        <p>Trinken Sie täglich Alkohol?</p>
+        <div class="d-flex">
+          <button
+            mat-stroked-button
+            class="custom-button-37">
+            Ja
+          </button>
+          <button
+            mat-stroked-button
+            class="custom-button-384C61 ml-5"
+          >
+            Nein
+          </button>
+        </div>
+      </div>
+      <div class="d-flex-between align-items-center mt-18">
+        <p>Nehmen Sie regelmäßig Medikamente ein?</p>
+        <div class="d-flex">
+          <button
+            mat-stroked-button
+            class="custom-button-384C61">
+            Ja
+          </button>
+          <button
+            mat-stroked-button
+            class="custom-button-37 ml-5"
+          >
+            Nein
+          </button>
+        </div>
+      </div>
+      <mat-form-field class="w-100">
+        <mat-label>Gegen Diabetes</mat-label>
+        <mat-select formControlName="model">
+          <mat-option>
+            <ngx-mat-select-search [formControl]="districtSearchControl"></ngx-mat-select-search>
+          </mat-option>
+          <mat-option *ngFor="let model of allStaticDistrict">
+            {{''}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="d-flex-between align-items-center mt-18">
+        <p>Gibt es in Ihrer Familie Herzinfarkte / Schlaganfälle?</p>
+        <div class="d-flex">
+          <button
+            mat-stroked-button
+            class="custom-button-384C61">
+            Ja
+          </button>
+          <button
+            mat-stroked-button
+            class="custom-button-37 ml-5"
+          >
+            Nein
+          </button>
+        </div>
+      </div>
+      <div class="d-flex-between align-items-center mt-18">
+        <p>Sind bei Ihnen relevante Vorerkrankungen bekannt?</p>
+        <div class="d-flex">
+          <button
+            mat-stroked-button
+            class="custom-button-384C61">
+            Ja
+          </button>
+          <button
+            mat-stroked-button
+            class="custom-button-37 ml-5"
+          >
+            Nein
+          </button>
+        </div>
+      </div>
+      <div class="d-flex-between align-items-center mt-18">
+        <p>Wollen Sie uns noch zusätzliche Informationen<br/> zukommen lassen?</p>
+        <div class="d-flex">
+          <button
+            mat-stroked-button
+            class="custom-button-384C61">
+            Ja
+          </button>
+          <button
+            mat-stroked-button
+            class="custom-button-37 ml-5"
+          >
+            Nein
+          </button>
+        </div>
+      </div>
+      <div class="d-flex mt-85 ml-166">
+        <button
+          mat-stroked-button
+          class="custom-button"
+          (click)="close()"
+        >
+          Abbrechen
+        </button>
+        <button
+          mat-stroked-button
+          class="custom-button-s-384C61 ml-10"
+        >
+          Anamnesedaten speichern
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-47" *ngIf="saved">
+    <div class="d-flex">
+      <mat-icon class="green-0">lens</mat-icon>
+      <p class="p-green ml-10"
+         style="margin-top: 3px">
+        Ihre Anamnese wurde geändert.<br/>
+        Bitte warten Sie auf die erneute Freigabe durch Ihren Arzt.<br/>
+        Ihr Termin bleibt bis dahin bestehen.
+      </p>
+    </div>
+    <div class="mt-47 float-right">
+      <button
+        mat-stroked-button
+        class="custom-button"
+        (click)="close()"
+        >
+        Schließen
+      </button>
+    </div>
+  </div>
+</div>
+</form>
+

@@ -1,0 +1,63 @@
+<form [formGroup]="cancelForm" (ngSubmit)="submit()">
+<div class="patient-popup-container">
+  <button mat-icon-button class="close" (click)="close()">
+    <mat-icon>clear</mat-icon>
+  </button>
+  <div class="main-side-container" *ngIf="!success">
+    <h1 *ngIf="isTablet">Termin <span style="font-weight: 100">stornieren</span></h1>
+    <div class="left-border-div mt-38 position-relative">
+      <p class="p-272140">12.09.2020 09:00 - 10:15</p>
+      <p class="p-576E82">Check-Up: Männergesundheit</p>
+      <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+      <div class="d-flex">
+        <div class="warning-div">
+          <img src="/assets/images/warning-t.svg" alt="warning" class="warning-icon">
+        </div>
+        <p class="p-272140-10 ml-16">Bei einer Terminstornierung mit weniger als 48h Vorlauf vor<br/> Terminbeginn fallen 30€ Aufwandsentschädigung an.</p>
+      </div>
+    </div>
+    <div class="add-message">
+      <div
+        class="d-flex avatar red-yellow justify-content-between"
+        (click)="openMessage()"
+      >
+        <div class="d-flex align-items-center">
+          <div class="round">
+            <mat-icon>stop_circle</mat-icon>
+          </div>
+          <div>Nachricht hinzufügen</div>
+        </div>
+      </div>
+      <div class="message-div" *ngIf="showMessage">
+        <mat-form-field appearance="fill" style="width: 100%">
+          <mat-label>Please text here</mat-label>
+          <textarea
+            matInput
+            formControlName="message"
+            placeholder="Hallo"
+            rows="13"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="mt-47 text-center">
+      <button
+        mat-stroked-button
+        class="redYellow-custom-button"
+        >
+        Termin verbindlich stornieren
+      </button>
+    </div>
+  </div>
+  <div class="main-side-container" *ngIf="success">
+    <h1>Termin <span style="font-weight: 100">stornieren</span></h1>
+    <div class="d-flex mt-38">
+      <mat-icon class="green-0">lens</mat-icon>
+      <p
+        class="p-green ml-10"
+        style="margin-top: 3px"
+      >Ihr Termin wurde storniert.</p>
+    </div>
+  </div>
+</div>
+</form>

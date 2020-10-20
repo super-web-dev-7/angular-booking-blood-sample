@@ -29,6 +29,7 @@ export class OpenDatesComponent implements OnInit {
   selectedButton = 0;
 
   allAppointment = [];
+  appointments = [];
   filterValue = null;
 
   orderStatus = {
@@ -63,12 +64,21 @@ export class OpenDatesComponent implements OnInit {
     }
     this.httpService.get(URL_JSON.APPOINTMENT + '/get').subscribe((res: any) => {
       this.allAppointment = res;
-      for (const appointment of this.allAppointment) {
+      if (url[2] === 'open-dates') {
+        this.appointments = this.allAppointment.filter(item => item.adminStatus === 'upcoming');
+      } else if (url[2] === 'confirmed') {
+        this.appointments = this.allAppointment.filter(item => item.adminStatus === 'confirmed');
+      } else if (url[2] === 'canceled') {
+        this.appointments = this.allAppointment.filter(item => item.adminStatus === 'canceled');
+      } else if (url[2] === 'completed') {
+        this.appointments = this.allAppointment.filter(item => item.adminStatus === 'completed');
+      }
+      for (const appointment of this.appointments) {
         if (!this.agencies.includes(item => item.id === appointment.agency.id)) {
           this.agencies.push(appointment.agency);
         }
       }
-      this.dataSource.data = res;
+      this.dataSource.data = this.appointments;
     });
   }
 
@@ -90,10 +100,10 @@ export class OpenDatesComponent implements OnInit {
   selectButton = (id) => {
     this.selectedButton = id;
     if (id === 0) {
-      this.dataSource.data = this.allAppointment;
+      this.dataSource.data = this.appointments;
       return;
     }
-    this.dataSource.data = this.allAppointment.filter(item => item.agency.id === id);
+    this.dataSource.data = this.appointments.filter(item => item.agency.id === id);
   }
 
   delete = (id) => {

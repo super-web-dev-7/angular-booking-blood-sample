@@ -1,0 +1,18 @@
+<div class="patient-left-sidebar">
+  <div class="float-left">
+    <button
+      mat-icon-button
+      (click)="close()"
+      class="back-button"
+      style="margin-top: 20px;margin-right: 10px"
+    >
+      <mat-icon class="p-white">keyboard_arrow_left</mat-icon>
+    </button>
+  </div>
+  <div class="float-left mt-47">
+    <ul>
+      <li (click)="dashboard()">Dashboard</li>
+      <li (click)="newAppointment()">Neuen Termin vereinbaren</li>
+    </ul>
+  </div>
+</div>
