@@ -13,12 +13,8 @@
     <p class="p-272140-tablet mt-38" *ngIf="isMobile">
       Patienten-Nachricht via E-Mail beantworten
     </p>
-    <div style="width: 100%;justify-content: center;display: flex">
-      <mat-form-field class="w-100" appearance="outline">
-        <mat-label></mat-label>
-        <textarea [(ngModel)]="content" matInput rows="25"></textarea>
-      </mat-form-field>
-    </div>
+      <ckeditor
+        [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
     <div class="mt-47 text-center">
       <button
         mat-stroked-button

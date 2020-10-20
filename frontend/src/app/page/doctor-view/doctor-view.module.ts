@@ -39,6 +39,7 @@ import { LeftRecallComponent } from './tablet/side-patient-answer/left-recall/le
 import { LeftMessagePopupComponent } from './tablet/side-patient-answer/left-message-popup/left-message-popup.component';
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 import { SearchInputComponent } from './doctor-dashboard/search-input/search-input.component';
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 
 
 
@@ -95,15 +96,16 @@ import { SearchInputComponent } from './doctor-dashboard/search-input/search-inp
     LeftRecallComponent,
     LeftMessagePopupComponent
   ],
-  imports: [
-    CommonModule,
-    DoctorViewRoutingModule,
-    MaterialModule,
-    RouterModule,
-    ReactiveFormsModule,
-    FormsModule,
-    SharedModule,
-    NgxMatSelectSearchModule,
-  ]
+    imports: [
+        CommonModule,
+        DoctorViewRoutingModule,
+        MaterialModule,
+        RouterModule,
+        ReactiveFormsModule,
+        FormsModule,
+        SharedModule,
+        NgxMatSelectSearchModule,
+        CKEditorModule,
+    ]
 })
 export class DoctorViewModule { }

@@ -43,6 +43,11 @@ exports.get = async (req, res) => {
     res.status(200).json(response);
 }
 
+exports.getAllPackagesWithAppointment = async (req, res) => {
+    const allPackages = await db.sequelize.query(`SELECT packages.id AS id, packages.name AS name, COUNT(appointments.id) AS total FROM packages LEFT JOIN appointments ON appointments.packageId=packages.id GROUP BY packages.id`, {type: db.Sequelize.QueryTypes.SELECT});
+    res.status(200).json(allPackages);
+}
+
 exports.getWithQuery = async (req, res) => {
     WorkingGroup.hasMany(PackageGroup, {foreignKey: 'groupId'});
     PackageGroup.belongsTo(WorkingGroup, {foreignKey: 'groupId'});

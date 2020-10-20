@@ -1,64 +1,17 @@
 <h3 class="header-title" *ngIf="!isTablet && !isMobile">Dashboard</h3>
 <div class="main-container">
   <div class="notify-container">
-    <div class="d-flex-between" *ngIf="!isMobile">
-      <div class="notify-board">
+    <div class="d-flex-between flex-wrap" *ngIf="!isMobile">
+      <div class="notify-board" *ngFor="let item of allPackages">
         <div class="d-flex a-center">
           <div class="n-circle" style="background: #4A90E2">
             <img src="/assets/images/male.svg" alt="mail">
           </div>
-          <p style="margin-left: 15px">Männermedizin</p>
+          <p style="margin-left: 15px">{{item.name}}</p>
         </div>
-        <p>1</p>
-      </div>
-      <div class="notify-board">
-        <div class="d-flex a-center">
-          <div class="n-circle" style="background: #F389CC">
-            <mat-icon style="color: white">search</mat-icon>
-          </div>
-          <p style="margin-left: 15px">Gesundheits-Check-Up</p>
-        </div>
-        <p class="p-0">0</p>
-      </div>
-      <div class="notify-board">
-        <div class="d-flex a-center">
-          <div class="n-circle" style="background: #E87C60">
-            <mat-icon style="color: white">bug_report</mat-icon>
-          </div>
-          <p style="margin-left: 15px">Corona</p>
-        </div>
-        <p class="p-0">0</p>
+        <p>{{item.total}}</p>
       </div>
     </div>
-    <div class="d-flex-between mt-15" *ngIf="!isMobile">
-      <div class="notify-board">
-        <div class="d-flex a-center">
-          <div class="n-circle" style="background: #89DF8C">
-            <p style="color:#ffffff">+</p>
-          </div>
-          <p style="margin-left: 15px">Gutes Immunsystem</p>
-        </div>
-        <p>1</p>
-      </div>
-      <div class="notify-board">
-        <div class="d-flex a-center">
-          <div class="n-circle" style="background: #ffffff">
-            <img src="/assets/images/fire.svg" alt="mail">
-          </div>
-          <p style="margin-left: 15px">Sexuelle Gesundheit</p>
-        </div>
-        <p class="p-0">0</p>
-      </div>
-      <div class="notify-board-basis">
-        <div class="d-flex a-center">
-          <div class="n-circle" style="background: #ffffff">
-            <img src="/assets/images/heart.svg" alt="mail">
-          </div>
-          <p style="margin-left: 15px">Basis</p>
-        </div>
-        <p class="p-0">0</p>
-    </div>
-  </div>
   <div class="main-content-div position-relative">
     <div class="row">
       <div class="col-md-4">

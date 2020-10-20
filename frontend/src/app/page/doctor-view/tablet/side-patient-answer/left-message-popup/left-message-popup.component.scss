@@ -71,3 +71,7 @@
     border: 1px solid #CFDCE6;
   }
 }
+::ng-deep .ck-editor__editable_inline {
+  min-height: 250px;
+}
+

@@ -6,7 +6,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NurseViewRoutingModule} from './nurse-view-routing.module';
 import {MaterialModule} from '../../material/material.module';
 import { NurseDashboardComponent } from './nurse-dashboard/nurse-dashboard.component';
-import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   declarations: [

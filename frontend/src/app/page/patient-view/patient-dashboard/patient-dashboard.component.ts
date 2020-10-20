@@ -13,6 +13,9 @@ import {AppointmentHistoryComponent} from './appointment-history/appointment-his
 import {Router} from '@angular/router';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {SharedService} from '../../../service/shared/shared.service';
+import {HttpService} from '../../../service/http/http.service';
+import {URL_JSON} from '../../../utils/url_json';
+import {AuthService} from '../../../service/auth/auth.service';
 
 @Component({
   selector: 'app-patient-dashboard',
@@ -23,22 +26,36 @@ export class PatientDashboardComponent implements OnInit {
   showDetail: boolean;
   isMobile = false;
   isTablet = false;
+  allPackages = [];
+  allAppointments = [];
+  currentUser: any;
 
   constructor(
     public dialog: MatDialog,
     public router: Router,
     public breakpointObserver: BreakpointObserver,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    public httpService: HttpService,
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {
     this.showDetail = false;
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
+    this.currentUser = this.authService.currentUserValue;
     const url = this.router.url.split('/');
     if (url[2] === 'new_appointment') {
       this.openDialog();
     }
+
+    this.httpService.get(URL_JSON.PACKAGE + '/getAllPackagesWithAppointment').subscribe((res: any) => {
+      this.allPackages = res;
+    });
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentByPatient/' + this.currentUser.id).subscribe((res: any) => {
+      console.log(res);
+      this.allAppointments = res;
+    });
   }
 
   openDialog = () => {

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {AG_Sidebar, Sidebar} from '../../../utils/sidebar';

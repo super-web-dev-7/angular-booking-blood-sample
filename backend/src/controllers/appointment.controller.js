@@ -80,6 +80,26 @@ exports.getAppointmentByNurse = async (req, res) => {
     res.status(200).json(allAppointment);
 }
 
+exports.getAppointmentByPatient = async (req, res) => {
+    const allAppointment = await sequelize.query(`
+        SELECT appointments.id AS id, appointments.time AS startTime, appointments.ready AS ready,
+            users.id AS patientId, users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
+            patients.id AS patientDetailId, patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt, 
+            packages.id AS packageId, packages.name AS packageName,
+            calendars.id AS calendarId, calendars.duration_appointment AS duration, calendars.working_time_until AS workingTimeUntil
+        FROM appointments
+        JOIN agencies ON appointments.agencyId=agencies.id
+        JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id
+        JOIN working_groups ON working_group_agencies.groupId=working_groups.id
+        JOIN calendars ON working_groups.calendar_id=calendars.id
+        JOIN users ON appointments.userId=users.id
+        JOIN patients ON patients.user_id=users.id
+        JOIN packages ON appointments.packageId=packages.id
+        WHERE appointments.userId=${req.params.id}
+    `, {type: Sequelize.QueryTypes.SELECT});
+    res.status(200).json(allAppointment);
+}
+
 exports.appointmentReady = async (req, res) => {
     const id = req.params.id;
     await Appointment.update(req.body, {where: {id}});

@@ -11,8 +11,11 @@
     </div>
     <div class="option-buttons-div mt-47">
       <div class="option-button-div mt-15">
-        <button class="doctor-search-button">
-          <mat-icon>search</mat-icon>
+        <button
+          class="doctor-search-button"
+          [ngClass]="{'active-button':isSideHistory}"
+        >
+          <mat-icon [ngClass]="{'active-icon': isSideHistory}">search</mat-icon>
         </button>
         <button
           class="custom-button-default ml-10"
