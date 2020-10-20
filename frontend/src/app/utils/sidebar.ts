@@ -259,3 +259,57 @@ export const AG_Sidebar = [
     ]
   }
 ];
+// doctor sidebar
+export const DoctorSidebar = [
+  {
+    name: 'Dashboard',
+    icon: 'dashboard.svg',
+    role: '',
+    link: '/doctor',
+    children: []
+  },
+  {
+    name: 'Laborberichte',
+    icon: 'calendar.svg',
+    role: '',
+    link: '/doctor/laboratory-report',
+    children: []
+  },
+  {
+    name: 'Archiv',
+    icon: 'check.svg',
+    role: '',
+    link: '/doctor/archive',
+    children: [
+      {
+        name: 'Patientenrückfragen',
+        link: '/patient-inquiry'
+      },
+      {
+        name: 'Anamnesefreigaben',
+        link: '/anamnes-release'
+      },
+      {
+        name: 'Termine',
+        link: '/events'
+      }
+    ]
+  }
+];
+// patient sidebar
+export const PatientSidebar = [
+  {
+    name: 'Dashboard',
+    icon: 'dashboard.svg',
+    role: '',
+    link: '/patient',
+    children: []
+  },
+  {
+    name: 'Neuen Termin vereinbaren',
+    icon: 'calendar.svg',
+    role: '',
+    link: '/patient/new_appointment',
+    children: []
+  }
+];

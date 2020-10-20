@@ -312,7 +312,7 @@ mat-dialog-container {
   color: #202331;
 }
 
-table thead tr th {
+table thead tr th, .disable-user-select {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -330,14 +330,129 @@ table thead tr th {
   color: white;
 }
 
-.disable-user-select {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
 
 // Doctor && Patient
+
+.d-flex {
+  display: flex;
+}
+.d-block {
+  display: block;
+}
+.d-flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+.ml-10 {
+  margin-left: 10px!important;
+}
+.ml-5 {
+  margin-left: 5px!important;
+}
+.mt-15 {
+  margin-top: 15px;
+}
+.ml-20 {
+  margin-left: 20px!important;
+}
+.ml-16 {
+  margin-left: 16px!important;
+}
+.mt-13 {
+  margin-top: 13px;
+}
+.mt-20 {
+  margin-top: 20px!important;
+}
+.mt-38 {
+  margin-top: 38px!important;
+}
+.mt-24 {
+  margin-top: 24px!important;
+}
+.mt-47 {
+  margin-top: 47px!important;
+}
+.mt-45 {
+  margin-top: 45px!important;
+}
+.mb-30 {
+  margin-bottom: 30px;
+}
+.mb-20 {
+  margin-bottom: 20px;
+}
+.p-272140 {
+  font-size: 16px!important;
+  color: #272140!important;
+  margin-left: 20px!important;
+}
+.p-272140-10 {
+  font-size: 10px!important;
+  color: #272140 !important;
+}
+.p-272140-tablet {
+  font-size: 16px!important;
+  color: #272140!important;
+}
+.p-576E82 {
+  font-size: 14px!important;
+  margin-left: 20px!important;
+  color: #576E82!important;
+}
+.p-576E82-tablet {
+  font-size: 14px!important;
+  color: #576E82!important;
+}
+.p-0 {
+  color: #B9C8D4!important;
+}
+.redYellow-custom-button {
+  background-color: #E87C60;
+  border-radius: 25px !important;
+  height: 50px;
+  color: #ffffff;
+  font-size: 1rem;
+}
+.custom-button-384 {
+  border-radius: 25px !important;
+  height: 50px;
+  color: #ffffff;
+  font-size: 1rem;
+  background-color: var(--primary-color);
+}
+.custom-button-C7D {
+  background-color: #C7D7E3;
+  border-radius: 25px !important;
+  height: 50px;
+  color: #ffffff;
+  font-size: 1rem;
+}
+.tablet-header-button-384 {
+  height: 35px;
+  color: #ffffff;
+  background-color: var(--primary-color);
+  border-radius: 23px;
+  font-size: 14px;
+  margin-right: 5px;
+}
+.pd-17 {
+  padding: 17px!important;
+}
+.p-white {
+  color: #ffffff!important;
+}
+.left-border-div {
+  border-left: 2px solid #384C61;
+}
+.p-green {
+  color: #89DF8C;
+  font-size: 16px;
+}
+.green-0 {
+  color: #89DF8C;
+}
+.p-14 {
+  color: #272140;
+  font-size: 14px;
+}

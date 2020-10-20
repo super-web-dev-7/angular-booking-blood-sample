@@ -21,6 +21,8 @@ import {SharedModule} from './shared/shared.module';
 import { AgDashboardComponent } from './page/ag-dashboard/ag-dashboard.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { SessionExpireAlertComponent } from './components/session-expire-alert/session-expire-alert.component';
+import {PatientLayoutModule} from './layout/patient-layout/patient-layout.module';
+import {DoctorLayoutModule} from './layout/doctor-layout/doctor-layout.module';
 
 
 @NgModule({
@@ -41,6 +43,8 @@ import { SessionExpireAlertComponent } from './components/session-expire-alert/s
     HttpClientModule,
     MaterialModule,
     MainLayoutModule,
+    PatientLayoutModule,
+    DoctorLayoutModule,
     SharedModule,
     NgCircleProgressModule
   ],
