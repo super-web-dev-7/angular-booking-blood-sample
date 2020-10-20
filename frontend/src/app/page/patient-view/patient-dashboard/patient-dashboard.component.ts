@@ -1,5 +1,9 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Router} from '@angular/router';
+import {BreakpointObserver} from '@angular/cdk/layout';
+import * as moment from 'moment';
+
 import {CancelAppointmentComponent} from './cancel-appointment/cancel-appointment.component';
 import {MoveAppointmentComponent} from './move-appointment/move-appointment.component';
 import {EditAnamnesisComponent} from './edit-anamnesis/edit-anamnesis.component';
@@ -10,12 +14,11 @@ import {PaymentStatusComponent} from './payment-status/payment-status.component'
 import {NewAppointmentComponent} from '../new-appointment/new-appointment.component';
 import {AppointmentNewComponent} from '../new-appointment/appointment-new/appointment-new.component';
 import {AppointmentHistoryComponent} from './appointment-history/appointment-history.component';
-import {Router} from '@angular/router';
-import {BreakpointObserver} from '@angular/cdk/layout';
 import {SharedService} from '../../../service/shared/shared.service';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 import {AuthService} from '../../../service/auth/auth.service';
+
 
 @Component({
   selector: 'app-patient-dashboard',
@@ -29,6 +32,14 @@ export class PatientDashboardComponent implements OnInit {
   allPackages = [];
   allAppointments = [];
   currentUser: any;
+  adminStatus = {
+    upcoming: 'Labordaten übermittelt',
+    confirmed: 'Termin bestätigt',
+    canceled: 'Nicht angetroffen',
+    successful: 'Befund freigegeben'
+  };
+
+  selectedAppointment = null;
 
   constructor(
     public dialog: MatDialog,
@@ -56,6 +67,10 @@ export class PatientDashboardComponent implements OnInit {
       console.log(res);
       this.allAppointments = res;
     });
+  }
+
+  getTimeDuration = (startTime, duration) => {
+    return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');
   }
 
   openDialog = () => {
@@ -108,6 +123,7 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(EditAnamnesisComponent, {
         width: '1060px',
+        data: {appointmentId: this.selectedAppointment}
       });
       dialogRef.afterClosed().subscribe(res => {
         if (res) {

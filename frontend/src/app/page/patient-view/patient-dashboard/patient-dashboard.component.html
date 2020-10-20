@@ -5,7 +5,7 @@
       <div class="notify-board" *ngFor="let item of allPackages">
         <div class="d-flex a-center">
           <div class="n-circle" style="background: #4A90E2">
-            <img src="/assets/images/male.svg" alt="mail">
+            <img src="/assets/images/male.svg" alt="male">
           </div>
           <p style="margin-left: 15px">{{item.name}}</p>
         </div>
@@ -14,17 +14,19 @@
     </div>
   <div class="main-content-div position-relative">
     <div class="row">
-      <div class="col-md-4">
-        <div class="notify-view">
+      <div class="col-md-4" *ngFor="let item of allAppointments">
+        <div class="notify-view" *ngIf="item.adminStatus === 'confirmed'">
           <div class="main-view" style="border-color: #4A90E2">
             <p class="p-blue" style="margin-left: 20px">
               Termin bestätigt
             </p>
             <p class="p-272140">
-              12.09.2020 09:00 - 10:15
+              {{getTimeDuration(item.startTime, item.duration)}}
             </p>
-            <p class="p-576E82">Check-Up: Männergesundheit</p>
-            <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+            <p class="p-576E82">Check-Up: {{item.packageName}}</p>
+            <p class="p-272140">
+              {{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}
+            </p>
             <button
               mat-icon-button style="margin-left: 10px">
               <mat-icon class="p-0">keyboard_arrow_down</mat-icon>
@@ -35,13 +37,12 @@
             class="mt-10-min"
             aria-label="more"
             [matMenuTriggerFor]="appointment"
+            (click)="selectedAppointment = item.id"
           >
             <mat-icon class="p-0">more_horiz</mat-icon>
           </button>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="notify-view" style="background: #E87C60;">
+        <div class="notify-view" style="background: #E87C60;" *ngIf="item.adminStatus === 'canceled'">
           <div class="main-view" style="position: relative">
             <div class="warning-div">
               <img src="/assets/images/s_warning.svg" alt="warning" class="warning-icon">
@@ -52,8 +53,8 @@
             <p class="p-white ml-20">
               Bitte neuen Termin wählen
             </p>
-            <p class="p-white-14 ml-20">Check-Up: Gutes Immunsystem</p>
-            <p class="p-white-14 ml-20">Marienstraße 4, 15387 Berlin</p>
+            <p class="p-white-14 ml-20">Check-Up: {{item.packageName}}</p>
+            <p class="p-white-14 ml-20">{{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}</p>
             <button
               mat-icon-button style="margin-left: 10px">
               <mat-icon style="color: white">keyboard_arrow_down</mat-icon>
@@ -63,23 +64,23 @@
             mat-icon-button
             aria-label="more"
             class="mt-10-min"
+            [matMenuTriggerFor]="appointment"
+            (click)="selectedAppointment = item.id"
           >
             <mat-icon style="color: #ffffff">more_horiz</mat-icon>
           </button>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="notify-view additional-class">
+        <div class="notify-view additional-class" *ngIf="item.adminStatus === 'upcoming'">
           <div>
             <div class="main-view" style="border-color: #F389CC">
               <p class="p-pink ml-20">
                 Labordaten übermittelt
               </p>
               <p class="p-272140">
-                08.09.2020 17:00 - 19:00
+                {{getTimeDuration(item.startTime, item.duration)}}
               </p>
-              <p class="p-576E82">Check-Up: Gutes Immunsystem</p>
-              <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+              <p class="p-576E82">Check-Up: {{item.packageName}}</p>
+              <p class="p-272140">{{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}</p>
               <button
                 mat-icon-button
                 style="margin-left: 10px"
@@ -116,24 +117,22 @@
             mat-icon-button
             aria-label="more"
             class="mt-10-min"
+            [matMenuTriggerFor]="appointment"
+            (click)="selectedAppointment = item.id"
           >
             <mat-icon class="p-0">more_horiz</mat-icon>
           </button>
         </div>
-      </div>
-    </div>
-    <div class="row row-space">
-      <div class="col-md-4">
-        <div class="notify-view">
+        <div class="notify-view" *ngIf="item.adminStatus === 'successful'">
           <div class="main-view" style="border-color: #89DF8C">
             <p class="p-green ml-20">
               Befund freigegeben
             </p>
             <p class="p-272140">
-              12.03.2020 10:00 - 11:15
+              {{getTimeDuration(item.startTime, item.duration)}}
             </p>
-            <p class="p-576E82">Check-Up: Männergesundheit</p>
-            <p class="p-272140">Tannenallee 81, 14587 Berlin</p>
+            <p class="p-576E82">Check-Up: {{item.packageName}}</p>
+            <p class="p-272140">{{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}</p>
             <button mat-stroked-button class="finding-green">
               Befund unsehen
             </button>
@@ -146,6 +145,8 @@
             mat-icon-button
             aria-label="more"
             class="mt-10-min"
+            [matMenuTriggerFor]="appointment"
+            (click)="selectedAppointment = item.id"
           >
             <mat-icon class="p-0">more_horiz</mat-icon>
           </button>
