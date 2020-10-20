@@ -11,6 +11,7 @@ export class AnswerInquiryComponent implements OnInit {
    isContactHistory = false;
    isMedicalHistory = false;
    isPatientCall = false;
+   content = null;
   constructor(
     public dialog: MatDialog,
     private dialogRef: MatDialogRef<AnswerInquiryComponent>,

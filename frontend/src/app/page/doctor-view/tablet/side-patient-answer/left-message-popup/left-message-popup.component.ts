@@ -10,6 +10,7 @@ import {BreakpointObserver} from '@angular/cdk/layout';
 export class LeftMessagePopupComponent implements OnInit {
   isMobile = false;
   isTablet = false;
+  content = null;
   constructor(
     public breakpointObserver: BreakpointObserver,
     public sharedService: SharedService

@@ -8,6 +8,7 @@ import {SharedService} from '../../../../../service/shared/shared.service';
 })
 export class AnamnesCheckComponent implements OnInit {
   isCheckContact = false;
+  content = null;
   constructor(
     private sharedService: SharedService
   ) { }

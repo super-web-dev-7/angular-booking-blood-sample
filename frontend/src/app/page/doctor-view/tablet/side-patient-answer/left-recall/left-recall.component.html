@@ -18,9 +18,6 @@
           <mat-form-field class="mt-45" style="width: 100%">
             <mat-label>Uhrzeit</mat-label>
             <mat-select formControlName="model">
-              <mat-option>
-                <ngx-mat-select-search [formControl]="districtSearchControl"></ngx-mat-select-search>
-              </mat-option>
               <mat-option *ngFor="let model of allStaticDistrict">
                 {{''}}
               </mat-option>
@@ -33,11 +30,11 @@
             class="mt-20"
             style="width: 100%"
           >
-            <mat-label>Please text here</mat-label>
+            <mat-label></mat-label>
             <textarea
               matInput
               formControlName="message"
-              placeholder="Hallo"
+              placeholder=""
               rows="5"
             ></textarea>
           </mat-form-field>

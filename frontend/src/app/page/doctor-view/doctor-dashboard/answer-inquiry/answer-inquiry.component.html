@@ -85,9 +85,10 @@
     <p class="p-A9BBC9" style="margin-top: 56px">
       Patienten-Nachricht via E-Mail beantworten
     </p>
-    <div class="edit-div">
-      <p class="p-A9BBC9">SALUTATION[salutation:custom|Sehr geehrte |Sehr geehrter]}NACHNAME}, … Herzliche Grüße Ihr previmo-Team previmo_signature</p>
-    </div>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label></mat-label>
+      <textarea [(ngModel)]="content" matInput rows="14"></textarea>
+    </mat-form-field>
     <button
       class="custom-button"
       mat-stroked-button

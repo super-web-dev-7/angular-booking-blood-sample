@@ -14,8 +14,10 @@
       Patienten-Nachricht via E-Mail beantworten
     </p>
     <div style="width: 100%;justify-content: center;display: flex">
-      <div class="text-area">
-      </div>
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label></mat-label>
+        <textarea [(ngModel)]="content" matInput rows="25"></textarea>
+      </mat-form-field>
     </div>
     <div class="mt-47 text-center">
       <button
