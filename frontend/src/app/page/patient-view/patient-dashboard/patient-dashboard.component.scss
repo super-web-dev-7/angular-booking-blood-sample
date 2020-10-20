@@ -229,12 +229,14 @@
     background-color: #ffffff;
     margin-top: 15px;
   }
-  .additional-class {
-    position: relative !important;
-    width: 100% !important;
-    left: 0 !important;
-  }
   .row-space {
     margin-top: 0 !important;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .additional-class {
+    position: relative!important;
+    width: 100% !important;
+    left: 0px!important;
   }
 }
