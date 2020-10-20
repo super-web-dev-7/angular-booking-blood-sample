@@ -1,15 +1,18 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {AuthService} from '../../service/auth/auth.service';
 import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+
+import {AuthService} from '../../service/auth/auth.service';
 import {SharedService} from '../../service/shared/shared.service';
+import {SessionExpireAlertComponent} from '../../components/session-expire-alert/session-expire-alert.component';
 
 @Component({
   selector: 'app-patient-layout',
   templateUrl: './patient-layout.component.html',
   styleUrls: ['./patient-layout.component.scss']
 })
-export class PatientLayoutComponent implements OnInit {
+export class PatientLayoutComponent implements OnInit, OnDestroy {
   isOpen = true;
   isTablet = true;
   isRightSidebarOpen = false;
@@ -29,12 +32,14 @@ export class PatientLayoutComponent implements OnInit {
   openHistory = false;
   title: string;
   titleEnd: string;
+  subsVar: any;
 
   constructor(
     public authService: AuthService,
     public router: Router,
     public breakpointObserver: BreakpointObserver,
     private sharedService: SharedService,
+    public dialog: MatDialog
   ) {
 
     breakpointObserver.observe([
@@ -47,6 +52,11 @@ export class PatientLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.subsVar = this.authService.showExpireAlertSubject.subscribe(value => {
+      if (value) {
+        this.dialog.open(SessionExpireAlertComponent, {disableClose: true});
+      }
+    });
     this.isOpen = true;
     this.title = 'dashboard';
     this.titleEnd = '';
@@ -95,6 +105,12 @@ export class PatientLayoutComponent implements OnInit {
       }
       this.isRightSidebarOpen = true;
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subsVar) {
+      this.subsVar.unsubscribe();
+    }
   }
 
   setOpen = ($event: any) => {

@@ -7,11 +7,23 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
   templateUrl: './edit-anamnesis.component.html',
   styleUrls: ['./edit-anamnesis.component.scss']
 })
+
 export class EditAnamnesisComponent implements OnInit {
   editAnamsForm: FormGroup;
   saved = false;
   public districtSearchControl = new FormControl();
   allStaticDistrict = [];
+  ageRange = new Array(65);
+  heightRange = new Array(70);
+  weightRange = new Array(100);
+  selectValues = {
+    smoking: true,
+    alcohol: false,
+    takeMedication: true,
+    heartAttack: true,
+    previousIllness: true,
+    additionalInfo: true
+  };
 
   constructor(
     public formBuilder: FormBuilder,
@@ -21,14 +33,19 @@ export class EditAnamnesisComponent implements OnInit {
 
   ngOnInit(): void {
     this.editAnamsForm = this.formBuilder.group({
-      name: [this.data?.name, Validators.required],
-      model: [this.data?.model, Validators.required],
-      isActive: [this.data ? this.data?.isActive : false, Validators.required]
+      name: [null, Validators.required],
+      gender: [null, Validators.required],
+      male: [null, Validators.required],
+      age: [null, Validators.required],
+      height: [null, Validators.required],
+      weight: [null, Validators.required],
+      disease: [null, Validators.required]
     });
   }
 
   submit = () => {
     this.saved = true;
+    console.log(this.selectValues);
   }
 
   close = () => {

@@ -38,7 +38,7 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subsVar = this.authService.showExpireAlertSubject.subscribe(value => {
       if (value) {
-        const dialog = this.dialog.open(SessionExpireAlertComponent, {disableClose: true});
+        this.dialog.open(SessionExpireAlertComponent, {disableClose: true});
       }
     });
   }

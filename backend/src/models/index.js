@@ -17,6 +17,7 @@ import templateAction from './template-action.model';
 import workingGroupAgency from './working_group_agency.model';
 import templateKeyword from './template_keyword.model';
 import contactHistory from './contact-history.model';
+import medicalQuestion from './medical_question.model';
 
 const sequelize = new Sequelize(config.mysql.database, config.mysql.user, config.mysql.password, {
     host: config.mysql.host,
@@ -45,6 +46,7 @@ db.zipCodeModel = zipCodeModel(sequelize, Sequelize);
 db.templateAction = templateAction(sequelize, Sequelize);
 db.templatekeyword = templateKeyword(sequelize, Sequelize);
 db.contactHistory = contactHistory(sequelize, Sequelize);
+db.medicalQuestion = medicalQuestion(sequelize, Sequelize);
 
 // Relations
 db.patient.belongsTo(db.user);
