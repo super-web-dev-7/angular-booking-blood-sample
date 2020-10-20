@@ -6,17 +6,18 @@ const Package = db.package;
 const User = db.user;
 const Agency = db.agency;
 const Patient = db.patient;
+const ContactHistory = db.contactHistory;
 const sequelize = db.sequelize;
-
 
 exports.create = async (req, res) => {
     const newAppointment = req.body;
-    Appointment.create(newAppointment).then(data => {
+    Appointment.create(newAppointment).then(async data => {
+        await ContactHistory.create({type: 'upcoming', appointmentId: data.id});
         res.status(201).json(data);
     }).catch(e => {
         res.status(400).send({
             message: e.errors[0].message || 'Some error occurred.'
-        })
+        });
     });
 }
 
@@ -57,7 +58,6 @@ exports.delete = async (req, res) => {
 }
 
 exports.update = async (req, res) => {
-
 }
 
 exports.getAppointmentByNurse = async (req, res) => {

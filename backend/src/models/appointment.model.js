@@ -12,7 +12,7 @@ module.exports = (sequelize, Sequelize) => {
         adminStatus: {
             type: Sequelize.ENUM('upcoming', 'confirmed', 'canceled', 'successful'), defaultValue: 'upcoming'
         },
-        medical_report: {
+        anamnesisStatus: {
             type: Sequelize.ENUM('open', 'closed'), defaultValue: 'open'
         }
     });
