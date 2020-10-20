@@ -9,6 +9,12 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class PopupArrangeAppointmentComponent implements OnInit {
   @Output() closeSide = new EventEmitter();
   appointmentForm: FormGroup;
+  packages = [
+    {id: 1, name: 'Package1'},
+    {id: 2, name: 'Package2'},
+  ];
+  selectedPackage = null;
+  isValid = false;
   constructor(
     public formBuilder: FormBuilder,
   ) { }
@@ -21,6 +27,10 @@ export class PopupArrangeAppointmentComponent implements OnInit {
 
   close = () => {
     this.closeSide.emit(false);
+  }
+
+  selectPackage = (id) => {
+    this.selectedPackage = id;
   }
 
 }

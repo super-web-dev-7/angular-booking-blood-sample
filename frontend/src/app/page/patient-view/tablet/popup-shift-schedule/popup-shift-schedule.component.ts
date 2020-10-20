@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-popup-shift-schedule',
@@ -10,6 +10,9 @@ export class PopupShiftScheduleComponent implements OnInit {
   moveForm: FormGroup;
   @Input() isMobile;
   @Input() isTablet;
+  allTimes = [];
+  selectedPTime = null;
+  isValid = false;
 
   @Output() closeSide = new EventEmitter();
   constructor(
@@ -18,10 +21,10 @@ export class PopupShiftScheduleComponent implements OnInit {
 
   ngOnInit(): void {
     this.moveForm = this.formBuilder.group({
-      zipcode: [''],
-      place: [''],
-      street: [''],
-      message: ['']
+      plz: [null, Validators.required],
+      ort: [null, Validators.required],
+      street: [null, Validators.required],
+      message: ['', Validators.required]
     });
   }
 

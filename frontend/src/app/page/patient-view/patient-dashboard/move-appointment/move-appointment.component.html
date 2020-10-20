@@ -31,11 +31,11 @@
                 <div class="d-flex-between w-100">
                   <mat-form-field class="w-45">
                     <mat-label>PLZ</mat-label>
-                    <input formControlName="zipcode" autocomplete="off" matInput>
+                    <input formControlName="plz" autocomplete="off" matInput>
                   </mat-form-field>
                   <mat-form-field class="w-45">
                     <mat-label>Ort</mat-label>
-                    <input formControlName="place" autocomplete="off" matInput>
+                    <input formControlName="ort" autocomplete="off" matInput>
                   </mat-form-field>
                 </div>
                 <mat-form-field class="full-width">
@@ -56,6 +56,11 @@
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
+            <div class="d-flex flex-wrap expansion-panel-container">
+              <div class="text-center mt-4">
+                <app-datetime-picker [data]="allTimes" (setSelectedTime)="selectedPTime = $event"></app-datetime-picker>
+              </div>
+            </div>
           </mat-expansion-panel>
           <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>
@@ -75,11 +80,11 @@
                 appearance="fill"
                 style="width: 100%;margin-left:76px"
               >
-                <mat-label>Please text here</mat-label>
+                <mat-label></mat-label>
                 <textarea
                   matInput
                   formControlName="message"
-                  placeholder="Hallo"
+                  placeholder=""
                   rows="13"
                 ></textarea>
               </mat-form-field>
@@ -90,13 +95,18 @@
       <div class="determine-button-group">
         <div class="d-flex">
           <button
+            type="button"
             mat-stroked-button
             class="custom-button"
             (click)="close()"
           >
             Abbrechen
           </button>
-          <button mat-stroked-button class="custom-button-C7D ml-20">
+          <button
+            mat-stroked-button
+            class="custom-button-C7D ml-20"
+            [ngClass]="{'primary-button': isValid}"
+          >
             Termin verschieben
           </button>
         </div>

@@ -18,24 +18,27 @@ import { AppointmentViewComponent } from './appointment-view/appointment-view.co
 
 
 @NgModule({
-  declarations: [
-    OpenDatesComponent,
-    NewComponent,
-    StatisticsComponent,
-    DatetimePickerComponent,
-    DonutChartComponent,
-    BarChartComponent,
-    AppointmentViewComponent
-  ],
-  imports: [
-    CommonModule,
-    AppointmentRoutingModule,
-    SharedModule,
-    MaterialModule,
-    ReactiveFormsModule,
-    RouterModule,
-    NgxChartsModule,
-    NgxMatSelectSearchModule
-  ]
+    declarations: [
+        OpenDatesComponent,
+        NewComponent,
+        StatisticsComponent,
+        DatetimePickerComponent,
+        DonutChartComponent,
+        BarChartComponent,
+        AppointmentViewComponent
+    ],
+    exports: [
+        DatetimePickerComponent
+    ],
+    imports: [
+        CommonModule,
+        AppointmentRoutingModule,
+        SharedModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        RouterModule,
+        NgxChartsModule,
+        NgxMatSelectSearchModule
+    ]
 })
 export class AppointmentModule { }

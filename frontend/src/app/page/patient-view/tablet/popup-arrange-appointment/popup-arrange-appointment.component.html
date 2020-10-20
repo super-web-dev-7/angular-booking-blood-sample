@@ -82,6 +82,17 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="d-flex flex-wrap expansion-panel-container">
+              <div style="margin-left: 76px">
+                <button
+                  type="button"
+                  mat-stroked-button
+                  class="select-button"
+                  *ngFor="let item of packages"
+                  [ngClass]="{'primary': selectedPackage === item.id}"
+                  (click)="selectPackage(item.id)">
+                  {{item.name}}
+                </button>
+              </div>
             </div>
           </mat-expansion-panel>
           <mat-expansion-panel hideToggle>
@@ -130,6 +141,7 @@
         <button
           mat-stroked-button
           class="custom-button-C7D"
+          [ngClass]="{'primary-button': isValid}"
         >
           Termin buchen
         </button>

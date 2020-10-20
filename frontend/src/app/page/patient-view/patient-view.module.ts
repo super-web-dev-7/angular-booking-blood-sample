@@ -29,6 +29,7 @@ import { PopupPaymentStatusComponent } from './tablet/popup-payment-status/popup
 import { PopupNewAppointmentComponent } from './tablet/popup-new-appointment/popup-new-appointment.component';
 import { PopupArrangeAppointmentComponent } from './tablet/popup-arrange-appointment/popup-arrange-appointment.component';
 import { PopupHistoryComponent } from './tablet/popup-history/popup-history.component';
+import {AppointmentModule} from '../appointment/appointment.module';
 
 
 
@@ -78,7 +79,8 @@ import { PopupHistoryComponent } from './tablet/popup-history/popup-history.comp
         ReactiveFormsModule,
         FormsModule,
         PatientViewRoutingModule,
-        NgxMatSelectSearchModule
+        NgxMatSelectSearchModule,
+        AppointmentModule
     ]
 })
 export class PatientViewModule { }
