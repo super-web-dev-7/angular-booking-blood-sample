@@ -61,10 +61,8 @@
     <p class="p-A9BBC9" style="margin-top: 56px">
       Patienten-Nachricht via E-Mail beantworten
     </p>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label></mat-label>
-      <textarea [(ngModel)]="content" matInput rows="25"></textarea>
-    </mat-form-field>
+    <ckeditor
+      [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
     <button
       class="custom-button"
       mat-stroked-button

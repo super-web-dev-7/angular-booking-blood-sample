@@ -105,12 +105,24 @@ export class DoctorLayoutComponent implements OnInit {
     this.sharedService.tabletLeftSide.subscribe(res => {
       if (res === 't-history') {
         this.tHistory = true;
+        this.tAnamnes = false;
+        this.tRecall = false;
+        this.tMessage = false;
       } else if (res === 't-anamnes') {
         this.tAnamnes = true;
+        this.tRecall = false;
+        this.tMessage = false;
+        this.tHistory = false;
       } else if (res === 't-recall') {
         this.tRecall = true;
+        this.tMessage = false;
+        this.tHistory = false;
+        this.tAnamnes = false;
       } else if (res === 't-mail') {
         this.tMessage = true;
+        this.tHistory = false;
+        this.tAnamnes = false;
+        this.tRecall = false;
       }
     });
   }

@@ -24,6 +24,7 @@ export class SideCheckAnamnesComponent implements OnInit {
 
   close = () => {
     this.closeSide.emit(false);
+    this.sharedService.closeHistory.emit();
   }
   openSideHistory = () => {
     if (this.isMobile) {
@@ -42,6 +43,7 @@ export class SideCheckAnamnesComponent implements OnInit {
       this.sharedService.answer.emit('call');
     } else {
       this.sharedService.tabletLeftSide.emit('t-recall');
+      this.isSideHistory = false;
     }
   }
 
@@ -51,6 +53,7 @@ export class SideCheckAnamnesComponent implements OnInit {
       this.close();
     } else {
       this.sharedService.tabletLeftSide.emit('t-mail');
+      this.isSideHistory = false;
     }
   }
 

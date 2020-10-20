@@ -31,6 +31,7 @@ export class SidePatientAnswerComponent implements OnInit {
 
   close = () => {
     this.closeSide.emit(false);
+    this.sharedService.closeHistory.emit();
   }
 
   openSideHistory = () => {

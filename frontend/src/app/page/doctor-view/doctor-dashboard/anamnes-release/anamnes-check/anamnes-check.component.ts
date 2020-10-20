@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {SharedService} from '../../../../../service/shared/shared.service';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-anamnes-check',
@@ -8,7 +9,9 @@ import {SharedService} from '../../../../../service/shared/shared.service';
 })
 export class AnamnesCheckComponent implements OnInit {
   isCheckContact = false;
+  customText = '';
   content = null;
+  Editor = ClassicEditor;
   constructor(
     private sharedService: SharedService
   ) { }

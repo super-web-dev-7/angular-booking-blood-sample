@@ -356,6 +356,9 @@ mat-dialog-container {
   top: 10px !important;
   padding-left: 16px;
 }
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background:none!important;
+}
 
 .text-black {
   color: #202331;

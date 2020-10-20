@@ -1,6 +1,7 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {SharedService} from '../../../../../service/shared/shared.service';
 import {BreakpointObserver} from '@angular/cdk/layout';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-left-message-popup',
@@ -11,6 +12,8 @@ export class LeftMessagePopupComponent implements OnInit {
   isMobile = false;
   isTablet = false;
   content = null;
+  customText = '';
+  Editor = ClassicEditor;
   constructor(
     public breakpointObserver: BreakpointObserver,
     public sharedService: SharedService

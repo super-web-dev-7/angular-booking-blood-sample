@@ -33,3 +33,6 @@
 h1 {
   font-size: 36px!important;
 }
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background:none!important;
+}
