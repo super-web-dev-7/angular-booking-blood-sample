@@ -65,13 +65,15 @@ exports.cancelAppointment = async (req, res) => {
     const id = req.params.id;
     await Appointment.update({adminStatus: 'canceled'}, {where: {id}});
     await MedicalQuestion.update({isActive: false}, {where: {appointmentId: id}});
+    await ContactHistory.create({appointmentId: id, type: 'Appointment canceled'});
+
     const user = await sequelize.query(`
         SELECT users.email AS email, appointments.id AS appointmentId 
         FROM appointments 
         JOIN users ON appointments.userId=users.id
         WHERE appointments.id=${id}
     `, {type: db.Sequelize.QueryTypes.SELECT});
-    console.log(user);
+
     if (user.length > 0) {
         const mailData = {
             email: user[0].email,
@@ -82,4 +84,16 @@ exports.cancelAppointment = async (req, res) => {
         await sendMail(mailData);
     }
     res.status(200).json({message: 'Appointment cancel'});
+}
+
+exports.releaseAppointment = async (req, res) => {
+    const id = req.params.id;
+    await Appointment.update({adminStatus: 'confirmed'}, {where: {id}});
+    await MedicalQuestion.update({isActive: false}, {where: {appointmentId: id}});
+    const user = await sequelize.query(`
+        SELECT users.email AS email, appointments.id AS appointmentId 
+        FROM appointments 
+        JOIN users ON appointments.userId=users.id
+        WHERE appointments.id=${id}
+    `, {type: db.Sequelize.QueryTypes.SELECT});
 }
