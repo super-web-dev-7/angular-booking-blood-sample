@@ -1,15 +1,19 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {AuthService} from '../../service/auth/auth.service';
 import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material/dialog';
+
 import {SharedService} from '../../service/shared/shared.service';
+import {AuthService} from '../../service/auth/auth.service';
+import {SessionExpireAlertComponent} from '../../components/session-expire-alert/session-expire-alert.component';
+
 
 @Component({
   selector: 'app-doctor-layout',
   templateUrl: './doctor-layout.component.html',
   styleUrls: ['./doctor-layout.component.scss']
 })
-export class DoctorLayoutComponent implements OnInit {
+export class DoctorLayoutComponent implements OnInit, OnDestroy {
   isOpen = true;
   isMobile = false;
   isTablet = false;
@@ -30,12 +34,14 @@ export class DoctorLayoutComponent implements OnInit {
   tAnamnes = false;
   tMessage = false;
   tRecall = false;
+  subsVar: any;
 
   constructor(
     public breakpointObserver: BreakpointObserver,
     public authService: AuthService,
     private sharedService: SharedService,
-    public router: Router
+    public router: Router,
+    public dialog: MatDialog
   ) {
     breakpointObserver.observe([
       Breakpoints.HandsetPortrait,
@@ -47,6 +53,11 @@ export class DoctorLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.subsVar = this.authService.showExpireAlertSubject.subscribe(value => {
+      if (value) {
+        this.dialog.open(SessionExpireAlertComponent, {disableClose: true});
+      }
+    });
     this.openMedicalHistory = false;
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
@@ -125,6 +136,12 @@ export class DoctorLayoutComponent implements OnInit {
         this.tRecall = false;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subsVar) {
+      this.subsVar.unsubscribe();
+    }
   }
 
   setOpen = ($event: any) => {

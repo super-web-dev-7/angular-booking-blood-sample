@@ -98,7 +98,7 @@
   <div class="table-container mt-30">
     <mat-card class="table-card mat-card-radius" style="position: relative">
       <div>
-        <table mat-table [dataSource]="dataSourceA" matSort (matSortChange)="onSort($event)">
+        <table mat-table [dataSource]="anamnesisDataSource" matSort (matSortChange)="onSort($event)">
           <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef> # </th>
             <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
@@ -109,7 +109,7 @@
               Patientenname
               <app-order-icon columnName="patientName" [orderStatus]="orderStatus"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element"> {{element.patientName}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.patientFirstName}} {{element.patientLastName}} </td>
           </ng-container>
 
           <ng-container matColumnDef="appointmentDate">
@@ -117,7 +117,7 @@
               Termindatum
               <app-order-icon columnName="appointmentDate" [orderStatus]="orderStatus"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element" class="t-width"> {{element.appointmentDate}} </td>
+            <td mat-cell *matCellDef="let element" class="t-width"> {{getTimeDuration(element.startTime, element.duration)}} </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
@@ -126,10 +126,10 @@
               <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element" class="t-width">
-              <span *ngIf="element.id !== 1">
-                {{element.status}}
+              <span *ngIf="element.anamnesisStatus === 'open'">
+                {{'Anfrage offen'}}
               </span>
-              <span *ngIf="element.id === 1" class="spec-text">
+              <span *ngIf="element.anamnesisStatus !== 'open'" class="spec-text">
                 <img src="/assets/images/info_icon.svg" alt="info" class="mr-10" style="margin-left: -10px">
                 {{"In Bearbeitung durch Dr. Med. Marius Wilhelm"}}
               </span>
@@ -139,10 +139,10 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: center"> Anamnesebogen prüfen </th>
             <td mat-cell *matCellDef="let element" style="text-align: center">
-              <button mat-icon-button aria-label="more" (click)="checkAnamnes()" *ngIf="element.id !== 1">
+              <button mat-icon-button aria-label="more" (click)="checkAnamnes()" *ngIf="element.id % 2 !== 1">
                 <img src="/assets/images/edit.svg" alt="edit">
               </button>
-              <button mat-icon-button aria-label="more" (click)="anamnesView()" *ngIf="element.id === 1">
+              <button mat-icon-button aria-label="more" (click)="anamnesView()" *ngIf="element.id % 2 === 1">
                 <mat-icon>search</mat-icon>
               </button>
             </td>
@@ -359,7 +359,7 @@
         </button>
         Amnamnesebogen prüfen
       </div>
-      <table mat-table [dataSource]="dataSourceA" matSort (matSortChange)="onSort($event)">
+      <table mat-table [dataSource]="anamnesisDataSource" matSort (matSortChange)="onSort($event)">
         <ng-container matColumnDef="no">
           <th mat-header-cell *matHeaderCellDef> # </th>
           <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>

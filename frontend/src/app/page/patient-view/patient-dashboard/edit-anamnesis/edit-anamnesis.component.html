@@ -1,188 +1,224 @@
-<form [formGroup]="editAnamsForm" (ngSubmit)="submit()">
-<div class="pd-17">
-  <h1 style="margin-top: 9px">Anamnese  <span style="font-weight: 100"> bearbeiten</span></h1>
-  <div class="main-edit-container" *ngIf="!saved">
-    <div class="left-div">
-      <p>Ihre persönlichen Daten</p>
-      <mat-form-field class="mt-4 w-90">
-        <mat-label>Sebastian Naumann</mat-label>
-        <input formControlName="name" autocomplete="off" matInput>
-      </mat-form-field>
-      <div class="d-flex-between w-90">
-        <mat-form-field class="w-45">
-          <mat-label>Männlich</mat-label>
-          <mat-select formControlName="model">
-            <mat-option *ngFor="let model of allStaticDistrict">
-              {{''}}
-            </mat-option>
-          </mat-select>
+<form [formGroup]="editAnamsForm">
+  <div class="pd-17">
+    <h1 style="margin-top: 9px">Anamnese <span style="font-weight: 100"> bearbeiten</span></h1>
+    <div class="main-edit-container" *ngIf="!saved">
+      <div class="left-div">
+        <p>Ihre persönlichen Daten</p>
+        <mat-form-field class="mt-4 w-90">
+          <mat-label>Sebastian Naumann</mat-label>
+          <input formControlName="name" autocomplete="off" matInput>
         </mat-form-field>
-        <mat-form-field class="w-45">
-          <mat-label>39 Jahre</mat-label>
-          <mat-select formControlName="model">
-            <mat-option *ngFor="let model of allStaticDistrict">
-              {{''}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="d-flex-between w-90">
+          <mat-form-field class="w-45">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender">
+              <mat-option value="Female">Weiblich</mat-option>
+              <mat-option value="Male">Männlich</mat-option>
+              <mat-option value="Divers">Divers</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-45">
+            <mat-label>Age</mat-label>
+            <mat-select formControlName="age">
+              <mat-option [value]="index + 18" *ngFor="let age of ageRange; let index = index;">
+                {{index + 18}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="d-flex-between w-90">
+          <mat-form-field class="w-45">
+            <mat-label>Height</mat-label>
+            <mat-select formControlName="height">
+              <mat-option [value]="index + 100" *ngFor="let height of heightRange; let index = index;">
+                {{index + 100}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="w-45">
+            <mat-label>Weight</mat-label>
+            <mat-select formControlName="weight">
+              <mat-option [value]="index + 35" *ngFor="let weight of weightRange; let index = index;">
+                {{index + 35}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
-      <div class="d-flex-between w-90">
-        <mat-form-field class="w-45">
-          <mat-label>1,83</mat-label>
-          <mat-select formControlName="model">
-            <mat-option *ngFor="let model of allStaticDistrict">
-              {{''}}
+      <div class="right-dev">
+        <div class="d-flex-between align-items-center">
+          <p>Rauchen Sie?</p>
+          <div class="d-flex">
+            <button
+              (click)="selectValues.smoking = true"
+              mat-stroked-button
+              type="button"
+              [ngClass]="{'primary primary-button': selectValues.smoking, 'custom-button-37': !selectValues.smoking}"
+              >
+              Ja
+            </button>
+            <button
+              (click)="selectValues.smoking = false"
+              mat-stroked-button
+              type="button"
+              [ngClass]="{'primary primary-button': !selectValues.smoking, 'custom-button-37': selectValues.smoking}"
+              class="ml-5"
+            >
+              Nein
+            </button>
+          </div>
+        </div>
+        <div class="d-flex-between align-items-center mt-18">
+          <p>Trinken Sie täglich Alkohol?</p>
+          <div class="d-flex">
+            <button
+              (click)="selectValues.alcohol = true"
+              mat-stroked-button
+              type="button"
+              [ngClass]="{'primary primary-button': selectValues.alcohol, 'custom-button-37': !selectValues.alcohol}"
+              >
+              Ja
+            </button>
+            <button
+              (click)="selectValues.alcohol = false"
+              mat-stroked-button
+              type="button"
+              [ngClass]="{'primary primary-button': !selectValues.alcohol, 'custom-button-37': selectValues.alcohol}"
+              class="ml-5"
+            >
+              Nein
+            </button>
+          </div>
+        </div>
+        <div class="d-flex-between align-items-center mt-18">
+          <p>Nehmen Sie regelmäßig Medikamente ein?</p>
+          <div class="d-flex">
+            <button
+              (click)="selectValues.takeMedication = true"
+              mat-stroked-button
+              type="button"
+              [ngClass]="{'primary primary-button': selectValues.takeMedication, 'custom-button-37': !selectValues.takeMedication}"
+              >
+              Ja
+            </button>
+            <button
+              (click)="selectValues.takeMedication = false"
+              mat-stroked-button
+              type="button"
+              [ngClass]="{'primary primary-button': !selectValues.takeMedication, 'custom-button-37': selectValues.takeMedication}"
+              class="ml-5"
+            >
+              Nein
+            </button>
+          </div>
+        </div>
+        <mat-form-field class="w-100">
+          <mat-label>Gegen Diabetes</mat-label>
+          <mat-select formControlName="disease">
+            <mat-option [value]="disease" *ngFor="let disease of diseases">
+              {{disease}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field class="w-45">
-          <mat-label>95 kg</mat-label>
-          <mat-select formControlName="model">
-            <mat-option *ngFor="let model of allStaticDistrict">
-              {{''}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="d-flex-between align-items-center mt-18">
+          <p>Gibt es in Ihrer Familie Herzinfarkte / Schlaganfälle?</p>
+          <div class="d-flex">
+            <button
+              (click)="selectValues.heartAttack = true"
+              mat-stroked-button
+              type="button"
+              [ngClass]="{'primary primary-button': selectValues.heartAttack, 'custom-button-37': !selectValues.heartAttack}"
+              >
+              Ja
+            </button>
+            <button
+              (click)="selectValues.heartAttack = false"
+              [ngClass]="{'primary primary-button': !selectValues.heartAttack, 'custom-button-37': selectValues.heartAttack}"
+              mat-stroked-button
+              type="button"
+              class="ml-5"
+            >
+              Nein
+            </button>
+          </div>
+        </div>
+        <div class="d-flex-between align-items-center mt-18">
+          <p>Sind bei Ihnen relevante Vorerkrankungen bekannt?</p>
+          <div class="d-flex">
+            <button
+              (click)="selectValues.previousIllness = true"
+              mat-stroked-button
+              type="button"
+              [ngClass]="{'primary primary-button': selectValues.previousIllness, 'custom-button-37': !selectValues.previousIllness}"
+              >
+              Ja
+            </button>
+            <button
+              (click)="selectValues.previousIllness = false"
+              mat-stroked-button
+              type="button"
+              [ngClass]="{'primary primary-button': !selectValues.previousIllness, 'custom-button-37': selectValues.previousIllness}"
+              class="ml-5"
+            >
+              Nein
+            </button>
+          </div>
+        </div>
+        <div class="d-flex-between align-items-center mt-18">
+          <p>Wollen Sie uns noch zusätzliche Informationen<br/> zukommen lassen?</p>
+          <div class="d-flex">
+            <button
+              (click)="selectValues.additionalInfo = true"
+              mat-stroked-button
+              type="button"
+              [ngClass]="{'primary primary-button': selectValues.additionalInfo, 'custom-button-37': !selectValues.additionalInfo}"
+              >
+              Ja
+            </button>
+            <button
+              (click)="selectValues.additionalInfo = false"
+              mat-stroked-button
+              type="button"
+              [ngClass]="{'primary primary-button': !selectValues.additionalInfo, 'custom-button-37': selectValues.additionalInfo}"
+              class="ml-5"
+            >
+              Nein
+            </button>
+          </div>
+        </div>
+        <div class="d-flex mt-85 ml-166">
+          <button
+            mat-stroked-button
+            class="custom-button"
+            (click)="close()"
+          >
+            Abbrechen
+          </button>
+          <button
+            mat-stroked-button
+            class="custom-button-s-384C61 ml-10"
+            (click)="submit()"
+          >
+            Anamnesedaten speichern
+          </button>
+        </div>
       </div>
     </div>
-    <div class="right-dev">
-      <div class="d-flex-between align-items-center">
-        <p>Rauchen Sie?</p>
-        <div class="d-flex">
-          <button
-            mat-stroked-button
-            class="custom-button-384C61">
-            Ja
-          </button>
-          <button
-            mat-stroked-button
-            class="custom-button-37 ml-5"
-          >
-            Nein
-          </button>
-        </div>
+    <div class="mt-47" *ngIf="saved">
+      <div class="d-flex">
+        <mat-icon class="green-0">lens</mat-icon>
+        <p class="p-green ml-10"
+           style="margin-top: 3px">
+          Ihre Anamnese wurde geändert.<br/>
+          Bitte warten Sie auf die erneute Freigabe durch Ihren Arzt.<br/>
+          Ihr Termin bleibt bis dahin bestehen.
+        </p>
       </div>
-      <div class="d-flex-between align-items-center mt-18">
-        <p>Trinken Sie täglich Alkohol?</p>
-        <div class="d-flex">
-          <button
-            type="button"
-            mat-stroked-button
-            class="custom-button-37">
-            Ja
-          </button>
-          <button
-            mat-stroked-button
-            class="primary-button ml-5"
-          >
-            Nein
-          </button>
-        </div>
-      </div>
-      <div class="d-flex-between align-items-center mt-18">
-        <p>Nehmen Sie regelmäßig Medikamente ein?</p>
-        <div class="d-flex">
-          <button
-            mat-stroked-button
-            class="custom-button-384C61">
-            Ja
-          </button>
-          <button
-            mat-stroked-button
-            class="custom-button-37 ml-5"
-          >
-            Nein
-          </button>
-        </div>
-      </div>
-      <mat-form-field class="w-100">
-        <mat-label>Gegen Diabetes</mat-label>
-        <mat-select formControlName="model">
-          <mat-option *ngFor="let model of allStaticDistrict">
-            {{''}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <div class="d-flex-between align-items-center mt-18">
-        <p>Gibt es in Ihrer Familie Herzinfarkte / Schlaganfälle?</p>
-        <div class="d-flex">
-          <button
-            mat-stroked-button
-            class="custom-button-384C61">
-            Ja
-          </button>
-          <button
-            mat-stroked-button
-            class="custom-button-37 ml-5"
-          >
-            Nein
-          </button>
-        </div>
-      </div>
-      <div class="d-flex-between align-items-center mt-18">
-        <p>Sind bei Ihnen relevante Vorerkrankungen bekannt?</p>
-        <div class="d-flex">
-          <button
-            mat-stroked-button
-            class="custom-button-384C61">
-            Ja
-          </button>
-          <button
-            mat-stroked-button
-            class="custom-button-37 ml-5"
-          >
-            Nein
-          </button>
-        </div>
-      </div>
-      <div class="d-flex-between align-items-center mt-18">
-        <p>Wollen Sie uns noch zusätzliche Informationen<br/> zukommen lassen?</p>
-        <div class="d-flex">
-          <button
-            mat-stroked-button
-            class="custom-button-384C61">
-            Ja
-          </button>
-          <button
-            mat-stroked-button
-            class="custom-button-37 ml-5"
-          >
-            Nein
-          </button>
-        </div>
-      </div>
-      <div class="d-flex mt-85 ml-166">
+      <div class="mt-47 float-right">
         <button
           mat-stroked-button
           class="custom-button"
           (click)="close()"
-        >
-          Abbrechen
-        </button>
-        <button
-          mat-stroked-button
-          class="custom-button-s-384C61 ml-10"
-        >
-          Anamnesedaten speichern
-        </button>
-      </div>
-    </div>
-  </div>
-  <div class="mt-47" *ngIf="saved">
-    <div class="d-flex">
-      <mat-icon class="green-0">lens</mat-icon>
-      <p class="p-green ml-10"
-         style="margin-top: 3px">
-        Ihre Anamnese wurde geändert.<br/>
-        Bitte warten Sie auf die erneute Freigabe durch Ihren Arzt.<br/>
-        Ihr Termin bleibt bis dahin bestehen.
-      </p>
-    </div>
-    <div class="mt-47 float-right">
-      <button
-        mat-stroked-button
-        class="custom-button"
-        (click)="close()"
         >
         Schließen
       </button>

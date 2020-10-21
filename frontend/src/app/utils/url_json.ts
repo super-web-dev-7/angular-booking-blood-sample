@@ -16,5 +16,6 @@ export const URL_JSON = {
   AGENCY: API_URL + 'agency',
   APPOINTMENT: API_URL + 'appointment',
   BASE: API_URL,
-  ZIPCODE: API_URL + 'zipcode'
+  ZIPCODE: API_URL + 'zipcode',
+  PATIENT: API_URL + 'patient'
 };
