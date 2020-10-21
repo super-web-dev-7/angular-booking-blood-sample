@@ -77,6 +77,7 @@
             <button
               class="custom-button"
               mat-stroked-button
+              (click)="sendMessage()"
             >
               Nachricht versenden
             </button>
@@ -96,13 +97,14 @@
           type="button"
           class="custom-button ml-20"
           mat-stroked-button
+          (click)="cancel()"
         >
           Termin stornieren
         </button>
         <button
           class="custom-button primary ml-20"
           mat-stroked-button
-          (click)="sendMessage()"
+          (click)="release()"
         >
           Anamnese freigeben
         </button>
