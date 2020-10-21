@@ -3,12 +3,14 @@
   <div class="table-toolbar">
     <div>
       <button
+        type="button"
         class="custom-button-pink"
         [routerLink]="'/doctor/dashboard/patient-inquiry'"
         mat-stroked-button
         *ngIf="currentUser.role === 'Doctor'"
       >Patientenrückfragen</button>
       <button
+        type="button"
         class="custom-button"
         [routerLink]="'/doctor/dashboard/anamnes-release'"
         mat-stroked-button
@@ -16,6 +18,7 @@
         *ngIf="currentUser.role === 'Doctor'"
       >Anamnesefreigaben</button>
       <button
+        type="button"
         class="custom-button"
         [routerLink]="'/doctor/dashboard/event'"
         mat-stroked-button

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SharedService} from '../../../../../service/shared/shared.service';
 
 @Component({
@@ -10,7 +10,6 @@ import {SharedService} from '../../../../../service/shared/shared.service';
 export class LeftRecallComponent implements OnInit {
 
   PatientCallForm: FormGroup;
-  public districtSearchControl = new FormControl();
   allStaticDistrict = [];
   constructor(
     private sharedService: SharedService,
