@@ -1,11 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import * as moment from 'moment';
 
 import {SharedService} from '../../../../../service/shared/shared.service';
 import {HttpService} from '../../../../../service/http/http.service';
 import {URL_JSON} from '../../../../../utils/url_json';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {SuccessDialogComponent} from '../../answer-inquiry/success-dialog/success-dialog.component';
 
 @Component({
   selector: 'app-anamnes-check',
@@ -14,26 +16,35 @@ import {URL_JSON} from '../../../../../utils/url_json';
 })
 export class AnamnesCheckComponent implements OnInit {
   isCheckContact = false;
-  customText = '';
   content = null;
   Editor = ClassicEditor;
   displayData: any;
+  messageForm: FormGroup;
 
   constructor(
     private sharedService: SharedService,
     public httpService: HttpService,
+    private dialogRef: MatDialogRef<AnamnesCheckComponent>,
+    public formBuilder: FormBuilder,
+    public dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
   }
 
   ngOnInit(): void {
+    this.messageForm = this.formBuilder.group({
+      message: [null, Validators.required]
+    });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithQuestionById/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res[0];
-      console.log('displayedData++++++++++', this.displayData);
     });
     this.sharedService.closeHistory.subscribe(res => {
       this.isCheckContact = false;
     });
+  }
+
+  get f(): any {
+    return this.messageForm.controls;
   }
 
   getTimeDuration = (startTime, duration) => {
@@ -41,6 +52,24 @@ export class AnamnesCheckComponent implements OnInit {
       return '';
     }
     return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');
+  }
+
+  sendMessage = () => {
+    if (this.messageForm.invalid) {
+      return;
+    }
+    const data = {
+      questionId: this.displayData.id,
+      answer: this.f.message.value,
+      appointmentId: this.displayData.appointmentId
+    };
+    if (data) {
+      this.httpService.post(URL_JSON.DOCTOR + '/createMedicalAnswer', data).subscribe((res: any) => {
+        if (res) {
+          this.dialogRef.close(true);
+        }
+      });
+    }
   }
 
   openCheckContact = () => {
@@ -51,6 +80,10 @@ export class AnamnesCheckComponent implements OnInit {
   openCallPatient = () => {
     this.isCheckContact = false;
     this.sharedService.check.emit('call-patient');
+  }
+
+  close = () => {
+    this.dialogRef.close();
   }
 
 }

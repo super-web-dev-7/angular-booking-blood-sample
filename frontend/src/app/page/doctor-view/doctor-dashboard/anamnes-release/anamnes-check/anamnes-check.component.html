@@ -1,109 +1,112 @@
-<h1 style="margin-top: 9px">Anamnesebogen <span style="font-weight: 100"> prüfen</span></h1>
-<div class="main-answer-modal-container">
-  <div class="d-flex">
-    <div class="modal-left-div">
-      <div class="des-div">
-        <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
-        <p class="p-576E82">Check-Up: Männergesundheit</p>
-        <p class="p-272140">{{displayData?.addressStreet + '' + displayData?.addressOrt}}, {{displayData?.addressPlz}} Berlin</p>
-      </div>
-      <div class="option-buttons-div">
-        <div class="option-button-div mt-14">
-          <button
-            type="button"
-            class="doctor-search-button"
-            [ngClass]="{'active-button':isCheckContact}"
-          >
-            <mat-icon [ngClass]="{'active-icon': isCheckContact}">search</mat-icon>
-          </button>
-          <button
-            type="button"
-            class="custom-button-default ml-10"
-            mat-stroked-button
-            (click)="openCheckContact()"
-            [ngClass]="{'active-button': isCheckContact}"
-          >
-            Kontakthistorie ansehen
-          </button>
+<form [formGroup]="messageForm">
+  <h1 style="margin-top: 9px">Anamnesebogen <span style="font-weight: 100"> prüfen</span></h1>
+  <div class="main-answer-modal-container">
+    <div class="d-flex">
+      <div class="modal-left-div">
+        <div class="des-div">
+          <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
+          <p class="p-576E82">Check-Up: Männergesundheit</p>
+          <p class="p-272140">{{displayData?.addressStreet + '' + displayData?.addressOrt}}, {{displayData?.addressPlz}} Berlin</p>
         </div>
-        <div class="option-button-div mt-14">
-          <button
-            type="button"
-            class="doctor-search-button"
-            style="background: #89DF8C;color:#FFFFFF"
-          >
-            <mat-icon>phone</mat-icon>
-          </button>
-          <button
-            type="button"
-            class="custom-button-default ml-10"
-            style="background: #89DF8C;color:#FFFFFF"
-            mat-stroked-button
-            (click)="openCallPatient()"
-          >
-            {{displayData?.patientFirstName + '' + displayData?.patientLastName}}
-          </button>
+        <div class="option-buttons-div">
+          <div class="option-button-div mt-14">
+            <button
+              type="button"
+              class="doctor-search-button"
+              [ngClass]="{'active-button':isCheckContact}"
+            >
+              <mat-icon [ngClass]="{'active-icon': isCheckContact}">search</mat-icon>
+            </button>
+            <button
+              type="button"
+              class="custom-button-default ml-10"
+              mat-stroked-button
+              (click)="openCheckContact()"
+              [ngClass]="{'active-button': isCheckContact}"
+            >
+              Kontakthistorie ansehen
+            </button>
+          </div>
+          <div class="option-button-div mt-14">
+            <button
+              type="button"
+              class="doctor-search-button"
+              style="background: #89DF8C;color:#FFFFFF"
+            >
+              <mat-icon>phone</mat-icon>
+            </button>
+            <button
+              type="button"
+              class="custom-button-default ml-10"
+              style="background: #89DF8C;color:#FFFFFF"
+              mat-stroked-button
+              (click)="openCallPatient()"
+            >
+              {{displayData?.patientFirstName + '' + displayData?.patientLastName}}
+            </button>
+          </div>
+        </div>
+        <p class="p-272140">Rückrufwunsch</p>
+        <p class="p-272140">28.09.2020</p>
+        <p class="p-272140">Vormittags 09:00 - 12:00</p>
+      </div>
+      <div class="modal-middle-div">
+        <p style="margin-top: 56px">
+          Anamnesedaten
+        </p>
+        <div class="mt-47">
+          <p>{{displayData?.patientFirstName}} {{displayData?.patientLastName}}</p>
+          <p>{{displayData?.gender}}, {{displayData?.age}} Jahre, {{displayData?.height/100}} m, {{displayData?.weight}} kg</p>
+          <p class="mt-20">Rauchen Sie?<br/>{{displayData?.smoking ? 'Ja' : 'Nein'}}</p>
+          <p class="mt-20">Trinken Sie täglich Alkohol?<br/>{{displayData?.alcohol ? 'Ja' : 'Nein'}}</p>
+          <p class="mt-20">Nehmen Sie regelmäßig Medikamente ein?<br/>{{displayData?.takeMedication ? 'Ja' : 'Nein'}}</p>
+          <p class="mt-20">Gibt es in Ihrer Familie Herzinfarkte / Schlaganfälle?<br/>{{displayData?.heartAttack ? 'Ja' : 'Nein'}}</p>
+          <p class="mt-20">Sind bei Ihnen relevante Vorerkrankungen bekannt?<br/>{{displayData?.previousIllness ? 'Ja' : 'Nein'}}</p>
+          <p *ngIf="displayData?.previousIllness">{{displayData?.disease}}</p>
+          <p class="mt-20">Wollen Sie uns noch zusätzliche Informationen<br/> zukommen lassen?<br/>{{displayData?.additionalInfo ? 'Ja': 'Nein'}}</p>
         </div>
       </div>
-      <p class="p-272140">Rückrufwunsch</p>
-      <p class="p-272140">28.09.2020</p>
-      <p class="p-272140">Vormittags 09:00 - 12:00</p>
-    </div>
-    <div class="modal-middle-div">
-      <p style="margin-top: 56px">
-        Anamnesedaten
-      </p>
-      <div class="mt-47">
-        <p>{{displayData?.patientFirstName}} {{displayData?.patientLastName}}</p>
-        <p>{{displayData?.gender}}, {{displayData?.age}} Jahre, {{displayData?.height/100}} m, {{displayData?.weight}} kg</p>
-        <p class="mt-20">Rauchen Sie?<br/>{{displayData?.smoking ? 'Ja' : 'Nein'}}</p>
-        <p class="mt-20">Trinken Sie täglich Alkohol?<br/>{{displayData?.alcohol ? 'Ja' : 'Nein'}}</p>
-        <p class="mt-20">Nehmen Sie regelmäßig Medikamente ein?<br/>{{displayData?.takeMedication ? 'Ja' : 'Nein'}}</p>
-        <p class="mt-20">Gibt es in Ihrer Familie Herzinfarkte / Schlaganfälle?<br/>{{displayData?.heartAttack ? 'Ja' : 'Nein'}}</p>
-        <p class="mt-20">Sind bei Ihnen relevante Vorerkrankungen bekannt?<br/>{{displayData?.previousIllness ? 'Ja' : 'Nein'}}</p>
-        <p *ngIf="displayData?.previousIllness">{{displayData?.disease}}</p>
-        <p class="mt-20">Wollen Sie uns noch zusätzliche Informationen<br/> zukommen lassen?<br/>{{displayData?.additionalInfo ? 'Ja': 'Nein'}}</p>
+      <div class="modal-right-div">
+        <p class="p-A9BBC9" style="margin-top: 56px">
+          Patienten-Nachricht via E-Mail beantworten
+        </p>
+          <ckeditor
+            [editor]="Editor" formControlName="message" [config]="{ toolbar: [ 'bold', 'italic' ] }" data="">
+          </ckeditor>
+          <div class="float-right mt-24">
+            <button
+              class="custom-button"
+              mat-stroked-button
+            >
+              Nachricht versenden
+            </button>
+          </div>
       </div>
     </div>
-    <div class="modal-right-div">
-      <p class="p-A9BBC9" style="margin-top: 56px">
-        Patienten-Nachricht via E-Mail beantworten
-      </p>
-      <ckeditor
-        [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data="">
-      </ckeditor>
-      <div class="float-right mt-24">
+    <div class="float-right">
+      <div class="determine-buttons">
         <button
+          type="button"
           class="custom-button"
           mat-stroked-button
         >
-          Nachricht versenden
+          Zurück ohne Änderungen
+        </button>
+        <button
+          type="button"
+          class="custom-button ml-20"
+          mat-stroked-button
+        >
+          Termin stornieren
+        </button>
+        <button
+          class="custom-button primary ml-20"
+          mat-stroked-button
+          (click)="sendMessage()"
+        >
+          Anamnese freigeben
         </button>
       </div>
     </div>
   </div>
-  <div class="float-right">
-    <div class="determine-buttons">
-      <button
-        type="button"
-        class="custom-button"
-        mat-stroked-button
-      >
-        Zurück ohne Änderungen
-      </button>
-      <button
-        type="button"
-        class="custom-button ml-20"
-        mat-stroked-button
-      >
-        Termin stornieren
-      </button>
-      <button
-        class="custom-button primary ml-20"
-        mat-stroked-button
-      >
-        Anamnese freigeben
-      </button>
-    </div>
-  </div>
-</div>
+</form>

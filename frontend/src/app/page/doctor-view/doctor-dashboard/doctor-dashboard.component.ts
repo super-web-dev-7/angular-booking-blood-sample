@@ -15,6 +15,7 @@ import {SharedService} from '../../../service/shared/shared.service';
 import {SearchInputComponent} from './search-input/search-input.component';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
+import {SuccessDialogComponent} from './answer-inquiry/success-dialog/success-dialog.component';
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -133,6 +134,11 @@ export class DoctorDashboardComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(res => {
         this.sharedService.closeHistory.emit();
+        if (res) {
+          dialogRef = this.dialog.open(SuccessDialogComponent, {
+            width: '627px'
+          });
+        }
       });
     }
   }
