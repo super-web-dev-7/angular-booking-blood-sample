@@ -39,12 +39,10 @@ exports.createMedicalAnswer = async (req, res) => {
 exports.getContactHistory = async (req, res) => {
     const id = req.params.id;
     const appointment = await sequelize.query(`
-        SELECT appointments.id AS id, appointments.time AS startTime,
-            users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
+        SELECT appointments.id AS id, appointments.time AS startTime,             
             patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
             packages.name AS packageName,
-            calendars.duration_appointment AS duration,
-            medical_questions.*
+            calendars.duration_appointment AS duration
         FROM appointments
         JOIN agencies ON appointments.agencyId=agencies.id
         JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id
@@ -53,9 +51,12 @@ exports.getContactHistory = async (req, res) => {
         JOIN users ON appointments.userId=users.id
         JOIN patients ON patients.user_id=users.id
         JOIN packages ON appointments.packageId=packages.id
-        JOIN medical_questions ON appointments.id=medical_questions.appointmentId
-        WHERE medical_questions.isActive=1 AND appointments.id=${id}
+        WHERE appointments.id=${id}
     `, {type: db.Sequelize.QueryTypes.SELECT});
-    console.log(appointment);
-
+    const contactHistory = await ContactHistory.findAll({where: {appointmentId: id}, raw: true, nest: true});
+    const response = {
+        appointment,
+        contactHistory
+    }
+    res.status(200).json(response);
 }
