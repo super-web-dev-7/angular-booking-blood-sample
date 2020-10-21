@@ -23,11 +23,13 @@ export class AnamnesCheckComponent implements OnInit {
     private sharedService: SharedService,
     public httpService: HttpService,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithQuestionById/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res[0];
+      console.log('displayedData++++++++++', this.displayData);
     });
     this.sharedService.closeHistory.subscribe(res => {
       this.isCheckContact = false;

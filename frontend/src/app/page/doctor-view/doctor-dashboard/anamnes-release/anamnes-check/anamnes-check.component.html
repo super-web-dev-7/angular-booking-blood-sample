@@ -5,7 +5,7 @@
       <div class="des-div">
         <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
         <p class="p-576E82">Check-Up: Männergesundheit</p>
-        <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+        <p class="p-272140">{{displayData?.addressStreet + '' + displayData?.addressOrt}}, {{displayData?.addressPlz}} Berlin</p>
       </div>
       <div class="option-buttons-div">
         <div class="option-button-div mt-14">
@@ -41,7 +41,7 @@
             mat-stroked-button
             (click)="openCallPatient()"
           >
-            Sebastian Naumann
+            {{displayData?.patientFirstName + '' + displayData?.patientLastName}}
           </button>
         </div>
       </div>
@@ -53,13 +53,17 @@
       <p style="margin-top: 56px">
         Anamnesedaten
       </p>
-      <p style="margin-top: 57px">Sebastian Naumann<br/> Männlich, 39 Jahre, 1,83 m, 95 kg</p>
-      <p style="margin-top: 24px">Rauchen Sie? <br/>Nein</p>
-      <p style="margin-top: 24px">Trinken Sie täglich Alkohol? <br/>Nein</p>
-      <p style="margin-top: 24px">Nehmen Sie regelmäßig Medikamente ein? <br/>Ja<br/> Gegen Diabetes</p>
-      <p style="margin-top: 24px">Gibt es in Ihrer Familie Herzinfarkte / Schlaganfälle?<br/>Nein</p>
-      <p style="margin-top: 24px">Sind bei Ihnen relevante Vorerkrankungen bekannt?<br/>Nein</p>
-      <p style="margin-top: 24px">Wollen Sie uns noch zusätzliche Informationen<br/> zukommen lassen?<br/>Nein</p>
+      <div class="mt-47">
+        <p>{{displayData?.patientFirstName}} {{displayData?.patientLastName}}</p>
+        <p>{{displayData?.gender}}, {{displayData?.age}} Jahre, {{displayData?.height/100}} m, {{displayData?.weight}} kg</p>
+        <p class="mt-20">Rauchen Sie?<br/>{{displayData?.smoking ? 'Ja' : 'Nein'}}</p>
+        <p class="mt-20">Trinken Sie täglich Alkohol?<br/>{{displayData?.alcohol ? 'Ja' : 'Nein'}}</p>
+        <p class="mt-20">Nehmen Sie regelmäßig Medikamente ein?<br/>{{displayData?.takeMedication ? 'Ja' : 'Nein'}}</p>
+        <p class="mt-20">Gibt es in Ihrer Familie Herzinfarkte / Schlaganfälle?<br/>{{displayData?.heartAttack ? 'Ja' : 'Nein'}}</p>
+        <p class="mt-20">Sind bei Ihnen relevante Vorerkrankungen bekannt?<br/>{{displayData?.previousIllness ? 'Ja' : 'Nein'}}</p>
+        <p *ngIf="displayData?.previousIllness">{{displayData?.disease}}</p>
+        <p class="mt-20">Wollen Sie uns noch zusätzliche Informationen<br/> zukommen lassen?<br/>{{displayData?.additionalInfo ? 'Ja': 'Nein'}}</p>
+      </div>
     </div>
     <div class="modal-right-div">
       <p class="p-A9BBC9" style="margin-top: 56px">
