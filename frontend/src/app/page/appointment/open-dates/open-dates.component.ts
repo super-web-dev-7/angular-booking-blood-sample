@@ -71,7 +71,7 @@ export class OpenDatesComponent implements OnInit {
       } else if (url[2] === 'canceled') {
         this.appointments = this.allAppointment.filter(item => item.adminStatus === 'canceled');
       } else if (url[2] === 'completed') {
-        this.appointments = this.allAppointment.filter(item => item.adminStatus === 'completed');
+        this.appointments = this.allAppointment.filter(item => item.adminStatus === 'successful');
       }
       for (const appointment of this.appointments) {
         if (!this.agencies.includes(item => item.id === appointment.agency.id)) {

@@ -69,7 +69,7 @@ exports.cancelAppointment = async (req, res) => {
 
     const user = await sequelize.query(`
         SELECT users.email AS email, appointments.id AS appointmentId 
-        FROM appointments 
+        FROM appointments
         JOIN users ON appointments.userId=users.id
         WHERE appointments.id=${id}
     `, {type: db.Sequelize.QueryTypes.SELECT});
@@ -90,10 +90,24 @@ exports.releaseAppointment = async (req, res) => {
     const id = req.params.id;
     await Appointment.update({adminStatus: 'confirmed'}, {where: {id}});
     await MedicalQuestion.update({isActive: false}, {where: {appointmentId: id}});
+    await ContactHistory.create({appointmentId: id, type: 'Appointment confirmed'});
     const user = await sequelize.query(`
-        SELECT users.email AS email, appointments.id AS appointmentId 
-        FROM appointments 
+        SELECT users.email AS email, appointments.id AS appointmentId
+        FROM appointments
         JOIN users ON appointments.userId=users.id
         WHERE appointments.id=${id}
     `, {type: db.Sequelize.QueryTypes.SELECT});
+    if (user.length > 0) {
+        const mailData = {
+            email: user[0].email,
+            subject: 'Appointment confirm',
+            from: process.env.OWNER_EMAIL,
+            content: 'Your appointment was confirmed.'
+        };
+        await sendMail(mailData);
+    }
+
+    // Send API to Laboratory
+
+    res.status(200).json({message: 'Appointment confirmed'})
 }

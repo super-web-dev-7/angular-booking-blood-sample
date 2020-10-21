@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.ENUM('upcoming', 'confirmed', 'canceled', 'successful'), defaultValue: 'upcoming'
         },
         anamnesisStatus: {
-            type: Sequelize.ENUM('open', 'closed'), defaultValue: 'open'
+            type: Sequelize.ENUM('open', 'closed'), defaultValue: 'closed'
         }
     });
 };
