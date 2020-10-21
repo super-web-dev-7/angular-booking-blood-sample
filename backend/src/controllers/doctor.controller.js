@@ -8,12 +8,16 @@ const MedicalAnswer = db.medicalAnswer;
 const sequelize = db.sequelize;
 
 exports.createMedicalAnswer = async (req, res) => {
-    console.log('body>>>>>>>', req.body)
-    const newAnswerData = req.body;
+    const newAnswerData = {
+        questionId: req.body.questionId,
+        answer: req.body.answer
+    };
     const newAnswer = await MedicalAnswer.create(newAnswerData);
     if (newAnswer) {
+        await Appointment.update({anamnesisStatus: 'closed'}, {where: {id: req.body.appointmentId}});
+        await ContactHistory.create({appointmentId: req.body.appointmentId, type: 'Doctor answered'});
         const user = await sequelize.query(`
-        SELECT users.email AS email 
+        SELECT users.email AS email
         FROM medical_questions 
         JOIN appointments ON appointments.id=medical_questions.appointmentId
         JOIN users ON appointments.userId=users.id
