@@ -1,7 +1,7 @@
 <app-medical-history-left *ngIf="openMedicalHistory"></app-medical-history-left>
 <app-contact-history-left *ngIf="openContactHistory"></app-contact-history-left>
 <app-patient-recall *ngIf="openPatientCall"></app-patient-recall>
-<app-view-contact-history *ngIf="openCheckContact"></app-view-contact-history>
+<app-view-contact-history *ngIf="openCheckContact" [appointmentID]="appointmentId"></app-view-contact-history>
 <app-call-patient *ngIf="openCallPatient"></app-call-patient>
 <app-left-history-popup *ngIf="tHistory"></app-left-history-popup>
 <app-left-anamnese *ngIf="tAnamnes"></app-left-anamnese>

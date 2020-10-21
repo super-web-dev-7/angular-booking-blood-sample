@@ -6,15 +6,15 @@
     <h1>Kontakt <span style="font-weight: 100"> historie</span></h1>
     <div class="mt-47">
       <div class="left-border-div">
-        <p class="p-16 ml-20">{{historyData.ddd.date}}</p>
-        <p class="p-576E82">Check-up: <span>{{historyData.ddd.check_up}}</span></p>
-        <p class="p-14 ml-20">{{historyData.ddd.address}}</p>
-        <div *ngFor="let history of historyData.data">
+        <p class="p-16 ml-20">{{getTimeDuration(appointmentData?.startTime, appointmentData?.duration)}}</p>
+        <p class="p-576E82">Check-up: <span>{{appointmentData?.packageName}}</span></p>
+        <p class="p-14 ml-20">{{appointmentData?.addressStreet + '' + appointmentData?.addressOrt}}, {{appointmentData?.addressPlz}} Berlin</p>
+        <div *ngFor="let history of historyData">
           <div class="d-flex mt-24">
             <mat-icon class="dot">lens</mat-icon>
             <div class="d-block ml-20">
-              <p class="p-16">{{history.time}}</p>
-              <p class="p-14">{{history.status}}</p>
+              <p class="p-16">{{formatTime(history.createdAt)}}</p>
+              <p class="p-14">{{history.type}}</p>
             </div>
           </div>
         </div>
