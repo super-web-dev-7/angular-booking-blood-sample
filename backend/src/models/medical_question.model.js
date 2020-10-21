@@ -38,6 +38,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         disease: {
             type: Sequelize.STRING
+        },
+        isActive: {
+            type: Sequelize.BOOLEAN, allowNull: false, defaultValue: true
         }
     });
 };
