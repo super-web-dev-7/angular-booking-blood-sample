@@ -141,7 +141,6 @@ exports.getAppointmentWithQuestionById = async (req, res) => {
         WHERE medical_questions.isActive=1 AND appointments.id=${id}
     `, {type: Sequelize.QueryTypes.SELECT});
     res.status(200).json(appointment);
-
 }
 
 exports.appointmentReady = async (req, res) => {
