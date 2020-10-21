@@ -8,6 +8,7 @@ import {AnamnesCheckComponent} from './anamnes-check/anamnes-check.component';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {SharedService} from '../../../../service/shared/shared.service';
 import {SearchInputComponent} from '../search-input/search-input.component';
+import {SuccessDialogComponent} from '../answer-inquiry/success-dialog/success-dialog.component';
 
 @Component({
   selector: 'app-anamnes-release',
@@ -81,6 +82,11 @@ export class AnamnesReleaseComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(res => {
         this.sharedService.closeHistory.emit();
+        if (res) {
+          dialogRef = this.dialog.open(SuccessDialogComponent, {
+            width: '627px'
+          });
+        }
       });
     }
   }

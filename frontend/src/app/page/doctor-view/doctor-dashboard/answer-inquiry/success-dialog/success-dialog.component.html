@@ -1,11 +1,12 @@
-<h1 style="margin-top: 9px">Patientenrückfrage <span style="font-weight: 100"> beantworten</span></h1>
+<h1 style="margin-top: 9px">Anamnesebogen <span style="font-weight: 100"> prüfen</span></h1>
 <div class="success-message">
   <div class="green-dot"></div>
-  <p>Sie haben die Rückfrage des Patienten erfolgreich bearbeitet.</p>
+  <p>Sie haben den Anamnesebogen des Patienten freigegeben.</p>
 </div>
 <button
   class="custom-button"
   mat-stroked-button
+  (click)="close()"
   style="float: right;margin-top: 68px"
 >
   Schließen
