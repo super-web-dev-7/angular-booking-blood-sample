@@ -7,39 +7,39 @@ const ContactHistory = db.contactHistory;
 const MedicalAnswer = db.medicalAnswer;
 const sequelize = db.sequelize;
 
-exports.createMedicalAnswer = async (req, res) => {
-    const newAnswerData = {
-        questionId: req.body.questionId,
-        answer: req.body.answer
-    };
-    const newAnswer = await MedicalAnswer.create(newAnswerData);
-    if (newAnswer) {
-        await Appointment.update({anamnesisStatus: 'closed'}, {where: {id: req.body.appointmentId}});
-        await ContactHistory.create({appointmentId: req.body.appointmentId, type: 'Doctor answered'});
-        const user = await sequelize.query(`
+exports.sendMessageToPatient = async (req, res) => {
+    // const newAnswerData = {
+    //     questionId: req.body.questionId,
+    //     answer: req.body.answer
+    // };
+    // const newAnswer = await MedicalAnswer.create(newAnswerData);
+    // if (newAnswer) {
+    // await Appointment.update({anamnesisStatus: 'closed'}, {where: {id: req.body.appointmentId}});
+    // await ContactHistory.create({appointmentId: req.body.appointmentId, type: 'Doctor answered'});
+    const user = await sequelize.query(`
         SELECT users.email AS email
         FROM medical_questions 
         JOIN appointments ON appointments.id=medical_questions.appointmentId
         JOIN users ON appointments.userId=users.id
         WHERE medical_questions.id=${req.body.questionId}
         `, {type: db.Sequelize.QueryTypes.SELECT});
-        if (user[0]) {
-            const mailData = {
-                email: user[0].email,
-                subject: 'Doctor Answer',
-                from: process.env.OWNER_EMAIL,
-                content: req.body.answer
-            }
-            await sendMail(mailData);
+    if (user[0]) {
+        const mailData = {
+            email: user[0].email,
+            subject: 'Doctor Answer',
+            from: process.env.OWNER_EMAIL,
+            content: req.body.answer
         }
+        await sendMail(mailData);
     }
-    res.status(201).json(newAnswer);
+    // }
+    res.status(201).json({message: 'Email sent'});
 }
 
 exports.getContactHistory = async (req, res) => {
     const id = req.params.id;
     const appointment = await sequelize.query(`
-        SELECT appointments.id AS id, appointments.time AS startTime,             
+        SELECT appointments.id AS id, appointments.time AS startTime,
             patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
             packages.name AS packageName,
             calendars.duration_appointment AS duration
@@ -57,6 +57,29 @@ exports.getContactHistory = async (req, res) => {
     const response = {
         appointment,
         contactHistory
-    }
+    };
     res.status(200).json(response);
+}
+
+exports.cancelAppointment = async (req, res) => {
+    const id = req.params.id;
+    await Appointment.update({adminStatus: 'canceled'}, {where: {id}});
+    await MedicalQuestion.update({isActive: false}, {where: {appointmentId: id}});
+    const user = await sequelize.query(`
+        SELECT users.email AS email, appointments.id AS appointmentId 
+        FROM appointments 
+        JOIN users ON appointments.userId=users.id
+        WHERE appointments.id=${id}
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    console.log(user);
+    if (user.length > 0) {
+        const mailData = {
+            email: user[0].email,
+            subject: 'Appointment cancel',
+            from: process.env.OWNER_EMAIL,
+            content: 'Your questionnaire is not good.'
+        };
+        await sendMail(mailData);
+    }
+    res.status(200).json({message: 'Appointment cancel'});
 }
