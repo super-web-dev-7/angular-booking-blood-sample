@@ -74,12 +74,20 @@ export class AnamnesCheckComponent implements OnInit {
 
   openCheckContact = () => {
     this.isCheckContact = true;
-    this.sharedService.check.emit('v-contact');
+    const emitData = {
+      title: 'v-contact',
+      appointmentId: this.displayData?.appointmentId
+    };
+    this.sharedService.check.emit(emitData);
   }
 
   openCallPatient = () => {
     this.isCheckContact = false;
-    this.sharedService.check.emit('call-patient');
+    const emitData = {
+      title: 'call-patient',
+      appointmentId: this.displayData?.appointmentId
+    };
+    this.sharedService.check.emit(emitData);
   }
 
   close = () => {

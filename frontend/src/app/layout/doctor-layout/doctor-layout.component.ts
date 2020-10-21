@@ -35,6 +35,7 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
   tMessage = false;
   tRecall = false;
   subsVar: any;
+  appointmentId = null;
 
   constructor(
     public breakpointObserver: BreakpointObserver,
@@ -91,12 +92,16 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
       this.tMessage = false;
     });
     this.sharedService.check.subscribe(res => {
-      if (res === 'v-contact') {
-        this.openCheckContact = true;
-        this.openCallPatient = false;
-      } else {
-        this.openCallPatient = true;
-        this.openCheckContact = false;
+      if (res) {
+        if (res.title === 'v-contact') {
+          this.openCheckContact = true;
+          this.openCallPatient = false;
+          this.appointmentId = res.appointmentId;
+          console.log('appointmentID@@@@@@', this.appointmentId);
+        } else {
+          this.openCallPatient = true;
+          this.openCheckContact = false;
+        }
       }
     });
     this.sharedService.tabletSide.subscribe(res => {
