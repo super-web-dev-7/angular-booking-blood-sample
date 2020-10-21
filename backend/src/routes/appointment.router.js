@@ -10,4 +10,5 @@ router.route('/delete/:id').delete(appointmentController.delete);
 router.route('/getAppointmentByNurse/:id').get(appointmentController.getAppointmentByNurse);
 router.route('/ready/:id').put(appointmentController.appointmentReady);
 router.route('/getAppointmentByPatient/:id').get(appointmentController.getAppointmentByPatient);
+router.route('/getAppointmentsByAnamnes').get(appointmentController.getAppointmentsByAnamnes);
 export default router;
