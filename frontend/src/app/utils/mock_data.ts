@@ -232,3 +232,16 @@ export const userMockData = {
   birthday: '27.01.1987 (33 Jahre)',
   sex: 'Männlich'
 };
+export const historyMockData = {
+  ddd: {
+    date: '12.09.2020 09:00 - 10:15',
+    check_up: 'Männergesundheit',
+    address: 'Marienstraße 4, 15387 Berlin'
+  },
+  data: [
+    {time: '11.09.2020 07:12', status: 'Arztrückruf angefragt'},
+    {time: '09.09.2020 14:15', status: 'Termin bestätigt'},
+    {time: '09.09.2020 14:12', status: 'Anamnese freigegeben'},
+    {time: '04.09.2020 10:47', status: 'Terminreservierung online'}
+  ]
+};
