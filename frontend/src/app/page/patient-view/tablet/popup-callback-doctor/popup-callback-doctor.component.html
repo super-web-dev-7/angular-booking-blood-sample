@@ -1,5 +1,10 @@
 <div class="patient-popup-container">
-  <button mat-icon-button class="close" (click)="close()">
+  <button
+    type="button"
+    mat-icon-button
+    class="close"
+    (click)="close()"
+  >
     <mat-icon>clear</mat-icon>
   </button>
   <div class="main-side-container">
@@ -11,29 +16,29 @@
     </div>
     <div class="mt-45 d-flex">
       <button
+        type="button"
         mat-stroked-button
-        class="custom-button-384">
+        class="custom-button"
+        (click)="selectDay('today')"
+        [ngClass]="{'primary':selectedDay === 'today'}"
+      >
         Ab heute
       </button>
       <button
+        type="button"
         mat-stroked-button
-        class="custom-button ml-10">
+        class="custom-button ml-10"
+        (click)="selectDay('tomorrow')"
+        [ngClass]="{'primary':selectedDay === 'tomorrow'}"
+      >
         Ab morgen
       </button>
     </div>
     <div class="mt-47">
-      <div class="time-board">
-        <mat-icon>radio_button_unchecked</mat-icon>
-        <p class="ml-10 p-0">Vormittags (09:00 - 12:00)</p>
-      </div>
-      <div class="time-board mt-15">
-        <mat-icon>radio_button_unchecked</mat-icon>
-        <p class="ml-10">Nachmittags (12:00 - 16:00)</p>
-      </div>
-      <div class="time-board mt-15">
-        <mat-icon>radio_button_unchecked</mat-icon>
-        <p class="ml-10">Abends (16:00 - 19:00)</p>
-      </div>
+        <div class="time-board mt-15" *ngFor="let item of times">
+          <mat-icon>radio_button_unchecked</mat-icon>
+          <p class="ml-10">{{item.label}}</p>
+        </div>
     </div>
     <div class="mt-45">
       <mat-accordion>
@@ -69,6 +74,7 @@
       <button
         mat-stroked-button
         class="custom-button-C7D"
+        [ngClass]="{'primary': isValid}"
         >
         Rückrufbitte senden
       </button>

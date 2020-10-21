@@ -1,6 +1,11 @@
 <form [formGroup]="appointmentForm" class="p-2">
   <div class="patient-popup-container">
-    <button mat-icon-button class="close" (click)="close()">
+    <button
+      type="button"
+      mat-icon-button
+      class="close"
+      (click)="close()"
+    >
       <mat-icon>clear</mat-icon>
     </button>
     <div class="main-side-container">
@@ -141,7 +146,7 @@
         <button
           mat-stroked-button
           class="custom-button-C7D"
-          [ngClass]="{'primary-button': isValid}"
+          [ngClass]="{'primary': isValid}"
         >
           Termin buchen
         </button>
