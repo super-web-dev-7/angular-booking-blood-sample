@@ -7,15 +7,19 @@
   left: 0px;
   z-index: 2000!important;
   .main-div {
-      margin-top: 115px;
-      margin-left: 38px;
+    margin-top: 95px;
+    margin-left: 30px;
     h1 {
       font-size: 30px;
       color: #384C61
     }
-    p {
+    .p-16 {
       color: #272140;
       font-size: 16px;
+    }
+    .p-14 {
+      color: #272140;
+      font-size: 14px;
     }
   }
 }
@@ -24,24 +28,10 @@
   top: 48px;
   right: 33px;
 }
-.before-dot {
-  position: absolute;
+.dot {
   width: 10px;
   height: 10px;
-  border-radius: 50%;
-  background-color: #384C61;
-  left: -6px;
+  font-size: 10px;
+  margin-left: -6px;
+  color: var(--primary-color);
 }
-.location-a {
-  top: 120px;
-}
-.location-b {
-  top: 205px;
-}
-.location-c {
-  top: 264px;
-}
-.location-d {
-  top: 327px
-}
-
