@@ -3,18 +3,21 @@
   <div class="table-toolbar">
     <div>
       <button
+        type="button"
         class="custom-button-pink"
         [routerLink]="'/doctor/dashboard/patient-inquiry'"
         mat-stroked-button
         *ngIf="currentUser.role === 'Doctor'"
       >Patientenrückfragen</button>
       <button
+        type="button"
         class="custom-button-green"
         [routerLink]="'/doctor/dashboard/anamnes-release'"
         mat-stroked-button
         *ngIf="currentUser.role === 'Doctor'"
       >Anamnesefreigaben</button>
       <button
+        type="button"
         class="custom-button-light-green"
         [routerLink]="'/doctor/dashboard/event'"
         mat-stroked-button
@@ -84,6 +87,7 @@
         </table>
       </div>
       <button
+        type="button"
         class="custom-doctor-button pink-b-0"
         mat-stroked-button
       >
@@ -149,6 +153,7 @@
         </table>
       </div>
       <button
+        type="button"
         class="custom-doctor-button blue-b-0"
         mat-stroked-button
       >
@@ -238,6 +243,7 @@
         </table>
       </div>
       <button
+        type="button"
         class="custom-doctor-button green-b-0"
         mat-stroked-button
       >
