@@ -4,7 +4,6 @@ h1 {
 .main-answer-modal-container {
   width: 100%;
   padding: 17px;
-  display: flex;
 }
 .modal-left-div {
   width: 25%;
@@ -102,8 +101,6 @@ p {
 .determine-buttons {
   display: flex;
   justify-content: space-between;
-  margin-left: -100px;
-  margin-top: 110px;
 }
 .active-button {
   background-color: #384C61;
@@ -113,6 +110,6 @@ p {
   color: #ffffff;
 }
 ::ng-deep .ck-editor__editable_inline {
-  min-height: 350px;
+  min-height: 400px;
 }
 

@@ -1,92 +1,97 @@
 <h1 style="margin-top: 9px">Anamnesebogen <span style="font-weight: 100"> prüfen</span></h1>
 <div class="main-answer-modal-container">
-  <div class="modal-left-div">
-    <div class="des-div">
-      <p class="p-272140">03.10.2020 09:00 - 10:15</p>
-      <p class="p-576E82">Check-Up: Männergesundheit</p>
-      <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
-    </div>
-    <div class="option-buttons-div">
-      <div class="option-button-div mt-14">
-        <button
-          class="doctor-search-button"
-          [ngClass]="{'active-button':isCheckContact}"
-        >
-          <mat-icon [ngClass]="{'active-icon': isCheckContact}">search</mat-icon>
-        </button>
-        <button
-          class="custom-button-default ml-10"
-          style="margin-left: 10px"
-          mat-stroked-button
-          (click)="openCheckContact()"
-          [ngClass]="{'active-button': isCheckContact}"
-        >
-          Kontakthistorie ansehen
-        </button>
+  <div class="d-flex">
+    <div class="modal-left-div">
+      <div class="des-div">
+        <p class="p-272140">03.10.2020 09:00 - 10:15</p>
+        <p class="p-576E82">Check-Up: Männergesundheit</p>
+        <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
       </div>
-      <div class="option-button-div mt-14">
-        <button
-          class="doctor-search-button"
-          style="background: #89DF8C;color:#FFFFFF"
-        >
-          <mat-icon>phone</mat-icon>
-        </button>
-        <button
-          class="custom-button-default ml-10"
-          style="margin-left: 10px;background: #89DF8C;color:#FFFFFF"
-          mat-stroked-button
-          (click)="openCallPatient()"
-        >
-          Sebastian Naumann
-        </button>
+      <div class="option-buttons-div">
+        <div class="option-button-div mt-14">
+          <button
+            class="doctor-search-button"
+            [ngClass]="{'active-button':isCheckContact}"
+          >
+            <mat-icon [ngClass]="{'active-icon': isCheckContact}">search</mat-icon>
+          </button>
+          <button
+            class="custom-button-default ml-10"
+            style="margin-left: 10px"
+            mat-stroked-button
+            (click)="openCheckContact()"
+            [ngClass]="{'active-button': isCheckContact}"
+          >
+            Kontakthistorie ansehen
+          </button>
+        </div>
+        <div class="option-button-div mt-14">
+          <button
+            class="doctor-search-button"
+            style="background: #89DF8C;color:#FFFFFF"
+          >
+            <mat-icon>phone</mat-icon>
+          </button>
+          <button
+            class="custom-button-default ml-10"
+            style="margin-left: 10px;background: #89DF8C;color:#FFFFFF"
+            mat-stroked-button
+            (click)="openCallPatient()"
+          >
+            Sebastian Naumann
+          </button>
+        </div>
       </div>
+      <p class="p-272140">Rückrufwunsch</p>
+      <p class="p-272140">28.09.2020</p>
+      <p class="p-272140">Vormittags 09:00 - 12:00</p>
     </div>
-    <p class="p-272140">Rückrufwunsch</p>
-    <p class="p-272140">28.09.2020</p>
-    <p class="p-272140">Vormittags 09:00 - 12:00</p>
+    <div class="modal-middle-div">
+      <p style="margin-top: 56px">
+        Anamnesedaten
+      </p>
+      <p style="margin-top: 57px">Sebastian Naumann<br/> Männlich, 39 Jahre, 1,83 m, 95 kg</p>
+      <p style="margin-top: 24px">Rauchen Sie? <br/>Nein</p>
+      <p style="margin-top: 24px">Trinken Sie täglich Alkohol? <br/>Nein</p>
+      <p style="margin-top: 24px">Nehmen Sie regelmäßig Medikamente ein? <br/>Ja<br/> Gegen Diabetes</p>
+      <p style="margin-top: 24px">Gibt es in Ihrer Familie Herzinfarkte / Schlaganfälle?<br/>Nein</p>
+      <p style="margin-top: 24px">Sind bei Ihnen relevante Vorerkrankungen bekannt?<br/>Nein</p>
+      <p style="margin-top: 24px">Wollen Sie uns noch zusätzliche Informationen<br/> zukommen lassen?<br/>Nein</p>
+    </div>
+    <div class="modal-right-div">
+      <p class="p-A9BBC9" style="margin-top: 56px">
+        Patienten-Nachricht via E-Mail beantworten
+      </p>
+      <ckeditor
+        [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
+      <button
+        class="custom-button"
+        mat-stroked-button
+        style="margin-top: 24px;float: right"
+      >
+        Nachricht versenden
+      </button>
+    </div>
   </div>
-  <div class="modal-middle-div">
-    <p style="margin-top: 56px">
-      Anamnesedaten
-    </p>
-    <p style="margin-top: 57px">Sebastian Naumann<br/> Männlich, 39 Jahre, 1,83 m, 95 kg</p>
-    <p style="margin-top: 24px">Rauchen Sie? <br/>Nein</p>
-    <p style="margin-top: 24px">Trinken Sie täglich Alkohol? <br/>Nein</p>
-    <p style="margin-top: 24px">Nehmen Sie regelmäßig Medikamente ein? <br/>Ja<br/> Gegen Diabetes</p>
-    <p style="margin-top: 24px">Gibt es in Ihrer Familie Herzinfarkte / Schlaganfälle?<br/>Nein</p>
-    <p style="margin-top: 24px">Sind bei Ihnen relevante Vorerkrankungen bekannt?<br/>Nein</p>
-    <p style="margin-top: 24px">Wollen Sie uns noch zusätzliche Informationen<br/> zukommen lassen?<br/>Nein</p>
-  </div>
-  <div class="modal-right-div">
-    <p class="p-A9BBC9" style="margin-top: 56px">
-      Patienten-Nachricht via E-Mail beantworten
-    </p>
-    <ckeditor
-      [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
-    <button
-      class="custom-button"
-      mat-stroked-button
-      style="margin-top: 24px;float: right"
-    >
-      Nachricht versenden
-    </button><br/>
+  <div class="float-right">
     <div class="determine-buttons">
       <button
+        type="button"
         class="custom-button"
         mat-stroked-button
       >
         Zurück ohne Änderungen
       </button>
       <button
-        class="custom-button"
+        type="button"
+        class="custom-button ml-20"
         mat-stroked-button
       >
         Termin stornieren
       </button>
       <button
-        class="custom-button"
+        class="custom-button primary ml-20"
         mat-stroked-button
-        style="background: #384C61;color:#ffffff"
       >
         Anamnese freigeben
       </button>

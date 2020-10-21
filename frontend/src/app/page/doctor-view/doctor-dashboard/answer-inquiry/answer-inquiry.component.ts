@@ -29,8 +29,8 @@ export class AnswerInquiryComponent implements OnInit {
     });
   }
 
-  openSuccess = () => {
-    this.dialogRef.close(true);
+  close = () => {
+    this.dialogRef.close();
   }
 
   afterClosed = (dialogRef) => {
