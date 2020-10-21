@@ -20,8 +20,8 @@
           <mat-form-field class="w-45">
             <mat-label>Age</mat-label>
             <mat-select formControlName="age">
-              <mat-option [value]="index + 15" *ngFor="let age of ageRange; let index = index;">
-                {{index + 15}}
+              <mat-option [value]="index + 18" *ngFor="let age of ageRange; let index = index;">
+                {{index + 18}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -30,16 +30,16 @@
           <mat-form-field class="w-45">
             <mat-label>Height</mat-label>
             <mat-select formControlName="height">
-              <mat-option [value]="index + 150" *ngFor="let height of heightRange; let index = index;">
-                {{index + 150}}
+              <mat-option [value]="index + 100" *ngFor="let height of heightRange; let index = index;">
+                {{index + 100}}
               </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field class="w-45">
             <mat-label>Weight</mat-label>
             <mat-select formControlName="weight">
-              <mat-option [value]="index + 55" *ngFor="let weight of weightRange; let index = index;">
-                {{index + 55}}
+              <mat-option [value]="index + 35" *ngFor="let weight of weightRange; let index = index;">
+                {{index + 35}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -115,8 +115,8 @@
         <mat-form-field class="w-100">
           <mat-label>Gegen Diabetes</mat-label>
           <mat-select formControlName="disease">
-            <mat-option *ngFor="let model of allStaticDistrict">
-              {{''}}
+            <mat-option [value]="disease" *ngFor="let disease of diseases">
+              {{disease}}
             </mat-option>
           </mat-select>
         </mat-form-field>
