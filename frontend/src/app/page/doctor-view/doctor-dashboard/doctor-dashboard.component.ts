@@ -119,7 +119,7 @@ export class DoctorDashboardComponent implements OnInit {
     }
   }
 
-  checkAnamnes = () => {
+  checkAnamnes = (id) => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     if (this.isTablet || this.isMobile) {
@@ -128,7 +128,8 @@ export class DoctorDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(AnamnesCheckComponent, {
         width: '1347px',
-        position: {top: '2%', left: '22%'}
+        position: {top: '2%', left: '22%'},
+        data: {appointmentId: id}
       });
       dialogRef.afterClosed().subscribe(res => {
         this.sharedService.closeHistory.emit();

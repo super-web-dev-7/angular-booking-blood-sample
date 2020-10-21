@@ -12,8 +12,8 @@ import additionalPackageRouter from './additional-package.router';
 import agencyRouter from './agency.router';
 import appointmentRouter from './appointment.router';
 import patientRouter from './patient.router';
+import doctorRouter from './doctor.router';
 import otherRouter from './other.router';
-
 
 const router = Router();
 
@@ -30,6 +30,7 @@ router.use('/additional-package', additionalPackageRouter);
 router.use('/agency', agencyRouter);
 router.use('/appointment', appointmentRouter);
 router.use('/patient', patientRouter);
+router.use('/doctor', doctorRouter);
 router.use('', otherRouter);
 
 

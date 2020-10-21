@@ -26,6 +26,11 @@ exports.getSuperAdminDashboardValues = async (req, res) => {
 
 exports.sendEmail = async (req, res) => {
     const data = req.body;
+    await sendMail(data);
+    res.status(200).json({});
+}
+
+exports.sendMail = async (data) => {
     const option = {
         to: data.email,
         subject: data.subject,
@@ -46,12 +51,6 @@ exports.sendEmail = async (req, res) => {
         console.log(err)
         console.log(result)
     })
-    // sgMail.send(option).then(() => {
-    //     console.log('Email sends successfully')
-    // }).catch((e) => {
-    //     console.log(e)
-    // });
-    res.status(200).json({});
 }
 
 exports.checkPostalCode = async (req, res) => {
