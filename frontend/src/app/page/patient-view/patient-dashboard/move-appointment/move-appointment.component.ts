@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 
 @Component({
@@ -9,6 +9,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 })
 export class MoveAppointmentComponent implements OnInit {
   moveForm: FormGroup;
+  isValid = false;
+  allTimes = [];
+  selectedPTime = null;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -18,10 +21,10 @@ export class MoveAppointmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.moveForm = this.formBuilder.group({
-      zipcode: [''],
-      place: [''],
-      street: [''],
-      message: ['']
+      plz: [null, Validators.required],
+      ort: [null, Validators.required],
+      street: [null, Validators.required],
+      message: ['', Validators.required]
     });
   }
 

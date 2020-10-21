@@ -101,3 +101,6 @@ h1 {
     }
   }
 }
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background:none!important;
+}

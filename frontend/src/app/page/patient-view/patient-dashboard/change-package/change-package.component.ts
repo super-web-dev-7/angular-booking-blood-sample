@@ -7,7 +7,13 @@ import {MatDialogRef} from '@angular/material/dialog';
   styleUrls: ['./change-package.component.scss']
 })
 export class ChangePackageComponent implements OnInit {
-
+  packages = [
+    {id: 1, name: 'Package1'},
+    {id: 2, name: 'Package2'},
+    {id: 3, name: 'Package3'},
+  ];
+  selectedPackage = null;
+  isValid = false;
   constructor(
     private dialogRef: MatDialogRef<ChangePackageComponent>
   ) { }
@@ -17,5 +23,9 @@ export class ChangePackageComponent implements OnInit {
 
   close = () => {
     this.dialogRef.close(false);
+  }
+
+  selectPackage = (id) => {
+    this.selectedPackage = id;
   }
 }

@@ -7,7 +7,13 @@ import {MatDialogRef} from '@angular/material/dialog';
   styleUrls: ['./appointment-new.component.scss']
 })
 export class AppointmentNewComponent implements OnInit {
-
+  packages = [
+    {id: 1, name: 'Package1'},
+    {id: 2, name: 'Package2'},
+    {id: 3, name: 'Package3'},
+  ];
+  selectedPackage = null;
+  isValid = false;
   constructor(
     private dialogRef: MatDialogRef<AppointmentNewComponent>
   ) { }
@@ -19,4 +25,7 @@ export class AppointmentNewComponent implements OnInit {
     this.dialogRef.close(false);
   }
 
+  selectPackage = (id) => {
+    this.selectedPackage = id;
+  }
 }

@@ -10,6 +10,12 @@ export class PopupChangePackageComponent implements OnInit {
   @Input() isMobile;
   @Input() isTablet;
   isShow = false;
+  packages = [
+    {id: 1, name: 'Package1'},
+    {id: 2, name: 'Package2'},
+  ];
+  selectedPackage = null;
+  isValid = false;
   constructor() { }
 
   ngOnInit(): void {
@@ -22,5 +28,9 @@ export class PopupChangePackageComponent implements OnInit {
 
   moreItems = () => {
     this.isShow = !this.isShow;
+  }
+
+  selectPackage = (id) => {
+    this.selectedPackage = id;
   }
 }

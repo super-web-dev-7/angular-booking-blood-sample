@@ -82,16 +82,10 @@
                 type="button"
                 mat-stroked-button
                 class="select-button"
-              >
-                Paket1
-              </button>
-              <button
-                type="button"
-                mat-stroked-button
-                style="background: #384C61"
-                class="select-button"
-              >
-                Paket2
+                *ngFor="let item of packages"
+                [ngClass]="{'primary': selectedPackage === item.id}"
+                (click)="selectPackage(item.id)">
+                {{item.name}}
               </button>
             </div>
           </div>
@@ -150,6 +144,7 @@
       <div></div>
       <div class="d-flex">
         <button
+          type="button"
           mat-stroked-button
           (click)="close()"
           class="custom-button"
@@ -159,6 +154,7 @@
         <button
           mat-stroked-button
           class="custom-package-button ml-10"
+          [ngClass]="{'primary': isValid}"
         >
           Paket wechseln
         </button>
