@@ -15,7 +15,7 @@
   <div class="main-content-div position-relative">
     <div class="row">
       <div class="col-md-4" *ngFor="let item of allAppointments">
-        <div class="notify-view" *ngIf="item.adminStatus === 'confirmed'">
+        <div class="notify-view mt-15" *ngIf="item.adminStatus === 'confirmed'">
           <div class="main-view" style="border-color: #4A90E2">
             <p class="p-blue" style="margin-left: 20px">
               Termin bestätigt
@@ -42,7 +42,7 @@
             <mat-icon class="p-0">more_horiz</mat-icon>
           </button>
         </div>
-        <div class="notify-view" style="background: #E87C60;" *ngIf="item.adminStatus === 'canceled'">
+        <div class="notify-view mt-15" style="background: #E87C60;" *ngIf="item.adminStatus === 'canceled'">
           <div class="main-view" style="position: relative">
             <div class="warning-div">
               <img src="/assets/images/s_warning.svg" alt="warning" class="warning-icon">
@@ -70,7 +70,7 @@
             <mat-icon style="color: #ffffff">more_horiz</mat-icon>
           </button>
         </div>
-        <div class="notify-view additional-class" *ngIf="item.adminStatus === 'upcoming'">
+        <div class="notify-view additional-class mt-15" *ngIf="item.adminStatus === 'upcoming'">
           <div>
             <div class="main-view" style="border-color: #F389CC">
               <p class="p-pink ml-20">
