@@ -12,4 +12,5 @@ router.route('/ready/:id').put(appointmentController.appointmentReady);
 router.route('/getAppointmentByPatient/:id').get(appointmentController.getAppointmentByPatient);
 router.route('/getAppointmentsByAnamnes').get(appointmentController.getAppointmentsByAnamnes);
 router.route('/getAppointmentWithQuestionById/:id').get(appointmentController.getAppointmentWithQuestionById);
+router.route('/getAppointmentsByAnamnesArchived').get(appointmentController.getAppointmentsByAnamnesArchived);
 export default router;
