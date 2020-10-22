@@ -21,6 +21,7 @@ export class AnswerInquiryComponent implements OnInit {
    Editor = ClassicEditor;
    messageForm: FormGroup;
    displayData: any;
+   isSent = false;
   constructor(
     public dialog: MatDialog,
     private dialogRef: MatDialogRef<AnswerInquiryComponent>,
@@ -57,6 +58,23 @@ export class AnswerInquiryComponent implements OnInit {
 
   get f(): any {
     return this.messageForm.controls;
+  }
+
+  sendMessage = () => {
+    if (this.messageForm.invalid) {
+      return;
+    }
+    const data = {
+      callbackId: this.displayData.id,
+      answer: this.f.message.value,
+    };
+    if (data) {
+      this.httpService.post(URL_JSON.DOCTOR + '/sendMessageToPatientAboutCallback', data).subscribe((res: any) => {
+        if (res) {
+          this.isSent = true;
+        }
+      });
+    }
   }
 
   close = () => {

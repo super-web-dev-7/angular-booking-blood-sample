@@ -84,11 +84,12 @@
       Patienten-Nachricht via E-Mail beantworten
     </p>
     <ckeditor
-      [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
+      [editor]="Editor" formControlName="message" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
     <button
       type="button"
       class="custom-button"
       mat-stroked-button
+      (click)="sendMessage()"
       style="margin-top: 24px;float: right"
     >
       Nachricht versenden
