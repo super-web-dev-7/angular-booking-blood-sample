@@ -32,7 +32,7 @@
   <div class="table-container mt-54">
     <mat-card class="table-card mat-card-radius" style="position: relative">
       <div>
-        <table mat-table [dataSource]="dataSourceP" matSort (matSortChange)="onSort($event)">
+        <table mat-table [dataSource]="activeCallbackDataSource" matSort (matSortChange)="onSort($event)">
           <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef> # </th>
             <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
@@ -43,7 +43,7 @@
               Patientenname
               <app-order-icon columnName="patientName" [orderStatus]="orderStatus"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element"> {{element.patientName}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.patientFirstName}} {{element.patientLastName}} </td>
           </ng-container>
 
           <ng-container matColumnDef="appointmentDate">
@@ -51,7 +51,7 @@
               Termindatum
               <app-order-icon columnName="appointmentDate" [orderStatus]="orderStatus"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element" class="t-width"> {{element.appointmentDate}} </td>
+            <td mat-cell *matCellDef="let element" class="t-width"> {{getTimeDuration(element.startTime, element.duration)}} </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
@@ -60,25 +60,25 @@
               <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element" class="t-width">
-              <span *ngIf="element.id !== 1">
-                {{element.status}}
+              <span>
+                {{'Anfrage offen'}}
               </span>
-              <span *ngIf="element.id === 1" class="spec-text">
+              <!--<span *ngIf="element.id === 1" class="spec-text">
                 <img src="/assets/images/info_icon.svg" alt="info" class="mr-10" style="margin-left: -10px">
                 {{"In Bearbeitung durch Dr. Med. Jessica Johns"}}
-              </span>
+              </span>-->
             </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: center"> Anfrage bearbeiten </th>
             <td mat-cell *matCellDef="let element" style="text-align: center">
-              <button mat-icon-button aria-label="more" (click)="openAnswer()" *ngIf="element.id !== 1">
+              <button mat-icon-button aria-label="more" (click)="openAnswer(element.id)">
                 <img src="/assets/images/chat_icon.svg" alt="edit">
               </button>
-              <button mat-icon-button aria-label="more" (click)="searchItem()" *ngIf="element.id === 1">
+              <!--<button mat-icon-button aria-label="more" (click)="searchItem()" *ngIf="element.id === 1">
                 <mat-icon>search</mat-icon>
-              </button>
+              </button>-->
             </td>
           </ng-container>
 
@@ -291,13 +291,13 @@
   </div>
   <div class="table-container mt-54">
       <div style="margin-left: -30px; margin-right: -30px;border-top: 4px solid #F389CC;position: relative;">
-        <div style="height: 50px; width: 100%; background: #384C61;position:absolute;top: 115px;display: flex;align-items: center;color:#fff;" (click)="openAnswer()">
+        <div style="height: 50px; width: 100%; background: #384C61;position:absolute;top: 115px;display: flex;align-items: center;color:#fff;">
           <button mat-icon-button aria-label="more"  class="mx-2">
             <img src="/assets/images/chat.svg" alt="edit">
           </button>
           Patientenrückfrage bearbeiten
         </div>
-        <table mat-table [dataSource]="dataSourceP" matSort (matSortChange)="onSort($event)">
+        <table mat-table [dataSource]="activeCallbackDataSource" matSort (matSortChange)="onSort($event)">
           <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef> # </th>
             <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
@@ -308,7 +308,7 @@
               Patientenname
               <app-order-icon columnName="patientName" [orderStatus]="orderStatus"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element"> {{element.patientName}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.patientFirstName}} {{element.patientLastName}} </td>
           </ng-container>
 
           <ng-container matColumnDef="appointmentDate">
@@ -316,7 +316,7 @@
               Datum
               <app-order-icon columnName="appointmentDate" [orderStatus]="orderStatus"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element" class="t-width"> {{element.appointmentDate}} </td>
+            <td mat-cell *matCellDef="let element" class="t-width"> {{getTimeDuration(element.startTime, element.duration)}} </td>
           </ng-container>
 
           <ng-container matColumnDef="status">
@@ -325,24 +325,24 @@
               <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element" class="t-width">
-              <span *ngIf="element.id !== 1">
-                {{element.status}}
+              <span>
+                {{'Anfrage offen'}}
               </span>
-              <span *ngIf="element.id === 1" class="spec-text">
+             <!-- <span *ngIf="element.id === 1" class="spec-text">
                 {{"In Bearbeitung durch Dr. Med. Jessica Johns"}}
-              </span>
+              </span>-->
             </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: center"> Anfrage bearbeiten </th>
             <td mat-cell *matCellDef="let element" style="text-align: center">
-              <button mat-icon-button aria-label="more" (click)="openAnswer()" *ngIf="element.id !== 1">
+              <button mat-icon-button aria-label="more" (click)="openAnswer(element.id)">
                 <img src="/assets/images/chat_icon.svg" alt="edit">
               </button>
-              <button mat-icon-button aria-label="more" (click)="searchItem()" *ngIf="element.id === 1">
+             <!-- <button mat-icon-button aria-label="more" (click)="searchItem()" *ngIf="element.id === 1">
                 <mat-icon>search</mat-icon>
-              </button>
+              </button>-->
             </td>
           </ng-container>
 

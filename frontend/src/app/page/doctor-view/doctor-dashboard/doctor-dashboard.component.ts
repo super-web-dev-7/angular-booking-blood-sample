@@ -5,7 +5,7 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import * as moment from 'moment';
 
 import {AuthService} from '../../../service/auth/auth.service';
-import {eventData, patientInjuryData} from '../../../utils/mock_data';
+import {eventData} from '../../../utils/mock_data';
 import {SearchModalComponent} from './search-modal/search-modal.component';
 import {AnswerInquiryComponent} from './answer-inquiry/answer-inquiry.component';
 import {AnamnesViewComponent} from './anamnes-release/anamnes-view/anamnes-view.component';
@@ -26,7 +26,7 @@ import {MatSort} from '@angular/material/sort';
 export class DoctorDashboardComponent implements OnInit {
   currentUser: any;
   filterValue = null;
-  dataSourceP = new MatTableDataSource<any>();
+  activeCallbackDataSource = new MatTableDataSource<any>();
   dataSourceE = new MatTableDataSource<any>();
   anamnesisDataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -52,7 +52,6 @@ export class DoctorDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
-    this.dataSourceP.data = patientInjuryData;
     this.dataSourceE.data = eventData;
     this.anamnesisDataSource.sort = this.sort;
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
@@ -60,6 +59,10 @@ export class DoctorDashboardComponent implements OnInit {
       console.log(res);
       this.anamnesisDataSource.data = res;
       this.allAnamnesis = res;
+    });
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithActiveCallback').subscribe((res: any) => {
+      console.log('res', res);
+      this.activeCallbackDataSource = res;
     });
   }
 
@@ -138,7 +141,7 @@ export class DoctorDashboardComponent implements OnInit {
     });
   }
 
-  openAnswer = () => {
+  openAnswer = (id) => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     if (this.isTablet || this.isMobile) {
@@ -150,7 +153,9 @@ export class DoctorDashboardComponent implements OnInit {
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(AnswerInquiryComponent, {
-        width: '1347px', position: {top: '5%', left: '21%'}
+        width: '1347px',
+        position: {top: '5%', left: '21%'},
+        data: {callbackId: id}
       });
       dialogRef.afterClosed().subscribe(res => {
         this.sharedService.closeHistory.emit();
