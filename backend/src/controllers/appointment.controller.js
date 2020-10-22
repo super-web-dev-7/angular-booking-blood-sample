@@ -128,7 +128,9 @@ exports.getAppointmentWithQuestionById = async (req, res) => {
             patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
             packages.name AS packageName,
             calendars.duration_appointment AS duration,
-            medical_questions.*
+            medical_questions.*,
+            callback_doctors.id AS callbackId, callback_doctors.date AS callbackDate, callback_doctors.time AS callbackTime, callback_doctors.phoneNumber AS callbackPhoneNumber,
+            callback_doctors.schedule AS callbackSchedule, callback_doctors.message AS callbackMessage
         FROM appointments
         JOIN agencies ON appointments.agencyId=agencies.id
         JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id
@@ -138,6 +140,7 @@ exports.getAppointmentWithQuestionById = async (req, res) => {
         JOIN patients ON patients.user_id=users.id
         JOIN packages ON appointments.packageId=packages.id
         JOIN medical_questions ON appointments.id=medical_questions.appointmentId
+        LEFT JOIN callback_doctors ON callback_doctors.appointmentId=appointments.id
         WHERE medical_questions.isActive=1 AND appointments.id=${id}
     `, {type: Sequelize.QueryTypes.SELECT});
     res.status(200).json(appointment);
