@@ -171,3 +171,23 @@ exports.getAppointmentsByAnamnesArchived = async (req, res) => {
     `, {type: Sequelize.QueryTypes.SELECT});
     res.status(200).json(allAppointment);
 }
+
+exports.getAppointmentsWithActiveCallback = async (req, res) => {
+    const allAppointment = await sequelize.query(`
+        SELECT appointments.id AS id, appointments.time AS startTime, appointments.adminStatus AS adminStatus,
+            users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
+            patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
+            packages.name AS packageName,
+            calendars.duration_appointment AS duration
+        FROM appointments
+        JOIN agencies ON appointments.agencyId=agencies.id
+        JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id
+        JOIN working_groups ON working_group_agencies.groupId=working_groups.id
+        JOIN calendars ON working_groups.calendar_id=calendars.id
+        JOIN users ON appointments.userId=users.id
+        JOIN patients ON patients.user_id=users.id
+        JOIN packages ON appointments.packageId=packages.id
+        WHERE appointments.callbackStatus=1
+    `, {type: Sequelize.QueryTypes.SELECT});
+    res.status(200).json(allAppointment);
+}
