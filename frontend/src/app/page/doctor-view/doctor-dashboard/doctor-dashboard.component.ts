@@ -119,7 +119,11 @@ export class DoctorDashboardComponent implements OnInit {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     if (this.isTablet || this.isMobile) {
-      this.sharedService.tabletSide.emit('inquiry');
+      const data = {
+        title: 'inquiry',
+        appointmentId: null,
+      };
+      this.sharedService.tabletSide.emit(data);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(SearchModalComponent, {
@@ -138,7 +142,11 @@ export class DoctorDashboardComponent implements OnInit {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     if (this.isTablet || this.isMobile) {
-      this.sharedService.tabletSide.emit('answer');
+      const data = {
+        title: 'answer',
+        appointmentId: null,
+      };
+      this.sharedService.tabletSide.emit(data);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(AnswerInquiryComponent, {
@@ -153,7 +161,11 @@ export class DoctorDashboardComponent implements OnInit {
   anamnesView = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet) {
-      this.sharedService.tabletSide.emit('v-anam');
+      const data = {
+        title: 'v-anam',
+        appointmentId: null,
+      };
+      this.sharedService.tabletSide.emit(data);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(AnamnesViewComponent, {
@@ -168,7 +180,11 @@ export class DoctorDashboardComponent implements OnInit {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     if (this.isTablet || this.isMobile) {
-      this.sharedService.tabletSide.emit('c-anam');
+      const data = {
+        title: 'c-anam',
+        appointmentId: id,
+      };
+      this.sharedService.tabletSide.emit(data);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(AnamnesCheckComponent, {
@@ -191,7 +207,11 @@ export class DoctorDashboardComponent implements OnInit {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     if (this.isTablet || this.isMobile) {
-      this.sharedService.tabletSide.emit('v-appointment');
+      const data = {
+        title: 'v-appointment',
+        appointmentId: null,
+      };
+      this.sharedService.tabletSide.emit(data);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(ViewAppointmentComponent, {

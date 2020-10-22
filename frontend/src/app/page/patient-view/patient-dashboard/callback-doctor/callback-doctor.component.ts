@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {HttpService} from '../../../../service/http/http.service';
+import {URL_JSON} from '../../../../utils/url_json';
 
 @Component({
   selector: 'app-callback-doctor',
@@ -15,12 +18,61 @@ export class CallbackDoctorComponent implements OnInit {
   ];
   selectedTime = null;
   isValid = false;
+  isEditPhone = false;
+  callbackForm: FormGroup;
   constructor(
-    private dialogRef: MatDialogRef<CallbackDoctorComponent>
+    public formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<CallbackDoctorComponent>,
+    public httpService: HttpService,
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
   ngOnInit(): void {
-    this.selectedDay = null;
+    this.selectedDay = 'today';
+    this.callbackForm = this.formBuilder.group({
+      phone: [null, Validators.required],
+      schedule: [null, Validators.required],
+      message: [null, Validators.required],
+    });
+  }
+
+  get f(): any {
+    return this.callbackForm.controls;
+  }
+
+  formatDate = (date) => {
+    return new Date(date.getTime() - (date.getTimezoneOffset() * 60000 ))
+      .toISOString()
+      .split('T')[0];
+  }
+
+  submit = () => {
+    if (this.callbackForm.invalid) {
+      return;
+    }
+    let selectedDate;
+    if (this.selectedDay === 'today') {
+      const today = new Date();
+      selectedDate = this.formatDate(today);
+    } else {
+      const today = new Date();
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      selectedDate = this.formatDate(tomorrow);
+    }
+    const data = {
+      appointmentId: this.data.appointmentId,
+      date: selectedDate,
+      time: this.selectedTime,
+      phoneNumber: this.f.phone.value,
+      schedule: this.f.schedule.value,
+      message: this.f.message.value
+    };
+    this.httpService.post(URL_JSON.PATIENT + '/createMedicalQuestion', data).subscribe((res: any) => {
+      if (res) {
+        this.dialogRef.close(true);
+      }
+    });
   }
 
   close = () => {
@@ -29,6 +81,10 @@ export class CallbackDoctorComponent implements OnInit {
 
   selectDay = (event) => {
     this.selectedDay = event;
+  }
+
+  selectTime = (event) => {
+    this.selectedTime = event.time;
   }
 
 }

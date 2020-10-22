@@ -30,6 +30,7 @@ import { PopupNewAppointmentComponent } from './tablet/popup-new-appointment/pop
 import { PopupArrangeAppointmentComponent } from './tablet/popup-arrange-appointment/popup-arrange-appointment.component';
 import { PopupHistoryComponent } from './tablet/popup-history/popup-history.component';
 import {AppointmentModule} from '../appointment/appointment.module';
+import { DialogSuccessComponent } from './patient-dashboard/dialog-success/dialog-success.component';
 
 
 
@@ -57,7 +58,8 @@ import {AppointmentModule} from '../appointment/appointment.module';
         PopupPaymentStatusComponent,
         PopupNewAppointmentComponent,
         PopupArrangeAppointmentComponent,
-        PopupHistoryComponent
+        PopupHistoryComponent,
+        DialogSuccessComponent
     ],
     exports: [
         PatientSidebarComponent,

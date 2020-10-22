@@ -7,7 +7,6 @@ import {SharedService} from '../../../../../service/shared/shared.service';
 import {HttpService} from '../../../../../service/http/http.service';
 import {URL_JSON} from '../../../../../utils/url_json';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {SuccessDialogComponent} from '../../answer-inquiry/success-dialog/success-dialog.component';
 
 @Component({
   selector: 'app-anamnes-check',

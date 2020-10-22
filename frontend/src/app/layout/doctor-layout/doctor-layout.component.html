@@ -31,7 +31,7 @@
     <app-side-patient-inquiry *ngIf="openPatientInquiry" (closeSide)="closeRightSide($event)"></app-side-patient-inquiry>
     <app-side-patient-answer *ngIf="openPatientAnswer" (closeSide) ="closeRightSide($event)"></app-side-patient-answer>
     <app-side-medical-history *ngIf="viewAnamnes" (closeSide)="closeRightSide($event)"></app-side-medical-history>
-    <app-side-check-anamnes *ngIf="checkAnamnes" (closeSide)="closeRightSide($event)"></app-side-check-anamnes>
+    <app-side-check-anamnes *ngIf="checkAnamnes" (closeSide)="closeRightSide($event)" [appointmentID]="appointId"></app-side-check-anamnes>
     <app-side-view-appointment *ngIf="viewAppointment" (closeSide)="closeRightSide($event)"></app-side-view-appointment>
   </mat-sidenav>
   <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Doctor' ? '#F2F7FB' : '#fafafa'}">
