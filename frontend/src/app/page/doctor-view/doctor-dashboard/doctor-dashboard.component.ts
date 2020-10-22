@@ -26,7 +26,7 @@ import {MatSort} from '@angular/material/sort';
 export class DoctorDashboardComponent implements OnInit {
   currentUser: any;
   filterValue = null;
-  dataSourceP = new MatTableDataSource<any>();
+  activeCallbackDataSource = new MatTableDataSource<any>();
   dataSourceE = new MatTableDataSource<any>();
   anamnesisDataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -52,7 +52,6 @@ export class DoctorDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
-    this.dataSourceP.data = patientInjuryData;
     this.dataSourceE.data = eventData;
     this.anamnesisDataSource.sort = this.sort;
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
@@ -60,6 +59,10 @@ export class DoctorDashboardComponent implements OnInit {
       console.log(res);
       this.anamnesisDataSource.data = res;
       this.allAnamnesis = res;
+    });
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithActiveCallback').subscribe((res: any) => {
+      console.log('res', res);
+      this.activeCallbackDataSource = res;
     });
   }
 
