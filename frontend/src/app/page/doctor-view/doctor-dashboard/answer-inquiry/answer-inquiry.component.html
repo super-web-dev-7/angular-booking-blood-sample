@@ -64,7 +64,9 @@
     </div>
     <p class="p-272140">{{displayData?.schedule}}</p>
     <p class="p-272140">{{displayData?.date}}</p>
-    <p class="p-272140">Vormittags 09:00 - 12:00</p>
+    <p class="p-272140" *ngIf="displayData?.time === 'morning'">Vormittags 09:00 - 12:00</p>
+    <p class="p-272140" *ngIf="displayData?.time === 'afternoon'">Nachmittags (12:00 - 16:00)</p>
+    <p class="p-272140" *ngIf="displayData?.time === 'evening'">Abends (16:00 - 19:00)</p>
   </div>
   <div class="modal-middle-div">
     <p style="margin-top: 56px">
