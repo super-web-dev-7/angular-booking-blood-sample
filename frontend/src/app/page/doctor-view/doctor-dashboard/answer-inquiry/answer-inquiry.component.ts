@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {SharedService} from '../../../../service/shared/shared.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {HttpService} from '../../../../service/http/http.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {URL_JSON} from '../../../../utils/url_json';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-answer-inquiry',
@@ -15,18 +19,44 @@ export class AnswerInquiryComponent implements OnInit {
    customText = '';
    content = null;
    Editor = ClassicEditor;
+   messageForm: FormGroup;
+   displayData: any;
   constructor(
     public dialog: MatDialog,
     private dialogRef: MatDialogRef<AnswerInquiryComponent>,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public httpService: HttpService,
+    public formBuilder: FormBuilder,
   ) { }
 
   ngOnInit(): void {
+    this.messageForm = this.formBuilder.group({
+      message: [null, Validators.required]
+    });
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.data.callbackId).subscribe((res: any) => {
+      this.displayData = res;
+    });
     this.sharedService.closeHistory.subscribe(res => {
       this.isMedicalHistory = false;
       this.isContactHistory = false;
       this.isPatientCall = false;
     });
+  }
+
+  getTimeDuration = (startTime, duration) => {
+    if (!startTime || !duration) {
+      return '';
+    }
+    return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');
+  }
+
+  formatTime = (time) => {
+    return moment(time).format('DD.MM.YYYY HH:mm');
+  }
+
+  get f(): any {
+    return this.messageForm.controls;
   }
 
   close = () => {

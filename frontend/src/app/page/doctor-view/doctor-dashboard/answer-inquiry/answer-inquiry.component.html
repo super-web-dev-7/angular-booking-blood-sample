@@ -2,9 +2,9 @@
 <div class="main-answer-modal-container">
   <div class="modal-left-div">
     <div class="des-div">
-      <p class="p-272140">03.10.2020 09:00 - 10:15</p>
+      <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
       <p class="p-576E82">Check-Up: Männergesundheit</p>
-      <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+      <p class="p-272140">{{displayData?.addressStreet + '' + displayData?.addressOrt}}, {{displayData?.addressPlz}} Berlin</p>
     </div>
     <div class="option-buttons-div">
       <div class="option-button-div">
@@ -58,30 +58,22 @@
           mat-stroked-button
           (click)="openPatientCall()"
         >
-          Sebastian Naumann
+          {{displayData?.patientFirstName}} {{displayData?.patientLastName}}
         </button>
       </div>
     </div>
-    <p class="p-272140">Rückrufwunsch</p>
-    <p class="p-272140">28.09.2020</p>
+    <p class="p-272140">{{displayData?.schedule}}</p>
+    <p class="p-272140">{{displayData?.date}}</p>
     <p class="p-272140">Vormittags 09:00 - 12:00</p>
   </div>
   <div class="modal-middle-div">
     <p style="margin-top: 56px">
-      Kundennachricht 29.09.2020 18:10
+      Kundennachricht {{formatTime(displayData?.createdAt)}}
     </p>
-    <p style="margin-top: 57px">Terminablauf</p>
+    <p style="margin-top: 57px">{{displayData?.schedule}}</p>
     <div class="faq-text">
-      <p style="margin-top: 23px">Hallo,</p>
-      <p style="margin-top: 30px">
-        ich habe Rückfragen zum Terminablauf, muss ich<br/>
-        irgendwas vorbereiten? Oder muss ich<br/>
-        vor der Blutentnahme auf etwas achten?
-      </p>
-      <p style="margin-top: 30px">
-        Vielen Dank.<br/>
-        Mit freundlichen Grüßen<br/>
-        Sebastian Naumann
+      <p class="mt-24">
+        {{displayData?.message}}
       </p>
     </div>
   </div>
@@ -92,6 +84,7 @@
     <ckeditor
       [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
     <button
+      type="button"
       class="custom-button"
       mat-stroked-button
       style="margin-top: 24px;float: right"
