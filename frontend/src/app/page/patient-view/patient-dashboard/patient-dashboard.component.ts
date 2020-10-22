@@ -18,6 +18,7 @@ import {SharedService} from '../../../service/shared/shared.service';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 import {AuthService} from '../../../service/auth/auth.service';
+import {DialogSuccessComponent} from "./dialog-success/dialog-success.component";
 
 
 @Component({
@@ -161,8 +162,14 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(CallbackDoctorComponent, {
         width: '1182px',
+        data: {appointmentId: this.selectedAppointment}
       });
       dialogRef.afterClosed().subscribe(res => {
+        if (res) {
+          dialogRef = this.dialog.open(DialogSuccessComponent, {
+            width: '627px'
+          });
+        }
       });
     }
   }

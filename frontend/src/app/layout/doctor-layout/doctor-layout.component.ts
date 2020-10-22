@@ -36,6 +36,7 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
   tRecall = false;
   subsVar: any;
   appointmentId = null;
+  appointId = null;
 
   constructor(
     public breakpointObserver: BreakpointObserver,
@@ -90,6 +91,7 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
       this.tAnamnes = false;
       this.tRecall = false;
       this.tMessage = false;
+      this.appointmentId = null;
     });
     this.sharedService.check.subscribe(res => {
       if (res) {
@@ -105,18 +107,21 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
       }
     });
     this.sharedService.tabletSide.subscribe(res => {
-      if (res === 'inquiry') {
-        this.openPatientInquiry = true;
-      } else if (res === 'answer') {
-        this.openPatientAnswer = true;
-      } else if (res === 'v-anam') {
-        this.viewAnamnes = true;
-      } else if (res === 'c-anam') {
-        this.checkAnamnes = true;
-      } else if (res === 'v-appointment') {
-        this.viewAppointment = true;
+      if (res) {
+        if (res.title === 'inquiry') {
+          this.openPatientInquiry = true;
+        } else if (res.title === 'answer') {
+          this.openPatientAnswer = true;
+        } else if (res.title === 'v-anam') {
+          this.viewAnamnes = true;
+        } else if (res.title === 'c-anam') {
+          this.checkAnamnes = true;
+          this.appointId = res.appointmentId;
+        } else if (res.title === 'v-appointment') {
+          this.viewAppointment = true;
+        }
+        this.isRightSidebarOpen = true;
       }
-      this.isRightSidebarOpen = true;
     });
     this.sharedService.tabletLeftSide.subscribe(res => {
       if (res === 't-history') {
