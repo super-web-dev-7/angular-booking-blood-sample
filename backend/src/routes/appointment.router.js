@@ -10,6 +10,7 @@ router.route('/delete/:id').delete(appointmentController.delete);
 router.route('/getAppointmentByNurse/:id').get(appointmentController.getAppointmentByNurse);
 router.route('/ready/:id').put(appointmentController.appointmentReady);
 router.route('/getAppointmentByPatient/:id').get(appointmentController.getAppointmentByPatient);
+router.route('/getAppointmentDetail/:id').get(appointmentController.getAppointmentDetail);
 router.route('/getAppointmentsByAnamnes').get(appointmentController.getAppointmentsByAnamnes);
 router.route('/getAppointmentWithQuestionById/:id').get(appointmentController.getAppointmentWithQuestionById);
 router.route('/getAppointmentsByAnamnesArchived').get(appointmentController.getAppointmentsByAnamnesArchived);

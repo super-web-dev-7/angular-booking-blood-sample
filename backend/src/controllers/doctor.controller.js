@@ -131,3 +131,10 @@ exports.sendMessageToPatientAboutCallback = async (req, res) => {
     }
     res.status(201).json({message: 'Email sent'});
 }
+
+exports.inquiryAnswered = async (req, res) => {
+    const id = req.params.id;
+    await Appointment.update({callbackStatus: false}, {where: {id}});
+    await ContactHistory.create({appointmentId: id, type: 'Callback answered'});
+    // const newCallback = await CallbackDoctor.create(newCallbackData);
+}
