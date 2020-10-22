@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MatTableDataSource} from '@angular/material/table';
 import {AuthService} from '../../../../service/auth/auth.service';
@@ -9,6 +9,10 @@ import {BreakpointObserver} from '@angular/cdk/layout';
 import {SharedService} from '../../../../service/shared/shared.service';
 import {SearchInputComponent} from '../search-input/search-input.component';
 import {SuccessDialogComponent} from '../answer-inquiry/success-dialog/success-dialog.component';
+import {MatSort} from '@angular/material/sort';
+import {URL_JSON} from '../../../../utils/url_json';
+import {HttpService} from '../../../../service/http/http.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-anamnes-release',
@@ -22,23 +26,32 @@ export class AnamnesReleaseComponent implements OnInit {
     active: '',
     direction: ''
   };
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   currentPage = 0;
   pageSize = 5;
   dataSourceA = new MatTableDataSource<any>();
   displayedColumns: string[] = ['no', 'patientName', 'appointmentDate', 'status', 'actions'];
   isTablet = false;
+  isMobile = false;
+  allAnamnesis: any;
 
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
     public breakpointObserver: BreakpointObserver,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    public httpService: HttpService
   ) { }
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
-    this.dataSourceA.data = patientAnamnesData;
+    this.dataSourceA.sort = this.sort;
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsByAnamnes').subscribe((res: any) => {
+      console.log(res);
+      this.dataSourceA.data = res;
+      this.allAnamnesis = res;
+    });
   }
 
   filter = () => {
@@ -46,6 +59,43 @@ export class AnamnesReleaseComponent implements OnInit {
 
   onSort = (event) => {
     this.orderStatus = event;
+    const anams = [...this.allAnamnesis];
+
+    if (event.active === 'patientName') {
+      anams.sort((a, b) => {
+        const x = a.patientFirstName + '' + a.patientLastName;
+        const y = b.patientFirstName + '' + b.patientLastName;
+        if (event.direction === 'asc') {
+          return x < y ? 1 : -1;
+        } else if (event.direction === 'desc') {
+          return x > y ? 1 : -1;
+        }
+      });
+      if (event.direction === '') {
+        this.dataSourceA.data = this.allAnamnesis;
+      } else {
+        this.dataSourceA.data = anams;
+      }
+    } else if (event.active === 'appointmentDate') {
+      anams.sort((a, b) => {
+        const x = this.getTimeDuration(a.startTime, a.duration);
+        const y = this.getTimeDuration(b.startTime, b.duration);
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+      if (event.direction === '') {
+        this.dataSourceA.data = this.allAnamnesis;
+      } else {
+        this.dataSourceA.data = anams;
+      }
+    }
+  }
+
+  getTimeDuration = (startTime, duration) => {
+    return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');
   }
 
   editItem = (id) => {
@@ -70,15 +120,17 @@ export class AnamnesReleaseComponent implements OnInit {
     }
   }
 
-  checkAnamnes = () => {
+  checkAnamnes = (id) => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
+    if (this.isTablet || this.isMobile) {
       this.sharedService.tabletSide.emit('c-anam');
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(AnamnesCheckComponent, {
         width: '1347px',
-        position: {top: '2%', left: '22%'}
+        position: {top: '2%', left: '22%'},
+        data: {appointmentId: id}
       });
       dialogRef.afterClosed().subscribe(res => {
         this.sharedService.closeHistory.emit();
