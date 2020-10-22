@@ -111,3 +111,23 @@ exports.releaseAppointment = async (req, res) => {
 
     res.status(200).json({message: 'Appointment confirmed'})
 }
+
+exports.sendMessageToPatientAboutCallback = async (req, res) => {
+    const user = await sequelize.query(`
+        SELECT users.email AS email
+        FROM callback_doctors 
+        JOIN appointments ON appointments.id=callback_doctors.appointmentId
+        JOIN users ON appointments.userId=users.id
+        WHERE callback_doctors.id=${req.body.callbackId}
+        `, {type: db.Sequelize.QueryTypes.SELECT});
+    if (user[0]) {
+        const mailData = {
+            email: user[0].email,
+            subject: 'Doctor Answer',
+            from: process.env.OWNER_EMAIL,
+            content: req.body.answer
+        }
+        await sendMail(mailData);
+    }
+    res.status(201).json({message: 'Email sent'});
+}

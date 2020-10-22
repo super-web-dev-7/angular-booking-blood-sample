@@ -15,6 +15,7 @@ exports.createMedicalQuestion = async (req, res) => {
 exports.createCallback = async (req, res) => {
     const newCallbackData = req.body;
     await Appointment.update({callbackStatus: true}, {where: {id: newCallbackData.appointmentId}});
+    await ContactHistory.create({appointmentId: newCallbackData.appointmentId, type: 'Callback created'});
     const newCallback = await CallbackDoctor.create(newCallbackData);
     res.status(201).json(newCallback);
 }

@@ -3,9 +3,14 @@ import * as doctorController from '../controllers/doctor.controller';
 
 const router = Router();
 
-router.route('/sendMessageToPatient').post(doctorController.sendMessageToPatient);
 router.route('/getContactHistory/:id').get(doctorController.getContactHistory);
+
+// second table
+router.route('/sendMessageToPatient').post(doctorController.sendMessageToPatient);
 router.route('/cancelAppointment/:id').put(doctorController.cancelAppointment);
 router.route('/releaseAppointment/:id').put(doctorController.releaseAppointment);
+
+// first table
+router.route('/sendMessageToPatientAboutCallback').post(doctorController.sendMessageToPatientAboutCallback);
 
 export default router;
