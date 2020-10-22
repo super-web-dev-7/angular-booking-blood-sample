@@ -20,6 +20,7 @@ export class AnamnesCheckComponent implements OnInit {
   Editor = ClassicEditor;
   displayData: any;
   messageForm: FormGroup;
+  isSent = false;
 
   constructor(
     private sharedService: SharedService,
@@ -66,10 +67,30 @@ export class AnamnesCheckComponent implements OnInit {
     if (data) {
       this.httpService.post(URL_JSON.DOCTOR + '/createMedicalAnswer', data).subscribe((res: any) => {
         if (res) {
-          this.dialogRef.close(true);
+          this.isSent = true;
         }
       });
     }
+  }
+
+  release = () => {
+    if (!this.isSent) {
+      return;
+    }
+    this.httpService.update(URL_JSON.DOCTOR + '/releaseAppointment/' + this.displayData.appointmentId, {}).subscribe((res: any) => {
+      if (res) {
+        this.dialogRef.close(true);
+      }
+    });
+  }
+
+  cancel = () => {
+    this.httpService.update(URL_JSON.DOCTOR + '/cancelAppointment/' + this.displayData.appointmentId, {}).subscribe((res: any) => {
+      if (res) {
+        this.dialogRef.close(false);
+        this.isSent = false;
+      }
+    });
   }
 
   openCheckContact = () => {
