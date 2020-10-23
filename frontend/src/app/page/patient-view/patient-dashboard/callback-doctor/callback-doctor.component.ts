@@ -22,6 +22,8 @@ export class CallbackDoctorComponent implements OnInit {
   isEditPhone = false;
   callbackForm: FormGroup;
   displayData: any;
+  customPhone: '';
+  defaultPhone: '';
   constructor(
     public formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<CallbackDoctorComponent>,
@@ -33,9 +35,10 @@ export class CallbackDoctorComponent implements OnInit {
     this.selectedDay = 'today';
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;
+      this.defaultPhone = this.displayData.patientNumber;
     });
     this.callbackForm = this.formBuilder.group({
-      phone: [null, Validators.required],
+      phone: [null, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],
       schedule: [null, Validators.required],
       message: [null, Validators.required],
     });
@@ -80,7 +83,7 @@ export class CallbackDoctorComponent implements OnInit {
       schedule: this.f.schedule.value,
       message: this.f.message.value
     };
-    this.httpService.post(URL_JSON.PATIENT + '/createMedicalQuestion', data).subscribe((res: any) => {
+    this.httpService.post(URL_JSON.PATIENT + '/createCallbackForDoctor', data).subscribe((res: any) => {
       if (res) {
         this.dialogRef.close(true);
       }
