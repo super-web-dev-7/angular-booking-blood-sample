@@ -17,5 +17,6 @@ router.route('/getAppointmentsByAnamnesArchived').get(appointmentController.getA
 router.route('/getAppointmentsWithActiveCallback').get(appointmentController.getAppointmentsWithActiveCallback);
 router.route('/getAppointmentWithCallbackById/:id').get(appointmentController.getAppointmentWithCallbackById);
 router.route('/getAppointmentsWithArchivedCallback').get(appointmentController.getAppointmentsWithArchivedCallback);
+router.route('/getAppointmentsWithoutArchived').get(appointmentController.getAppointmentsWithoutArchived);
 
 export default router;
