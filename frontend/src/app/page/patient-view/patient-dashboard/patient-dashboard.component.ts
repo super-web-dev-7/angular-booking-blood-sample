@@ -18,7 +18,7 @@ import {SharedService} from '../../../service/shared/shared.service';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 import {AuthService} from '../../../service/auth/auth.service';
-import {DialogSuccessComponent} from "./dialog-success/dialog-success.component";
+import {DialogSuccessComponent} from './dialog-success/dialog-success.component';
 
 
 @Component({

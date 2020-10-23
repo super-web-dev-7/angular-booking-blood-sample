@@ -31,6 +31,11 @@ import { PopupArrangeAppointmentComponent } from './tablet/popup-arrange-appoint
 import { PopupHistoryComponent } from './tablet/popup-history/popup-history.component';
 import {AppointmentModule} from '../appointment/appointment.module';
 import { DialogSuccessComponent } from './patient-dashboard/dialog-success/dialog-success.component';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule
+} from '@angular-material-components/datetime-picker';
 
 
 
@@ -82,7 +87,10 @@ import { DialogSuccessComponent } from './patient-dashboard/dialog-success/dialo
         FormsModule,
         PatientViewRoutingModule,
         NgxMatSelectSearchModule,
-        AppointmentModule
+        AppointmentModule,
+        NgxMatDatetimePickerModule,
+        NgxMatTimepickerModule,
+        NgxMatNativeDateModule,
     ]
 })
 export class PatientViewModule { }

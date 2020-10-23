@@ -42,8 +42,8 @@
             <mat-icon> stay_current_portrait</mat-icon>
           </div>
           <div>
-            <span *ngIf="!isEditPhone || !selectedTime">{{this.f.phone.value && !this.f.phone.errors? this.f.phone.value:defaultPhone}}</span>
-            <mat-form-field class="w-100" *ngIf="isEditPhone && selectedTime !== null">
+            <span *ngIf="!isEditPhone">{{this.f.phone.value && !this.f.phone.errors? this.f.phone.value:defaultPhone}}</span>
+            <mat-form-field class="w-100" *ngIf="isEditPhone">
               <input autocomplete="off" matInput formControlName="phone">
               <mat-icon *ngIf="f.phone.touched && !f.phone.errors" style="color: greenyellow" matSuffix>done</mat-icon>
               <mat-icon *ngIf="f.phone.touched && f.phone.errors" style="color: red" matSuffix>close</mat-icon>
@@ -64,7 +64,10 @@
             </mat-expansion-panel-header>
             <div class="d-block expansion-panel-container" style="margin-left: 76px">
               <mat-form-field class="width-50">
-                <input autocomplete="off" matInput formControlName="schedule">
+                <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl" formControlName="schedule">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <ngx-mat-datetime-picker #picker>
+                </ngx-mat-datetime-picker>
               </mat-form-field>
               <br/>
               <mat-form-field appearance="fill" class="mt-15 width-50">

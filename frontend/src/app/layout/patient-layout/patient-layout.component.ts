@@ -66,6 +66,7 @@ export class PatientLayoutComponent implements OnInit, OnDestroy {
       this.isOpen = false;
     }
     this.sharedService.patientPopup.subscribe(res => {
+      console.log('res!!!!!!!!', res);
       if (res === 'cancel') {
         this.openCancelAppointment = true;
         this.title = 'Termin';
