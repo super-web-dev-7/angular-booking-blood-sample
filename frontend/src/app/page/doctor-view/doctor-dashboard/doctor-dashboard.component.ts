@@ -196,6 +196,12 @@ export class DoctorDashboardComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(res => {
         this.sharedService.closeHistory.emit();
+        if (res) {
+          dialogRef = this.dialog.open(SuccessDialogComponent, {
+            width: '627px'
+          });
+          this.afterClosed(dialogRef);
+        }
       });
     }
   }
