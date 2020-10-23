@@ -5,7 +5,7 @@
       <div class="left-border-div">
         <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
         <p class="p-576E82">Check-Up: Männergesundheit</p>
-        <p class="p-272140">{{displayData?.addressStreet + '' + displayData?.addressOrt}}, {{displayData?.addressPlz}} Berlin</p>
+        <p class="p-272140">{{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}</p>
       </div>
       <div class="mt-24 d-flex">
         <button
@@ -42,9 +42,11 @@
             <mat-icon> stay_current_portrait</mat-icon>
           </div>
           <div>
-            <span *ngIf="!isEditPhone || !selectedTime">{{displayData?.patientNumber}}</span>
+            <span *ngIf="!isEditPhone || !selectedTime">{{this.f.phone.value && !this.f.phone.errors? this.f.phone.value:defaultPhone}}</span>
             <mat-form-field class="w-100" *ngIf="isEditPhone && selectedTime !== null">
               <input autocomplete="off" matInput formControlName="phone">
+              <mat-icon *ngIf="f.phone.touched && !f.phone.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+              <mat-icon *ngIf="f.phone.touched && f.phone.errors" style="color: red" matSuffix>close</mat-icon>
             </mat-form-field>
           </div>
         </div>
@@ -92,7 +94,8 @@
             mat-stroked-button
             class="custom-button-C7D ml-10"
             (click)="submit()"
-            [ngClass]="{'primary': isValid}"
+            [disabled]="callbackForm.invalid"
+            [ngClass]="{'primary':callbackForm.valid}"
           >
             Rückrufbitte senden
           </button>
