@@ -13,5 +13,6 @@ router.route('/releaseAppointment/:id').put(doctorController.releaseAppointment)
 // first table
 router.route('/sendMessageToPatientAboutCallback').post(doctorController.sendMessageToPatientAboutCallback);
 router.route('/inquiryAnswered/:id').put(doctorController.inquiryAnswered);
+router.route('/createPatientRecall').post(doctorController.createPatientRecall);
 
 export default router;

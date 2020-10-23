@@ -20,6 +20,7 @@ import contactHistory from './contact-history.model';
 import medicalQuestion from './medical_question.model';
 import medicalAnswer from './medical_answer.model';
 import callbackDoctor from './callback_doctor.model';
+import patientRecall from './patient_recall.model';
 
 
 const sequelize = new Sequelize(config.mysql.database, config.mysql.user, config.mysql.password, {
@@ -52,6 +53,7 @@ db.contactHistory = contactHistory(sequelize, Sequelize);
 db.medicalQuestion = medicalQuestion(sequelize, Sequelize);
 db.medicalAnswer = medicalAnswer(sequelize, Sequelize);
 db.callbackDoctor = callbackDoctor(sequelize, Sequelize);
+db.patientRecall = patientRecall(sequelize, Sequelize);
 
 // Relations
 db.patient.belongsTo(db.user);
