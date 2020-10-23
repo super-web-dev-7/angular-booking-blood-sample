@@ -13,10 +13,10 @@ router.route('/getAppointmentByPatient/:id').get(appointmentController.getAppoin
 router.route('/getAppointmentDetail/:id').get(appointmentController.getAppointmentDetail);
 router.route('/getAppointmentsByAnamnes').get(appointmentController.getAppointmentsByAnamnes);
 router.route('/getAppointmentWithQuestionById/:id').get(appointmentController.getAppointmentWithQuestionById);
-router.route('/getAppointmentsByAnamnesArchived').get(appointmentController.getAppointmentsByAnamnesArchived);
+router.route('/getAppointmentsByAnamnesArchived').get(appointmentController.getAppointmentsByAnamnesArchived); //
 router.route('/getAppointmentsWithActiveCallback').get(appointmentController.getAppointmentsWithActiveCallback);
 router.route('/getAppointmentWithCallbackById/:id').get(appointmentController.getAppointmentWithCallbackById);
-router.route('/getAppointmentsWithArchivedCallback').get(appointmentController.getAppointmentsWithArchivedCallback);
+router.route('/getAppointmentsWithArchivedCallback').get(appointmentController.getAppointmentsWithArchivedCallback); //
 router.route('/getAppointmentsWithoutArchived').get(appointmentController.getAppointmentsWithoutArchived);
 router.route('/getAppointmentsWithArchived').get(appointmentController.getAppointmentsWithArchived);
 

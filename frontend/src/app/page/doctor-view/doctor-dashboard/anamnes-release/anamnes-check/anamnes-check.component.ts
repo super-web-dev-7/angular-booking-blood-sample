@@ -93,6 +93,7 @@ export class AnamnesCheckComponent implements OnInit {
   }
 
   archive = () => {
+    console.log(this.displayData);
     this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData.appointmentId, {}).subscribe(res => {
       console.log(res);
     });

@@ -22,7 +22,7 @@ exports.create = async (req, res) => {
 }
 
 exports.get = async (req, res) => {
-    const allAppointment = await Appointment.findAll({where: {}, include: [User, Package, Agency], raw: true, nest: true});
+    const allAppointment = await Appointment.findAll({where: {archive: false}, include: [User, Package, Agency], raw: true, nest: true});
     let response = [];
     for (const appointment of allAppointment) {
         const doctors_id = JSON.parse(appointment.agency.doctors_id);
@@ -136,7 +136,7 @@ exports.getAppointmentsByAnamnes = async (req, res) => {
         JOIN users ON appointments.userId=users.id
         JOIN patients ON patients.user_id=users.id
         JOIN packages ON appointments.packageId=packages.id
-        WHERE appointments.anamnesisStatus="open"
+        WHERE appointments.anamnesisStatus="open" AND appointments.archive=0
     `, {type: Sequelize.QueryTypes.SELECT});
     res.status(200).json(allAppointment);
 }
@@ -208,7 +208,7 @@ exports.getAppointmentsWithActiveCallback = async (req, res) => {
         JOIN users ON appointments.userId=users.id
         JOIN patients ON patients.user_id=users.id
         JOIN packages ON appointments.packageId=packages.id
-        WHERE appointments.callbackStatus=1
+        WHERE appointments.callbackStatus=1 AND appointments.archive=0
     `, {type: Sequelize.QueryTypes.SELECT});
     res.status(200).json(allAppointment);
 }
