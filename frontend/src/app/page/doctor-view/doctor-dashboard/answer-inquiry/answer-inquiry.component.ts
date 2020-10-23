@@ -106,19 +106,37 @@ export class AnswerInquiryComponent implements OnInit {
   openMedicalHistory = () => {
     this.isMedicalHistory = true;
     this.isContactHistory = false;
-    this.sharedService.answer.emit('medical');
+    const emitData = {
+      title: 'medical',
+      data: null
+    };
+    this.sharedService.answer.emit(emitData);
   }
 
   openContactHistory = () => {
     this.isContactHistory = true;
     this.isMedicalHistory = false;
-    this.sharedService.answer.emit('contact');
+    const emitData = {
+      title: 'contact',
+      data: null
+    };
+    this.sharedService.answer.emit(emitData);
   }
 
   openPatientCall = () => {
     this.isMedicalHistory = false;
     this.isContactHistory = false;
-    this.sharedService.answer.emit('call');
+    const emitData = {
+      title: 'call',
+      data: {
+        appointmentId: this.displayData.appointmentId,
+        callbackId: this.displayData.id,
+        phoneNumber: this.displayData.phoneNumber,
+        firstName: this.displayData.patientFirstName,
+        lastName: this.displayData.patientLastName
+      }
+    };
+    this.sharedService.answer.emit(emitData);
   }
 
 }
