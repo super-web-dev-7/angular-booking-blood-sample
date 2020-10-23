@@ -37,6 +37,7 @@ export class AnswerInquiryComponent implements OnInit {
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.data.callbackId).subscribe((res: any) => {
       this.displayData = res;
+      console.log('###############%%%%%%%%%', res);
     });
     this.sharedService.closeHistory.subscribe(res => {
       this.isMedicalHistory = false;
@@ -75,6 +76,17 @@ export class AnswerInquiryComponent implements OnInit {
         }
       });
     }
+  }
+
+  submit = () => {
+    if (this.messageForm.invalid) {
+      return;
+    }
+    this.httpService.update(URL_JSON.DOCTOR + '/inquiryAnswered/' + this.displayData.appointmentId, {}).subscribe((res: any) => {
+      if (res) {
+        this.dialogRef.close(true);
+      }
+    });
   }
 
   close = () => {
