@@ -12,7 +12,7 @@ const sequelize = db.sequelize;
 exports.create = async (req, res) => {
     const newAppointment = req.body;
     Appointment.create(newAppointment).then(async data => {
-        await ContactHistory.create({type: 'upcoming', appointmentId: data.id});
+        await ContactHistory.create({type: 'Offene Termine', appointmentId: data.id});
         res.status(201).json(data);
     }).catch(e => {
         res.status(400).send({

@@ -67,7 +67,7 @@ exports.cancelAppointment = async (req, res) => {
     const id = req.params.id;
     await Appointment.update({adminStatus: 'canceled'}, {where: {id}});
     await MedicalQuestion.update({isActive: false}, {where: {appointmentId: id}});
-    await ContactHistory.create({appointmentId: id, type: 'Appointment canceled'});
+    await ContactHistory.create({appointmentId: id, type: 'Termin abgesagt'});
 
     const user = await sequelize.query(`
         SELECT users.email AS email, appointments.id AS appointmentId 
@@ -92,7 +92,7 @@ exports.releaseAppointment = async (req, res) => {
     const id = req.params.id;
     await Appointment.update({adminStatus: 'confirmed'}, {where: {id}});
     await MedicalQuestion.update({isActive: false}, {where: {appointmentId: id}});
-    await ContactHistory.create({appointmentId: id, type: 'Appointment confirmed'});
+    await ContactHistory.create({appointmentId: id, type: 'Termin bestätigt'});
     const user = await sequelize.query(`
         SELECT users.email AS email, appointments.id AS appointmentId
         FROM appointments
@@ -137,7 +137,7 @@ exports.sendMessageToPatientAboutCallback = async (req, res) => {
 exports.inquiryAnswered = async (req, res) => {
     const id = req.params.id;
     await Appointment.update({callbackStatus: false}, {where: {id}});
-    await ContactHistory.create({appointmentId: id, type: 'Callback answered'});
+    await ContactHistory.create({appointmentId: id, type: 'Rückruf beantwortet'});
     await CallbackDoctor.update({isActive: false}, {where: {appointmentId: id}});
     const user = await sequelize.query(`
         SELECT users.email AS email, appointments.id AS appointmentId
