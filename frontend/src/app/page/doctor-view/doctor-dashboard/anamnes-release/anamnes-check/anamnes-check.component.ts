@@ -64,7 +64,7 @@ export class AnamnesCheckComponent implements OnInit {
       appointmentId: this.displayData.appointmentId
     };
     if (data) {
-      this.httpService.post(URL_JSON.DOCTOR + '/createMedicalAnswer', data).subscribe((res: any) => {
+      this.httpService.post(URL_JSON.DOCTOR + '/sendMessageToPatient', data).subscribe((res: any) => {
         if (res) {
           this.isSent = true;
         }

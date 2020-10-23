@@ -17,6 +17,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         message: {
             type: Sequelize.STRING
+        },
+        isActive: {
+            type: Sequelize.BOOLEAN, defaultValue: true, allowNull: false
         }
     });
 };

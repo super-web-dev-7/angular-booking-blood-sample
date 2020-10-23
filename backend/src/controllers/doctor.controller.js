@@ -5,6 +5,7 @@ const MedicalQuestion = db.medicalQuestion;
 const Appointment = db.appointment;
 const ContactHistory = db.contactHistory;
 const MedicalAnswer = db.medicalAnswer;
+const CallbackDoctor = db.callbackDoctor;
 const sequelize = db.sequelize;
 
 exports.sendMessageToPatient = async (req, res) => {
@@ -136,5 +137,24 @@ exports.inquiryAnswered = async (req, res) => {
     const id = req.params.id;
     await Appointment.update({callbackStatus: false}, {where: {id}});
     await ContactHistory.create({appointmentId: id, type: 'Callback answered'});
-    // const newCallback = await CallbackDoctor.create(newCallbackData);
+    await CallbackDoctor.update({isActive: false}, {where: {appointmentId: id}});
+    const user = await sequelize.query(`
+        SELECT users.email AS email, appointments.id AS appointmentId
+        FROM appointments
+        JOIN users ON appointments.userId=users.id
+        WHERE appointments.id=${id}
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    if (user.length > 0) {
+        const mailData = {
+            email: user[0].email,
+            subject: 'Appointment confirm',
+            from: process.env.OWNER_EMAIL,
+            content: 'Your appointment callback was answered.'
+        };
+        await sendMail(mailData);
+    }
+
+    // Send API to Laboratory
+
+    res.status(200).json({message: 'Appointment callback answered'})
 }
