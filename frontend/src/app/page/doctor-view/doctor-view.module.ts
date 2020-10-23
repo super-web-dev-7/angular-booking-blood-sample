@@ -39,7 +39,8 @@ import { LeftRecallComponent } from './tablet/side-patient-answer/left-recall/le
 import { LeftMessagePopupComponent } from './tablet/side-patient-answer/left-message-popup/left-message-popup.component';
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 import { SearchInputComponent } from './doctor-dashboard/search-input/search-input.component';
-import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 
 
 
@@ -106,6 +107,7 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
         SharedModule,
         NgxMatSelectSearchModule,
         CKEditorModule,
+        NgxMatDatetimePickerModule,
     ]
 })
 export class DoctorViewModule { }
