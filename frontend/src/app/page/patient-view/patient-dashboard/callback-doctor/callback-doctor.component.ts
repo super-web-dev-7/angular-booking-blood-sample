@@ -22,7 +22,6 @@ export class CallbackDoctorComponent implements OnInit {
   isEditPhone = false;
   callbackForm: FormGroup;
   displayData: any;
-  customPhone: '';
   defaultPhone: '';
   constructor(
     public formBuilder: FormBuilder,

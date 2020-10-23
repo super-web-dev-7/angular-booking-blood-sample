@@ -24,7 +24,6 @@ import { SessionExpireAlertComponent } from './components/session-expire-alert/s
 import {PatientLayoutModule} from './layout/patient-layout/patient-layout.module';
 import {DoctorLayoutModule} from './layout/doctor-layout/doctor-layout.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,14 +45,14 @@ import {DoctorLayoutModule} from './layout/doctor-layout/doctor-layout.module';
     PatientLayoutModule,
     DoctorLayoutModule,
     SharedModule,
-    NgCircleProgressModule
+    NgCircleProgressModule,
   ],
   entryComponents: [SessionExpireAlertComponent],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
   ],
-    exports: [
-    ],
+  exports: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
