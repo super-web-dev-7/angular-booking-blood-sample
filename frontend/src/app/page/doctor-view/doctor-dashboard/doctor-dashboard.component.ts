@@ -42,6 +42,7 @@ export class DoctorDashboardComponent implements OnInit {
   isTablet = false;
   isMobile = false;
   allAnamnesis: any;
+  allInquiry: any;
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
@@ -56,13 +57,12 @@ export class DoctorDashboardComponent implements OnInit {
     this.anamnesisDataSource.sort = this.sort;
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsByAnamnes').subscribe((res: any) => {
-      console.log(res);
       this.anamnesisDataSource.data = res;
       this.allAnamnesis = res;
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithActiveCallback').subscribe((res: any) => {
-      console.log('res', res);
       this.activeCallbackDataSource = res;
+      this.allInquiry = res;
     });
   }
 
@@ -71,6 +71,43 @@ export class DoctorDashboardComponent implements OnInit {
 
   onSort = (event) => {
     this.orderStatus = event;
+  }
+
+  onInquirySort = (event) => {
+    this.orderStatus = event;
+    const inquiries = [...this.allInquiry];
+
+    if (event.active === 'patientName') {
+      inquiries.sort((a, b) => {
+        const x = a.patientFirstName + '' + a.patientLastName;
+        const y = b.patientFirstName + '' + b.patientLastName;
+        if (event.direction === 'asc') {
+          return x < y ? 1 : -1;
+        } else if (event.direction === 'desc') {
+          return x > y ? 1 : -1;
+        }
+      });
+      if (event.direction === '') {
+        this.activeCallbackDataSource.data = this.allInquiry;
+      } else {
+        this.activeCallbackDataSource.data = inquiries;
+      }
+    } else if (event.active === 'appointmentDate') {
+      inquiries.sort((a, b) => {
+        const x = this.getTimeDuration(a.startTime, a.duration);
+        const y = this.getTimeDuration(b.startTime, b.duration);
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+      if (event.direction === '') {
+        this.activeCallbackDataSource.data = this.allInquiry;
+      } else {
+        this.activeCallbackDataSource.data = inquiries;
+      }
+    }
   }
 
   onAnamsSort = (event) => {

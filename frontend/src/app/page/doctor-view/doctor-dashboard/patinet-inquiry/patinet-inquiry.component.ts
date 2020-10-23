@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../../../../service/auth/auth.service';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {patientInjuryData} from '../../../../utils/mock_data';
@@ -9,6 +9,10 @@ import {SuccessDialogComponent} from '../answer-inquiry/success-dialog/success-d
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {SharedService} from '../../../../service/shared/shared.service';
 import {SearchInputComponent} from '../search-input/search-input.component';
+import {MatSort} from '@angular/material/sort';
+import {HttpService} from '../../../../service/http/http.service';
+import {URL_JSON} from '../../../../utils/url_json';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-patinet-inquiry',
@@ -24,20 +28,28 @@ export class PatinetInquiryComponent implements OnInit {
   };
   currentPage = 0;
   pageSize = 5;
-  dataSourceP = new MatTableDataSource<any>();
+  activeCallbackDataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['no', 'patientName', 'appointmentDate', 'status', 'actions'];
   isTablet = false;
+  allInquiry;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
     public breakpointObserver: BreakpointObserver,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    public httpService: HttpService
   ) { }
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
-    this.dataSourceP.data = patientInjuryData;
+    this.activeCallbackDataSource.sort = this.sort;
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithActiveCallback').subscribe((res: any) => {
+      console.log('res', res);
+      this.activeCallbackDataSource = res;
+      this.allInquiry = res;
+    });
   }
 
   filter = () => {
@@ -45,9 +57,46 @@ export class PatinetInquiryComponent implements OnInit {
 
   onSort = (event) => {
     this.orderStatus = event;
+    const inquiries = [...this.allInquiry];
+
+    if (event.active === 'patientName') {
+      inquiries.sort((a, b) => {
+        const x = a.patientFirstName + '' + a.patientLastName;
+        const y = b.patientFirstName + '' + b.patientLastName;
+        if (event.direction === 'asc') {
+          return x < y ? 1 : -1;
+        } else if (event.direction === 'desc') {
+          return x > y ? 1 : -1;
+        }
+      });
+      if (event.direction === '') {
+        this.activeCallbackDataSource.data = this.allInquiry;
+      } else {
+        this.activeCallbackDataSource.data = inquiries;
+      }
+    } else if (event.active === 'appointmentDate') {
+      inquiries.sort((a, b) => {
+        const x = this.getTimeDuration(a.startTime, a.duration);
+        const y = this.getTimeDuration(b.startTime, b.duration);
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+      if (event.direction === '') {
+        this.activeCallbackDataSource.data = this.allInquiry;
+      } else {
+        this.activeCallbackDataSource.data = inquiries;
+      }
+    }
   }
 
   editItem = (id) => {
+  }
+
+  getTimeDuration = (startTime, duration) => {
+    return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');
   }
 
   searchItem = () => {
@@ -68,14 +117,15 @@ export class PatinetInquiryComponent implements OnInit {
     });
   }
 
-  openAnswer = () => {
+  openAnswer = (id) => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet) {
       this.sharedService.tabletSide.emit('answer');
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(AnswerInquiryComponent, {
-        width: '1347px', position: {top: '5%', left: '21%'}
+        width: '1347px', position: {top: '5%', left: '21%'},
+        data: {callbackId: id}
       });
       dialogRef.afterClosed().subscribe(res => {
         if (res) {

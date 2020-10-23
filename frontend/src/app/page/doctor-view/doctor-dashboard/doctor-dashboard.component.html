@@ -32,7 +32,7 @@
   <div class="table-container mt-54">
     <mat-card class="table-card mat-card-radius" style="position: relative">
       <div>
-        <table mat-table [dataSource]="activeCallbackDataSource" matSort (matSortChange)="onSort($event)">
+        <table mat-table [dataSource]="activeCallbackDataSource" matSort (matSortChange)="onInquirySort($event)">
           <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef> # </th>
             <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>

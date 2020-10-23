@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpService} from '../../../../service/http/http.service';
 import {URL_JSON} from '../../../../utils/url_json';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-callback-doctor',
@@ -13,13 +14,14 @@ export class CallbackDoctorComponent implements OnInit {
   selectedDay: any;
   times = [
     {time: 'morning', label: 'Vormittags (09:00 - 12:00)'},
-    {time: 'noon', label: 'Nachmittags (12:00 - 16:00)'},
+    {time: 'afternoon', label: 'Nachmittags (12:00 - 16:00)'},
     {time: 'evening', label: 'Abends (16:00 - 19:00)'}
   ];
   selectedTime = null;
   isValid = false;
   isEditPhone = false;
   callbackForm: FormGroup;
+  displayData: any;
   constructor(
     public formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<CallbackDoctorComponent>,
@@ -29,6 +31,9 @@ export class CallbackDoctorComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectedDay = 'today';
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.data.appointmentId).subscribe((res: any) => {
+      this.displayData = res;
+    });
     this.callbackForm = this.formBuilder.group({
       phone: [null, Validators.required],
       schedule: [null, Validators.required],
@@ -38,6 +43,13 @@ export class CallbackDoctorComponent implements OnInit {
 
   get f(): any {
     return this.callbackForm.controls;
+  }
+
+  getTimeDuration = (startTime, duration) => {
+    if (!startTime || !duration) {
+      return '';
+    }
+    return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');
   }
 
   formatDate = (date) => {

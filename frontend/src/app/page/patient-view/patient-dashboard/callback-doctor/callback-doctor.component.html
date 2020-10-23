@@ -3,9 +3,9 @@
     <h1 style="margin-top: 9px">Rückrufbitte  <span style="font-weight: 100"> Arzt</span></h1>
     <div class="main-container-div">
       <div class="left-border-div">
-        <p class="p-272140">12.09.2020 09:00 - 10:15</p>
+        <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
         <p class="p-576E82">Check-Up: Männergesundheit</p>
-        <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+        <p class="p-272140">{{displayData?.addressStreet + '' + displayData?.addressOrt}}, {{displayData?.addressPlz}} Berlin</p>
       </div>
       <div class="mt-24 d-flex">
         <button
@@ -42,7 +42,7 @@
             <mat-icon> stay_current_portrait</mat-icon>
           </div>
           <div>
-            <span *ngIf="!isEditPhone || !selectedTime">0178 536247885</span>
+            <span *ngIf="!isEditPhone || !selectedTime">{{displayData?.patientNumber}}</span>
             <mat-form-field class="w-100" *ngIf="isEditPhone && selectedTime !== null">
               <input autocomplete="off" matInput formControlName="phone">
             </mat-form-field>
