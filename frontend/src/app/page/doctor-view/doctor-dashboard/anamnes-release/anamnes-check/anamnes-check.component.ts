@@ -92,6 +92,12 @@ export class AnamnesCheckComponent implements OnInit {
     });
   }
 
+  archive = () => {
+    this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData.appointmentId, {}).subscribe(res => {
+      console.log(res);
+    });
+  }
+
   openCheckContact = () => {
     this.isCheckContact = true;
     const emitData = {

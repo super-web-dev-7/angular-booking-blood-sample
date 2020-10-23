@@ -165,3 +165,10 @@ exports.createPatientRecall = async (req, res) => {
     await ContactHistory.create({appointmentId: req.body.appointmentId, type: 'Patienten rückruf'});
     res.status(201).json(newRecall);
 }
+
+exports.setAppointmentToArchive = async (req, res) => {
+    const id = req.params.appointmentId;
+    await Appointment.update({archive: true}, {where: {id}});
+    await ContactHistory.create({appointmentId: id, type: 'Termin archiv'});
+    res.status(200).json({message: 'archived'});
+}

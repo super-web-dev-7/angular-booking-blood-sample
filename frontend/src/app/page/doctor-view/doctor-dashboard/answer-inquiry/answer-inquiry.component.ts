@@ -92,6 +92,12 @@ export class AnswerInquiryComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  archive = () => {
+    this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData.appointmentId, {}).subscribe(res => {
+      console.log(res);
+    });
+  }
+
   afterClosed = (dialogRef) => {
     dialogRef.afterClosed().subscribe(result => {
     });

@@ -15,4 +15,5 @@ router.route('/sendMessageToPatientAboutCallback').post(doctorController.sendMes
 router.route('/inquiryAnswered/:id').put(doctorController.inquiryAnswered);
 router.route('/createPatientRecall').post(doctorController.createPatientRecall);
 
+router.route('/setAppointmentToArchive/:appointmentId').put(doctorController.setAppointmentToArchive);
 export default router;
