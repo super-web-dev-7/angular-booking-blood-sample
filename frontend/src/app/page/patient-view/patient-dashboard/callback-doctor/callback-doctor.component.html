@@ -64,7 +64,7 @@
             </mat-expansion-panel-header>
             <div class="d-block expansion-panel-container" style="margin-left: 76px">
               <mat-form-field class="width-50">
-                <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" formControlName="schedule">
+                <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl" formControlName="schedule">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <ngx-mat-datetime-picker #picker>
                 </ngx-mat-datetime-picker>
