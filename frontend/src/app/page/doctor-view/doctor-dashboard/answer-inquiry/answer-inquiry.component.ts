@@ -82,7 +82,7 @@ export class AnswerInquiryComponent implements OnInit {
     if (this.messageForm.invalid) {
       return;
     }
-    this.httpService.post(URL_JSON.DOCTOR + '/inquiryAnswered/' + this.displayData.appointmentId, {}).subscribe((res: any) => {
+    this.httpService.update(URL_JSON.DOCTOR + '/inquiryAnswered/' + this.displayData.appointmentId, {}).subscribe((res: any) => {
       if (res) {
         this.dialogRef.close(true);
       }
