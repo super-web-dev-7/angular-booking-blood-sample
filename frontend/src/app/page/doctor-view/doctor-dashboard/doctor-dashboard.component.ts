@@ -2,10 +2,11 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatSort} from '@angular/material/sort';
 import * as moment from 'moment';
 
 import {AuthService} from '../../../service/auth/auth.service';
-import {eventData} from '../../../utils/mock_data';
+import {URL_JSON} from '../../../utils/url_json';
 import {SearchModalComponent} from './search-modal/search-modal.component';
 import {AnswerInquiryComponent} from './answer-inquiry/answer-inquiry.component';
 import {AnamnesViewComponent} from './anamnes-release/anamnes-view/anamnes-view.component';
@@ -14,9 +15,8 @@ import {ViewAppointmentComponent} from './event/view-appointment/view-appointmen
 import {SharedService} from '../../../service/shared/shared.service';
 import {SearchInputComponent} from './search-input/search-input.component';
 import {HttpService} from '../../../service/http/http.service';
-import {URL_JSON} from '../../../utils/url_json';
 import {SuccessDialogComponent} from './answer-inquiry/success-dialog/success-dialog.component';
-import {MatSort} from '@angular/material/sort';
+
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -43,6 +43,13 @@ export class DoctorDashboardComponent implements OnInit {
   isMobile = false;
   allAnamnesis: any;
   allInquiry: any;
+  status = {
+    upcoming: 'Offene Termine',
+    confirmed: 'Bestätigte Termine',
+    canceled: 'Storniert / Verschoben',
+    successful: 'Abgeschlossene Termine'
+  };
+
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
@@ -53,7 +60,6 @@ export class DoctorDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
-    this.dataSourceE.data = eventData;
     this.anamnesisDataSource.sort = this.sort;
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsByAnamnes').subscribe((res: any) => {
@@ -64,6 +70,19 @@ export class DoctorDashboardComponent implements OnInit {
       this.activeCallbackDataSource = res;
       this.allInquiry = res;
     });
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithoutArchived').subscribe((res: any) => {
+      this.dataSourceE.data = res;
+    });
+  }
+
+  getDate = (time) => {
+    moment.locale('de');
+    return moment(time).format('DD.MM.YYYY');
+  }
+
+  getTime = (time) => {
+    moment.locale('de');
+    return moment(time).format('HH:mm');
   }
 
   filter = () => {

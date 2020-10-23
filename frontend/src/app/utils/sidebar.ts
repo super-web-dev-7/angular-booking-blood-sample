@@ -279,21 +279,22 @@ export const DoctorSidebar = [
     name: 'Archiv',
     icon: 'check.svg',
     role: '',
-    link: '/doctor/archive',
-    children: [
-      {
-        name: 'Patientenrückfragen',
-        link: '/patient-inquiry'
-      },
-      {
-        name: 'Anamnesefreigaben',
-        link: '/anamnes-release'
-      },
-      {
-        name: 'Termine',
-        link: '/events'
-      }
-    ]
+    link: '/doctor/archive/events',
+    children: []
+    // children: [
+    //   {
+    //     name: 'Patientenrückfragen',
+    //     link: '/patient-inquiry'
+    //   },
+    //   {
+    //     name: 'Anamnesefreigaben',
+    //     link: '/anamnes-release'
+    //   },
+    //   {
+    //     name: 'Termine',
+    //     link: '/events'
+    //   }
+    // ]
   }
 ];
 // patient sidebar
