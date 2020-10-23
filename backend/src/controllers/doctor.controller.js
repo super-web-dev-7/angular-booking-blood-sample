@@ -6,6 +6,7 @@ const Appointment = db.appointment;
 const ContactHistory = db.contactHistory;
 const MedicalAnswer = db.medicalAnswer;
 const CallbackDoctor = db.callbackDoctor;
+const PatientRecall = db.patientRecall;
 const sequelize = db.sequelize;
 
 exports.sendMessageToPatient = async (req, res) => {
@@ -157,4 +158,10 @@ exports.inquiryAnswered = async (req, res) => {
     // Send API to Laboratory
 
     res.status(200).json({message: 'Appointment callback answered'})
+}
+
+exports.createPatientRecall = async (req, res) => {
+    const newRecall = await PatientRecall.create(req.body);
+    await ContactHistory.create({appointmentId: req.body.appointmentId, type: 'Patienten rückruf'});
+    res.status(201).json(newRecall);
 }
