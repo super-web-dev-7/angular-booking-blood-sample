@@ -39,8 +39,7 @@ export class ArchiveEventComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
-    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithoutArchived').subscribe((res: any) => {
-      console.log(res);
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithArchived').subscribe((res: any) => {
       this.allAppointments = res;
       this.dataSource.data = res;
     });

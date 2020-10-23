@@ -18,5 +18,6 @@ router.route('/getAppointmentsWithActiveCallback').get(appointmentController.get
 router.route('/getAppointmentWithCallbackById/:id').get(appointmentController.getAppointmentWithCallbackById);
 router.route('/getAppointmentsWithArchivedCallback').get(appointmentController.getAppointmentsWithArchivedCallback);
 router.route('/getAppointmentsWithoutArchived').get(appointmentController.getAppointmentsWithoutArchived);
+router.route('/getAppointmentsWithArchived').get(appointmentController.getAppointmentsWithArchived);
 
 export default router;
