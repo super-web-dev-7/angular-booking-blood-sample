@@ -18,7 +18,6 @@ import { AuthComponent } from './layout/auth/auth.component';
 import {MaterialModule} from './material/material.module';
 import {MainLayoutModule} from './layout/main-layout/main-layout.module';
 import {SharedModule} from './shared/shared.module';
-import { AgDashboardComponent } from './page/ag-dashboard/ag-dashboard.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { SessionExpireAlertComponent } from './components/session-expire-alert/session-expire-alert.component';
 import {PatientLayoutModule} from './layout/patient-layout/patient-layout.module';
@@ -30,7 +29,6 @@ import {DoctorLayoutModule} from './layout/doctor-layout/doctor-layout.module';
     LoginComponent,
     RegisterComponent,
     AuthComponent,
-    AgDashboardComponent,
     ChartComponent,
     SessionExpireAlertComponent,
   ],

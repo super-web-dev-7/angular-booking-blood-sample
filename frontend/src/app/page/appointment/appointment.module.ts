@@ -12,7 +12,6 @@ import {AppointmentRoutingModule} from './appointment-routing.module';
 import {SharedModule} from '../../shared/shared.module';
 import {MaterialModule} from '../../material/material.module';
 import {DatetimePickerComponent} from '../../components/datetime-picker/datetime-picker.component';
-import {DonutChartComponent} from '../../components/donut-chart/donut-chart.component';
 import {BarChartComponent} from '../../components/bar-chart/bar-chart.component';
 import { AppointmentViewComponent } from './appointment-view/appointment-view.component';
 
@@ -23,7 +22,6 @@ import { AppointmentViewComponent } from './appointment-view/appointment-view.co
         NewComponent,
         StatisticsComponent,
         DatetimePickerComponent,
-        DonutChartComponent,
         BarChartComponent,
         AppointmentViewComponent
     ],

@@ -44,7 +44,12 @@ exports.get = async (req, res) => {
 }
 
 exports.getAllPackagesWithAppointment = async (req, res) => {
-    const allPackages = await db.sequelize.query(`SELECT packages.id AS id, packages.name AS name, COUNT(appointments.id) AS total FROM packages LEFT JOIN appointments ON appointments.packageId=packages.id GROUP BY packages.id`, {type: db.Sequelize.QueryTypes.SELECT});
+    const allPackages = await db.sequelize.query(`
+    SELECT 
+        packages.id AS id, packages.name AS name, COUNT(appointments.id) AS total 
+    FROM packages 
+    LEFT JOIN appointments ON appointments.packageId=packages.id 
+    GROUP BY packages.id`, {type: db.Sequelize.QueryTypes.SELECT});
     res.status(200).json(allPackages);
 }
 

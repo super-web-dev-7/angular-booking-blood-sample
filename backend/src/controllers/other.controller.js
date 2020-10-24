@@ -10,6 +10,7 @@ const WorkingGroup = db.workingGroup;
 const Calendar = db.calendar;
 const Template = db.template;
 const Package = db.package;
+const Appointment = db.appointment;
 const ZipCode = db.zipCodeModel;
 
 exports.getSuperAdminDashboardValues = async (req, res) => {
@@ -19,10 +20,35 @@ exports.getSuperAdminDashboardValues = async (req, res) => {
         calendar: await Calendar.count({where: {}}),
         template: await Template.count({where: {}}),
         package: await Package.count({where: {}}),
-        appointment: 275
+        appointment: await Appointment.count({where: {}})
     }
     res.json(response);
 };
+
+exports.getAgAdminDashboardValues = async (req, res) => {
+    const allAgencies = await db.sequelize.query(`
+        SELECT 
+            appointments.agencyId AS agencyId, agencies.name AS agencyName,
+            COALESCE(SUM(appointments.adminStatus="upcoming"), 0) AS open_date_count,
+            COALESCE(SUM(appointments.adminStatus="confirmed"), 0) AS confirm_count,
+            COALESCE(SUM(appointments.adminStatus="confirmed" OR appointments.adminStatus="upcoming"), 0) AS total_count
+        FROM appointments
+        JOIN agencies ON agencies.id=appointments.agencyId
+        GROUP BY appointments.agencyId
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    const totalValue = await db.sequelize.query(`
+        SELECT 
+            COALESCE(SUM(appointments.adminStatus="upcoming"), 0) AS open_date_count,
+            COALESCE(SUM(appointments.adminStatus="confirmed"), 0) AS confirm_count,
+            COALESCE(SUM(appointments.adminStatus="confirmed" OR appointments.adminStatus="upcoming"), 0) AS total_count
+        FROM appointments
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    const response = {
+        total: totalValue[0],
+        agency: allAgencies
+    };
+    res.json(response);
+}
 
 exports.sendEmail = async (req, res) => {
     const data = req.body;

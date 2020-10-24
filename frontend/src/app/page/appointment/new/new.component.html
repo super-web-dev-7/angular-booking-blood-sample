@@ -74,11 +74,11 @@
           type="button"
           mat-stroked-button
           class="select-button"
-          *ngFor="let time of randomTimes"
-          [ngClass]="{'primary': selectedTime === time}"
-          (click)="selectedTime = time"
+          *ngFor="let item of randomTimes"
+          [ngClass]="{'primary': selectedTime === item}"
+          (click)="selectTime(item)"
         >
-          {{getDate(time)}}
+          {{getDate(item)}}
         </button>
       </div>
     </mat-expansion-panel>

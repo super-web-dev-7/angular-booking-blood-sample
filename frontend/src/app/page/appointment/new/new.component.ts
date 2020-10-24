@@ -167,6 +167,10 @@ export class NewComponent implements OnInit {
     });
   }
 
+  selectTime = (time) => {
+    this.selectedTime = time;
+  }
+
   makeAppointmentTime = calendar  => {
     const date = new Date();
     this.allTimes = [];
@@ -190,12 +194,12 @@ export class NewComponent implements OnInit {
       plusDate++;
     }
     for (const i of new Array(4)) {
-      const randomIndex = Math.floor(Math.random() * this.allTimes.length);
-      this.randomTimes.push(this.allTimes[randomIndex]);
-      this.allTimes.splice(randomIndex, 1);
       if (this.allTimes.length === 0) {
         break;
       }
+      const randomIndex = Math.floor(Math.random() * this.allTimes.length);
+      this.randomTimes.push(this.allTimes[randomIndex]);
+      this.allTimes.splice(randomIndex, 1);
     }
   }
 
@@ -250,9 +254,12 @@ export class NewComponent implements OnInit {
 
   onSubmit = () => {
     if (this.appointmentForm.invalid) {
+      console.log('invalid form');
       return;
     }
     if (!this.selectedAgency || !this.selectedPackage || !this.selectedTime) {
+      console.log(this.selectedAgency, this.selectedPackage, this.selectedTime);
+      console.log('invalid select');
       return;
     }
     const data = {
