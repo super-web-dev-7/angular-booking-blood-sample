@@ -328,3 +328,30 @@ exports.getAppointmentsWithArchived = async (req, res) => {
     }
     res.status(200).json(response);
 }
+
+exports.analysis = async (req, res) => {
+    const allAgencies = await db.sequelize.query(`
+        SELECT 
+            appointments.agencyId AS agencyId, agencies.name AS agencyName,
+            COALESCE(SUM(appointments.adminStatus="upcoming"), 0) AS open_date_count,
+            COALESCE(SUM(appointments.adminStatus="confirmed"), 0) AS confirm_count,
+            COALESCE(SUM(appointments.adminStatus="canceled"), 0) AS cancel_count,
+            COALESCE(SUM(appointments.adminStatus="successful"), 0) AS success_count            
+        FROM appointments
+        JOIN agencies ON agencies.id=appointments.agencyId
+        GROUP BY appointments.agencyId
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    const totalValue = await db.sequelize.query(`
+        SELECT
+            COALESCE(SUM(appointments.adminStatus="upcoming"), 0) AS open_date_count,
+            COALESCE(SUM(appointments.adminStatus="confirmed"), 0) AS confirm_count,
+            COALESCE(SUM(appointments.adminStatus="canceled"), 0) AS cancel_count,
+            COALESCE(SUM(appointments.adminStatus="successful"), 0) AS success_count   
+        FROM appointments
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    const response = {
+        total: totalValue[0],
+        agency: allAgencies
+    };
+    res.json(response);
+}

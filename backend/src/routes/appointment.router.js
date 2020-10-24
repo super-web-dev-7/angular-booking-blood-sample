@@ -9,6 +9,7 @@ router.route('/update/:id').put(appointmentController.update);
 router.route('/delete/:id').delete(appointmentController.delete);
 router.route('/getAppointmentByNurse/:id').get(appointmentController.getAppointmentByNurse);
 router.route('/ready/:id').put(appointmentController.appointmentReady);
+
 router.route('/getAppointmentByPatient/:id').get(appointmentController.getAppointmentByPatient);
 router.route('/getAppointmentDetail/:id').get(appointmentController.getAppointmentDetail);
 router.route('/getAppointmentsByAnamnes').get(appointmentController.getAppointmentsByAnamnes);
@@ -19,5 +20,7 @@ router.route('/getAppointmentWithCallbackById/:id').get(appointmentController.ge
 router.route('/getAppointmentsWithArchivedCallback').get(appointmentController.getAppointmentsWithArchivedCallback); //
 router.route('/getAppointmentsWithoutArchived').get(appointmentController.getAppointmentsWithoutArchived);
 router.route('/getAppointmentsWithArchived').get(appointmentController.getAppointmentsWithArchived);
+
+router.route('/analysis').get(appointmentController.analysis);
 
 export default router;

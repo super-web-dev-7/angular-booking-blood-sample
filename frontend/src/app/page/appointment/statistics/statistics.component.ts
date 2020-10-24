@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
 import {curveCardinal} from 'd3-shape';
+import {HttpService} from '../../../service/http/http.service';
+import {URL_JSON} from '../../../utils/url_json';
 
 @Component({
   selector: 'app-statistics',
@@ -19,24 +21,24 @@ export class StatisticsComponent implements OnInit {
   packageLabelClass = ['light-green-color', 'pink-color', 'red-color', 'green-color', 'blue-color', 'yellow-color'];
 
   data = [
-    [
-      {color: '#50E3C2', value: 200, icon: 'done'},
-      {color: '#F389CC', value: 75, icon: 'feeling'},
-      {color: '#E87C60', value: 11, icon: 'close'},
-      {color: '#89DF8C', value: 71, icon: 'thumb-up'}
-    ],
-    [
-      {color: '#50E3C2', value: 160, icon: 'done'},
-      {color: '#F389CC', value: 25, icon: 'feeling'},
-      {color: '#E87C60', value: 11, icon: 'close'},
-      {color: '#89DF8C', value: 41, icon: 'thumb-up'}
-    ],
-    [
-      {color: '#50E3C2', value: 40, icon: 'done'},
-      {color: '#F389CC', value: 50, icon: 'feeling'},
-      {color: '#E87C60', value: 0, icon: 'close'},
-      {color: '#89DF8C', value: 30, icon: 'thumb-up'}
-    ]
+    // [
+    //   {color: '#50E3C2', value: 200, icon: 'done'},
+    //   {color: '#F389CC', value: 75, icon: 'feeling'},
+    //   {color: '#E87C60', value: 11, icon: 'close'},
+    //   {color: '#89DF8C', value: 71, icon: 'thumb-up'}
+    // ],
+    // [
+    //   {color: '#50E3C2', value: 160, icon: 'done'},
+    //   {color: '#F389CC', value: 25, icon: 'feeling'},
+    //   {color: '#E87C60', value: 11, icon: 'close'},
+    //   {color: '#89DF8C', value: 41, icon: 'thumb-up'}
+    // ],
+    // [
+    //   {color: '#50E3C2', value: 40, icon: 'done'},
+    //   {color: '#F389CC', value: 50, icon: 'feeling'},
+    //   {color: '#E87C60', value: 0, icon: 'close'},
+    //   {color: '#89DF8C', value: 30, icon: 'thumb-up'}
+    // ]
   ];
 
   packageData = [
@@ -98,6 +100,7 @@ export class StatisticsComponent implements OnInit {
   };
 
   constructor(
+    public httpService: HttpService,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer
   ) {
@@ -111,6 +114,32 @@ export class StatisticsComponent implements OnInit {
     for (const item of this.packageData) {
       this.packageTotal += item.value;
     }
+    this.httpService.get(URL_JSON.APPOINTMENT + '/analysis').subscribe((res: any) => {
+      this.data.push({
+        label: 'Termine gesamp',
+        detailData: [
+          {color: '#50E3C2', value: this.getNumberFromString(res.total.confirm_count), icon: 'done'},
+          {color: '#F389CC', value: this.getNumberFromString(res.total.open_date_count), icon: 'feeling'},
+          {color: '#E87C60', value: this.getNumberFromString(res.total.cancel_count), icon: 'close'},
+          {color: '#89DF8C', value: this.getNumberFromString(res.total.success_count), icon: 'thumb-up'}
+        ]
+      });
+      for (const agency of res.agency) {
+        this.data.push({
+          label: agency.agencyName,
+          detailData: [
+            {color: '#50E3C2', value: this.getNumberFromString(agency.confirm_count), icon: 'done'},
+            {color: '#F389CC', value: this.getNumberFromString(agency.open_date_count), icon: 'feeling'},
+            {color: '#E87C60', value: this.getNumberFromString(agency.cancel_count), icon: 'close'},
+            {color: '#89DF8C', value: this.getNumberFromString(agency.success_count), icon: 'thumb-up'}
+          ]
+        });
+      }
+    });
+  }
+
+  getNumberFromString = (value) => {
+    return parseInt(value, 10);
   }
 
 }
