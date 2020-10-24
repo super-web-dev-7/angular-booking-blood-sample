@@ -17,38 +17,12 @@ export class StatisticsComponent implements OnInit {
   ];
   labelClass = ['light-green-color', 'pink-color', 'red-color', 'green-color'];
 
-  packageLabel = ['Allgemeine Gesundheit', 'Frauenmedizin', 'Corona', 'Gutes Immunsystem', 'Männermedizin', 'Sexuelle Gesundheit'];
+  packageLabel = [];
   packageLabelClass = ['light-green-color', 'pink-color', 'red-color', 'green-color', 'blue-color', 'yellow-color'];
 
-  data = [
-    // [
-    //   {color: '#50E3C2', value: 200, icon: 'done'},
-    //   {color: '#F389CC', value: 75, icon: 'feeling'},
-    //   {color: '#E87C60', value: 11, icon: 'close'},
-    //   {color: '#89DF8C', value: 71, icon: 'thumb-up'}
-    // ],
-    // [
-    //   {color: '#50E3C2', value: 160, icon: 'done'},
-    //   {color: '#F389CC', value: 25, icon: 'feeling'},
-    //   {color: '#E87C60', value: 11, icon: 'close'},
-    //   {color: '#89DF8C', value: 41, icon: 'thumb-up'}
-    // ],
-    // [
-    //   {color: '#50E3C2', value: 40, icon: 'done'},
-    //   {color: '#F389CC', value: 50, icon: 'feeling'},
-    //   {color: '#E87C60', value: 0, icon: 'close'},
-    //   {color: '#89DF8C', value: 30, icon: 'thumb-up'}
-    // ]
-  ];
-
-  packageData = [
-    {color: '#50E3C2', value: 50, icon: 'heart'},
-    {color: '#F389CC', value: 26, icon: 'child'},
-    {color: '#E87C60', value: 44, icon: 'corona'},
-    {color: '#89DF8C', value: 12, icon: 'plus'},
-    {color: '#4A90E2', value: 36, icon: 'direction'},
-    {color: '#F5A623', value: 32, icon: 'fire'}
-  ];
+  data = [];
+  packageData = [];
+  colorArray = ['#50E3C2', '#F389CC', '#E87C60', '#89DF8C', '#4A90E2', '#F5A623'];
 
   packageTotal = 0;
 
@@ -111,10 +85,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    for (const item of this.packageData) {
-      this.packageTotal += item.value;
-    }
-    this.httpService.get(URL_JSON.APPOINTMENT + '/analysis').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisByAgency').subscribe((res: any) => {
       this.data.push({
         label: 'Termine gesamp',
         detailData: [
@@ -134,6 +105,23 @@ export class StatisticsComponent implements OnInit {
             {color: '#89DF8C', value: this.getNumberFromString(agency.success_count), icon: 'thumb-up'}
           ]
         });
+      }
+    });
+
+    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisByPackage').subscribe((res: any) => {
+      for (const [index, item] of res.entries()) {
+        this.packageData.push({
+          color: this.colorArray[index % this.colorArray.length],
+          value: item.count_by_package,
+          icon: 'heart'
+        });
+        this.packageLabel.push(item.packageName);
+      }
+      for (const item of this.packageData) {
+        this.packageTotal += item.value;
+      }
+      if (this.packageTotal === 0) {
+        this.packageTotal = 1;
       }
     });
   }

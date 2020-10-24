@@ -329,7 +329,7 @@ exports.getAppointmentsWithArchived = async (req, res) => {
     res.status(200).json(response);
 }
 
-exports.analysis = async (req, res) => {
+exports.analysisByAgency = async (req, res) => {
     const allAgencies = await db.sequelize.query(`
         SELECT 
             appointments.agencyId AS agencyId, agencies.name AS agencyName,
@@ -353,5 +353,17 @@ exports.analysis = async (req, res) => {
         total: totalValue[0],
         agency: allAgencies
     };
+    res.json(response);
+}
+
+exports.analysisByPackage = async (req, res) => {
+    const response = await db.sequelize.query(`
+        SELECT 
+            appointments.packageId AS packageId, packages.name AS packageName,
+            COUNT(appointments.id) AS count_by_package
+        FROM appointments
+        JOIN packages ON packages.id=appointments.packageId
+        GROUP BY appointments.packageId
+    `, {type: db.Sequelize.QueryTypes.SELECT});
     res.json(response);
 }

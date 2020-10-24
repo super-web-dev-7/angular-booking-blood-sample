@@ -39,7 +39,7 @@
 
 <div class="row">
   <div class="col-md-4">
-    <div class="package">
+    <div class="package" *ngIf="packageData.length > 0">
       <div class="text-white">00 %</div>
 
       <app-donut-chart [items]="packageData" label="Gebuchte Pakete" labelColor="white"></app-donut-chart>
@@ -55,8 +55,8 @@
       </button>
     </div>
   </div>
-  <div class="col-md-8 pl-4">
 
+  <div class="col-md-8 pl-4">
     <div class="bar-chart-container">
       <div>
         <app-bar-chart [data]="barChartData"></app-bar-chart>

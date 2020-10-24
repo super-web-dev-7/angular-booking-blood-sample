@@ -21,6 +21,7 @@ router.route('/getAppointmentsWithArchivedCallback').get(appointmentController.g
 router.route('/getAppointmentsWithoutArchived').get(appointmentController.getAppointmentsWithoutArchived);
 router.route('/getAppointmentsWithArchived').get(appointmentController.getAppointmentsWithArchived);
 
-router.route('/analysis').get(appointmentController.analysis);
+router.route('/analysisByAgency').get(appointmentController.analysisByAgency);
+router.route('/analysisByPackage').get(appointmentController.analysisByPackage);
 
 export default router;
