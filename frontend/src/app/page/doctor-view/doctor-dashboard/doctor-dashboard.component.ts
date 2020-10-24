@@ -270,7 +270,7 @@ export class DoctorDashboardComponent implements OnInit {
     }
   }
 
-  viewAppointment = () => {
+  viewAppointment = (id) => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     if (this.isTablet || this.isMobile) {
@@ -283,8 +283,11 @@ export class DoctorDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(ViewAppointmentComponent, {
         width: '827px',
+        data: {appointmentId: id}
       });
-      this.afterClosed(dialogRef);
+      dialogRef.afterClosed().subscribe(res => {
+        this.sharedService.closeHistory.emit();
+      });
     }
   }
 
