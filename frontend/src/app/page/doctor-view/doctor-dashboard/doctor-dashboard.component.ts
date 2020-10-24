@@ -276,7 +276,7 @@ export class DoctorDashboardComponent implements OnInit {
     if (this.isTablet || this.isMobile) {
       const data = {
         title: 'v-appointment',
-        appointmentId: null,
+        appointmentId: id,
       };
       this.sharedService.tabletSide.emit(data);
     } else {
