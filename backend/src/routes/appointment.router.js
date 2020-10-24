@@ -23,5 +23,7 @@ router.route('/getAppointmentsWithArchived').get(appointmentController.getAppoin
 
 router.route('/analysisByAgency').get(appointmentController.analysisByAgency);
 router.route('/analysisByPackage').get(appointmentController.analysisByPackage);
+router.route('/analysisPerMonth').get(appointmentController.analysisPerMonth);
+router.route('/analysisTotalPatient').get(appointmentController.analysisTotalPatient);
 
 export default router;

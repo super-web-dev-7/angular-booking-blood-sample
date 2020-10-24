@@ -367,3 +367,30 @@ exports.analysisByPackage = async (req, res) => {
     `, {type: db.Sequelize.QueryTypes.SELECT});
     res.json(response);
 }
+
+exports.analysisPerMonth = async (req, res) => {
+    const response = await db.sequelize.query(`
+        SELECT MONTH(appointments.createdAt) AS month, COUNT(*) as count_per_month
+        FROM appointments
+        WHERE appointments.createdAt >= CURDATE() - INTERVAL 1 YEAR
+        GROUP BY MONTH(appointments.createdAt)
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    res.json(response);
+}
+
+exports.analysisTotalPatient = async (req, res) => {
+    const allPatientCountPerMonth = await db.sequelize.query(`
+        SELECT MONTH(createdAt) as month, COUNT(*) as count_per_month
+        FROM users
+        WHERE createdAt >= CURDATE() - INTERVAL 1 YEAR AND role="Patient"
+        GROUP BY MONTH(createdAt)
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    const allPatientCount = await db.sequelize.query(`
+        SELECT COUNT(id) as all_patient_count FROM users WHERE role="Patient"
+    `, {type: db.sequelize.QueryTypes.SELECT});
+    const response = {
+        all: allPatientCount,
+        per_patient: allPatientCountPerMonth
+    };
+    res.json(response);
+}

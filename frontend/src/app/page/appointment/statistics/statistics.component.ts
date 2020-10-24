@@ -124,6 +124,14 @@ export class StatisticsComponent implements OnInit {
         this.packageTotal = 1;
       }
     });
+
+    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisPerMonth').subscribe((res: any) => {
+      console.log(res);
+    });
+
+    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisTotalPatient').subscribe((res: any) => {
+      console.log(res);
+    });
   }
 
   getNumberFromString = (value) => {
