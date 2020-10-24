@@ -36,6 +36,7 @@
       *ngIf="openCallback"
       [isMobile]="isMobile"
       [isTablet]="isTablet"
+      [appointmentId]="appointmentID"
     ></app-popup-callback-doctor>
     <app-popup-change-package
       (closeSide)="closeRightSide($event)"

@@ -1,83 +1,115 @@
-<div class="patient-popup-container">
-  <button
-    type="button"
-    mat-icon-button
-    class="close"
-    (click)="close()"
-  >
-    <mat-icon>clear</mat-icon>
-  </button>
-  <div class="main-side-container">
-    <h1 *ngIf="isTablet">Rückrufbitte <span style="font-weight: 100">Arzt</span></h1>
-    <div class="left-border-div mt-38">
-      <p class="p-272140">12.09.2020 09:00 - 10:15</p>
-      <p class="p-576E82">Check-Up: Männergesundheit</p>
-      <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
-    </div>
-    <div class="mt-45 d-flex">
-      <button
-        type="button"
-        mat-stroked-button
-        class="custom-button"
-        (click)="selectDay('today')"
-        [ngClass]="{'primary':selectedDay === 'today'}"
-      >
-        Ab heute
-      </button>
-      <button
-        type="button"
-        mat-stroked-button
-        class="custom-button ml-10"
-        (click)="selectDay('tomorrow')"
-        [ngClass]="{'primary':selectedDay === 'tomorrow'}"
-      >
-        Ab morgen
-      </button>
-    </div>
-    <div class="mt-47">
-        <div class="time-board mt-15" *ngFor="let item of times">
-          <mat-icon>radio_button_unchecked</mat-icon>
-          <p class="ml-10">{{item.label}}</p>
-        </div>
-    </div>
-    <div class="mt-45">
-      <mat-accordion>
-        <mat-expansion-panel hideToggle>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <div class="d-flex avatar pink">
-                <div class="round">
-                  <mat-icon> stay_current_portrait</mat-icon>
-                </div>
-                <div>0178 536247885</div>
-              </div>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="d-flex flex-wrap expansion-panel-container">
-          </div>
-        </mat-expansion-panel>
-        <mat-expansion-panel hideToggle>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <div class="d-flex avatar green">
-                <div class="round">
-                  <mat-icon>lens</mat-icon>
-                </div>
-                <div>Nachricht hinzufügen</div>
-              </div>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
-    <div class="mt-47 text-center">
-      <button
-        mat-stroked-button
-        class="custom-button-C7D"
-        [ngClass]="{'primary': isValid}"
+<form [formGroup]="callbackForm">
+  <div class="patient-popup-container">
+    <button
+      type="button"
+      mat-icon-button
+      class="close"
+      (click)="close()"
+    >
+      <mat-icon>clear</mat-icon>
+    </button>
+    <div class="main-side-container" *ngIf="!isSuccess">
+      <h1 *ngIf="isTablet">Rückrufbitte <span style="font-weight: 100">Arzt</span></h1>
+      <div class="left-border-div mt-38">
+        <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
+        <p class="p-576E82">Check-Up: Männergesundheit</p>
+        <p class="p-272140">{{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}</p>
+      </div>
+      <div class="mt-45 d-flex">
+        <button
+          type="button"
+          mat-stroked-button
+          class="custom-button"
+          (click)="selectDay('today')"
+          [ngClass]="{'primary':selectedDay === 'today'}"
         >
-        Rückrufbitte senden
-      </button>
+          Ab heute
+        </button>
+        <button
+          type="button"
+          mat-stroked-button
+          class="custom-button ml-10"
+          (click)="selectDay('tomorrow')"
+          [ngClass]="{'primary':selectedDay === 'tomorrow'}"
+        >
+          Ab morgen
+        </button>
+      </div>
+      <div class="mt-47">
+          <div class="time-board mt-15" *ngFor="let item of times" (click)="selectTime(item)">
+            <mat-icon *ngIf="selectedTime !== item.time">radio_button_unchecked</mat-icon>
+            <mat-icon style="color: #384c61" *ngIf="selectedTime === item.time">lens</mat-icon>
+            <p class="ml-10">{{item.label}}</p>
+          </div>
+      </div>
+      <div class="mt-45">
+        <div class="d-flex avatar pink ml-24">
+          <div class="round" (click)="isEditPhone = !isEditPhone">
+            <mat-icon> stay_current_portrait</mat-icon>
+          </div>
+          <div>
+            <span *ngIf="!isEditPhone">{{this.f.phone.value && !this.f.phone.errors? this.f.phone.value:defaultPhone}}</span>
+            <mat-form-field class="w-100" *ngIf="isEditPhone">
+              <input autocomplete="off" matInput formControlName="phone">
+              <mat-icon *ngIf="f.phone.touched && !f.phone.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+              <mat-icon *ngIf="f.phone.touched && f.phone.errors" style="color: red" matSuffix>close</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-accordion>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex avatar green">
+                  <div class="round">
+                    <mat-icon>lens</mat-icon>
+                  </div>
+                  <div>Nachricht hinzufügen</div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="d-block expansion-panel-container">
+              <mat-form-field class="w-100">
+                <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl" formControlName="schedule">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <ngx-mat-datetime-picker #picker>
+                </ngx-mat-datetime-picker>
+              </mat-form-field>
+              <br/>
+              <mat-form-field appearance="fill" class="mt-15 w-100">
+                <mat-label></mat-label>
+                <textarea
+                  matInput
+                  formControlName="message"
+                  placeholder=""
+                  rows="7"
+                ></textarea>
+              </mat-form-field>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+      <div class="mt-47 text-center">
+        <button
+          mat-stroked-button
+          class="custom-button-C7D"
+          (click)="submit()"
+          [disabled]="callbackForm.invalid"
+          [ngClass]="{'primary':callbackForm.valid}"
+          >
+          Rückrufbitte senden
+        </button>
+      </div>
+    </div>
+    <div class="main-side-container" *ngIf="isSuccess">
+      <h1 *ngIf="isTablet">Rückrufbitte <span style="font-weight: 100">Arzt</span></h1>
+      <div class="d-flex mt-38">
+        <mat-icon class="green-0">lens</mat-icon>
+        <p
+          class="p-green ml-10"
+          style="margin-top: 3px"
+        >Ihr Arzt wird Sie zurückrufen.</p>
+      </div>
     </div>
   </div>
-</div>
+</form>
