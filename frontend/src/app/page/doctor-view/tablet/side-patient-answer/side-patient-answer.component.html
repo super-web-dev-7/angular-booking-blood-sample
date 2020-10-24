@@ -5,9 +5,9 @@
   <div class="main-side-container" *ngIf="!isSuccess">
     <h1>Patienten <span style="font-weight: 100">rückfrage</span></h1>
     <div class="left-border-div mt-38">
-      <p class="p-272140">12.09.2020 09:00 - 10:15</p>
+      <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
       <p class="p-576E82">Check-Up: Männergesundheit</p>
-      <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+      <p class="p-272140">{{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}</p>
     </div>
     <div class="option-buttons-div mt-47">
       <div class="option-button-div">
@@ -55,15 +55,15 @@
           (click)="openRecall()"
           mat-stroked-button
         >
-          Sebastian Naumann
+          {{displayData?.patientFirstName}} {{displayData?.patientLastName}}
         </button>
       </div>
-      <div style="margin-left: 100px">
-        <p class="p-14">
-          Rückrufwunsch<br/>
-          28.09.2020<br/>
-          Vormittags 09:00 - 12:00
-        </p>
+      <div style="margin-left: 80px">
+        <p class="p-272140">{{displayData?.schedule}}</p>
+        <p class="p-272140">{{displayData?.date}}</p>
+        <p class="p-272140" *ngIf="displayData?.time === 'morning'">Vormittags 09:00 - 12:00</p>
+        <p class="p-272140" *ngIf="displayData?.time === 'afternoon'">Nachmittags (12:00 - 16:00)</p>
+        <p class="p-272140" *ngIf="displayData?.time === 'evening'">Abends (16:00 - 19:00)</p>
       </div>
       <div class="option-button-div mt-15">
         <button
@@ -83,46 +83,13 @@
       </div>
     </div>
     <p class="p-272140-tablet mt-47">
-      Kundennachricht 29.09.2020 18:10
+      Kundennachricht {{formatTime(displayData?.createdAt)}}
     </p>
-    <p class="p-272140-tablet mt-38">
-      Terminablauf
-    </p>
-    <p class="p-14 mt-24">
-      Hallo,
-    </p>
-    <p class="p-14 mt-24">
-      ich habe Rückfragen zum Terminablauf, muss ich<br/>
-      irgendwas vorbereiten? Oder muss ich vor der<br/>
-      Blutentnahme auf etwas achten?
-    </p>
-    <p class="p-14 mt-24">
-      Vielen Dank.<br/>
-      Mit freundlichen Grüßen<br/>
-      Sebastian Naumann
-    </p>
-    <p class="p-272140-tablet mt-47">
-      Arztnachricht 30.09.2020 10:55
-    </p>
-    <p class="p-272140-tablet mt-38">
-      Terminablauf
-    </p>
-    <p class="p-14 mt-24">
-      Hallo,
-    </p>
-    <p class="p-14 mt-24">
-      ich habe Rückfragen zum Terminablauf, muss ich<br/>
-      irgendwas vorbereiten? Oder muss ich vor der<br/>
-      Blutentnahme auf etwas achten?
-    </p>
-    <p class="p-14 mt-24">
-      Vielen Dank.<br/>
-      Mit freundlichen Grüßen<br/>
-      Sebastian Naumann
-    </p>
-    <div class="success-message mt-47">
-      <div class="green-dot"></div>
-      <p>Ihre Nachricht wurde via E-Mail an den<br/> Patienten übermittelt.</p>
+    <p style="margin-top: 57px">{{displayData?.schedule}}</p>
+    <div class="faq-text">
+      <p class="mt-24">
+        {{displayData?.message}}
+      </p>
     </div>
     <div class="mt-38 text-center">
       <button

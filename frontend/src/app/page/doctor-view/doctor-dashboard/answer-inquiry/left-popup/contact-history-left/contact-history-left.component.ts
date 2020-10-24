@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SharedService} from '../../../../../../service/shared/shared.service';
-import {historyMockData} from '../../../../../../utils/mock_data';
 import {HttpService} from '../../../../../../service/http/http.service';
 import {URL_JSON} from '../../../../../../utils/url_json';
 import * as moment from 'moment';

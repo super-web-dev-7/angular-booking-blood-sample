@@ -16,7 +16,6 @@ export class AnswerInquiryComponent implements OnInit {
    isContactHistory = false;
    isMedicalHistory = false;
    isPatientCall = false;
-   customText = '';
    content = null;
    Editor = ClassicEditor;
    messageForm: FormGroup;
