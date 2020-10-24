@@ -13,8 +13,6 @@ import {URL_JSON} from '../../../../utils/url_json';
 export class EditAnamnesisComponent implements OnInit {
   editAnamsForm: FormGroup;
   saved = false;
-  public districtSearchControl = new FormControl();
-  allStaticDistrict = [];
   ageRange = new Array(81);
   heightRange = new Array(140);
   weightRange = new Array(265);

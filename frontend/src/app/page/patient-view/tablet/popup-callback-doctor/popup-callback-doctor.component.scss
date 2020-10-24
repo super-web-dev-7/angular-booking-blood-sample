@@ -26,6 +26,7 @@ h1 {
   border-radius: 25px;
   background-color: #ffffff;
   border: none;
+  cursor: pointer;
   box-shadow: 0px 4px 16px #E3E8F4;
   p {
     color: #272140;
@@ -40,7 +41,7 @@ h1 {
 @media only screen and (max-width: 767px) {
   .patient-popup-container {
     width: 100% !important;
-    height: 100%;
+    height: 130vh;
     background-color: #ffffff;
     padding: 24px!important;
     top:50px;
@@ -72,4 +73,23 @@ h1 {
       }
     }
   }
+}
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background:none!important;
+}
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon-button {
+  font: inherit;
+  vertical-align: baseline;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+  width: 2em!important;
+}
+::ng-deep .mat-form-field-empty.mat-form-field-label, .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  display: none!important;
+}
+::ng-deep .mat-form-field-label-wrapper {
+  display: none!important;
 }

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SharedService} from '../../../../../service/shared/shared.service';
+import {HttpService} from '../../../../../service/http/http.service';
+import {URL_JSON} from '../../../../../utils/url_json';
 
 @Component({
   selector: 'app-left-recall',
@@ -8,19 +10,24 @@ import {SharedService} from '../../../../../service/shared/shared.service';
   styleUrls: ['./left-recall.component.scss']
 })
 export class LeftRecallComponent implements OnInit {
-
+  @Input() callbackInfo;
   PatientCallForm: FormGroup;
-  allStaticDistrict = [];
   constructor(
     private sharedService: SharedService,
     public formBuilder: FormBuilder,
+    public httpService: HttpService,
   ) { }
 
   ngOnInit(): void {
     this.PatientCallForm = this.formBuilder.group({
-      model: ['', Validators.required],
-      message: ['', Validators.required]
+      time: [null, Validators.required],
+      message: [null, Validators.required],
+      patient: [null, Validators.required]
     });
+  }
+
+  get f(): any {
+    return this.PatientCallForm.controls;
   }
 
   close = () => {
@@ -28,6 +35,22 @@ export class LeftRecallComponent implements OnInit {
   }
 
   submit = () => {
-  }
+    if (this.PatientCallForm.invalid) {
+      return;
+    }
+    const data = {
+      callbackId: this.callbackInfo.callbackId,
+      message: this.f.message.value,
+      appointmentId: this.callbackInfo.appointmentId,
+      time: this.f.time.value?.toLocaleString(),
+      phoneNumber: this.callbackInfo.phoneNumber,
+      patientNotThere: this.f.patient.value,
+    };
 
+    this.httpService.post(URL_JSON.DOCTOR + '/createPatientRecall', data).subscribe((res: any) => {
+      if (res) {
+        this.close();
+      }
+    });
+  }
 }

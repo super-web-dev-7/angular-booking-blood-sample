@@ -1,12 +1,12 @@
 <app-medical-history-left *ngIf="openMedicalHistory"></app-medical-history-left>
-<app-contact-history-left *ngIf="openContactHistory"></app-contact-history-left>
+<app-contact-history-left *ngIf="openContactHistory" [appointmentInfo]="answerPopupData"></app-contact-history-left>
 <app-patient-recall *ngIf="openPatientCall" [callbackData]="answerPopupData"></app-patient-recall>
 <app-view-contact-history *ngIf="openCheckContact" [appointmentID]="appointmentId"></app-view-contact-history>
 <app-call-patient *ngIf="openCallPatient"></app-call-patient>
-<app-left-history-popup *ngIf="tHistory"></app-left-history-popup>
+<app-left-history-popup *ngIf="tHistory" [appointmentInfo]="patientAnswerData"></app-left-history-popup>
 <app-left-anamnese *ngIf="tAnamnes"></app-left-anamnese>
-<app-left-recall *ngIf="tRecall"></app-left-recall>
-<app-left-message-popup *ngIf="tMessage"></app-left-message-popup>
+<app-left-recall *ngIf="tRecall" [callbackInfo]="patientAnswerData"></app-left-recall>
+<app-left-message-popup *ngIf="tMessage" [callbackInfo]="patientAnswerData" [isMobile]="isMobile" [isTablet]="isTablet"></app-left-message-popup>
 <mat-sidenav-container (backdropClick)="closeRightSide($event)">
   <mat-sidenav
     [opened]="isOpen"
@@ -27,12 +27,32 @@
     (closed)="isRightSidebarOpen = false"
     [ngClass]="{'side-top': isMobile && !openRightMenu}"
   >
-    <app-right-sidebar (closeSide)="closeRightSide($event)" *ngIf="openRightMenu"></app-right-sidebar>
-    <app-side-patient-inquiry *ngIf="openPatientInquiry" (closeSide)="closeRightSide($event)"></app-side-patient-inquiry>
-    <app-side-patient-answer *ngIf="openPatientAnswer" (closeSide) ="closeRightSide($event)"></app-side-patient-answer>
-    <app-side-medical-history *ngIf="viewAnamnes" (closeSide)="closeRightSide($event)"></app-side-medical-history>
-    <app-side-check-anamnes *ngIf="checkAnamnes" (closeSide)="closeRightSide($event)" [appointmentID]="appointId"></app-side-check-anamnes>
-    <app-side-view-appointment *ngIf="viewAppointment" (closeSide)="closeRightSide($event)"></app-side-view-appointment>
+    <app-right-sidebar
+      (closeSide)="closeRightSide($event)"
+      *ngIf="openRightMenu"
+    ></app-right-sidebar>
+    <app-side-patient-inquiry
+      *ngIf="openPatientInquiry"
+      (closeSide)="closeRightSide($event)"
+    ></app-side-patient-inquiry>
+    <app-side-patient-answer
+      *ngIf="openPatientAnswer"
+      (closeSide) ="closeRightSide($event)"
+      [callbackID]="callbackId"
+    ></app-side-patient-answer>
+    <app-side-medical-history
+      *ngIf="viewAnamnes"
+      (closeSide)="closeRightSide($event)"
+    ></app-side-medical-history>
+    <app-side-check-anamnes
+      *ngIf="checkAnamnes"
+      (closeSide)="closeRightSide($event)"
+      [appointmentID]="appointmentId"
+    ></app-side-check-anamnes>
+    <app-side-view-appointment
+      *ngIf="viewAppointment"
+      (closeSide)="closeRightSide($event)"
+    ></app-side-view-appointment>
   </mat-sidenav>
   <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Doctor' ? '#F2F7FB' : '#fafafa'}">
     <div class="background-container" *ngIf="!isMobile && !isTablet"></div>

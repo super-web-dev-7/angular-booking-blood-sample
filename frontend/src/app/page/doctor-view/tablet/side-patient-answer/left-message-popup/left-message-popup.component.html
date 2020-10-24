@@ -1,29 +1,32 @@
-<div class="tablet-left-container">
-  <button mat-icon-button class="close" (click)="close()">
-    <mat-icon>clear</mat-icon>
-  </button>
-  <div class="main-message-div">
-    <h1 *ngIf="isTablet">
-      Nachricht
-    </h1>
-    <h1 *ngIf="isMobile">Nachricht <span style="font-weight: 100">schreiben</span></h1>
-    <p class="p-272140-tablet mt-38" *ngIf="isTablet">
-      Patienten-Nachricht via<br/> E-Mail beantworten
-    </p>
-    <p class="p-272140-tablet mt-38" *ngIf="isMobile">
-      Patienten-Nachricht via E-Mail beantworten
-    </p>
-      <ckeditor
-        [editor]="Editor" [(ngModel)]="customText" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
-    <div class="mt-47 text-center">
-      <button
-        mat-stroked-button
-        class="custom-button primary"
-        >
-        Nachricht versenden
-      </button>
+<form [formGroup]="messageForm">
+  <div class="tablet-left-container">
+    <button mat-icon-button class="close" (click)="close()">
+      <mat-icon>clear</mat-icon>
+    </button>
+    <div class="main-message-div">
+      <h1 *ngIf="isTablet">
+        Nachricht
+      </h1>
+      <h1 *ngIf="isMobile">Nachricht <span style="font-weight: 100">schreiben</span></h1>
+      <p class="p-272140-tablet mt-38" *ngIf="isTablet">
+        Patienten-Nachricht via<br/> E-Mail beantworten
+      </p>
+      <p class="p-272140-tablet mt-38" *ngIf="isMobile">
+        Patienten-Nachricht via E-Mail beantworten
+      </p>
+        <ckeditor
+          [editor]="Editor" formControlName="message" [config]="{ toolbar: [ 'bold', 'italic' ] }" data=""></ckeditor>
+      <div class="mt-47 text-center">
+        <button
+          mat-stroked-button
+          class="custom-button primary"
+          (click)="sendMessage()"
+          >
+          Nachricht versenden
+        </button>
+      </div>
     </div>
   </div>
-</div>
+</form>
 
 

@@ -35,3 +35,7 @@
   margin-left: -6px;
   color: var(--primary-color);
 }
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+  background:none!important;
+}

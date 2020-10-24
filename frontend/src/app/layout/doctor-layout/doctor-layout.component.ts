@@ -36,8 +36,9 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
   tRecall = false;
   subsVar: any;
   appointmentId = null;
-  appointId = null;
   answerPopupData = null;
+  patientAnswerData = null;
+  callbackId = null;
 
   constructor(
     public breakpointObserver: BreakpointObserver,
@@ -78,10 +79,10 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
         this.openPatientCall = false;
       } else if (res.title === 'call') {
         this.openPatientCall = true;
-        this.answerPopupData = res.data;
         this.openMedicalHistory = false;
         this.openContactHistory = false;
       }
+      this.answerPopupData = res.data;
     });
     this.sharedService.closeHistory.subscribe(res => {
       this.openMedicalHistory = false;
@@ -95,6 +96,8 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
       this.tMessage = false;
       this.appointmentId = null;
       this.answerPopupData = null;
+      this.callbackId = null;
+      this.patientAnswerData = null;
     });
     this.sharedService.check.subscribe(res => {
       if (res) {
@@ -102,7 +105,6 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
           this.openCheckContact = true;
           this.openCallPatient = false;
           this.appointmentId = res.appointmentId;
-          console.log('appointmentID@@@@@@', this.appointmentId);
         } else {
           this.openCallPatient = true;
           this.openCheckContact = false;
@@ -115,11 +117,12 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
           this.openPatientInquiry = true;
         } else if (res.title === 'answer') {
           this.openPatientAnswer = true;
+          this.callbackId = res.callbackId;
         } else if (res.title === 'v-anam') {
           this.viewAnamnes = true;
         } else if (res.title === 'c-anam') {
           this.checkAnamnes = true;
-          this.appointId = res.appointmentId;
+          this.appointmentId = res.appointmentId;
         } else if (res.title === 'v-appointment') {
           this.viewAppointment = true;
         }
@@ -127,27 +130,28 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
       }
     });
     this.sharedService.tabletLeftSide.subscribe(res => {
-      if (res === 't-history') {
+      if (res.title === 't-history') {
         this.tHistory = true;
         this.tAnamnes = false;
         this.tRecall = false;
         this.tMessage = false;
-      } else if (res === 't-anamnes') {
+      } else if (res.title === 't-anamnes') {
         this.tAnamnes = true;
         this.tRecall = false;
         this.tMessage = false;
         this.tHistory = false;
-      } else if (res === 't-recall') {
+      } else if (res.title === 't-recall') {
         this.tRecall = true;
         this.tMessage = false;
         this.tHistory = false;
         this.tAnamnes = false;
-      } else if (res === 't-mail') {
+      } else if (res.title === 't-mail') {
         this.tMessage = true;
         this.tHistory = false;
         this.tAnamnes = false;
         this.tRecall = false;
       }
+      this.patientAnswerData = res.data;
     });
   }
 
@@ -174,6 +178,10 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
     this.checkAnamnes = false;
     this.viewAppointment = false;
     this.openRightMenu = false;
+    this.appointmentId = null;
+    this.answerPopupData = null;
+    this.callbackId = null;
+    this.patientAnswerData = null;
   }
 
   closeLeftSide = (event) => {

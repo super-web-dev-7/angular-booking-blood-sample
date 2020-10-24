@@ -91,11 +91,18 @@ export class PatientDashboardComponent implements OnInit {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     if (this.isTablet || this.isMobile) {
-      this.sharedService.patientPopup.emit('cancel');
+      const emitData = {
+        title: 'cancel',
+        data: {
+          appointmentId: this.selectedAppointment
+        }
+      };
+      this.sharedService.patientPopup.emit(emitData);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(CancelAppointmentComponent, {
         width: '662px',
+        data: {appointmentId: this.selectedAppointment}
       });
       dialogRef.afterClosed().subscribe(res => {
       });
@@ -105,11 +112,18 @@ export class PatientDashboardComponent implements OnInit {
   moveAppointment = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet || this.isMobile) {
-      this.sharedService.patientPopup.emit('move');
+      const emitData = {
+        title: 'move',
+        data: {
+          appointmentId: this.selectedAppointment
+        }
+      };
+      this.sharedService.patientPopup.emit(emitData);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(MoveAppointmentComponent, {
         width: '662px',
+        data: {appointmentId: this.selectedAppointment}
       });
       dialogRef.afterClosed().subscribe(res => {
       });
@@ -119,7 +133,13 @@ export class PatientDashboardComponent implements OnInit {
   editAnamnesis = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet || this.isMobile) {
-      this.sharedService.patientPopup.emit('edit');
+      const emitData = {
+        title: 'edit',
+        data: {
+          appointmentId: this.selectedAppointment
+        }
+      };
+      this.sharedService.patientPopup.emit(emitData);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(EditAnamnesisComponent, {
@@ -139,11 +159,18 @@ export class PatientDashboardComponent implements OnInit {
   changePackage = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet || this.isMobile) {
-      this.sharedService.patientPopup.emit('package');
+      const emitData = {
+        title: 'package',
+        data: {
+          appointmentId: this.selectedAppointment
+        }
+      };
+      this.sharedService.patientPopup.emit(emitData);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(ChangePackageComponent, {
         width: '1182px',
+        data: {appointmentId: this.selectedAppointment}
       });
       dialogRef.afterClosed().subscribe(res => {
       });
@@ -157,7 +184,13 @@ export class PatientDashboardComponent implements OnInit {
   openCallbackDoctor = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet || this.isMobile) {
-      this.sharedService.patientPopup.emit('callback');
+      const emitData = {
+        title: 'callback',
+        data: {
+          appointmentId: this.selectedAppointment
+        }
+      };
+      this.sharedService.patientPopup.emit(emitData);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(CallbackDoctorComponent, {
@@ -177,11 +210,18 @@ export class PatientDashboardComponent implements OnInit {
   callSister = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet || this.isMobile) {
-      this.sharedService.patientPopup.emit('sister');
+      const emitData = {
+        title: 'sister',
+        data: {
+          appointmentId: this.selectedAppointment
+        }
+      };
+      this.sharedService.patientPopup.emit(emitData);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(CallSisterComponent, {
         width: '662px',
+        data: {appointmentId: this.selectedAppointment}
       });
       dialogRef.afterClosed().subscribe(res => {
       });
@@ -191,11 +231,18 @@ export class PatientDashboardComponent implements OnInit {
   openPaymentStatus = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet || this.isMobile) {
-      this.sharedService.patientPopup.emit('payment');
+      const emitData = {
+        title: 'payment',
+        data: {
+          appointmentId: this.selectedAppointment
+        }
+      };
+      this.sharedService.patientPopup.emit(emitData);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(PaymentStatusComponent, {
         width: '662px',
+        data: {appointmentId: this.selectedAppointment}
       });
       dialogRef.afterClosed().subscribe(res => {
       });
@@ -205,7 +252,13 @@ export class PatientDashboardComponent implements OnInit {
   newAppointment = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet || this.isMobile) {
-      this.sharedService.patientPopup.emit('new');
+      const emitData = {
+        title: 'new',
+        data: {
+          appointmentId: this.selectedAppointment
+        }
+      };
+      this.sharedService.patientPopup.emit(emitData);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(NewAppointmentComponent, {
@@ -224,7 +277,13 @@ export class PatientDashboardComponent implements OnInit {
   openHistory = () => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet || this.isMobile) {
-      this.sharedService.patientPopup.emit('history');
+      const emitData = {
+        title: 'history',
+        data: {
+          appointmentId: this.selectedAppointment
+        }
+      };
+      this.sharedService.patientPopup.emit(emitData);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(AppointmentHistoryComponent, {
