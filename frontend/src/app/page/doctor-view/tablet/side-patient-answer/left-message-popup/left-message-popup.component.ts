@@ -43,17 +43,31 @@ export class LeftMessagePopupComponent implements OnInit {
     if (this.messageForm.invalid) {
       return;
     }
-    const data = {
-      callbackId: this.callbackInfo.callbackId,
-      answer: this.f.message.value,
-    };
-    if (data) {
-      this.httpService.post(URL_JSON.DOCTOR + '/sendMessageToPatientAboutCallback', data).subscribe((res: any) => {
-        if (res) {
-          this.sharedService.sentMessage.emit(true);
-          this.close();
-        }
-      });
+    if (this.callbackInfo.question) {
+      const data = {
+        questionId: this.callbackInfo.questionId,
+        answer: this.f.message.value,
+        appointmentId: this.callbackInfo.appointmentId
+      };
+      if (data) {
+        this.httpService.post(URL_JSON.DOCTOR + '/sendMessageToPatient', data).subscribe((res: any) => {
+          if (res) {
+            this.close();
+          }
+        });
+      }
+    } else {
+      const data = {
+        callbackId: this.callbackInfo.callbackId,
+        answer: this.f.message.value,
+      };
+      if (data) {
+        this.httpService.post(URL_JSON.DOCTOR + '/sendMessageToPatientAboutCallback', data).subscribe((res: any) => {
+          if (res) {
+            this.close();
+          }
+        });
+      }
     }
   }
 

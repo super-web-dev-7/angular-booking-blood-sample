@@ -49,9 +49,11 @@
           </div>
         </div>
         <div class="mt-15" *ngIf="displayData?.callbackId">
-          <p class="p-272140">Rückrufwunsch</p>
-          <p class="p-272140">28.09.2020</p>
-          <p class="p-272140">Vormittags 09:00 - 12:00</p>
+          <p class="p-272140">{{displayData?.callbackSchedule}}</p>
+          <p class="p-272140">{{displayData?.callbackDate}}</p>
+          <p class="p-272140" *ngIf="displayData?.callbackTime === 'morning'">Vormittags 09:00 - 12:00</p>
+          <p class="p-272140" *ngIf="displayData?.callbackTime === 'afternoon'">Nachmittags (12:00 - 16:00)</p>
+          <p class="p-272140" *ngIf="displayData?.callbackTime === 'evening'">Abends (16:00 - 19:00)</p>
         </div>
       </div>
       <div class="modal-middle-div">

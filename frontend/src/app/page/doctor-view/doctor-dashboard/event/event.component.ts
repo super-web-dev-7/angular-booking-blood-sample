@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {AuthService} from '../../../../service/auth/auth.service';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {eventData} from '../../../../utils/mock_data';
 import {ViewAppointmentComponent} from './view-appointment/view-appointment.component';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {SharedService} from '../../../../service/shared/shared.service';
 import {SearchInputComponent} from '../search-input/search-input.component';
+import {URL_JSON} from '../../../../utils/url_json';
+import {HttpService} from '../../../../service/http/http.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-event',
@@ -25,17 +27,26 @@ export class EventComponent implements OnInit {
   dataSourceE = new MatTableDataSource<any>();
   displayedColumnsE: string[] = ['no', 'date', 'time', 'package', 'appointmentLocation', 'doctorLast', 'status', 'actions'];
   isTablet = false;
+  status = {
+    upcoming: 'Offene Termine',
+    confirmed: 'Bestätigte Termine',
+    canceled: 'Storniert / Verschoben',
+    successful: 'Abgeschlossene Termine'
+  };
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
     public breakpointObserver: BreakpointObserver,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    public httpService: HttpService
   ) { }
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
-    this.dataSourceE.data = eventData;
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithoutArchived').subscribe((res: any) => {
+      this.dataSourceE.data = res;
+    });
   }
 
   filter = () => {
@@ -46,6 +57,16 @@ export class EventComponent implements OnInit {
   }
 
   editItem = (id) => {
+  }
+
+  getDate = (time) => {
+    moment.locale('de');
+    return moment(time).format('DD.MM.YYYY');
+  }
+
+  getTime = (time) => {
+    moment.locale('de');
+    return moment(time).format('HH:mm');
   }
 
   afterClosed = (dialogRef) => {

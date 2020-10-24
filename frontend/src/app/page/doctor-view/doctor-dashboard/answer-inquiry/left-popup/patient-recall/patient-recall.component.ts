@@ -46,12 +46,14 @@ export class PatientRecallComponent implements OnInit {
       phoneNumber: this.callbackData.phoneNumber,
       patientNotThere: this.f.patient.value,
     };
-
-    this.httpService.post(URL_JSON.DOCTOR + '/createPatientRecall', data).subscribe((res: any) => {
-      if (res) {
-        this.close();
-      }
-    });
+    if (this.callbackData.question) {
+    } else {
+      this.httpService.post(URL_JSON.DOCTOR + '/createPatientRecall', data).subscribe((res: any) => {
+        if (res) {
+          this.close();
+        }
+      });
+    }
   }
 
 }
