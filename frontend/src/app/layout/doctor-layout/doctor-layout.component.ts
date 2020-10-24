@@ -78,10 +78,10 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
         this.openPatientCall = false;
       } else if (res.title === 'call') {
         this.openPatientCall = true;
-        this.answerPopupData = res.data;
         this.openMedicalHistory = false;
         this.openContactHistory = false;
       }
+      this.answerPopupData = res.data;
     });
     this.sharedService.closeHistory.subscribe(res => {
       this.openMedicalHistory = false;
@@ -102,7 +102,6 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
           this.openCheckContact = true;
           this.openCallPatient = false;
           this.appointmentId = res.appointmentId;
-          console.log('appointmentID@@@@@@', this.appointmentId);
         } else {
           this.openCallPatient = true;
           this.openCheckContact = false;

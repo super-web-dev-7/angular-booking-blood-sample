@@ -118,7 +118,10 @@ export class AnswerInquiryComponent implements OnInit {
     this.isMedicalHistory = false;
     const emitData = {
       title: 'contact',
-      data: null
+      data: {
+        appointmentId: this.displayData.appointmentId,
+        callbackId: this.displayData.id
+      }
     };
     this.sharedService.answer.emit(emitData);
   }
