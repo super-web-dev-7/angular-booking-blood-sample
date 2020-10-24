@@ -19,6 +19,7 @@ export class SidePatientAnswerComponent implements OnInit {
   isMobile = false;
   isTablet = false;
   displayData: any;
+  messageSent = false;
   constructor(
     public sharedService: SharedService,
     public breakpointObserver: BreakpointObserver,
@@ -35,6 +36,11 @@ export class SidePatientAnswerComponent implements OnInit {
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.callbackID).subscribe((res: any) => {
       this.displayData = res;
+    });
+    this.sharedService.sentMessage.subscribe(res => {
+      if (res) {
+        this.messageSent = true;
+      }
     });
   }
 
@@ -126,8 +132,8 @@ export class SidePatientAnswerComponent implements OnInit {
         data: {
           appointmentId: this.displayData.appointmentId,
           callbackId: this.displayData.id,
-          patientFirstName: this.displayData.patientFirstName,
-          patientLastName: this.displayData.patientLastName,
+          firstName: this.displayData.patientFirstName,
+          lastName: this.displayData.patientLastName,
           phoneNumber: this.displayData.phoneNumber
         }
       };
@@ -137,7 +143,14 @@ export class SidePatientAnswerComponent implements OnInit {
   }
 
   submit = () => {
-    this.isSuccess = true;
+    if (!this.messageSent) {
+      return;
+    }
+    this.httpService.update(URL_JSON.DOCTOR + '/inquiryAnswered/' + this.displayData.appointmentId, {}).subscribe((res: any) => {
+      if (res) {
+        this.isSuccess = true;
+      }
+    });
   }
   @HostListener('window:resize', [])
   private onResize = () => {

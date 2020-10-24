@@ -5,8 +5,8 @@
 <app-call-patient *ngIf="openCallPatient"></app-call-patient>
 <app-left-history-popup *ngIf="tHistory" [appointmentInfo]="patientAnswerData"></app-left-history-popup>
 <app-left-anamnese *ngIf="tAnamnes"></app-left-anamnese>
-<app-left-recall *ngIf="tRecall"></app-left-recall>
-<app-left-message-popup *ngIf="tMessage"></app-left-message-popup>
+<app-left-recall *ngIf="tRecall" [callbackInfo]="patientAnswerData"></app-left-recall>
+<app-left-message-popup *ngIf="tMessage" [callbackInfo]="patientAnswerData" [isMobile]="isMobile" [isTablet]="isTablet"></app-left-message-popup>
 <mat-sidenav-container (backdropClick)="closeRightSide($event)">
   <mat-sidenav
     [opened]="isOpen"
