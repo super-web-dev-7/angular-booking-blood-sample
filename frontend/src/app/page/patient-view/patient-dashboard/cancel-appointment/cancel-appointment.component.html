@@ -1,7 +1,7 @@
-<form [formGroup]="cancelForm" (ngSubmit)="submit()">
+<form [formGroup]="cancelForm">
   <div class="pd-17">
     <h1 style="margin-top: 9px">Termin  <span style="font-weight: 100"> stornieren</span></h1>
-    <div class="mt-47" *ngIf="!success">
+    <div class="mt-47">
       <div class="cancel-des">
         <p>!</p>
         <p class="ml-20">Bei einer Terminstornierung mit weniger als 48h Vorlauf vor Terminbeginn<br/>
@@ -10,13 +10,13 @@
       </div>
       <div class="appointment-data">
         <p class="p-272140">
-          12.09.2020 09:00 - 10:15
+          {{getTimeDuration(displayData?.startTime, displayData?.duration)}}
         </p>
         <p class="p-576E82">
           Check-Up: Männergesundheit
         </p>
         <p class="p-272140">
-          Marienstraße 4, 15387 Berlin
+          {{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}
         </p>
       </div>
       <div class="add-message">
@@ -55,28 +55,11 @@
           <button
             mat-stroked-button
             class="redYellow-custom-button ml-20"
+            (click)="submit()"
           >
             Termin verbindlich stornieren
           </button>
         </div>
-      </div>
-    </div>
-    <div class="mt-47" *ngIf="success">
-      <div class="d-flex">
-        <mat-icon class="green-0">lens</mat-icon>
-        <p
-          class="p-green ml-10"
-          style="margin-top: 3px"
-        >Ihr Termin wurde storniert.</p>
-      </div>
-      <div class="mt-45 float-right">
-        <button
-          mat-stroked-button
-          class="custom-button"
-          (click)="close()"
-          >
-          Schließen
-        </button>
       </div>
     </div>
   </div>

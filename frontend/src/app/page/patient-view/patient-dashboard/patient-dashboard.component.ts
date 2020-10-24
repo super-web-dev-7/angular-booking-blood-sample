@@ -102,6 +102,7 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(CancelAppointmentComponent, {
         width: '662px',
+        data: {appointmentId: this.selectedAppointment}
       });
       dialogRef.afterClosed().subscribe(res => {
       });
@@ -122,6 +123,7 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(MoveAppointmentComponent, {
         width: '662px',
+        data: {appointmentId: this.selectedAppointment}
       });
       dialogRef.afterClosed().subscribe(res => {
       });
@@ -168,6 +170,7 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(ChangePackageComponent, {
         width: '1182px',
+        data: {appointmentId: this.selectedAppointment}
       });
       dialogRef.afterClosed().subscribe(res => {
       });
@@ -218,6 +221,7 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(CallSisterComponent, {
         width: '662px',
+        data: {appointmentId: this.selectedAppointment}
       });
       dialogRef.afterClosed().subscribe(res => {
       });
@@ -238,6 +242,7 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(PaymentStatusComponent, {
         width: '662px',
+        data: {appointmentId: this.selectedAppointment}
       });
       dialogRef.afterClosed().subscribe(res => {
       });

@@ -2,9 +2,9 @@
   <h1 style="margin-top: 9px">Schwester  <span style="font-weight: 100"> anrufen</span></h1>
   <div class="main-container-div">
     <div class="left-border-div">
-      <p class="p-272140">12.09.2020 09:00 - 10:15</p>
+      <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
       <p class="p-576E82">Check-Up: Männergesundheit</p>
-      <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+      <p class="p-272140">{{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}</p>
     </div>
     <div class="d-flex-between mt-45">
       <img src="/assets/images/1.jpg" alt="sister" class="call-circle-avatar">

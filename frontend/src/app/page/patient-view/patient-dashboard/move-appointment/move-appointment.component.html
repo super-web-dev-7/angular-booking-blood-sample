@@ -4,13 +4,13 @@
     <div class="main-container-div">
       <div class="left-border-div">
         <p class="p-272140">
-          12.09.2020 09:00 - 10:15
+          {{getTimeDuration(displayData?.startTime, displayData?.duration)}}
         </p>
         <p class="p-576E82">
           Check-Up: Männergesundheit
         </p>
         <p class="p-272140">
-          Marienstraße 4, 15387 Berlin
+          {{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}
         </p>
       </div>
       <div class="mt-47">
@@ -105,7 +105,9 @@
           <button
             mat-stroked-button
             class="custom-button-C7D ml-20"
-            [ngClass]="{'primary': isValid}"
+            (click)="submit()"
+            [disabled]="moveForm.invalid"
+            [ngClass]="{'primary':moveForm.valid}"
           >
             Termin verschieben
           </button>
