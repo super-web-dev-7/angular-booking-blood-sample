@@ -104,11 +104,12 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
         if (res.title === 'v-contact') {
           this.openCheckContact = true;
           this.openCallPatient = false;
-          this.appointmentId = res.appointmentId;
+          this.appointmentId = res.data.appointmentId;
         } else {
           this.openCallPatient = true;
           this.openCheckContact = false;
         }
+        this.appointmentId = res.data.appointmentId;
       }
     });
     this.sharedService.tabletSide.subscribe(res => {

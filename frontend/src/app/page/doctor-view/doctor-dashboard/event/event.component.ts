@@ -27,6 +27,7 @@ export class EventComponent implements OnInit {
   dataSourceE = new MatTableDataSource<any>();
   displayedColumnsE: string[] = ['no', 'date', 'time', 'package', 'appointmentLocation', 'doctorLast', 'status', 'actions'];
   isTablet = false;
+  allEvents: any;
   status = {
     upcoming: 'Offene Termine',
     confirmed: 'Bestätigte Termine',
@@ -46,14 +47,87 @@ export class EventComponent implements OnInit {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithoutArchived').subscribe((res: any) => {
       this.dataSourceE.data = res;
+      this.allEvents = res;
+      console.log('eventSource@@@@@@@@', res);
+    });
+  }
+  filter = () => {
+    this.dataSourceE.data = this.allEvents.filter(item => {
+      return this.getDate(item.startTime).includes(this.filterValue)
+        || this.getTime(item.startTime).includes(this.filterValue)
+        || item.package.includes(this.filterValue)
+        || this.getAddress(item.addressPlz, item.addressOrt).includes(this.filterValue);
     });
   }
 
-  filter = () => {
+  getTimeDuration = (startTime, duration) => {
+    return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');
   }
 
   onSort = (event) => {
     this.orderStatus = event;
+    const events = [...this.allEvents];
+    if (event.active === 'date') {
+      events.sort((a, b) => {
+        const x = this.getDate(a.startTime);
+        const y = this.getDate(b.startTime);
+        if (event.direction === 'asc') {
+          return x < y ? 1 : -1;
+        } else if (event.direction === 'desc') {
+          return x > y ? 1 : -1;
+        }
+      });
+      if (event.direction === '') {
+        this.dataSourceE.data = this.allEvents;
+      } else {
+        this.dataSourceE.data = events;
+      }
+    } else if (event.active === 'time') {
+     events.sort((a, b) => {
+        const x = this.getTime(a.startTime);
+        const y = this.getTime(b.startTime);
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+     if (event.direction === '') {
+        this.dataSourceE.data = this.allEvents;
+     } else {
+        this.dataSourceE.data = events;
+     }
+    } else if (event.active === 'package') {
+      events.sort((a, b) => {
+        const x = a.package;
+        const y = b.package;
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+      if (event.direction === '') {
+        this.dataSourceE.data = this.allEvents;
+      } else {
+        this.dataSourceE.data = events;
+      }
+    } else if (event.active === 'appointmentLocation') {
+      events.sort((a, b) => {
+        const x = this.getAddress(a.addressPlz, a.addressOrt);
+        const y = this.getAddress(b.addressPlz, b.addressOrt);
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+      if (event.direction === '') {
+        this.dataSourceE.data = this.allEvents;
+      } else {
+        this.dataSourceE.data = events;
+      }
+    }
   }
 
   editItem = (id) => {
@@ -67,6 +141,10 @@ export class EventComponent implements OnInit {
   getTime = (time) => {
     moment.locale('de');
     return moment(time).format('HH:mm');
+  }
+
+  getAddress = (plz, ort) => {
+    return plz + ' ' + ort;
   }
 
   afterClosed = (dialogRef) => {

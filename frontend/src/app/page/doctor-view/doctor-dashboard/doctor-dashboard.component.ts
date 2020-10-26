@@ -30,7 +30,15 @@ export class DoctorDashboardComponent implements OnInit {
   dataSourceE = new MatTableDataSource<any>();
   anamnesisDataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, {static: true}) sort: MatSort;
-  orderStatus = {
+  orderStatusA = {
+    active: '',
+    direction: ''
+  };
+  orderStatusB = {
+    active: '',
+    direction: ''
+  };
+  orderStatusC = {
     active: '',
     direction: ''
   };
@@ -43,6 +51,7 @@ export class DoctorDashboardComponent implements OnInit {
   isMobile = false;
   allAnamnesis: any;
   allInquiry: any;
+  allEvents: any;
   status = {
     upcoming: 'Offene Termine',
     confirmed: 'Bestätigte Termine',
@@ -67,39 +76,26 @@ export class DoctorDashboardComponent implements OnInit {
       this.allAnamnesis = res;
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithActiveCallback').subscribe((res: any) => {
-      this.activeCallbackDataSource = res;
+      this.activeCallbackDataSource.data = res;
       this.allInquiry = res;
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithoutArchived').subscribe((res: any) => {
       this.dataSourceE.data = res;
+      this.allEvents = res;
     });
-  }
-
-  getDate = (time) => {
-    moment.locale('de');
-    return moment(time).format('DD.MM.YYYY');
-  }
-
-  getTime = (time) => {
-    moment.locale('de');
-    return moment(time).format('HH:mm');
   }
 
   filter = () => {
   }
 
-  onSort = (event) => {
-    this.orderStatus = event;
-  }
-
   onInquirySort = (event) => {
-    this.orderStatus = event;
+    this.orderStatusA = event;
     const inquiries = [...this.allInquiry];
 
     if (event.active === 'patientName') {
       inquiries.sort((a, b) => {
-        const x = a.patientFirstName + '' + a.patientLastName;
-        const y = b.patientFirstName + '' + b.patientLastName;
+        const x = a.patientFirstName + ' ' + a.patientLastName;
+        const y = b.patientFirstName + ' ' + b.patientLastName;
         if (event.direction === 'asc') {
           return x < y ? 1 : -1;
         } else if (event.direction === 'desc') {
@@ -130,13 +126,13 @@ export class DoctorDashboardComponent implements OnInit {
   }
 
   onAnamsSort = (event) => {
-    this.orderStatus = event;
+    this.orderStatusB = event;
     const anams = [...this.allAnamnesis];
 
     if (event.active === 'patientName') {
       anams.sort((a, b) => {
-        const x = a.patientFirstName + '' + a.patientLastName;
-        const y = b.patientFirstName + '' + b.patientLastName;
+        const x = a.patientFirstName + ' ' + a.patientLastName;
+        const y = b.patientFirstName + ' ' + b.patientLastName;
         if (event.direction === 'asc') {
           return x < y ? 1 : -1;
         } else if (event.direction === 'desc') {
@@ -166,9 +162,88 @@ export class DoctorDashboardComponent implements OnInit {
     }
   }
 
+  onEventSort = (event) => {
+    this.orderStatusC = event;
+    const events = [...this.allEvents];
+    if (event.active === 'date') {
+      events.sort((a, b) => {
+        const x = this.getDate(a.startTime);
+        const y = this.getDate(b.startTime);
+        if (event.direction === 'asc') {
+          return x < y ? 1 : -1;
+        } else if (event.direction === 'desc') {
+          return x > y ? 1 : -1;
+        }
+      });
+      if (event.direction === '') {
+        this.dataSourceE.data = this.allEvents;
+      } else {
+        this.dataSourceE.data = events;
+      }
+    } else if (event.active === 'time') {
+      events.sort((a, b) => {
+        const x = this.getTime(a.startTime);
+        const y = this.getTime(b.startTime);
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+      if (event.direction === '') {
+        this.dataSourceE.data = this.allEvents;
+      } else {
+        this.dataSourceE.data = events;
+      }
+    } else if (event.active === 'package') {
+      events.sort((a, b) => {
+        const x = a.package;
+        const y = b.package;
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+      if (event.direction === '') {
+        this.dataSourceE.data = this.allEvents;
+      } else {
+        this.dataSourceE.data = events;
+      }
+    } else if (event.active === 'appointmentLocation') {
+      events.sort((a, b) => {
+        const x = this.getAddress(a.addressPlz, a.addressOrt);
+        const y = this.getAddress(b.addressPlz, b.addressOrt);
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+      if (event.direction === '') {
+        this.dataSourceE.data = this.allEvents;
+      } else {
+        this.dataSourceE.data = events;
+      }
+    }
+  }
 
   getTimeDuration = (startTime, duration) => {
     return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');
+  }
+
+  getDate = (time) => {
+    moment.locale('de');
+    return moment(time).format('DD.MM.YYYY');
+  }
+
+  getTime = (time) => {
+    moment.locale('de');
+    return moment(time).format('HH:mm');
+  }
+
+  getAddress = (plz, ort) => {
+    return plz + ' ' + ort;
   }
 
   editItem = (id) => {

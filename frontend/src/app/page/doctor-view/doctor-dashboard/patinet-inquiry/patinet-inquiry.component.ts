@@ -46,13 +46,21 @@ export class PatinetInquiryComponent implements OnInit {
     this.currentUser = this.authService.currentUserValue;
     this.activeCallbackDataSource.sort = this.sort;
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithActiveCallback').subscribe((res: any) => {
-      console.log('res', res);
-      this.activeCallbackDataSource = res;
+      console.log('resA', res);
+      this.activeCallbackDataSource.data = res;
       this.allInquiry = res;
     });
   }
 
   filter = () => {
+    this.activeCallbackDataSource.data = this.allInquiry.filter(item => {
+      return this.getFullName(item.patientFirstName, item.patientLastName).includes(this.filterValue)
+        || this.getTimeDuration(item.startTime, item.duration).includes(this.filterValue);
+    });
+  }
+
+  getFullName = (firstName, lastName) => {
+    return firstName + ' ' + lastName;
   }
 
   onSort = (event) => {
@@ -61,8 +69,8 @@ export class PatinetInquiryComponent implements OnInit {
 
     if (event.active === 'patientName') {
       inquiries.sort((a, b) => {
-        const x = a.patientFirstName + '' + a.patientLastName;
-        const y = b.patientFirstName + '' + b.patientLastName;
+        const x = a.patientFirstName + ' ' + a.patientLastName;
+        const y = b.patientFirstName + ' ' + b.patientLastName;
         if (event.direction === 'asc') {
           return x < y ? 1 : -1;
         } else if (event.direction === 'desc') {

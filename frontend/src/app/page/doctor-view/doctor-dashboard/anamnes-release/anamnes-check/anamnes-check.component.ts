@@ -104,7 +104,7 @@ export class AnamnesCheckComponent implements OnInit {
     const emitData = {
       title: 'v-contact',
       data: {
-        appointmentId: this.displayData?.appointmentId
+        appointmentId: this.displayData.appointmentId
       }
     };
     this.sharedService.check.emit(emitData);
