@@ -60,25 +60,27 @@
               <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element" class="t-width">
-              <span>
+              <span *ngIf="conditionEditing(element, 1) === -1">
                 {{'Anfrage offen'}}
               </span>
-              <!--<span *ngIf="element.id === 1" class="spec-text">
+              <span *ngIf="conditionEditing(element, 1) >= 0" class="spec-text">
                 <img src="/assets/images/info_icon.svg" alt="info" class="mr-10" style="margin-left: -10px">
-                {{"In Bearbeitung durch Dr. Med. Jessica Johns"}}
-              </span>-->
+                {{"In Bearbeitung durch Dr. Med. "}}
+                {{editingAppointment[conditionEditing(element, 1)].doctorFirstName}}
+                {{editingAppointment[conditionEditing(element, 1)].doctorLastName}}
+              </span>
             </td>
           </ng-container>
 
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: center"> Anfrage bearbeiten </th>
             <td mat-cell *matCellDef="let element" style="text-align: center">
-              <button mat-icon-button aria-label="more" (click)="openAnswer(element.id)">
+              <button *ngIf="conditionEditing(element, 1) === -1" mat-icon-button aria-label="more" (click)="openAnswer(element.id)">
                 <img src="/assets/images/chat_icon.svg" alt="edit">
               </button>
-              <!--<button mat-icon-button aria-label="more" (click)="searchItem()" *ngIf="element.id === 1">
+              <button *ngIf="conditionEditing(element, 1) > -1" mat-icon-button aria-label="more" (click)="searchItem()">
                 <mat-icon>search</mat-icon>
-              </button>-->
+              </button>
             </td>
           </ng-container>
 
@@ -126,12 +128,14 @@
               <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element" class="t-width">
-              <span *ngIf="element.anamnesisStatus === 'open'">
+              <span *ngIf="conditionEditing(element, 2) === -1">
                 {{'Anfrage offen'}}
               </span>
-              <span *ngIf="element.anamnesisStatus !== 'open'" class="spec-text">
+              <span *ngIf="conditionEditing(element, 2) > -1" class="spec-text">
                 <img src="/assets/images/info_icon.svg" alt="info" class="mr-10" style="margin-left: -10px">
-                {{"In Bearbeitung durch Dr. Med. Marius Wilhelm"}}
+                {{"In Bearbeitung durch Dr. Med. "}}
+                {{editingAppointment[conditionEditing(element, 2)].doctorFirstName}}
+                {{editingAppointment[conditionEditing(element, 2)].doctorLastName}}
               </span>
             </td>
           </ng-container>
@@ -139,12 +143,12 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: center"> Anamnesebogen prüfen </th>
             <td mat-cell *matCellDef="let element" style="text-align: center">
-              <button mat-icon-button aria-label="more" (click)="checkAnamnes(element.id)">
+              <button *ngIf="conditionEditing(element, 2) === -1" mat-icon-button aria-label="more" (click)="checkAnamnes(element.id)">
                 <img src="/assets/images/edit.svg" alt="edit">
               </button>
-<!--              <button mat-icon-button aria-label="more" (click)="anamnesView()" *ngIf="element.id % 2 === 1">-->
-<!--                <mat-icon>search</mat-icon>-->
-<!--              </button>-->
+              <button mat-icon-button aria-label="more" (click)="anamnesView()"  *ngIf="conditionEditing(element, 2) > -1">
+                <mat-icon>search</mat-icon>
+              </button>
             </td>
           </ng-container>
 

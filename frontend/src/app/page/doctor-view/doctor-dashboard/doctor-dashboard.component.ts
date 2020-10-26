@@ -16,6 +16,7 @@ import {SharedService} from '../../../service/shared/shared.service';
 import {SearchInputComponent} from './search-input/search-input.component';
 import {HttpService} from '../../../service/http/http.service';
 import {SuccessDialogComponent} from './answer-inquiry/success-dialog/success-dialog.component';
+import {SocketService} from '../../../service/socket/socket.service';
 
 
 @Component({
@@ -49,14 +50,17 @@ export class DoctorDashboardComponent implements OnInit {
     canceled: 'Storniert / Verschoben',
     successful: 'Abgeschlossene Termine'
   };
+  editingAppointment = [];
 
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
     public breakpointObserver: BreakpointObserver,
     private sharedService: SharedService,
-    public httpService: HttpService
-  ) { }
+    public httpService: HttpService,
+    public socketService: SocketService
+  ) {
+  }
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
@@ -72,6 +76,22 @@ export class DoctorDashboardComponent implements OnInit {
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithoutArchived').subscribe((res: any) => {
       this.dataSourceE.data = res;
+    });
+
+    this.httpService.get(URL_JSON.DOCTOR + '/getEditingStatus').subscribe((res: any) => {
+      this.editingAppointment = res;
+    });
+
+    this.socketService.editingNotification.subscribe(data => {
+      if (data.type) {
+        this.editingAppointment.push(data);
+      } else {
+        this.editingAppointment = this.editingAppointment.filter(item => {
+          return item.appointmentId !== data.appointmentId && item.type !== data.type && item.doctorId !== data.doctorId;
+        });
+      }
+
+      console.log(this.editingAppointment);
     });
   }
 
@@ -166,7 +186,6 @@ export class DoctorDashboardComponent implements OnInit {
     }
   }
 
-
   getTimeDuration = (startTime, duration) => {
     return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');
   }
@@ -198,6 +217,14 @@ export class DoctorDashboardComponent implements OnInit {
   }
 
   openAnswer = (id) => {
+    this.socketService.editCallbackTable({
+      doctorId: this.currentUser.id,
+      appointmentId: id,
+      doctorFirstName: this.currentUser.firstName,
+      doctorLastName: this.currentUser.lastName,
+      type: 1,
+      table: 1
+    });
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     if (this.isTablet || this.isMobile) {
@@ -214,15 +241,29 @@ export class DoctorDashboardComponent implements OnInit {
         data: {callbackId: id}
       });
       dialogRef.afterClosed().subscribe(res => {
+        console.log('closed>>>>>>>>', res);
         this.sharedService.closeHistory.emit();
+        this.socketService.editCallbackTable({
+          doctorId: this.currentUser.id,
+          appointmentId: id,
+          doctorFirstName: this.currentUser.firstName,
+          doctorLastName: this.currentUser.lastName,
+          table: 1,
+          type: 0
+        });
         if (res) {
           dialogRef = this.dialog.open(SuccessDialogComponent, {
             width: '627px'
           });
-          this.afterClosed(dialogRef);
         }
       });
     }
+  }
+
+  conditionEditing = (data, table) => {
+    return this.editingAppointment.findIndex(item => {
+      return item.appointmentId === data.id && item.table === table;
+    });
   }
 
   anamnesView = () => {
@@ -244,6 +285,14 @@ export class DoctorDashboardComponent implements OnInit {
   }
 
   checkAnamnes = (id) => {
+    this.socketService.editCallbackTable({
+      doctorId: this.currentUser.id,
+      appointmentId: id,
+      doctorFirstName: this.currentUser.firstName,
+      doctorLastName: this.currentUser.lastName,
+      type: 1,
+      table: 2
+    });
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     if (this.isTablet || this.isMobile) {
@@ -261,6 +310,14 @@ export class DoctorDashboardComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(res => {
         this.sharedService.closeHistory.emit();
+        this.socketService.editCallbackTable({
+          doctorId: this.currentUser.id,
+          appointmentId: id,
+          doctorFirstName: this.currentUser.firstName,
+          doctorLastName: this.currentUser.lastName,
+          type: 0,
+          table: 2
+        });
         if (res) {
           dialogRef = this.dialog.open(SuccessDialogComponent, {
             width: '627px'

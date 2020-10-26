@@ -21,12 +21,14 @@ import medicalQuestion from './medical_question.model';
 import medicalAnswer from './medical_answer.model';
 import callbackDoctor from './callback_doctor.model';
 import patientRecall from './patient_recall.model';
+import editingStatus from './editing_status.model';
 
 
 const sequelize = new Sequelize(config.mysql.database, config.mysql.user, config.mysql.password, {
     host: config.mysql.host,
     dialect: config.dialect,
-    operatorsAliases: false
+    operatorsAliases: false,
+    logging: false
 });
 
 const db = {};
@@ -54,6 +56,7 @@ db.medicalQuestion = medicalQuestion(sequelize, Sequelize);
 db.medicalAnswer = medicalAnswer(sequelize, Sequelize);
 db.callbackDoctor = callbackDoctor(sequelize, Sequelize);
 db.patientRecall = patientRecall(sequelize, Sequelize);
+db.editingStatus = editingStatus(sequelize, Sequelize);
 
 // Relations
 db.patient.belongsTo(db.user);

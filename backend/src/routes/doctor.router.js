@@ -16,4 +16,6 @@ router.route('/inquiryAnswered/:id').put(doctorController.inquiryAnswered);
 router.route('/createPatientRecall').post(doctorController.createPatientRecall);
 
 router.route('/setAppointmentToArchive/:appointmentId').put(doctorController.setAppointmentToArchive);
+
+router.route('/getEditingStatus').get(doctorController.getEditingStatus);
 export default router;

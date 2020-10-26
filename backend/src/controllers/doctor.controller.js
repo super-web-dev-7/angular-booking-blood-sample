@@ -7,6 +7,7 @@ const ContactHistory = db.contactHistory;
 const MedicalAnswer = db.medicalAnswer;
 const CallbackDoctor = db.callbackDoctor;
 const PatientRecall = db.patientRecall;
+const EditingStatus = db.editingStatus;
 const sequelize = db.sequelize;
 
 exports.sendMessageToPatient = async (req, res) => {
@@ -171,4 +172,9 @@ exports.setAppointmentToArchive = async (req, res) => {
     await Appointment.update({archive: true}, {where: {id}});
     await ContactHistory.create({appointmentId: id, type: 'Termin archiv'});
     res.status(200).json({message: 'archived'});
+}
+
+exports.getEditingStatus = async (req, res) => {
+    const allStatus = await EditingStatus.findAll();
+    res.status(200).json(allStatus);
 }

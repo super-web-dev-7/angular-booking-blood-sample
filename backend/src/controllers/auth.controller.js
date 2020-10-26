@@ -42,7 +42,9 @@ exports.login = async (req, res) => {
             const token = jwt.sign({
                 id: user.id,
                 email: user.email,
-                role: user.role
+                role: user.role,
+                firstName: user.firstName,
+                lastName: user.lastName
             }, config.jwtSecret, {
                 // expiresIn: 35
                 expiresIn: sessionTimeByRole[user.role] * 60
@@ -67,7 +69,9 @@ exports.resetToken = async (req, res) => {
     const token = jwt.sign({
         id: user.id,
         email: user.email,
-        role: user.role
+        role: user.role,
+        firstName: user.firstName,
+        lastName: user.lastName
     }, config.jwtSecret, {
         // expiresIn: 35
         expiresIn: sessionTimeByRole[user.role] * 60

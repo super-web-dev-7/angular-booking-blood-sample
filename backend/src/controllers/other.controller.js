@@ -1,8 +1,5 @@
 import db from '../models';
 import Axios from 'axios';
-// import * as sgMail from '@sendgrid/mail';
-// const sgMail = require('@sendgrid/mail');
-// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 import {sendMail} from '../helper/email';
 
 const User = db.user;
