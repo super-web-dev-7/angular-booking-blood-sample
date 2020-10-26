@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {HttpService} from '../../../../service/http/http.service';
 import {URL_JSON} from '../../../../utils/url_json';
 import * as moment from 'moment';
-import {AuthService} from "../../../../service/auth/auth.service";
+import {AuthService} from '../../../../service/auth/auth.service';
 
 @Component({
   selector: 'app-search-modal',

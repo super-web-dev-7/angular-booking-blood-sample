@@ -116,6 +116,7 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
       if (res) {
         if (res.title === 'inquiry') {
           this.openPatientInquiry = true;
+          this.callbackId = res.callbackId;
         } else if (res.title === 'answer') {
           this.openPatientAnswer = true;
           this.callbackId = res.callbackId;

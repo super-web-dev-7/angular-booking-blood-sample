@@ -34,6 +34,9 @@
     <app-side-patient-inquiry
       *ngIf="openPatientInquiry"
       (closeSide)="closeRightSide($event)"
+      [callbackID]="callbackId"
+      [isMobile]="isMobile"
+      [isTablet]="isTablet"
     ></app-side-patient-inquiry>
     <app-side-patient-answer
       *ngIf="openPatientAnswer"
