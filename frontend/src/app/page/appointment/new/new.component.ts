@@ -254,12 +254,9 @@ export class NewComponent implements OnInit {
 
   onSubmit = () => {
     if (this.appointmentForm.invalid) {
-      console.log('invalid form');
       return;
     }
     if (!this.selectedAgency || !this.selectedPackage || !this.selectedTime) {
-      console.log(this.selectedAgency, this.selectedPackage, this.selectedTime);
-      console.log('invalid select');
       return;
     }
     const data = {

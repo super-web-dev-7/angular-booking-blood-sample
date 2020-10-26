@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {HttpService} from '../../../../service/http/http.service';
 import {URL_JSON} from '../../../../utils/url_json';
 import * as moment from 'moment';
+import {AuthService} from "../../../../service/auth/auth.service";
 
 @Component({
   selector: 'app-search-modal',
@@ -14,12 +15,14 @@ export class SearchModalComponent implements OnInit {
   displayData: any;
   constructor(
     private dialogRef: MatDialogRef<SearchModalComponent>,
+    public authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public httpService: HttpService,
   ) { }
 
   ngOnInit(): void {
-    this.currentUser.role = 'Doctor';
+    console.log(this.data);
+    this.currentUser = this.authService.currentUserValue;
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.data.callbackId).subscribe((res: any) => {
       this.displayData = res;
     });
