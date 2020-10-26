@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
 import {curveCardinal} from 'd3-shape';
@@ -27,51 +27,42 @@ export class StatisticsComponent implements OnInit {
   packageTotal = 0;
 
   barChartData = [
-    {positive: 16, negative: 5, label: 'März'},
-    {positive: 11, negative: 12, label: 'April'},
-    {positive: 8, negative: 3, label: 'Mai'},
-    {positive: 14, negative: 10, label: 'Juni'},
-    {positive: 10, negative: 15, label: 'Juli'},
-    {positive: 12, negative: 10, label: 'August'}
+    // {positive: 16, negative: 5, label: 'März'},
+    // {positive: 11, negative: 12, label: 'April'},
+    // {positive: 8, negative: 3, label: 'Mai'},
+    // {positive: 14, negative: 10, label: 'Juni'},
+    // {positive: 10, negative: 15, label: 'Juli'},
+    // {positive: 12, negative: 10, label: 'August'}
+  ];
+
+  monthArray = [
+    'Januar',
+    'Februar',
+    'März',
+    'April',
+    'Mai',
+    'Juni',
+    'Juli',
+    'August',
+    'September',
+    'Oktober',
+    'November',
+    'Dezember'
   ];
 
   lineChartData = [
     {
       name: 'Patient',
-      series: [
-        {
-          name: 'March',
-          value: 10
-        },
-        {
-          name: 'April',
-          value: 13
-        },
-        {
-          name: 'May',
-          value: 15
-        },
-        {
-          name: 'June',
-          value: 17
-        },
-        {
-          name: 'July',
-          value: 12
-        },
-        {
-          name: 'August',
-          value: 21
-        }
-      ]
+      series: []
     },
   ];
 
   curve: any = curveCardinal;
   customColors = {
     domain: ['#FFF', '#FFF'],
-
   };
+  monthlyData: any;
+  dataPerPatient: any;
 
   constructor(
     public httpService: HttpService,
@@ -126,11 +117,27 @@ export class StatisticsComponent implements OnInit {
     });
 
     this.httpService.get(URL_JSON.APPOINTMENT + '/analysisPerMonth').subscribe((res: any) => {
+      for (const item of res) {
+        this.barChartData.push({
+          label: this.monthArray[item.month - 1],
+          positive: parseInt(item.positive_value ? item.positive_value : 0, 10),
+          negative: parseInt(item.negative_value ? item.negative_value : 0, 10)
+        });
+      }
+      console.log(this.barChartData);
+      this.monthlyData = res;
       console.log(res);
     });
 
     this.httpService.get(URL_JSON.APPOINTMENT + '/analysisTotalPatient').subscribe((res: any) => {
-      console.log(res);
+
+      for (const data of res.per_patient) {
+        this.lineChartData[0].series.push({
+          name: this.monthArray[data.month - 1],
+          value: data.count_per_month
+        });
+      }
+      this.dataPerPatient = res;
     });
   }
 

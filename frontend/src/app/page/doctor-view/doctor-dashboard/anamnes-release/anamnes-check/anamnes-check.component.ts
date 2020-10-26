@@ -78,7 +78,7 @@ export class AnamnesCheckComponent implements OnInit {
     }
     this.httpService.update(URL_JSON.DOCTOR + '/releaseAppointment/' + this.displayData.appointmentId, {}).subscribe((res: any) => {
       if (res) {
-        this.dialogRef.close(true);
+        this.dialogRef.close({type: 'release'});
       }
     });
   }
@@ -93,9 +93,8 @@ export class AnamnesCheckComponent implements OnInit {
   }
 
   archive = () => {
-    console.log(this.displayData);
     this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData.appointmentId, {}).subscribe(res => {
-      console.log(res);
+      this.dialogRef.close({type: 'archive', appointmentId: this.displayData.appointmentId});
     });
   }
 

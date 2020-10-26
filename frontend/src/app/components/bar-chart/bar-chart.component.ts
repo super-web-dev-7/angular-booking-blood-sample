@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-bar-chart',
@@ -13,16 +13,19 @@ export class BarChartComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    const tempData = [...this.data];
-    tempData.sort((a, b) => {
-      return b.positive - a.positive;
-    });
-    this.maxValue = tempData[0].positive;
-    tempData.sort((a, b) => {
-      return b.negative - a.negative;
-    });
-    if (this.maxValue < tempData[0].negative) {
-      this.maxValue = tempData[0].negative;
+    console.log(this.data);
+    if (this.data) {
+      const tempData = [...this.data];
+      tempData.sort((a, b) => {
+        return b.positive - a.positive;
+      });
+      this.maxValue = tempData[0].positive;
+      tempData.sort((a, b) => {
+        return b.negative - a.negative;
+      });
+      if (this.maxValue < tempData[0].negative) {
+        this.maxValue = tempData[0].negative;
+      }
     }
   }
 

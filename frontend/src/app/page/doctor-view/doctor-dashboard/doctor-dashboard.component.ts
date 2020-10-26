@@ -93,6 +93,7 @@ export class DoctorDashboardComponent implements OnInit {
     });
 
     this.socketService.editingNotification.subscribe(data => {
+      console.log(data);
       if (data.type) {
         this.editingAppointment.push(data);
       } else {
@@ -279,14 +280,14 @@ export class DoctorDashboardComponent implements OnInit {
     if (this.isTablet || this.isMobile) {
       const data = {
         title: 'inquiry',
-        callbackId: id,
+        appointmentId: id,
       };
       this.sharedService.tabletSide.emit(data);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(SearchModalComponent, {
         width: '827px',
-        data: {callbackId: id}
+        data: {appointmentId: id}
       });
       this.afterClosed(dialogRef);
     }
@@ -311,7 +312,7 @@ export class DoctorDashboardComponent implements OnInit {
     if (this.isTablet || this.isMobile) {
       const data = {
         title: 'answer',
-        callbackId: id,
+        appointmentId: id,
       };
       this.sharedService.tabletSide.emit(data);
     } else {
@@ -319,7 +320,7 @@ export class DoctorDashboardComponent implements OnInit {
       dialogRef = this.dialog.open(AnswerInquiryComponent, {
         width: '1347px',
         position: {top: '5%', left: '21%'},
-        data: {callbackId: id}
+        data: {appointmentId: id}
       });
       dialogRef.afterClosed().subscribe(res => {
         this.sharedService.closeHistory.emit();
@@ -332,9 +333,15 @@ export class DoctorDashboardComponent implements OnInit {
           type: 0
         });
         if (res) {
-          dialogRef = this.dialog.open(SuccessDialogComponent, {
-            width: '627px'
-          });
+          if (res.type === 'submit') {
+            dialogRef = this.dialog.open(SuccessDialogComponent, {
+              width: '627px'
+            });
+          } else if (res.type === 'archive') {
+            const index = this.allInquiry.findIndex(item => item.id === res.appointmentId);
+            this.allInquiry.splice(index, 1);
+            this.activeCallbackDataSource = this.allInquiry;
+          }
         }
       });
     }
@@ -400,9 +407,15 @@ export class DoctorDashboardComponent implements OnInit {
           table: 2
         });
         if (res) {
-          dialogRef = this.dialog.open(SuccessDialogComponent, {
-            width: '627px'
-          });
+          if (res.type === 'release') {
+            dialogRef = this.dialog.open(SuccessDialogComponent, {
+              width: '627px'
+            });
+          } else if (res.type === 'archive') {
+            const index = this.allAnamnesis.findIndex(item => item.id === res.appointmentId);
+            this.allAnamnesis.splice(index, 1);
+            this.anamnesisDataSource = this.allAnamnesis;
+          }
         }
       });
     }

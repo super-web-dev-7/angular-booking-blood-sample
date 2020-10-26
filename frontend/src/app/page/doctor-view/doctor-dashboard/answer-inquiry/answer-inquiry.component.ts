@@ -34,7 +34,7 @@ export class AnswerInquiryComponent implements OnInit {
     this.messageForm = this.formBuilder.group({
       message: [null, Validators.required]
     });
-    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.data.callbackId).subscribe((res: any) => {
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;
     });
     this.sharedService.closeHistory.subscribe(res => {
@@ -82,7 +82,7 @@ export class AnswerInquiryComponent implements OnInit {
     }
     this.httpService.update(URL_JSON.DOCTOR + '/inquiryAnswered/' + this.displayData.appointmentId, {}).subscribe((res: any) => {
       if (res) {
-        this.dialogRef.close(true);
+        this.dialogRef.close({type: 'submit'});
       }
     });
   }
@@ -93,7 +93,7 @@ export class AnswerInquiryComponent implements OnInit {
 
   archive = () => {
     this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData.appointmentId, {}).subscribe(res => {
-      console.log(res);
+      this.dialogRef.close({type: 'archive', appointmentId: this.displayData.appointmentId});
     });
   }
 
@@ -107,7 +107,7 @@ export class AnswerInquiryComponent implements OnInit {
     this.isContactHistory = false;
     const emitData = {
       title: 'medical',
-      data: null
+      data: this.data
     };
     this.sharedService.answer.emit(emitData);
   }
