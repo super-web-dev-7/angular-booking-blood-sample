@@ -273,13 +273,13 @@ export class DoctorDashboardComponent implements OnInit {
   editItem = (id) => {
   }
 
-  searchItem = () => {
+  searchItem = (id) => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     if (this.isTablet || this.isMobile) {
       const data = {
         title: 'inquiry',
-        appointmentId: null,
+        callbackId: id,
       };
       this.sharedService.tabletSide.emit(data);
     } else {
