@@ -45,7 +45,7 @@ import {LeftMessagePopupComponent} from './tablet/side-patient-answer/left-messa
 import {SearchInputComponent} from './doctor-dashboard/search-input/search-input.component';
 import {environment} from '../../../environments/environment';
 
-const config: SocketIoConfig = {url: environment.SOCKET_URL, options: {}};
+const config: SocketIoConfig = {url: environment.BASE_URL, options: {}};
 
 @NgModule({
   declarations: [

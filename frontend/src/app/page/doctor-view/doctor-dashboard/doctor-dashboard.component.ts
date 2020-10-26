@@ -93,6 +93,7 @@ export class DoctorDashboardComponent implements OnInit {
     });
 
     this.socketService.editingNotification.subscribe(data => {
+      console.log(data);
       if (data.type) {
         this.editingAppointment.push(data);
       } else {
