@@ -103,6 +103,10 @@ export class DoctorDashboardComponent implements OnInit {
 
       console.log(this.editingAppointment);
     });
+
+    this.socketService.closeNotification.subscribe(data => {
+      console.log(this.editingAppointment);
+    });
   }
 
   filter = () => {

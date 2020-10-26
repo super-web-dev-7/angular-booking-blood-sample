@@ -17,6 +17,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         table: {
             type: Sequelize.INTEGER
+        },
+        socketId: {
+            type: Sequelize.STRING
         }
     });
 };
