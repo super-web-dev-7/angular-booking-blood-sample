@@ -286,6 +286,7 @@ export class DoctorDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(SearchModalComponent, {
         width: '827px',
+        data: {callbackId: id}
       });
       this.afterClosed(dialogRef);
     }

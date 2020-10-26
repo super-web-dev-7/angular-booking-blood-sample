@@ -78,7 +78,7 @@
               <button *ngIf="conditionEditing(element, 1) === -1" mat-icon-button aria-label="more" (click)="openAnswer(element.id)">
                 <img src="/assets/images/chat_icon.svg" alt="edit">
               </button>
-              <button *ngIf="conditionEditing(element, 1) > -1" mat-icon-button aria-label="more" (click)="searchItem()">
+              <button *ngIf="conditionEditing(element, 1) > -1" mat-icon-button aria-label="more" (click)="searchItem(element.id)">
                 <mat-icon>search</mat-icon>
               </button>
             </td>
