@@ -275,19 +275,21 @@ export class DoctorDashboardComponent implements OnInit {
   }
 
   searchItem = (id) => {
+    const index = this.editingAppointment.findIndex(item => item.appointmentId === id && item.table === 1);
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     if (this.isTablet || this.isMobile) {
       const data = {
         title: 'inquiry',
         appointmentId: id,
+        editingDoctorData: this.editingAppointment[index]
       };
       this.sharedService.tabletSide.emit(data);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(SearchModalComponent, {
         width: '827px',
-        data: {appointmentId: id}
+        data: {appointmentId: id, editingDoctorData: this.editingAppointment[index]}
       });
       this.afterClosed(dialogRef);
     }

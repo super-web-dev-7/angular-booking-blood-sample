@@ -38,7 +38,6 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
   appointmentId = null;
   answerPopupData = null;
   patientAnswerData = null;
-  callbackId = null;
 
   constructor(
     public breakpointObserver: BreakpointObserver,
@@ -96,7 +95,6 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
       this.tMessage = false;
       this.appointmentId = null;
       this.answerPopupData = null;
-      this.callbackId = null;
       this.patientAnswerData = null;
     });
     this.sharedService.check.subscribe(res => {
@@ -184,7 +182,6 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
     this.openRightMenu = false;
     this.appointmentId = null;
     this.answerPopupData = null;
-    this.callbackId = null;
     this.patientAnswerData = null;
   }
 
