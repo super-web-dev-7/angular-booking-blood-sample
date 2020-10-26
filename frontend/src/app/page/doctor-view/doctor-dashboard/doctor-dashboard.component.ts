@@ -346,19 +346,20 @@ export class DoctorDashboardComponent implements OnInit {
     });
   }
 
-  anamnesView = () => {
+  anamnesView = (id) => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet) {
       const data = {
         title: 'v-anam',
-        appointmentId: null,
+        appointmentId: id,
       };
       this.sharedService.tabletSide.emit(data);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(AnamnesViewComponent, {
         width: '827px',
-        height: '844px'
+        height: '844px',
+        data: {appointmentId: id}
       });
       this.afterClosed(dialogRef);
     }

@@ -2,9 +2,9 @@
 <div class="main-modal-container">
   <div class="modal-left-div">
     <div class="des-div">
-      <p class="p-272140">03.10.2020 09:00 - 10:15</p>
+      <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
       <p class="p-576E82">Check-Up: Männergesundheit</p>
-      <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+      <p class="p-272140">{{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}</p>
     </div>
     <div class="option-buttons-div">
       <div class="option-button-div">
@@ -36,25 +36,34 @@
           style="background: #C7D7E3;color:#FFFFFF"
           mat-stroked-button
         >
-          Sebastian Naumann
+          <span *ngIf="displayData?.id">{{displayData?.patientFirstName}} {{displayData?.patientLastName}}</span>
+          <span *ngIf="!displayData?.id">No callback</span>
         </button>
       </div>
     </div>
-    <p class="p-272140">Rückrufwunsch</p>
-    <p class="p-272140">28.09.2020</p>
-    <p class="p-272140">Vormittags 09:00 - 12:00</p>
+    <div class="mt-15" *ngIf="displayData?.callbackId">
+      <p class="p-272140">{{displayData?.callbackSchedule}}</p>
+      <p class="p-272140">{{displayData?.callbackDate}}</p>
+      <p class="p-272140" *ngIf="displayData?.callbackTime === 'morning'">Vormittags 09:00 - 12:00</p>
+      <p class="p-272140" *ngIf="displayData?.callbackTime === 'afternoon'">Nachmittags (12:00 - 16:00)</p>
+      <p class="p-272140" *ngIf="displayData?.callbackTime === 'evening'">Abends (16:00 - 19:00)</p>
+    </div>
   </div>
   <div class="modal-right-div">
     <p style="margin-top: 56px">
       Anamnesedaten
     </p>
-    <p style="margin-top: 57px">Sebastian Naumann<br/> Männlich, 39 Jahre, 1,83 m, 95 kg</p>
-    <p style="margin-top: 24px">Rauchen Sie? <br/>Nein</p>
-    <p style="margin-top: 24px">Trinken Sie täglich Alkohol? <br/>Nein</p>
-    <p style="margin-top: 24px">Nehmen Sie regelmäßig Medikamente ein? <br/>Ja<br/> Gegen Diabetes</p>
-    <p style="margin-top: 24px">Gibt es in Ihrer Familie Herzinfarkte / Schlaganfälle?<br/>Nein</p>
-    <p style="margin-top: 24px">Sind bei Ihnen relevante Vorerkrankungen bekannt?<br/>Nein</p>
-    <p style="margin-top: 24px">Wollen Sie uns noch zusätzliche Informationen<br/> zukommen lassen?<br/>Nein</p>
+    <div class="mt-47">
+      <p>{{displayData?.patientFirstName}} {{displayData?.patientLastName}}</p>
+      <p>{{displayData?.gender}}, {{displayData?.age}} Jahre, {{displayData?.height/100}} m, {{displayData?.weight}} kg</p>
+      <p class="mt-20">Rauchen Sie?<br/>{{displayData?.smoking ? 'Ja' : 'Nein'}}</p>
+      <p class="mt-20">Trinken Sie täglich Alkohol?<br/>{{displayData?.alcohol ? 'Ja' : 'Nein'}}</p>
+      <p class="mt-20">Nehmen Sie regelmäßig Medikamente ein?<br/>{{displayData?.takeMedication ? 'Ja' : 'Nein'}}</p>
+      <p class="mt-20">Gibt es in Ihrer Familie Herzinfarkte / Schlaganfälle?<br/>{{displayData?.heartAttack ? 'Ja' : 'Nein'}}</p>
+      <p class="mt-20">Sind bei Ihnen relevante Vorerkrankungen bekannt?<br/>{{displayData?.previousIllness ? 'Ja' : 'Nein'}}</p>
+      <p *ngIf="displayData?.previousIllness">{{displayData?.disease}}</p>
+      <p class="mt-20">Wollen Sie uns noch zusätzliche Informationen<br/> zukommen lassen?<br/>{{displayData?.additionalInfo ? 'Ja': 'Nein'}}</p>
+    </div>
     <div class="d-flex mt-38">
       <span class="org-text d-flex">
         <img src="/assets/images/info_icon.svg" alt="info" class="mr-10">
@@ -63,6 +72,7 @@
       <button
         class="custom-button ml-20"
         mat-stroked-button
+        (click)="close()"
       >
         Schließen
       </button>
