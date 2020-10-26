@@ -5,31 +5,43 @@
   <div class="main-side-container">
     <h1>Termin <span style="font-weight: 100"> ansehen</span></h1>
     <div class="left-border-div mt-38">
-      <p class="p-272140">12.09.2020 09:00 - 10:15</p>
+      <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
       <p class="p-576E82">Check-Up: Männergesundheit</p>
-      <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+      <p class="p-272140">{{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}</p>
     </div>
     <div class="option-buttons-div mt-47">
       <div class="option-button-div">
-        <button class="doctor-search-button">
-          <mat-icon>search</mat-icon>
+        <button
+          type="button"
+          class="doctor-search-button"
+          [ngClass]="{'active-button': isAnamnes}"
+        >
+          <mat-icon [ngClass]="{'active-icon':isAnamnes}">search</mat-icon>
         </button>
         <button
+          type="button"
           class="custom-button-default ml-10"
-          style="margin-left: 10px"
+          (click)="openMedicalHistory()"
           mat-stroked-button
+          [ngClass]="{'active-button': isAnamnes}"
         >
           Anamnesedaten ansehen
         </button>
       </div>
-      <div class="option-button-div mt-15">
-        <button class="doctor-search-button">
-          <mat-icon>search</mat-icon>
+      <div class="option-button-div mt-14">
+        <button
+          type="button"
+          class="doctor-search-button"
+          [ngClass]="{'active-button': isSideHistory}"
+        >
+          <mat-icon [ngClass]="{'active-icon':isSideHistory}">search</mat-icon>
         </button>
         <button
+          type="button"
           class="custom-button-default ml-10"
-          style="margin-left: 10px"
+          (click)="openContactHistory()"
           mat-stroked-button
+          [ngClass]="{'active-button': isSideHistory}"
         >
           Kontakthistorie ansehen
         </button>

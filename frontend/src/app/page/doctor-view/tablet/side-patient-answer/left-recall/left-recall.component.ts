@@ -46,11 +46,14 @@ export class LeftRecallComponent implements OnInit {
       phoneNumber: this.callbackInfo.phoneNumber,
       patientNotThere: this.f.patient.value,
     };
+    if (this.callbackInfo.question) {
 
-    this.httpService.post(URL_JSON.DOCTOR + '/createPatientRecall', data).subscribe((res: any) => {
-      if (res) {
-        this.close();
-      }
-    });
+    } else {
+      this.httpService.post(URL_JSON.DOCTOR + '/createPatientRecall', data).subscribe((res: any) => {
+        if (res) {
+          this.close();
+        }
+      });
+    }
   }
 }

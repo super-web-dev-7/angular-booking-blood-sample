@@ -104,11 +104,12 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
         if (res.title === 'v-contact') {
           this.openCheckContact = true;
           this.openCallPatient = false;
-          this.appointmentId = res.appointmentId;
+          this.appointmentId = res.data.appointmentId;
         } else {
           this.openCallPatient = true;
           this.openCheckContact = false;
         }
+        this.appointmentId = res.data.appointmentId;
       }
     });
     this.sharedService.tabletSide.subscribe(res => {
@@ -125,6 +126,7 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
           this.appointmentId = res.appointmentId;
         } else if (res.title === 'v-appointment') {
           this.viewAppointment = true;
+          this.appointmentId = res.appointmentId;
         }
         this.isRightSidebarOpen = true;
       }

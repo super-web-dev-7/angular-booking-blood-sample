@@ -13,13 +13,12 @@ import * as moment from 'moment';
 export class SidePatientAnswerComponent implements OnInit {
   @Output() closeSide = new EventEmitter();
   @Input() callbackID;
+  @Input() isMobile;
+  @Input() isTablet;
   isAnamnes = false;
   isSideHistory = false;
   isSuccess = false;
-  isMobile = false;
-  isTablet = false;
   displayData: any;
-  messageSent = false;
   constructor(
     public sharedService: SharedService,
     public breakpointObserver: BreakpointObserver,
@@ -28,19 +27,12 @@ export class SidePatientAnswerComponent implements OnInit {
 
   ngOnInit(): void {
     this.isSuccess = false;
-    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
-    this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.sharedService.closeHistory.subscribe(res => {
       this.isAnamnes = false;
       this.isSideHistory = false;
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.callbackID).subscribe((res: any) => {
       this.displayData = res;
-    });
-    this.sharedService.sentMessage.subscribe(res => {
-      if (res) {
-        this.messageSent = true;
-      }
     });
   }
 
@@ -69,10 +61,6 @@ export class SidePatientAnswerComponent implements OnInit {
         title: 't-history',
         data: {
           appointmentId: this.displayData.appointmentId,
-          callbackId: this.displayData.id,
-          patientFirstName: this.displayData.patientFirstName,
-          patientLastName: this.displayData.patientLastName,
-          phoneNumber: this.displayData.phoneNumber
         }
       };
       this.sharedService.tabletLeftSide.emit(emitData);
@@ -90,10 +78,6 @@ export class SidePatientAnswerComponent implements OnInit {
         title: 't-anamnes',
         data: {
           appointmentId: this.displayData.appointmentId,
-          callbackId: this.displayData.id,
-          patientFirstName: this.displayData.patientFirstName,
-          patientLastName: this.displayData.patientLastName,
-          phoneNumber: this.displayData.phoneNumber
         }
       };
       this.sharedService.tabletLeftSide.emit(emitData);
@@ -112,9 +96,10 @@ export class SidePatientAnswerComponent implements OnInit {
         data: {
           appointmentId: this.displayData.appointmentId,
           callbackId: this.displayData.id,
-          patientFirstName: this.displayData.patientFirstName,
-          patientLastName: this.displayData.patientLastName,
-          phoneNumber: this.displayData.phoneNumber
+          firstName: this.displayData.patientFirstName,
+          lastName: this.displayData.patientLastName,
+          phoneNumber: this.displayData.phoneNumber,
+          question: false
         }
       };
       this.sharedService.tabletLeftSide.emit(emitData);
@@ -132,9 +117,7 @@ export class SidePatientAnswerComponent implements OnInit {
         data: {
           appointmentId: this.displayData.appointmentId,
           callbackId: this.displayData.id,
-          firstName: this.displayData.patientFirstName,
-          lastName: this.displayData.patientLastName,
-          phoneNumber: this.displayData.phoneNumber
+          question: false
         }
       };
       this.sharedService.tabletLeftSide.emit(emitData);
@@ -143,19 +126,11 @@ export class SidePatientAnswerComponent implements OnInit {
   }
 
   submit = () => {
-    if (!this.messageSent) {
-      return;
-    }
     this.httpService.update(URL_JSON.DOCTOR + '/inquiryAnswered/' + this.displayData.appointmentId, {}).subscribe((res: any) => {
       if (res) {
         this.isSuccess = true;
       }
     });
-  }
-  @HostListener('window:resize', [])
-  private onResize = () => {
-    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
-    this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
   }
 
 }

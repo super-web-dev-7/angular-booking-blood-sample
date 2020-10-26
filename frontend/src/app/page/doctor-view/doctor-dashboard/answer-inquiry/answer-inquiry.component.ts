@@ -135,7 +135,8 @@ export class AnswerInquiryComponent implements OnInit {
         callbackId: this.displayData.id,
         phoneNumber: this.displayData.phoneNumber,
         firstName: this.displayData.patientFirstName,
-        lastName: this.displayData.patientLastName
+        lastName: this.displayData.patientLastName,
+        question: false
       }
     };
     this.sharedService.answer.emit(emitData);

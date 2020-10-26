@@ -55,6 +55,14 @@ export class AnamnesReleaseComponent implements OnInit {
   }
 
   filter = () => {
+    this.dataSourceA.data = this.allAnamnesis.filter(item => {
+      return this.getFullName(item.patientFirstName, item.patientLastName).includes(this.filterValue)
+        || this.getTimeDuration(item.startTime, item.duration).includes(this.filterValue);
+    });
+  }
+
+  getFullName = (firstName, lastName) => {
+    return firstName + ' ' + lastName;
   }
 
   onSort = (event) => {
@@ -63,8 +71,8 @@ export class AnamnesReleaseComponent implements OnInit {
 
     if (event.active === 'patientName') {
       anams.sort((a, b) => {
-        const x = a.patientFirstName + '' + a.patientLastName;
-        const y = b.patientFirstName + '' + b.patientLastName;
+        const x = a.patientFirstName + ' ' + a.patientLastName;
+        const y = b.patientFirstName + ' ' + b.patientLastName;
         if (event.direction === 'asc') {
           return x < y ? 1 : -1;
         } else if (event.direction === 'desc') {

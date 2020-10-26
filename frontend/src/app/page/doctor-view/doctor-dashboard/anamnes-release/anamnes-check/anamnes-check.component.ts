@@ -103,7 +103,9 @@ export class AnamnesCheckComponent implements OnInit {
     this.isCheckContact = true;
     const emitData = {
       title: 'v-contact',
-      appointmentId: this.displayData?.appointmentId
+      data: {
+        appointmentId: this.displayData.appointmentId
+      }
     };
     this.sharedService.check.emit(emitData);
   }
@@ -111,10 +113,17 @@ export class AnamnesCheckComponent implements OnInit {
   openCallPatient = () => {
     this.isCheckContact = false;
     const emitData = {
-      title: 'call-patient',
-      appointmentId: this.displayData?.appointmentId
+      title: 'call',
+      data: {
+        appointmentId: this.displayData.appointmentId,
+        callbackId: this.displayData.callbackId,
+        phoneNumber: this.displayData.phoneNumber,
+        firstName: this.displayData.patientFirstName,
+        lastName: this.displayData.patientLastName,
+        question: true
+      }
     };
-    this.sharedService.check.emit(emitData);
+    this.sharedService.answer.emit(emitData);
   }
 
   close = () => {

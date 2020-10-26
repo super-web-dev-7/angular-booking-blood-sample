@@ -5,9 +5,9 @@
   <div class="main-side-container" *ngIf="!isSuccess">
     <h1>Anamnesebogen<span style="font-weight: 100">prüfen</span></h1>
     <div class="left-border-div mt-38">
-      <p class="p-272140">12.09.2020 09:00 - 10:15</p>
+      <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
       <p class="p-576E82">Check-Up: Männergesundheit</p>
-      <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+      <p class="p-272140">{{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}</p>
     </div>
     <div class="option-buttons-div mt-47">
       <div class="option-button-div mt-15">
@@ -37,17 +37,19 @@
           class="custom-button-default ml-10"
           style="background: #89DF8C;color:#FFFFFF"
           mat-stroked-button
+          [disabled]="!displayData?.callbackId || !displayData?.id"
           (click)="openRecall()"
         >
-          Sebastian Naumann
+          <span *ngIf="displayData?.id">{{displayData?.patientFirstName}} {{displayData?.patientLastName}}</span>
+          <span *ngIf="!displayData?.id">No callback</span>
         </button>
       </div>
-      <div style="margin-left: 100px">
-        <p class="p-14">
-          Rückrufwunsch<br/>
-          28.09.2020<br/>
-          Vormittags 09:00 - 12:00
-        </p>
+      <div style="margin-left: 100px" *ngIf="displayData?.callbackId">
+        <p class="p-14">{{displayData?.callbackSchedule}}</p>
+        <p class="p-14">{{displayData?.callbackDate}}</p>
+        <p class="p-14" *ngIf="displayData?.callbackTime === 'morning'">Vormittags 09:00 - 12:00</p>
+        <p class="p-14" *ngIf="displayData?.callbackTime === 'afternoon'">Nachmittags (12:00 - 16:00)</p>
+        <p class="p-14" *ngIf="displayData?.callbackTime === 'evening'">Abends (16:00 - 19:00)</p>
       </div>
       <div class="option-button-div mt-15">
         <button
@@ -66,36 +68,20 @@
         </button>
       </div>
     </div>
-    <p class="p-272140-tablet mt-47">
-      Sebastian Naumann<br/>
-      <span class="p-14">
-        Männlich, 39 Jahre, 1,83 m, 95 kg
-      </span>
-    </p>
-    <p class="p-14 mt-24">
-      Rauchen Sie?
-      <br/>
-      Nein
-    </p>
-    <p class="p-14 mt-24">
-      Trinken Sie täglich Alkohol?<br/>
-      Nein
-    </p>
-    <p class="p-14 mt-24">
-      Nehmen Sie regelmäßig Medikamente ein?<br/>
-      Ja<br/>
-      Gegen Diabetes
-    </p>
-    <p class="p-14 mt-24">
-      Sind bei Ihnen relevante Vorerkrankungen bekannt?<br/>
-      Nein
-    </p>
-    <p class="p-14 mt-24">
-      Wollen Sie uns noch zusätzliche Informationen<br/> zukommen lassen?<br/>
-      Nein
-    </p>
+    <div class="mt-47">
+      <p class="p-272140-tablet">{{displayData?.patientFirstName}} {{displayData?.patientLastName}}</p>
+      <p class="p-272140-tablet">{{displayData?.gender}}, {{displayData?.age}} Jahre, {{displayData?.height/100}} m, {{displayData?.weight}} kg</p>
+      <p class="mt-20">Rauchen Sie?<br/>{{displayData?.smoking ? 'Ja' : 'Nein'}}</p>
+      <p class="mt-20">Trinken Sie täglich Alkohol?<br/>{{displayData?.alcohol ? 'Ja' : 'Nein'}}</p>
+      <p class="mt-20">Nehmen Sie regelmäßig Medikamente ein?<br/>{{displayData?.takeMedication ? 'Ja' : 'Nein'}}</p>
+      <p class="mt-20">Gibt es in Ihrer Familie Herzinfarkte / Schlaganfälle?<br/>{{displayData?.heartAttack ? 'Ja' : 'Nein'}}</p>
+      <p class="mt-20">Sind bei Ihnen relevante Vorerkrankungen bekannt?<br/>{{displayData?.previousIllness ? 'Ja' : 'Nein'}}</p>
+      <p *ngIf="displayData?.previousIllness">{{displayData?.disease}}</p>
+      <p class="mt-20">Wollen Sie uns noch zusätzliche Informationen<br/> zukommen lassen?<br/>{{displayData?.additionalInfo ? 'Ja': 'Nein'}}</p>
+    </div>
     <div class="mt-38 text-center">
       <button
+        type="button"
         mat-stroked-button
         class="custom-button-384"
         (click)="submit()"
@@ -105,10 +91,22 @@
     </div>
     <div class="mt-20 text-center">
       <button
+        type="button"
         mat-stroked-button
         class="custom-button"
+        (click)="cancel()"
       >
         Termin stornieren
+      </button>
+    </div>
+    <div class="mt-20 text-center">
+      <button
+        type="button"
+        class="custom-button"
+        (click)="archive()"
+        mat-stroked-button
+      >
+        Archiv
       </button>
     </div>
   </div>

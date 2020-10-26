@@ -39,6 +39,8 @@
       *ngIf="openPatientAnswer"
       (closeSide) ="closeRightSide($event)"
       [callbackID]="callbackId"
+      [isMobile]="isMobile"
+      [isTablet]="isTablet"
     ></app-side-patient-answer>
     <app-side-medical-history
       *ngIf="viewAnamnes"
@@ -48,10 +50,12 @@
       *ngIf="checkAnamnes"
       (closeSide)="closeRightSide($event)"
       [appointmentID]="appointmentId"
+      [isMobile]="isMobile"
     ></app-side-check-anamnes>
     <app-side-view-appointment
       *ngIf="viewAppointment"
       (closeSide)="closeRightSide($event)"
+      [appointmentID]="appointmentId"
     ></app-side-view-appointment>
   </mat-sidenav>
   <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Doctor' ? '#F2F7FB' : '#fafafa'}">
