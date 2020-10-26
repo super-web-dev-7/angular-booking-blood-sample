@@ -12,6 +12,7 @@ import {MatSort} from '@angular/material/sort';
 import {HttpService} from '../../../../service/http/http.service';
 import {URL_JSON} from '../../../../utils/url_json';
 import * as moment from 'moment';
+import {SocketService} from '../../../../service/socket/socket.service';
 
 @Component({
   selector: 'app-patinet-inquiry',
@@ -32,13 +33,15 @@ export class PatinetInquiryComponent implements OnInit {
   isTablet = false;
   allInquiry;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  editingAppointment = [];
 
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
     public breakpointObserver: BreakpointObserver,
     private sharedService: SharedService,
-    public httpService: HttpService
+    public httpService: HttpService,
+    public socketService: SocketService
   ) { }
 
   ngOnInit(): void {
@@ -48,6 +51,30 @@ export class PatinetInquiryComponent implements OnInit {
       console.log('resA', res);
       this.activeCallbackDataSource.data = res;
       this.allInquiry = res;
+    });
+    this.httpService.get(URL_JSON.DOCTOR + '/getEditingStatus').subscribe((res: any) => {
+      this.editingAppointment = res;
+    });
+    this.socketService.editingNotification.subscribe(data => {
+      if (data.type) {
+        this.editingAppointment.push(data);
+      } else {
+        this.editingAppointment = this.editingAppointment.filter(item => {
+          return item.appointmentId !== data.appointmentId && item.type !== data.type && item.doctorId !== data.doctorId;
+        });
+      }
+    });
+
+    this.socketService.closeNotification.subscribe(socketId => {
+      this.editingAppointment = this.editingAppointment.filter(item => {
+        return item.socketId !== socketId;
+      });
+    });
+  }
+
+  conditionEditing = (data, table) => {
+    return this.editingAppointment.findIndex(item => {
+      return item.appointmentId === data.id && item.table === table;
     });
   }
 
@@ -99,9 +126,6 @@ export class PatinetInquiryComponent implements OnInit {
     }
   }
 
-  editItem = (id) => {
-  }
-
   getTimeDuration = (startTime, duration) => {
     return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');
   }
@@ -109,7 +133,11 @@ export class PatinetInquiryComponent implements OnInit {
   searchItem = (id) => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet) {
-      this.sharedService.tabletSide.emit('inquiry');
+      const data = {
+        title: 'inquiry',
+        callbackId: id,
+      };
+      this.sharedService.tabletSide.emit(data);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(SearchModalComponent, {
@@ -126,9 +154,21 @@ export class PatinetInquiryComponent implements OnInit {
   }
 
   openAnswer = (id) => {
+    this.socketService.editCallbackTable({
+      doctorId: this.currentUser.id,
+      appointmentId: id,
+      doctorFirstName: this.currentUser.firstName,
+      doctorLastName: this.currentUser.lastName,
+      type: 1,
+      table: 1
+    });
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet) {
-      this.sharedService.tabletSide.emit('answer');
+      const data = {
+        title: 'answer',
+        callbackId: id,
+      };
+      this.sharedService.tabletSide.emit(data);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(AnswerInquiryComponent, {
@@ -136,6 +176,14 @@ export class PatinetInquiryComponent implements OnInit {
         data: {callbackId: id}
       });
       dialogRef.afterClosed().subscribe(res => {
+        this.socketService.editCallbackTable({
+          doctorId: this.currentUser.id,
+          appointmentId: id,
+          doctorFirstName: this.currentUser.firstName,
+          doctorLastName: this.currentUser.lastName,
+          table: 1,
+          type: 0
+        });
         if (res) {
           this.dialog.open(SuccessDialogComponent, {
             width: '662px',

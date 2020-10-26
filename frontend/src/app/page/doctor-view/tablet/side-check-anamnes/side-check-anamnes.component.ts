@@ -4,6 +4,8 @@ import {BreakpointObserver} from '@angular/cdk/layout';
 import {HttpService} from '../../../../service/http/http.service';
 import {URL_JSON} from '../../../../utils/url_json';
 import * as moment from 'moment';
+import {SocketService} from '../../../../service/socket/socket.service';
+import {AuthService} from '../../../../service/auth/auth.service';
 
 @Component({
   selector: 'app-side-check-anamnes',
@@ -18,13 +20,17 @@ export class SideCheckAnamnesComponent implements OnInit {
   isSideHistory = false;
   isSuccess = false;
   displayData: any;
+  currentUser: any;
   constructor(
     public sharedService: SharedService,
     public breakpointObserver: BreakpointObserver,
     public httpService: HttpService,
+    public socketService: SocketService,
+    public authService: AuthService,
   ) { }
   ngOnInit(): void {
     this.isSuccess = false;
+    this.currentUser = this.authService.currentUserValue;
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithQuestionById/' + this.appointmentID).subscribe((res: any) => {
       this.displayData = res[0];
     });
@@ -44,6 +50,14 @@ export class SideCheckAnamnesComponent implements OnInit {
   close = () => {
     this.closeSide.emit(false);
     this.sharedService.closeHistory.emit();
+    this.socketService.editCallbackTable({
+      doctorId: this.currentUser.id,
+      appointmentId: this.displayData.appointmentId,
+      doctorFirstName: this.currentUser.firstName,
+      doctorLastName: this.currentUser.lastName,
+      type: 0,
+      table: 2
+    });
   }
   openSideHistory = () => {
     if (this.isMobile) {

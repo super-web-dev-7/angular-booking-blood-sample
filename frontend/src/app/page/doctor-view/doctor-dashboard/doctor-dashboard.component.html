@@ -146,7 +146,7 @@
               <button *ngIf="conditionEditing(element, 2) === -1" mat-icon-button aria-label="more" (click)="checkAnamnes(element.id)">
                 <img src="/assets/images/edit.svg" alt="edit">
               </button>
-              <button mat-icon-button aria-label="more" (click)="anamnesView()"  *ngIf="conditionEditing(element, 2) > -1">
+              <button mat-icon-button aria-label="more" (click)="anamnesView(element.id)"  *ngIf="conditionEditing(element, 2) > -1">
                 <mat-icon>search</mat-icon>
               </button>
             </td>

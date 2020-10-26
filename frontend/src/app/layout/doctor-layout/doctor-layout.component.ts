@@ -122,6 +122,7 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
           this.appointmentId = res.appointmentId;
         } else if (res.title === 'v-anam') {
           this.viewAnamnes = true;
+          this.appointmentId = res.appointmentId;
         } else if (res.title === 'c-anam') {
           this.checkAnamnes = true;
           this.appointmentId = res.appointmentId;

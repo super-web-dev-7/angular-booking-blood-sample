@@ -62,12 +62,14 @@
               <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element" class="t-width">
-              <span *ngIf="element.anamnesisStatus === 'open'">
+              <span *ngIf="conditionEditing(element, 2) === -1">
                 {{'Anfrage offen'}}
               </span>
-              <span *ngIf="element.anamnesisStatus !== 'open'" class="spec-text">
+              <span *ngIf="conditionEditing(element, 2) > -1" class="spec-text">
                 <img src="/assets/images/info_icon.svg" alt="info" class="mr-10" style="margin-left: -10px">
-                {{"In Bearbeitung durch Dr. Med. Marius Wilhelm"}}
+                {{"In Bearbeitung durch Dr. Med. "}}
+                {{editingAppointment[conditionEditing(element, 2)].doctorFirstName}}
+                {{editingAppointment[conditionEditing(element, 2)].doctorLastName}}
               </span>
             </td>
           </ng-container>
@@ -75,8 +77,11 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef style="text-align: center"> Anamnesebogen prüfen </th>
             <td mat-cell *matCellDef="let element" style="text-align: center">
-              <button mat-icon-button aria-label="more" (click)="checkAnamnes(element.id)">
+              <button *ngIf="conditionEditing(element, 2) === -1" mat-icon-button aria-label="more" (click)="checkAnamnes(element.id)">
                 <img src="/assets/images/edit.svg" alt="edit">
+              </button>
+              <button mat-icon-button aria-label="more" (click)="anamnesView(element.id)"  *ngIf="conditionEditing(element, 2) > -1">
+                <mat-icon>search</mat-icon>
               </button>
             </td>
           </ng-container>
@@ -94,7 +99,7 @@
     </mat-card>
   </div>
 </div>
-<div class="main-container mt-5 d-block d-md-none">
+<!--<div class="main-container mt-5 d-block d-md-none">
   <div class="table-toolbar flex-column">
     <div class="row">
       <div class="col-8">
@@ -173,10 +178,10 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef style="text-align: center"> Anamnesebogen prüfen </th>
           <td mat-cell *matCellDef="let element" style="text-align: center">
-            <button mat-icon-button aria-label="more" (click)="checkAnamnes()" *ngIf="element.id !== 1">
+            <button mat-icon-button aria-label="more" (click)="checkAnamnes(element.id)" *ngIf="element.id !== 1">
               <img src="/assets/images/edit.svg" alt="edit">
             </button>
-            <button mat-icon-button aria-label="more" (click)="anamnesView()" *ngIf="element.id === 1">
+            <button mat-icon-button aria-label="more" (click)="anamnesView(element.id)" *ngIf="element.id === 1">
               <mat-icon>search</mat-icon>
             </button>
           </td>
@@ -187,4 +192,4 @@
       </table>
     </div>
   </div>
-</div>
+</div>-->
