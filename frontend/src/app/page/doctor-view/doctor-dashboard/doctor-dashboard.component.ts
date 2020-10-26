@@ -356,11 +356,13 @@ export class DoctorDashboardComponent implements OnInit {
   }
 
   anamnesView = (id) => {
+    const index = this.editingAppointment.findIndex(item => item.appointmentId === id && item.table === 2);
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet) {
       const data = {
         title: 'v-anam',
         appointmentId: id,
+        editingDoctorData: this.editingAppointment[index]
       };
       this.sharedService.tabletSide.emit(data);
     } else {
@@ -368,7 +370,7 @@ export class DoctorDashboardComponent implements OnInit {
       dialogRef = this.dialog.open(AnamnesViewComponent, {
         width: '827px',
         height: '844px',
-        data: {appointmentId: id}
+        data: {appointmentId: id, editingDoctorData: this.editingAppointment[index]}
       });
       this.afterClosed(dialogRef);
     }

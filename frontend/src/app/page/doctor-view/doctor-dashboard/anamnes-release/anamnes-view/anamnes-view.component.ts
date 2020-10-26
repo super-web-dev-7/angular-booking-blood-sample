@@ -23,7 +23,6 @@ export class AnamnesViewComponent implements OnInit {
   ngOnInit(): void {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithQuestionById/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res[0];
-      console.log('+++++++++++++', this.displayData);
     });
   }
 

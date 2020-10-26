@@ -15,6 +15,7 @@ export class SideMedicalHistoryComponent implements OnInit {
   @Input() appointmentID;
   @Input() isMobile;
   @Input() isTablet;
+  @Input() editingDoctorData;
   displayData: any;
   currentUser: any;
   constructor(
