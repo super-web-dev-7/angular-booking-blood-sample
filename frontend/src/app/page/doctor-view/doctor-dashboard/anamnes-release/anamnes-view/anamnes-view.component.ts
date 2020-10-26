@@ -12,6 +12,7 @@ import * as moment from 'moment';
 })
 export class AnamnesViewComponent implements OnInit {
   displayData: any;
+  isContactHistory = false;
 
   constructor(
     private sharedService: SharedService,
@@ -23,7 +24,9 @@ export class AnamnesViewComponent implements OnInit {
   ngOnInit(): void {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithQuestionById/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res[0];
-      console.log('+++++++++++++', this.displayData);
+    });
+    this.sharedService.closeHistory.subscribe(res => {
+      this.isContactHistory = false;
     });
   }
 
@@ -36,6 +39,18 @@ export class AnamnesViewComponent implements OnInit {
 
   close = () => {
     this.dialogRef.close();
+    this.sharedService.closeHistory.emit();
+  }
+
+  openContactHistory = () => {
+    this.isContactHistory = true;
+    const emitData = {
+      title: 'v-contact',
+      data: {
+        appointmentId: this.displayData.appointmentId
+      }
+    };
+    this.sharedService.check.emit(emitData);
   }
 
 }

@@ -152,7 +152,9 @@ export class AnamnesReleaseComponent implements OnInit {
         height: '844px',
         data: {appointmentId: id}
       });
-      this.afterClosed(dialogRef);
+      dialogRef.afterClosed().subscribe(res => {
+        this.sharedService.closeHistory.emit();
+      });
     }
   }
 

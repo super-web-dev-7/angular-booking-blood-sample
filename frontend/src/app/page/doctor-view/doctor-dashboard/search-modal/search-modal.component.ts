@@ -4,6 +4,7 @@ import {HttpService} from '../../../../service/http/http.service';
 import {URL_JSON} from '../../../../utils/url_json';
 import * as moment from 'moment';
 import {AuthService} from '../../../../service/auth/auth.service';
+import {SharedService} from '../../../../service/shared/shared.service';
 
 @Component({
   selector: 'app-search-modal',
@@ -13,11 +14,14 @@ import {AuthService} from '../../../../service/auth/auth.service';
 export class SearchModalComponent implements OnInit {
   currentUser;
   displayData: any;
+  isContactHistory = false;
+  isMedicalHistory = false;
   constructor(
     private dialogRef: MatDialogRef<SearchModalComponent>,
     public authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public httpService: HttpService,
+    private sharedService: SharedService,
   ) { }
 
   ngOnInit(): void {
@@ -25,6 +29,10 @@ export class SearchModalComponent implements OnInit {
     this.currentUser = this.authService.currentUserValue;
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;
+    });
+    this.sharedService.closeHistory.subscribe(res => {
+      this.isMedicalHistory = false;
+      this.isContactHistory = false;
     });
   }
 
@@ -41,6 +49,29 @@ export class SearchModalComponent implements OnInit {
 
   close = () => {
     this.dialogRef.close();
+  }
+
+  openMedicalHistory = () => {
+    this.isMedicalHistory = true;
+    this.isContactHistory = false;
+    const emitData = {
+      title: 'medical',
+      data: this.data
+    };
+    this.sharedService.answer.emit(emitData);
+  }
+
+  openContactHistory = () => {
+    this.isContactHistory = true;
+    this.isMedicalHistory = false;
+    const emitData = {
+      title: 'contact',
+      data: {
+        appointmentId: this.displayData.appointmentId,
+        callbackId: this.displayData.id
+      }
+    };
+    this.sharedService.answer.emit(emitData);
   }
 
 }
