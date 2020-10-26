@@ -100,12 +100,12 @@ export class DoctorDashboardComponent implements OnInit {
           return item.appointmentId !== data.appointmentId && item.type !== data.type && item.doctorId !== data.doctorId;
         });
       }
-
-      console.log(this.editingAppointment);
     });
 
-    this.socketService.closeNotification.subscribe(data => {
-      console.log(this.editingAppointment);
+    this.socketService.closeNotification.subscribe(socketId => {
+      this.editingAppointment = this.editingAppointment.filter(item => {
+        return item.socketId !== socketId;
+      });
     });
   }
 
