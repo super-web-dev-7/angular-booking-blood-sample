@@ -82,7 +82,7 @@ export class AnswerInquiryComponent implements OnInit {
     }
     this.httpService.update(URL_JSON.DOCTOR + '/inquiryAnswered/' + this.displayData.appointmentId, {}).subscribe((res: any) => {
       if (res) {
-        this.dialogRef.close(true);
+        this.dialogRef.close({type: 'submit'});
       }
     });
   }
@@ -93,7 +93,7 @@ export class AnswerInquiryComponent implements OnInit {
 
   archive = () => {
     this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData.appointmentId, {}).subscribe(res => {
-      console.log(res);
+      this.dialogRef.close({type: 'archive', appointmentId: this.displayData.appointmentId});
     });
   }
 

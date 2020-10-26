@@ -333,9 +333,15 @@ export class DoctorDashboardComponent implements OnInit {
           type: 0
         });
         if (res) {
-          dialogRef = this.dialog.open(SuccessDialogComponent, {
-            width: '627px'
-          });
+          if (res.type === 'submit') {
+            dialogRef = this.dialog.open(SuccessDialogComponent, {
+              width: '627px'
+            });
+          } else if (res.type === 'archive') {
+            const index = this.allInquiry.findIndex(item => item.id === res.appointmentId);
+            this.allInquiry.splice(index, 1);
+            this.activeCallbackDataSource = this.allInquiry;
+          }
         }
       });
     }
@@ -400,9 +406,15 @@ export class DoctorDashboardComponent implements OnInit {
           table: 2
         });
         if (res) {
-          dialogRef = this.dialog.open(SuccessDialogComponent, {
-            width: '627px'
-          });
+          if (res.type === 'release') {
+            dialogRef = this.dialog.open(SuccessDialogComponent, {
+              width: '627px'
+            });
+          } else if (res.type === 'archive') {
+            const index = this.allAnamnesis.findIndex(item => item.id === res.appointmentId);
+            this.allAnamnesis.splice(index, 1);
+            this.anamnesisDataSource = this.allAnamnesis;
+          }
         }
       });
     }
