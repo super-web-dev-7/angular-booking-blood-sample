@@ -370,9 +370,22 @@ exports.analysisByPackage = async (req, res) => {
 
 exports.analysisPerMonth = async (req, res) => {
     const response = await db.sequelize.query(`
-        SELECT MONTH(appointments.createdAt) AS month, COUNT(*) as count_per_month
+        SELECT 
+            MONTH(appointments.createdAt) AS month, 
+            SUM(CASE WHEN appointments.adminStatus="upcoming" THEN 1 END) AS positive_value, 
+            SUM(CASE WHEN appointments.adminStatus="successful" THEN 1 END) AS negative_value
         FROM appointments
-        WHERE appointments.createdAt >= CURDATE() - INTERVAL 1 YEAR
+        WHERE appointments.createdAt >= CURDATE() - INTERVAL 6 MONTH
+        GROUP BY MONTH(appointments.createdAt)
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    res.json(response);
+}
+
+exports.analysisPerMonthWithComplete = async (req, res) => {
+    const response = await db.sequelize.query(`
+        SELECT MONTH(appointments.createdAt) AS MONTH, COUNT(*) AS count_per_month
+        FROM appointments
+        WHERE appointments.createdAt >= CURDATE() - INTERVAL 6 MONTH AND appointments.adminStatus="successful"
         GROUP BY MONTH(appointments.createdAt)
     `, {type: db.Sequelize.QueryTypes.SELECT});
     res.json(response);
@@ -382,14 +395,14 @@ exports.analysisTotalPatient = async (req, res) => {
     const allPatientCountPerMonth = await db.sequelize.query(`
         SELECT MONTH(createdAt) as month, COUNT(*) as count_per_month
         FROM users
-        WHERE createdAt >= CURDATE() - INTERVAL 1 YEAR AND role="Patient"
+        WHERE createdAt >= CURDATE() - INTERVAL 6 MONTH AND role="Patient"
         GROUP BY MONTH(createdAt)
     `, {type: db.Sequelize.QueryTypes.SELECT});
     const allPatientCount = await db.sequelize.query(`
         SELECT COUNT(id) as all_patient_count FROM users WHERE role="Patient"
     `, {type: db.sequelize.QueryTypes.SELECT});
     const response = {
-        all: allPatientCount,
+        all: allPatientCount[0],
         per_patient: allPatientCountPerMonth
     };
     res.json(response);
