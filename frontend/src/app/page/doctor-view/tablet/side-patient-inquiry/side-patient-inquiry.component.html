@@ -5,9 +5,9 @@
   <div class="main-side-container">
     <h1>Patienten <span style="font-weight: 100">rückfrage</span></h1>
     <div class="left-border-div mt-38">
-      <p class="p-272140">12.09.2020 09:00 - 10:15</p>
+      <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
       <p class="p-576E82">Check-Up: Männergesundheit</p>
-      <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+      <p class="p-272140">{{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}</p>
     </div>
     <div class="option-buttons-div mt-47">
       <div class="option-button-div">
@@ -36,23 +36,11 @@
       </div>
     </div>
     <p class="p-272140-tablet mt-47">
-      Kundennachricht 29.09.2020 18:10
+      Kundennachricht {{formatTime(displayData?.createdAt)}}
     </p>
-    <p class="p-272140-tablet mt-38">
-      Terminablauf
-    </p>
+    <p style="margin-top: 57px">{{displayData?.schedule}}</p>
     <p class="p-14 mt-24">
-      Hallo,
-    </p>
-    <p class="p-14 mt-24">
-      ich habe Rückfragen zum Terminablauf, muss ich<br/>
-      irgendwas vorbereiten? Oder muss ich vor der<br/>
-      Blutentnahme auf etwas achten?
-    </p>
-    <p class="p-14 mt-24">
-      Vielen Dank.<br/>
-      Mit freundlichen Grüßen<br/>
-      Sebastian Naumann
+      {{displayData?.message}}
     </p>
     <span class="org-text d-flex mt-47">
         <img src="/assets/images/info_icon.svg" alt="info" class="mr-10">

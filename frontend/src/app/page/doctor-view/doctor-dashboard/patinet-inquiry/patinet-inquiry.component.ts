@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../../../../service/auth/auth.service';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {patientInjuryData} from '../../../../utils/mock_data';
 import {MatTableDataSource} from '@angular/material/table';
 import {SearchModalComponent} from '../search-modal/search-modal.component';
 import {AnswerInquiryComponent} from '../answer-inquiry/answer-inquiry.component';
@@ -107,7 +106,7 @@ export class PatinetInquiryComponent implements OnInit {
     return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');
   }
 
-  searchItem = () => {
+  searchItem = (id) => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet) {
       this.sharedService.tabletSide.emit('inquiry');
@@ -115,6 +114,7 @@ export class PatinetInquiryComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(SearchModalComponent, {
         width: '827px',
+        data: {callbackId: id}
       });
       this.afterClosed(dialogRef);
     }
