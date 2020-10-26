@@ -135,7 +135,7 @@ export class PatinetInquiryComponent implements OnInit {
     if (this.isTablet) {
       const data = {
         title: 'inquiry',
-        callbackId: id,
+        appointmentId: id,
       };
       this.sharedService.tabletSide.emit(data);
     } else {
@@ -166,14 +166,14 @@ export class PatinetInquiryComponent implements OnInit {
     if (this.isTablet) {
       const data = {
         title: 'answer',
-        callbackId: id,
+        appointmentId: id,
       };
       this.sharedService.tabletSide.emit(data);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(AnswerInquiryComponent, {
         width: '1347px', position: {top: '5%', left: '21%'},
-        data: {callbackId: id}
+        data: {appointmentId: id}
       });
       dialogRef.afterClosed().subscribe(res => {
         this.socketService.editCallbackTable({
