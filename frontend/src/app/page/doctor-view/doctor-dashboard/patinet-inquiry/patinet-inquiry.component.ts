@@ -144,7 +144,9 @@ export class PatinetInquiryComponent implements OnInit {
         width: '827px',
         data: {callbackId: id}
       });
-      this.afterClosed(dialogRef);
+      dialogRef.afterClosed().subscribe(res => {
+        this.sharedService.closeHistory.emit();
+      });
     }
   }
 

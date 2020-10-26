@@ -18,6 +18,7 @@ export class SideMedicalHistoryComponent implements OnInit {
   @Input() editingDoctorData;
   displayData: any;
   currentUser: any;
+  isSideHistory = false;
   constructor(
     public sharedService: SharedService,
     public httpService: HttpService,
@@ -40,5 +41,21 @@ export class SideMedicalHistoryComponent implements OnInit {
 
   close = () => {
     this.closeSide.emit(false);
+  }
+
+  openSideHistory = () => {
+    if (this.isMobile) {
+      this.close();
+      this.sharedService.answer.emit('contact');
+    } else {
+      const emitData = {
+        title: 't-history',
+        data: {
+          appointmentId: this.displayData.appointmentId,
+        }
+      };
+      this.sharedService.tabletLeftSide.emit(emitData);
+      this.isSideHistory = true;
+    }
   }
 }

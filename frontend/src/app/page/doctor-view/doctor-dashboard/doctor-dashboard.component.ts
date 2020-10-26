@@ -291,7 +291,9 @@ export class DoctorDashboardComponent implements OnInit {
         width: '827px',
         data: {appointmentId: id, editingDoctorData: this.editingAppointment[index]}
       });
-      this.afterClosed(dialogRef);
+      dialogRef.afterClosed().subscribe(res => {
+        this.sharedService.closeHistory.emit();
+      });
     }
   }
 
@@ -372,7 +374,9 @@ export class DoctorDashboardComponent implements OnInit {
         height: '844px',
         data: {appointmentId: id, editingDoctorData: this.editingAppointment[index]}
       });
-      this.afterClosed(dialogRef);
+      dialogRef.afterClosed().subscribe(res => {
+        this.sharedService.closeHistory.emit();
+      });
     }
   }
 

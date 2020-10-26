@@ -127,6 +127,7 @@ export class AnamnesCheckComponent implements OnInit {
 
   close = () => {
     this.dialogRef.close();
+    this.sharedService.closeHistory.emit();
   }
 
 }

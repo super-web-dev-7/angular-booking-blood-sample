@@ -19,6 +19,8 @@ export class SidePatientInquiryComponent implements OnInit {
   @Input() editingDoctorData;
   displayData: any;
   currentUser: any;
+  isAnamnes = false;
+  isSideHistory = false;
   constructor(
     public sharedService: SharedService,
     public breakpointObserver: BreakpointObserver,
@@ -31,10 +33,15 @@ export class SidePatientInquiryComponent implements OnInit {
       this.displayData = res;
     });
     this.currentUser = this.authService.currentUserValue;
+    this.sharedService.closeHistory.subscribe(res => {
+      this.isAnamnes = false;
+      this.isSideHistory = false;
+    });
   }
 
   close = () => {
     this.closeSide.emit(false);
+    this.sharedService.closeHistory.emit();
   }
 
   formatTime = (time) => {
@@ -46,6 +53,40 @@ export class SidePatientInquiryComponent implements OnInit {
       return '';
     }
     return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');
+  }
+
+  openSideHistory = () => {
+    if (this.isMobile) {
+      this.close();
+      this.sharedService.answer.emit('contact');
+    } else {
+      const emitData = {
+        title: 't-history',
+        data: {
+          appointmentId: this.displayData.appointmentId,
+        }
+      };
+      this.sharedService.tabletLeftSide.emit(emitData);
+      this.isSideHistory = true;
+      this.isAnamnes = false;
+    }
+  }
+
+  openAnamneses = () => {
+    if (this.isMobile) {
+      this.close();
+      this.sharedService.answer.emit('medical');
+    } else {
+      const emitData = {
+        title: 't-anamnes',
+        data: {
+          appointmentId: this.displayData.appointmentId,
+        }
+      };
+      this.sharedService.tabletLeftSide.emit(emitData);
+      this.isAnamnes = true;
+      this.isSideHistory = false;
+    }
   }
 
 }

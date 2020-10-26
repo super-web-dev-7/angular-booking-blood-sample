@@ -11,13 +11,16 @@
         <button
           type="button"
           class="doctor-search-button"
+          [ngClass]="{'active-button': isMedicalHistory}"
         >
-          <mat-icon>search</mat-icon>
+          <mat-icon [ngClass]="{'active-icon':isMedicalHistory}">search</mat-icon>
         </button>
         <button
           type="button"
           class="custom-button-default ml-10"
+          (click)="openMedicalHistory()"
           mat-stroked-button
+          [ngClass]="{'active-button': isMedicalHistory}"
         >
           Anamnesedaten ansehen
         </button>
@@ -26,13 +29,16 @@
         <button
           type="button"
           class="doctor-search-button"
+          [ngClass]="{'active-button': isContactHistory}"
         >
-          <mat-icon>search</mat-icon>
+          <mat-icon [ngClass]="{'active-icon':isContactHistory}">search</mat-icon>
         </button>
         <button
           type="button"
           class="custom-button-default ml-10"
+          (click)="openContactHistory()"
           mat-stroked-button
+          [ngClass]="{'active-button': isContactHistory}"
         >
           Kontakthistorie ansehen
         </button>
