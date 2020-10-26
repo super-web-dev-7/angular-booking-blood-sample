@@ -14,7 +14,7 @@ import {SocketService} from '../../../../service/socket/socket.service';
 })
 export class SidePatientAnswerComponent implements OnInit {
   @Output() closeSide = new EventEmitter();
-  @Input() callbackID;
+  @Input() appointmentId;
   @Input() isMobile;
   @Input() isTablet;
   isAnamnes = false;
@@ -36,7 +36,7 @@ export class SidePatientAnswerComponent implements OnInit {
       this.isAnamnes = false;
       this.isSideHistory = false;
     });
-    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.callbackID).subscribe((res: any) => {
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.appointmentId).subscribe((res: any) => {
       this.displayData = res;
     });
     this.currentUser = this.authService.currentUserValue;

@@ -13,7 +13,7 @@ import * as moment from 'moment';
 })
 export class SidePatientInquiryComponent implements OnInit {
   @Output() closeSide = new EventEmitter();
-  @Input() callbackID;
+  @Input() appointmentId;
   @Input() isMobile;
   @Input() isTablet;
   displayData: any;
@@ -26,7 +26,7 @@ export class SidePatientInquiryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.callbackID).subscribe((res: any) => {
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.appointmentId).subscribe((res: any) => {
       this.displayData = res;
     });
     this.currentUser = this.authService.currentUserValue;
