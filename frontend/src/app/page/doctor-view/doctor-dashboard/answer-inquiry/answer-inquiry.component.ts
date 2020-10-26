@@ -34,7 +34,7 @@ export class AnswerInquiryComponent implements OnInit {
     this.messageForm = this.formBuilder.group({
       message: [null, Validators.required]
     });
-    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.data.callbackId).subscribe((res: any) => {
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;
     });
     this.sharedService.closeHistory.subscribe(res => {
@@ -107,7 +107,7 @@ export class AnswerInquiryComponent implements OnInit {
     this.isContactHistory = false;
     const emitData = {
       title: 'medical',
-      data: null
+      data: this.data
     };
     this.sharedService.answer.emit(emitData);
   }

@@ -3,10 +3,10 @@
   height: 100vh;
   background-color: #ffffff;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   position: fixed;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   z-index: 2000!important;
   .main-div {
     margin-top: 85px;
@@ -21,6 +21,7 @@
     }
   }
 }
+
 .close {
   position: absolute;
   top: 48px;

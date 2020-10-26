@@ -1,4 +1,4 @@
-<app-medical-history-left *ngIf="openMedicalHistory"></app-medical-history-left>
+<app-medical-history-left [data]="answerPopupData" *ngIf="openMedicalHistory"></app-medical-history-left>
 <app-contact-history-left *ngIf="openContactHistory" [appointmentInfo]="answerPopupData"></app-contact-history-left>
 <app-patient-recall *ngIf="openPatientCall" [callbackData]="answerPopupData"></app-patient-recall>
 <app-view-contact-history *ngIf="openCheckContact" [appointmentID]="appointmentId"></app-view-contact-history>

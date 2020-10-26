@@ -280,14 +280,14 @@ export class DoctorDashboardComponent implements OnInit {
     if (this.isTablet || this.isMobile) {
       const data = {
         title: 'inquiry',
-        callbackId: id,
+        appointmentId: id,
       };
       this.sharedService.tabletSide.emit(data);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(SearchModalComponent, {
         width: '827px',
-        data: {callbackId: id}
+        data: {appointmentId: id}
       });
       this.afterClosed(dialogRef);
     }
@@ -312,7 +312,7 @@ export class DoctorDashboardComponent implements OnInit {
     if (this.isTablet || this.isMobile) {
       const data = {
         title: 'answer',
-        callbackId: id,
+        appointmentId: id,
       };
       this.sharedService.tabletSide.emit(data);
     } else {
@@ -320,7 +320,7 @@ export class DoctorDashboardComponent implements OnInit {
       dialogRef = this.dialog.open(AnswerInquiryComponent, {
         width: '1347px',
         position: {top: '5%', left: '21%'},
-        data: {callbackId: id}
+        data: {appointmentId: id}
       });
       dialogRef.afterClosed().subscribe(res => {
         this.sharedService.closeHistory.emit();
