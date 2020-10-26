@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   BASE_URL: 'http://localhost:7000/',
-  API_URL: 'http://localhost:7000/api/'
+  API_URL: 'http://localhost:7000/api/',
+  SOCKET_URL: 'http://localhost:7000'
 };
 
 /*
