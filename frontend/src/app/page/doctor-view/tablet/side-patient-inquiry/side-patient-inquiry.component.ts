@@ -16,6 +16,7 @@ export class SidePatientInquiryComponent implements OnInit {
   @Input() appointmentId;
   @Input() isMobile;
   @Input() isTablet;
+  @Input() editingDoctorData;
   displayData: any;
   currentUser: any;
   isAnamnes = false;

@@ -17,11 +17,15 @@ export class SocketService {
     this.socket.emit('edit_callback', data);
   }
 
-  editAnamnesisTable = data => {
-    this.socket.emit('edit_anamnesis', data);
-  }
+  // editAnamnesisTable = data => {
+  //   this.socket.emit('edit_anamnesis', data);
+  // }
+  //
+  // editTerminTable = data => {
+  //   this.socket.emit('edit_termin', data);
+  // }
 
-  editTerminTable = data => {
-    this.socket.emit('edit_termin', data);
+  closeEmit = () => {
+    this.socket.emit('close_emit');
   }
 }

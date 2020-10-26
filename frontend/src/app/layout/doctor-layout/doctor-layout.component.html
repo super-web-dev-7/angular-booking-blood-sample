@@ -9,10 +9,10 @@
 <app-left-message-popup *ngIf="tMessage" [callbackInfo]="patientAnswerData" [isMobile]="isMobile" [isTablet]="isTablet"></app-left-message-popup>
 <mat-sidenav-container (backdropClick)="closeRightSide($event)">
   <mat-sidenav
+    disableClose
     [opened]="isOpen"
     [mode]="isMobile || isTablet ? 'over' : 'side'"
     (closed)="isOpen = false"
-    #sidenav
   >
     <app-left-sidebar *ngIf="isMobile || isTablet else desktopView;" (closeSide)="closeLeftSide($event)"></app-left-sidebar>
     <ng-template  #desktopView>
@@ -22,10 +22,10 @@
   <mat-sidenav
     [opened]="isRightSidebarOpen && currentUser.role === 'Doctor'"
     [mode]="'over'"
-    #rightSide
     position="end"
     (closed)="isRightSidebarOpen = false"
     [ngClass]="{'side-top': isMobile && !openRightMenu}"
+    disableClose
   >
     <app-right-sidebar
       (closeSide)="closeRightSide($event)"
@@ -35,6 +35,7 @@
       *ngIf="openPatientInquiry"
       (closeSide)="closeRightSide($event)"
       [appointmentId]="appointmentId"
+      [editingDoctorData]="editingDoctorData"
       [isMobile]="isMobile"
       [isTablet]="isTablet"
     ></app-side-patient-inquiry>
@@ -49,6 +50,7 @@
       *ngIf="viewAnamnes"
       (closeSide)="closeRightSide($event)"
       [appointmentID]="appointmentId"
+      [editingDoctorData]="editingDoctorData"
       [isMobile]="isMobile"
       [isTablet]="isTablet"
     ></app-side-medical-history>

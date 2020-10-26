@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {SharedService} from '../../service/shared/shared.service';
 import {AuthService} from '../../service/auth/auth.service';
 import {SessionExpireAlertComponent} from '../../components/session-expire-alert/session-expire-alert.component';
+import {SocketService} from '../../service/socket/socket.service';
 
 
 @Component({
@@ -38,13 +39,15 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
   appointmentId = null;
   answerPopupData = null;
   patientAnswerData = null;
+  editingDoctorData: any;
 
   constructor(
     public breakpointObserver: BreakpointObserver,
     public authService: AuthService,
     private sharedService: SharedService,
     public router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public socketService: SocketService
   ) {
     breakpointObserver.observe([
       Breakpoints.HandsetPortrait,
@@ -115,12 +118,14 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
         if (res.title === 'inquiry') {
           this.openPatientInquiry = true;
           this.appointmentId = res.appointmentId;
+          this.editingDoctorData = res.editingDoctorData;
         } else if (res.title === 'answer') {
           this.openPatientAnswer = true;
           this.appointmentId = res.appointmentId;
         } else if (res.title === 'v-anam') {
           this.viewAnamnes = true;
           this.appointmentId = res.appointmentId;
+          this.editingDoctorData = res.editingDoctorData;
         } else if (res.title === 'c-anam') {
           this.checkAnamnes = true;
           this.appointmentId = res.appointmentId;
@@ -173,6 +178,9 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
   }
 
   closeRightSide = (event) => {
+    console.log('close side');
+    console.log(this.editingDoctorData);
+    this.socketService.closeEmit();
     this.isRightSidebarOpen = false;
     this.openPatientInquiry = false;
     this.openPatientAnswer = false;
