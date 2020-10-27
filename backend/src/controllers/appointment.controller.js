@@ -65,7 +65,7 @@ exports.getAppointmentByNurse = async (req, res) => {
         SELECT appointments.id AS id, appointments.time AS startTime, appointments.ready AS ready,
             users.id AS patientId, users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.id AS patientDetailId, patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
-            patients.differentPlace AS differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode, 
+            patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode, 
             packages.id AS packageId, packages.name AS packageName,
             calendars.id AS calendarId, calendars.duration_appointment AS duration, calendars.working_time_from AS workingTimeFrom, calendars.working_time_until AS workingTimeUntil
         FROM appointments
@@ -85,7 +85,8 @@ exports.getAppointmentByPatient = async (req, res) => {
     const allAppointment = await sequelize.query(`
         SELECT appointments.id AS id, appointments.time AS startTime, appointments.ready AS ready, appointments.adminStatus AS adminStatus,
             users.id AS patientId, users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
-            patients.id AS patientDetailId, patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt, 
+            patients.id AS patientDetailId, patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
+            patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode, 
             packages.id AS packageId, packages.name AS packageName,
             calendars.id AS calendarId, calendars.duration_appointment AS duration
         FROM appointments
@@ -105,7 +106,8 @@ exports.getAppointmentDetail = async (req, res) => {
     const appointment = await sequelize.query(`
         SELECT appointments.id AS id, appointments.time AS startTime, appointments.ready AS ready, appointments.adminStatus AS adminStatus,
             users.id AS patientId, users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
-            patients.id AS patientDetailId, patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt, 
+            patients.id AS patientDetailId, patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
+            patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode, 
             packages.id AS packageId, packages.name AS packageName,
             calendars.id AS calendarId, calendars.duration_appointment AS duration
         FROM appointments
@@ -127,6 +129,7 @@ exports.getAppointmentsByAnamnes = async (req, res) => {
         SELECT appointments.id AS id, appointments.time AS startTime, appointments.adminStatus AS adminStatus,
             users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
+            patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode,
             packages.name AS packageName,
             calendars.duration_appointment AS duration
         FROM appointments
@@ -148,6 +151,7 @@ exports.getAppointmentWithQuestionById = async (req, res) => {
         SELECT appointments.id AS id, appointments.time AS startTime,
             users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
+            patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode,
             packages.name AS packageName,
             calendars.duration_appointment AS duration,
             medical_questions.*,
@@ -179,6 +183,7 @@ exports.getAppointmentsByAnamnesArchived = async (req, res) => {
         SELECT appointments.id AS id, appointments.time AS startTime, appointments.adminStatus AS adminStatus,
             users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
+            patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode,
             packages.name AS packageName,
             calendars.duration_appointment AS duration
         FROM appointments
@@ -199,6 +204,7 @@ exports.getAppointmentsWithActiveCallback = async (req, res) => {
         SELECT appointments.id AS id, appointments.time AS startTime, appointments.adminStatus AS adminStatus,
             users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
+            patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode,
             packages.name AS packageName,
             calendars.duration_appointment AS duration
         FROM appointments
@@ -220,6 +226,7 @@ exports.getAppointmentWithCallbackById = async (req, res) => {
         SELECT appointments.id AS id, appointments.time AS startTime,
             users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
+            patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode,
             packages.name AS packageName,
             calendars.duration_appointment AS duration,
             callback_doctors.*
@@ -243,6 +250,7 @@ exports.getAppointmentsWithArchivedCallback = async (req, res) => {
         SELECT appointments.id AS id, appointments.time AS startTime, appointments.adminStatus AS adminStatus,
             users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
+            patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode,
             packages.name AS packageName,
             calendars.duration_appointment AS duration
         FROM appointments
@@ -263,6 +271,7 @@ exports.getAppointmentsWithoutArchived = async (req, res) => {
         SELECT appointments.id AS id, appointments.time AS startTime, appointments.adminStatus AS adminStatus,
             users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
+            patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode,
             packages.name AS packageName,
             calendars.duration_appointment AS duration, agencies.doctors_id AS doctorsId
         FROM appointments
@@ -299,6 +308,7 @@ exports.getAppointmentsWithArchived = async (req, res) => {
         SELECT appointments.id AS id, appointments.time AS startTime, appointments.adminStatus AS adminStatus,
             users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
+            patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode,
             packages.name AS packageName,
             calendars.duration_appointment AS duration, agencies.doctors_id AS doctorsId
         FROM appointments
