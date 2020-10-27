@@ -24,25 +24,22 @@
     <div class="col-9 pt-3">
       <p>Terminbestätigung 24h vor Termin <br><br></p>
       <p ngnonbindable>
-        Sehr geehrter Herr Heinz,<br><br>
-        wir erinnern Sie freundlich an den morgigen Termin um 10:00 Uhr. Schwester Laura Morgenstern nimmt Ihren Termin wahr und übermittelt uns umgehend die Blutprobe. Anschließend werden wir Ihnen Ihre Testergebnisse innerhalb von 48h zusenden.
-        <br><br>
-        Herzliche Grüße <br> Ihr previmo-Team <br> {{'{previmo_signature}'}}
+        {{data.content}}
       </p>
       <p></p>
       <p></p>
     </div>
   </div>
   <div class="pt-5 float-right d-flex">
-    <div *ngIf="!success" class="d-flex align-items-center">
+    <div *ngIf="!data.status" class="d-flex align-items-center">
       <div class="warning-status">!</div>
       <div class="warning-color ml-2">Automatischer Versand fehlgeschlagen</div>
     </div>
-    <div *ngIf="success" class="d-flex align-items-center">
+    <div *ngIf="data.status" class="d-flex align-items-center">
       <div class="success-status"></div>
       <div class="success-color ml-2">Manueller Versand war erfolgreich</div>
     </div>
-    <button *ngIf="!success" class="custom-button primary primary-button ml-2" mat-stroked-button>Manuell versenden</button>
+    <button *ngIf="!data.status" class="custom-button primary primary-button ml-2" mat-stroked-button (click)="sendManual()">Manuell versenden</button>
     <button class="custom-button ml-2" mat-stroked-button>Schließen</button>
 
   </div>

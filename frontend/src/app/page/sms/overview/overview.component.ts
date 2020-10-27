@@ -24,7 +24,7 @@ export class OverviewComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   selectedDeleteItem: number = null;
-  allGroup = [];
+  allSMS = [];
   filterValue = null;
   orderStatus = {
     active: '',
@@ -44,15 +44,17 @@ export class OverviewComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    this.httpService.get(URL_JSON.GROUP + '/get').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.BASE + '/sms_history/get').subscribe((res: any) => {
+      console.log(res);
       this.dataSource.data = res;
-      this.allGroup = res;
+      this.allSMS = res;
     });
   }
 
   viewItem = (item) => {
     const dialogRef = this.dialog.open(ViewComponent, {
-      width: '900px'
+      width: '900px',
+      data: item
     });
 
     dialogRef.afterClosed().subscribe(() => {
@@ -66,7 +68,7 @@ export class OverviewComponent implements OnInit {
   }
 
   filter = () => {
-    this.dataSource.data = this.allGroup.filter(item => {
+    this.dataSource.data = this.allSMS.filter(item => {
       return item.name.includes(this.filterValue)
         || item.calendar.name.includes(this.filterValue)
         || (item.user.firstName + ' ' + item.user.lastName).includes(this.filterValue);
@@ -75,9 +77,9 @@ export class OverviewComponent implements OnInit {
 
   onSort = (event) => {
     this.orderStatus = event;
-    const groups = [...this.allGroup];
+    const groups = [...this.allSMS];
     if (event.direction === '') {
-      this.dataSource.data = this.allGroup;
+      this.dataSource.data = this.allSMS;
       return;
     }
     if (event.active === 'active') {

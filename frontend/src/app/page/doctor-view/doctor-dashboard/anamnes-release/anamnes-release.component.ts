@@ -184,14 +184,7 @@ export class AnamnesReleaseComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(res => {
         this.sharedService.closeHistory.emit();
-        this.socketService.editCallbackTable({
-          doctorId: this.currentUser.id,
-          appointmentId: id,
-          doctorFirstName: this.currentUser.firstName,
-          doctorLastName: this.currentUser.lastName,
-          type: 0,
-          table: 2
-        });
+        this.socketService.closeEmit();
         if (res) {
           dialogRef = this.dialog.open(SuccessDialogComponent, {
             width: '627px'

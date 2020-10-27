@@ -281,20 +281,6 @@ export const DoctorSidebar = [
     role: '',
     link: '/doctor/archive/events',
     children: []
-    // children: [
-    //   {
-    //     name: 'Patientenrückfragen',
-    //     link: '/patient-inquiry'
-    //   },
-    //   {
-    //     name: 'Anamnesefreigaben',
-    //     link: '/anamnes-release'
-    //   },
-    //   {
-    //     name: 'Termine',
-    //     link: '/events'
-    //   }
-    // ]
   }
 ];
 // patient sidebar

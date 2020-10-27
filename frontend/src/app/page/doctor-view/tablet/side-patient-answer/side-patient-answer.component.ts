@@ -1,10 +1,10 @@
-import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
-import {SharedService} from '../../../../service/shared/shared.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BreakpointObserver} from '@angular/cdk/layout';
-import {HttpService} from '../../../../service/http/http.service';
-import {URL_JSON} from '../../../../utils/url_json';
 import * as moment from 'moment';
-import {AuthService} from '../../../../service/auth/auth.service';
+
+import {URL_JSON} from '../../../../utils/url_json';
+import {SharedService} from '../../../../service/shared/shared.service';
+import {HttpService} from '../../../../service/http/http.service';
 import {SocketService} from '../../../../service/socket/socket.service';
 
 @Component({
@@ -21,12 +21,11 @@ export class SidePatientAnswerComponent implements OnInit {
   isSideHistory = false;
   isSuccess = false;
   displayData: any;
-  currentUser: any;
+
   constructor(
     public sharedService: SharedService,
     public breakpointObserver: BreakpointObserver,
     public httpService: HttpService,
-    public authService: AuthService,
     public socketService: SocketService
   ) { }
 
@@ -39,20 +38,12 @@ export class SidePatientAnswerComponent implements OnInit {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.appointmentId).subscribe((res: any) => {
       this.displayData = res;
     });
-    this.currentUser = this.authService.currentUserValue;
   }
 
   close = () => {
     this.closeSide.emit(false);
     this.sharedService.closeHistory.emit();
-    this.socketService.editCallbackTable({
-      doctorId: this.currentUser.id,
-      appointmentId: this.displayData.appointmentId,
-      doctorFirstName: this.currentUser.firstName,
-      doctorLastName: this.currentUser.lastName,
-      table: 1,
-      type: 0
-    });
+    this.socketService.closeEmit();
   }
 
   getTimeDuration = (startTime, duration) => {

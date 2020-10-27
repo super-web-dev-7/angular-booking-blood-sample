@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {HttpService} from '../../../service/http/http.service';
+import {URL_JSON} from '../../../utils/url_json';
 
 @Component({
   selector: 'app-view',
@@ -9,8 +12,9 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class ViewComponent implements OnInit {
 
-  success = true;
   constructor(
+    public httpService: HttpService,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer
   ) {
@@ -21,6 +25,12 @@ export class ViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.data);
   }
 
+  sendManual = () => {
+    this.httpService.post(URL_JSON.BASE + '/sendSMS', this.data).subscribe((res: any) => {
+      console.log(res);
+    });
+  }
 }

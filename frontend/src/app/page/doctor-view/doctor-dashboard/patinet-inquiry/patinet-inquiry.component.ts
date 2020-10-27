@@ -178,14 +178,7 @@ export class PatinetInquiryComponent implements OnInit {
         data: {appointmentId: id}
       });
       dialogRef.afterClosed().subscribe(res => {
-        this.socketService.editCallbackTable({
-          doctorId: this.currentUser.id,
-          appointmentId: id,
-          doctorFirstName: this.currentUser.firstName,
-          doctorLastName: this.currentUser.lastName,
-          table: 1,
-          type: 0
-        });
+        this.socketService.closeEmit();
         if (res) {
           this.dialog.open(SuccessDialogComponent, {
             width: '662px',

@@ -1,6 +1,7 @@
 import db from '../models';
 import Axios from 'axios';
 import {sendMail} from '../helper/email';
+import {sendSMS} from "../helper/sms";
 
 const User = db.user;
 const WorkingGroup = db.workingGroup;
@@ -63,22 +64,17 @@ exports.getPostalCodeByName = async (req, res) => {
 }
 
 exports.sendSMS = async (req, res) => {
-    const SMSData = {
-        recipientAddressList: ['8613124260482'],
-        messageContent: 'example message content',
-    };
-    Axios({
-        method: 'POST',
-        url: 'https://api.websms.com/rest/smsmessaging/text',
-        headers: {
-            'Content-Type': 'application/json',
-            'Host': 'api.websms.com',
-            'Accept': 'application/json',
-            'Authorization': 'Basic ' + process.env.SMS_BASIC_TOKEN
-        },
-        data: SMSData
-    }).then(res => {
-        console.log(res);
-    })
+    const data = req.body;
+    const response = await sendSMS(data);
+    console.log(response);
+    res.status(200).json(response);
 }
 
+exports.getSmsHistory = async (req, res) => {
+    const response = await db.sequelize.query(`
+        SELECT sms.id, sms.subject, sms.phoneNumber, sms.status, sms.content, sms.createdAt, users.firstName, users.lastName
+        FROM sms_histories sms
+        JOIN users ON sms.receiver=users.id
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    res.json(response);
+}

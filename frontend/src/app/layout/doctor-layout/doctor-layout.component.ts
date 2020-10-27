@@ -179,8 +179,9 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
 
   closeRightSide = (event) => {
     console.log('close side');
-    console.log(this.editingDoctorData);
+    console.log(event);
     this.socketService.closeEmit();
+    this.editingDoctorData = null;
     this.isRightSidebarOpen = false;
     this.openPatientInquiry = false;
     this.openPatientAnswer = false;
