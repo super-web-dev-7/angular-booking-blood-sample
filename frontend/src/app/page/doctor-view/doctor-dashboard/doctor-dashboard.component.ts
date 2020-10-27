@@ -17,12 +17,20 @@ import {SearchInputComponent} from './search-input/search-input.component';
 import {HttpService} from '../../../service/http/http.service';
 import {SuccessDialogComponent} from './answer-inquiry/success-dialog/success-dialog.component';
 import {SocketService} from '../../../service/socket/socket.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 
 @Component({
   selector: 'app-doctor-dashboard',
   templateUrl: './doctor-dashboard.component.html',
-  styleUrls: ['./doctor-dashboard.component.scss']
+  styleUrls: ['./doctor-dashboard.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class DoctorDashboardComponent implements OnInit {
   currentUser: any;
@@ -60,6 +68,7 @@ export class DoctorDashboardComponent implements OnInit {
     successful: 'Abgeschlossene Termine'
   };
   editingAppointment = [];
+  expandedElement = null;
 
   constructor(
     public authService: AuthService,
@@ -82,6 +91,7 @@ export class DoctorDashboardComponent implements OnInit {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithActiveCallback').subscribe((res: any) => {
       this.activeCallbackDataSource.data = res;
       this.allInquiry = res;
+      this.expandedElement = this.activeCallbackDataSource.data;
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithoutArchived').subscribe((res: any) => {
       this.dataSourceE.data = res;
