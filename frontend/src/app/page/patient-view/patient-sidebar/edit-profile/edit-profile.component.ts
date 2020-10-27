@@ -1,12 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {AuthService} from '../../../../service/auth/auth.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {userMockData} from '../../../../utils/mock_data';
-import {HttpService} from "../../../../service/http/http.service";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {URL_JSON} from "../../../../utils/url_json";
-import {MustMatch} from "../../../../shared/confirm-password.validator";
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
+import {URL_JSON} from '../../../../utils/url_json';
+import {AuthService} from '../../../../service/auth/auth.service';
+import {HttpService} from '../../../../service/http/http.service';
+import {MustMatch} from '../../../../shared/confirm-password.validator';
 
 @Component({
   selector: 'app-edit-profile',
@@ -84,17 +84,19 @@ export class EditProfileComponent implements OnInit {
   checkPostalCode = (type) => {
     if (type === 'plz') {
       this.httpService.checkPostalCode(this.f.plz.value).subscribe((res: any) => {
-        this.f.ort.setValue(res?.ort);
         if (!res) {
           this.f.plz.setErrors(Validators.required);
+        } else {
+          this.f.ort.setValue(res?.city);
         }
       });
     }
     if (type === 'otherPostalCode') {
       this.httpService.checkPostalCode(this.f.otherPostalCode.value).subscribe((res: any) => {
-        this.f.otherCity.setValue(res?.ort);
         if (!res) {
           this.f.otherPostalCode.setErrors(Validators.required);
+        } else {
+          this.f.otherCity.setValue(res?.city);
         }
       });
     }

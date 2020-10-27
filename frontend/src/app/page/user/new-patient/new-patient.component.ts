@@ -104,20 +104,20 @@ export class NewPatientComponent implements OnInit {
   checkPostalCode = (type) => {
     if (type === 'plz') {
       this.httpService.checkPostalCode(this.f.plz.value).subscribe((res: any) => {
-        this.f.ort.setValue(res?.ort);
         if (!res) {
           this.f.plz.setErrors(Validators.required);
         } else {
+          this.f.ort.setValue(res?.city);
           this.f.plz.setErrors(null);
         }
       });
     }
     if (type === 'otherPostalCode') {
       this.httpService.checkPostalCode(this.f.otherPostalCode.value).subscribe((res: any) => {
-        this.f.otherCity.setValue(res?.ort);
         if (!res) {
           this.f.otherPostalCode.setErrors(Validators.required);
         } else {
+          this.f.otherCity.setValue(res?.city);
           this.f.otherPostalCode.setErrors(null);
         }
       });

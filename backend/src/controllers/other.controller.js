@@ -10,6 +10,7 @@ const Template = db.template;
 const Package = db.package;
 const Appointment = db.appointment;
 const ZipCode = db.zipCodeModel;
+const DistrictModel = db.districtModel;
 
 exports.getSuperAdminDashboardValues = async (req, res) => {
     const response = {
@@ -55,8 +56,8 @@ exports.sendEmail = async (req, res) => {
 }
 
 exports.checkPostalCode = async (req, res) => {
-    const zipcodeModel = await ZipCode.findOne({where: {plz: req.params.code}, raw: true,});
-    res.status(200).json(zipcodeModel)
+    const district = await DistrictModel.findOne({where: {zipcode: req.params.code}, raw: true});
+    res.status(200).json(district)
 }
 
 exports.getPostalCodeByName = async (req, res) => {

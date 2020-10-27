@@ -72,13 +72,18 @@ exports.get = async (req, res) => {
     res.status(200).json(allUsers);
 }
 
+exports.getPatients = async (req, res) => {
+    const allPatients = await User.findAll({where: {role: 'Patient', isActive: true}});
+    res.status(200).json(allPatients);
+}
+
 exports.getPatientById = async (req, res) => {
     const patient = await Patient.findAll({where: {user_id: req.params.id}});
     res.status(200).json(patient[0])
 }
 
 exports.getAgAdminInWorkingGroup = async (req, res) => {
-    const admins = await User.findAll({where: {role: 'AG-Admin'}});
+    const admins = await User.findAll({where: {role: 'AG-Admin', isActive: true}});
     const groups = await WorkingGroup.findAll({where: {}});
     const agAdmin = [];
     for (const group of groups) {
@@ -103,12 +108,13 @@ exports.getAgAdminInWorkingGroup = async (req, res) => {
 }
 
 exports.unassignedInCalendar = async (req, res) => {
-    const allNurses = await sequelize.query(`SELECT * FROM users WHERE role="Nurse" AND id NOT IN (SELECT nurse FROM calendars)`, {type: Sequelize.QueryTypes.SELECT})
+    const allNurses = await sequelize.query(`SELECT * FROM users WHERE role="Nurse" AND isActive=true AND id NOT IN (SELECT nurse FROM calendars)`, {type: Sequelize.QueryTypes.SELECT})
     res.status(200).json(allNurses);
 }
 
 exports.unassignedInAgency = async (req, res) => {
-    const allDoctors = await User.findAll({where: req.query});
+    console.log({...req.query, isActive: true});
+    const allDoctors = await User.findAll({where: {...req.query, isActive: true}});
     const unassignedDoctors = [];
     for (const doctor of allDoctors) {
         let include = false;

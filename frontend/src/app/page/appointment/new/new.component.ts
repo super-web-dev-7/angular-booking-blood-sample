@@ -80,7 +80,7 @@ export class NewComponent implements OnInit {
     this.httpService.get(URL_JSON.PACKAGE + '/getWithQuery?status=Public&status=Intern').subscribe((res: any) => {
       this.packages = res;
     });
-    this.httpService.get(URL_JSON.USER + '/get?role=Patient').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.USER + '/getPatients').subscribe((res: any) => {
       this.allPatient = res;
       this.allPatient$ = res;
     });
@@ -123,17 +123,17 @@ export class NewComponent implements OnInit {
   checkPostalCode = (type) => {
     if (type === 'patient') {
       this.httpService.checkPostalCode(this.pf.plz.value).subscribe((res: any) => {
-        this.pf.ort.setValue(res?.ort);
         if (!res) {
           this.pf.plz.setErrors(Validators.required);
         } else {
+          this.pf.ort.setValue(res?.city);
           this.pf.plz.setErrors(null);
         }
       });
     }
     if (type === 'appointment') {
       this.httpService.checkPostalCode(this.f.name.value).subscribe((res: any) => {
-        if (!res || res?.ort !== 'Berlin') {
+        if (!res || res?.city !== 'Berlin') {
           this.f.name.setErrors(Validators.required);
         } else {
           this.f.name.setErrors(null);

@@ -32,10 +32,13 @@ exports.register = (req, res) => {
 
 exports.login = async (req, res) => {
     const auth_data = req.body;
-    const user = await User.findOne({where: {email: auth_data.email.toLowerCase()}}).then(res => {
-        return res;
-    });
+    const user = await User.findOne({where: {email: auth_data.email.toLowerCase()}});
     if (user) {
+        if (!user.isActive) {
+            res.status(400).send({
+                message: 'User is not active.'
+            })
+        }
         const passwordIsValid = bcrypt.compareSync(auth_data.password, user.password);
         if (passwordIsValid) {
             // Passwords match
