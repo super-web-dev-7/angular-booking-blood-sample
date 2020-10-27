@@ -84,19 +84,19 @@
 
     <div class="current-month-container">
       <div class="item-container pink-white">
-        <span class="value">12</span>
+        <span class="value">{{averageData?.monthPositiveAverage}}</span>
         <span class="label">Ø Monat</span>
       </div>
       <div class="item-container white-pink">
-        <span class="value">3</span>
+        <span class="value">{{averageData?.weekPositiveAverage}}</span>
         <span class="label">Ø Woche</span>
       </div>
       <div class="item-container green-white">
-        <span class="value">9</span>
+        <span class="value">{{averageData?.monthNegativeAverage}}</span>
         <span class="label">Ø Monat</span>
       </div>
       <div class="item-container white-green">
-        <span class="value">2</span>
+        <span class="value">{{averageData?.weekNegativeAverage}}</span>
         <span class="label">Ø Woche</span>
       </div>
     </div>

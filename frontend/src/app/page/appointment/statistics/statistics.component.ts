@@ -63,6 +63,7 @@ export class StatisticsComponent implements OnInit {
   };
   monthlyData: any;
   dataPerPatient: any;
+  averageData: any;
 
   constructor(
     public httpService: HttpService,
@@ -124,9 +125,16 @@ export class StatisticsComponent implements OnInit {
           negative: parseInt(item.negative_value ? item.negative_value : 0, 10)
         });
       }
-      console.log(this.barChartData);
       this.monthlyData = res;
       console.log(res);
+      const monthNegativeAverage = res.reduce((a, b) => a.negative_value + b.negative_value);
+      const monthPositiveAverage = res.reduce((a, b) => a.positive_value + b.positive_value);
+      this.averageData = {
+        monthNegativeAverage,
+        monthPositiveAverage,
+        weekNegativeAverage: (monthNegativeAverage / 4),
+        weekPositiveAverage: (monthPositiveAverage / 4)
+      };
     });
 
     this.httpService.get(URL_JSON.APPOINTMENT + '/analysisTotalPatient').subscribe((res: any) => {

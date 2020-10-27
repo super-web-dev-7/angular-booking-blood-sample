@@ -13,7 +13,6 @@ export class BarChartComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.data);
     if (this.data) {
       const tempData = [...this.data];
       tempData.sort((a, b) => {
@@ -28,5 +27,4 @@ export class BarChartComponent implements OnInit {
       }
     }
   }
-
 }

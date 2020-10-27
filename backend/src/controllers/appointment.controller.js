@@ -371,9 +371,9 @@ exports.analysisByPackage = async (req, res) => {
 exports.analysisPerMonth = async (req, res) => {
     const response = await db.sequelize.query(`
         SELECT 
-            MONTH(appointments.createdAt) AS month, 
-            SUM(CASE WHEN appointments.adminStatus="upcoming" THEN 1 END) AS positive_value, 
-            SUM(CASE WHEN appointments.adminStatus="successful" THEN 1 END) AS negative_value
+            MONTH(appointments.createdAt) AS MONTH, 
+            CONVERT(IFNULL(SUM(CASE WHEN appointments.adminStatus="upcoming" THEN 1 END), 0), UNSIGNED INTEGER) AS positive_value, 
+            CONVERT(IFNULL(SUM(CASE WHEN appointments.adminStatus="successful" THEN 1 END), 0), UNSIGNED INTEGER) AS negative_value
         FROM appointments
         WHERE appointments.createdAt >= CURDATE() - INTERVAL 6 MONTH
         GROUP BY MONTH(appointments.createdAt)
