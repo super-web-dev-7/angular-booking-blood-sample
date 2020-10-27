@@ -36,6 +36,7 @@ export class AnswerInquiryComponent implements OnInit {
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;
+      console.log('res#######', res);
     });
     this.sharedService.closeHistory.subscribe(res => {
       this.isMedicalHistory = false;

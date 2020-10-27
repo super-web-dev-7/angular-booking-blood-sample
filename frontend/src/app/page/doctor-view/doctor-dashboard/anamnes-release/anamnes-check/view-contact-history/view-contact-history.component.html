@@ -8,7 +8,8 @@
       <div class="left-border-div">
         <p class="p-16 ml-20">{{getTimeDuration(appointmentData?.startTime, appointmentData?.duration)}}</p>
         <p class="p-576E82">Check-up: <span>{{appointmentData?.packageName}}</span></p>
-        <p class="p-14 ml-20">{{appointmentData?.addressStreet}} {{appointmentData?.addressPlz}}, {{appointmentData?.addressOrt}}</p>
+        <p class="p-14 ml-20" *ngIf="!appointmentData?.differentPlace">{{appointmentData?.addressStreet}} {{appointmentData?.addressPlz}}, {{appointmentData?.addressOrt}}</p>
+        <p class="p-14 ml-20" *ngIf="appointmentData?.differentPlace">{{appointmentData?.otherStreet}} {{appointmentData?.otherPostalCode}}, {{appointmentData?.otherCity}}</p>
         <div *ngFor="let history of historyData">
           <div class="d-flex mt-24">
             <mat-icon class="dot">lens</mat-icon>
