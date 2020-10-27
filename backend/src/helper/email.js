@@ -17,8 +17,13 @@ export const sendMail = async (data) => {
         debug: true,
         logger: true
     });
-    await transporter.sendMail(option, function (err, result) {
-        console.log(err)
-        console.log(result)
+    return await transporter.sendMail(option, function (err, result) {
+        if (err) {
+            console.log('error >>> ', err)
+            return false;
+        }
+        console.log('result >>> ', result)
+        return true;
+
     })
 }

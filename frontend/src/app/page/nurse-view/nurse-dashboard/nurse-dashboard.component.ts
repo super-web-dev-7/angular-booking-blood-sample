@@ -257,26 +257,42 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
   }
 
   appointmentDelay = () => {
-    const data = {
+    const emailData = {
       email: this.customEmail ? this.customEmail : this.defaultEmail,
       content: this.customText,
       subject: 'Appointment Delay'
     };
-    this.httpService.post(URL_JSON.BASE + 'sendEmail', data).subscribe(res => {
+
+    const smsData = {
+      subject: 'Appointment Delay',
+      receiver: this.selectedAppointment.patientId,
+      phoneNumber: this.selectedAppointment.patientNumber,
+      content: this.customText
+    };
+    this.httpService.post(URL_JSON.BASE + '/nurse/appointment_delay', {emailData, smsData})
+      .subscribe((res: any) => {
+      console.log(res);
       this.close();
     });
-    // this.close();
   }
 
   shiftSchedule = () => {
-    const data = {
+    const emailData = {
       email: this.customEmail ? this.customEmail : this.defaultEmail,
       content: this.customText,
       subject: 'Appointment Moving'
     };
-    this.httpService.post(URL_JSON.BASE + 'sendEmail', data).subscribe(res => {
-      this.close();
-    });
+    const smsData = {
+      subject: 'Appointment Moving',
+      receiver: this.selectedAppointment.patientId,
+      phoneNumber: this.selectedAppointment.patientNumber,
+      content: this.customText
+    };
+    this.httpService.post(URL_JSON.BASE + '/nurse/appointment_delay', {emailData, smsData})
+      .subscribe((res: any) => {
+        console.log(res);
+        this.close();
+      });
   }
 
   appointmentTaken = () => {

@@ -4,6 +4,7 @@ import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
+import * as moment from 'moment';
 
 import {HttpService} from '../../../service/http/http.service';
 import {AuthService} from '../../../service/auth/auth.service';
@@ -124,5 +125,12 @@ export class OverviewComponent implements OnInit {
       });
     }
     this.dataSource.data = groups;
+  }
+
+  formatTime = (time) => {
+    if (!time) {
+      return '';
+    }
+    return moment(time).format('DD.MM.YYYY HH:mm');
   }
 }

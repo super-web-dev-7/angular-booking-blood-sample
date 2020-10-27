@@ -78,3 +78,27 @@ exports.getSmsHistory = async (req, res) => {
     `, {type: db.Sequelize.QueryTypes.SELECT});
     res.json(response);
 }
+
+exports.appointmentDelay = async (req, res) => {
+    const emailData = req.body.emailData;
+    const smsData = req.body.smsData;
+    const emailResult = await sendMail(emailData);
+    const smsResult = await sendSMS(smsData);
+    res.status(200).json({emailResult, smsResult});
+}
+
+exports.appointmentShift = async (req, res) => {
+    const emailData = req.body.emailData;
+    const smsData = req.body.smsData;
+    const emailResult = await sendMail(emailData);
+    const smsResult = await sendSMS(smsData);
+    res.status(200).json({emailResult, smsResult});
+}
+
+exports.appointmentTaken = async (req, res) => {
+
+}
+
+exports.appointmentNotThere = async (req, res) => {
+
+}

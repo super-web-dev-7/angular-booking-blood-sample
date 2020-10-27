@@ -6,10 +6,19 @@ const router = Router();
 
 router.route('/dashboard/superadmin').get(otherController.getSuperAdminDashboardValues);
 router.route('/dashboard/ag-admin').get(otherController.getAgAdminDashboardValues);
+
 router.route('/sms_history/get').get(otherController.getSmsHistory);
-router.route('/sendEmail').post(otherController.sendEmail);
-router.route('/sendSMS').post(otherController.sendSMS);
+
 router.route('/zipcode/checkPostalCode/:code').get(otherController.checkPostalCode);
 router.route('/zipcode/getPostalCodeByName').get(otherController.getPostalCodeByName);
+
+router.route('/sendEmail').post(otherController.sendEmail);
+router.route('/sendSMS').post(otherController.sendSMS);
+
+// Nurse action
+router.route('/nurse/appointment_delay').post(otherController.appointmentDelay);
+router.route('/nurse/appointment_shift').post(otherController.appointmentShift);
+router.route('/nurse/appointment_taken').post(otherController.appointmentTaken);
+router.route('/nurse/appointment_not_there').post(otherController.appointmentNotThere);
 
 export default router;
