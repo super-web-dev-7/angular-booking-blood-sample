@@ -71,8 +71,10 @@
             </h1>
             <div class="schedule">
               <div>{{selectedAppointment.patientFirstName}} {{selectedAppointment.patientLastName}}</div>
-              <div>{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
+              <div *ngIf="!selectedAppointment.differentPlace">{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
                 , {{selectedAppointment.addressPlz}} Berlin</div>
+              <div *ngIf="selectedAppointment.differentPlace">{{selectedAppointment.otherStreet}} {{selectedAppointment.otherCity}}
+                , {{selectedAppointment.otherPostalCode}} Berlin</div>
               <div>{{selectedAppointment.packageName}}</div>
               <div>{{getTimeString(selectedAppointment.startTime, 'DD.MM.YYYY, HH:mm')}} — {{getEndTime(selectedAppointment.startTime, selectedAppointment.duration)}}</div>
             </div>
@@ -125,8 +127,10 @@
             </h1>
             <div class="schedule">
               <div>{{selectedAppointment.patientFirstName}} {{selectedAppointment.patientLastName}}</div>
-              <div>{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
+              <div *ngIf="!selectedAppointment.differentPlace">{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
                 , {{selectedAppointment.addressPlz}} Berlin</div>
+              <div *ngIf="selectedAppointment.differentPlace">{{selectedAppointment.otherStreet}} {{selectedAppointment.otherCity}}
+                , {{selectedAppointment.otherPostalCode}} Berlin</div>
               <div>{{selectedAppointment.packageName}}</div>
               <div>{{getTimeString(selectedAppointment.startTime, 'DD.MM.YYYY, HH:mm')}} — {{getEndTime(selectedAppointment.startTime, selectedAppointment.duration)}}</div>
             </div>
@@ -189,8 +193,10 @@
             </h1>
             <div class="schedule">
               <div>{{selectedAppointment.patientFirstName}} {{selectedAppointment.patientLastName}}</div>
-              <div>{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
+              <div *ngIf="!selectedAppointment.differentPlace">{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
                 , {{selectedAppointment.addressPlz}} Berlin</div>
+              <div *ngIf="selectedAppointment.differentPlace">{{selectedAppointment.otherStreet}} {{selectedAppointment.otherCity}}
+                , {{selectedAppointment.otherPostalCode}} Berlin</div>
               <div>{{selectedAppointment.packageName}}</div>
               <div>{{getTimeString(selectedAppointment.startTime, 'DD.MM.YYYY, HH:mm')}} — {{getEndTime(selectedAppointment.startTime, selectedAppointment.duration)}}</div>
             </div>
@@ -254,8 +260,10 @@
             </div>
             <div class="schedule" *ngIf="!isSubmit">
               <div>{{selectedAppointment.patientFirstName}} {{selectedAppointment.patientLastName}}</div>
-              <div>{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
+              <div *ngIf="!selectedAppointment.differentPlace">{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
                 , {{selectedAppointment.addressPlz}} Berlin</div>
+              <div *ngIf="selectedAppointment.differentPlace">{{selectedAppointment.otherStreet}} {{selectedAppointment.otherCity}}
+                , {{selectedAppointment.otherPostalCode}} Berlin</div>
               <div>{{selectedAppointment.packageName}}</div>
               <div>{{getTimeString(selectedAppointment.startTime, 'DD.MM.YYYY, HH:mm')}} — {{getEndTime(selectedAppointment.startTime, selectedAppointment.duration)}}</div>
             </div>
@@ -352,8 +360,10 @@
             </div>
             <div class="schedule" *ngIf="!isSubmit">
               <div>{{selectedAppointment.patientFirstName}} {{selectedAppointment.patientLastName}}</div>
-              <div>{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
+              <div *ngIf="!selectedAppointment.differentPlace">{{selectedAppointment.addressStreet}} {{selectedAppointment.addressOrt}}
                 , {{selectedAppointment.addressPlz}} Berlin</div>
+              <div *ngIf="selectedAppointment.differentPlace">{{selectedAppointment.otherStreet}} {{selectedAppointment.otherCity}}
+                , {{selectedAppointment.otherPostalCode}} Berlin</div>
               <div>{{selectedAppointment.packageName}}</div>
               <div>{{getTimeString(selectedAppointment.startTime, 'DD.MM.YYYY, HH:mm')}} — {{getEndTime(selectedAppointment.startTime, selectedAppointment.duration)}}</div>
             </div>
@@ -443,8 +453,11 @@
                         <div *ngIf="!appointment.ready" class="appointment-status-green">Termin wahrgenommen</div>
                         <div *ngIf="appointment.ready" class="appointment-status-pink">Patient vorbereitet</div>
                         <div class="patient-name">{{appointment.patientFirstName}} {{appointment.patientLastName}}</div>
-                        <div class="patient-address">{{appointment.addressStreet}} {{appointment.addressOrt}}
+                        <div class="patient-address" *ngIf="!appointment.differentPlace">{{appointment.addressStreet}} {{appointment.addressOrt}}
                           , {{appointment.addressPlz}} Berlin
+                        </div>
+                        <div class="patient-address" *ngIf="appointment.differentPlace">{{appointment.otherStreet}} {{appointment.otherCity}}
+                          , {{appointment.otherPostalCode}} Berlin
                         </div>
                         <div class="patient-package">{{appointment.packageName}}</div>
                         <div class="patient-time">{{getStartTime(appointment.startTime)}}
