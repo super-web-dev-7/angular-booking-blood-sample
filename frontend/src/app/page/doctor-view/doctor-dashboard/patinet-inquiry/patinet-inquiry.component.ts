@@ -70,6 +70,13 @@ export class PatinetInquiryComponent implements OnInit {
         return item.socketId !== socketId;
       });
     });
+    this.sharedService.tabletArchive.subscribe(data => {
+      if (data.table === 0) {
+        const index = this.allInquiry.findIndex(item => item.id === data.appointmentId);
+        this.allInquiry.splice(index, 1);
+        this.activeCallbackDataSource = this.allInquiry;
+      }
+    });
   }
 
   conditionEditing = (data, table) => {
@@ -187,10 +194,15 @@ export class PatinetInquiryComponent implements OnInit {
           type: 0
         });
         if (res) {
-          this.dialog.open(SuccessDialogComponent, {
-            width: '662px',
-            height: '308px'
-          });
+          if (res.type === 'submit') {
+            dialogRef = this.dialog.open(SuccessDialogComponent, {
+              width: '627px'
+            });
+          } else if (res.type === 'archive') {
+            const index = this.allInquiry.findIndex(item => item.id === res.appointmentId);
+            this.allInquiry.splice(index, 1);
+            this.activeCallbackDataSource = this.allInquiry;
+          }
         }
         this.sharedService.closeHistory.emit();
       });

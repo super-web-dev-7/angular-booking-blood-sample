@@ -52,7 +52,7 @@ export class SideCheckAnamnesComponent implements OnInit {
     this.sharedService.closeHistory.emit();
     this.socketService.editCallbackTable({
       doctorId: this.currentUser.id,
-      appointmentId: this.displayData.appointmentId,
+      appointmentId: this.displayData?.appointmentId,
       doctorFirstName: this.currentUser.firstName,
       doctorLastName: this.currentUser.lastName,
       type: 0,
@@ -67,7 +67,7 @@ export class SideCheckAnamnesComponent implements OnInit {
       const emitData = {
         title: 't-history',
         data: {
-          appointmentId: this.displayData.appointmentId,
+          appointmentId: this.displayData?.appointmentId,
         }
       };
       this.sharedService.tabletLeftSide.emit(emitData);
@@ -84,11 +84,11 @@ export class SideCheckAnamnesComponent implements OnInit {
       const emitData = {
         title: 't-recall',
         data: {
-          appointmentId: this.displayData.appointmentId,
-          callbackId: this.displayData.id,
-          firstName: this.displayData.patientFirstName,
-          lastName: this.displayData.patientLastName,
-          phoneNumber: this.displayData.phoneNumber,
+          appointmentId: this.displayData?.appointmentId,
+          callbackId: this.displayData?.id,
+          firstName: this.displayData?.patientFirstName,
+          lastName: this.displayData?.patientLastName,
+          phoneNumber: this.displayData?.phoneNumber,
           question: true
         }
       };
@@ -105,8 +105,8 @@ export class SideCheckAnamnesComponent implements OnInit {
       const emitData = {
         title: 't-mail',
         data: {
-          questionId: this.displayData.id,
-          appointmentId: this.displayData.appointmentId,
+          questionId: this.displayData?.id,
+          appointmentId: this.displayData?.appointmentId,
           question: true
         }
       };
@@ -117,7 +117,7 @@ export class SideCheckAnamnesComponent implements OnInit {
 
 
   cancel = () => {
-    this.httpService.update(URL_JSON.DOCTOR + '/cancelAppointment/' + this.displayData.appointmentId, {}).subscribe((res: any) => {
+    this.httpService.update(URL_JSON.DOCTOR + '/cancelAppointment/' + this.displayData?.appointmentId, {}).subscribe((res: any) => {
       if (res) {
         console.log('res', res);
       }
@@ -129,8 +129,13 @@ export class SideCheckAnamnesComponent implements OnInit {
   }
 
   archive = () => {
-    this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData.appointmentId, {}).subscribe(res => {
-      console.log(res);
+    this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData?.appointmentId, {}).subscribe(res => {
+      const emitData = {
+        table: 1,
+        appointmentId: this.displayData?.appointmentId
+      };
+      this.sharedService.tabletArchive.emit(emitData);
+      this.close();
     });
   }
 }

@@ -194,7 +194,7 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
   }
 
   closeLeftSide = (event) => {
-    this.isOpen = event;
+    this.isOpen = false;
   }
 
   menuClick = (link) => {

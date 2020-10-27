@@ -72,6 +72,13 @@ export class AnamnesReleaseComponent implements OnInit {
         return item.socketId !== socketId;
       });
     });
+    this.sharedService.tabletArchive.subscribe(data => {
+      if (data.table === 1) {
+        const index = this.allAnamnesis.findIndex(item => item.id === data.appointmentId);
+        this.allAnamnesis.splice(index, 1);
+        this.dataSourceA = this.allAnamnesis;
+      }
+    });
   }
 
   filter = () => {
@@ -193,9 +200,15 @@ export class AnamnesReleaseComponent implements OnInit {
           table: 2
         });
         if (res) {
-          dialogRef = this.dialog.open(SuccessDialogComponent, {
-            width: '627px'
-          });
+          if (res.type === 'release') {
+            dialogRef = this.dialog.open(SuccessDialogComponent, {
+              width: '627px'
+            });
+          } else if (res.type === 'archive') {
+            const index = this.allAnamnesis.findIndex(item => item.id === res.appointmentId);
+            this.allAnamnesis.splice(index, 1);
+            this.dataSourceA = this.allAnamnesis;
+          }
         }
       });
     }

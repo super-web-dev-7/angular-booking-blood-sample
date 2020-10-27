@@ -108,6 +108,17 @@ export class DoctorDashboardComponent implements OnInit {
         return item.socketId !== socketId;
       });
     });
+    this.sharedService.tabletArchive.subscribe(data => {
+      if (data.table === 0) {
+        const index = this.allInquiry.findIndex(item => item.id === data.appointmentId);
+        this.allInquiry.splice(index, 1);
+        this.activeCallbackDataSource = this.allInquiry;
+      } else if (data.table === 1) {
+        const index = this.allAnamnesis.findIndex(item => item.id === data.appointmentId);
+        this.allAnamnesis.splice(index, 1);
+        this.anamnesisDataSource = this.allAnamnesis;
+      }
+    });
   }
 
   filter = () => {
