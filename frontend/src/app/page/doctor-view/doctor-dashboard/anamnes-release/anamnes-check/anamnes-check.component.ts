@@ -76,7 +76,7 @@ export class AnamnesCheckComponent implements OnInit {
     if (!this.isSent) {
       return;
     }
-    this.httpService.update(URL_JSON.DOCTOR + '/releaseAppointment/' + this.displayData.appointmentId, {}).subscribe((res: any) => {
+    this.httpService.update(URL_JSON.DOCTOR + '/releaseAppointment/' + this.displayData?.appointmentId, {}).subscribe((res: any) => {
       if (res) {
         this.dialogRef.close({type: 'release'});
       }
@@ -84,7 +84,7 @@ export class AnamnesCheckComponent implements OnInit {
   }
 
   cancel = () => {
-    this.httpService.update(URL_JSON.DOCTOR + '/cancelAppointment/' + this.displayData.appointmentId, {}).subscribe((res: any) => {
+    this.httpService.update(URL_JSON.DOCTOR + '/cancelAppointment/' + this.displayData?.appointmentId, {}).subscribe((res: any) => {
       if (res) {
         this.dialogRef.close(false);
         this.isSent = false;
@@ -93,8 +93,8 @@ export class AnamnesCheckComponent implements OnInit {
   }
 
   archive = () => {
-    this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData.appointmentId, {}).subscribe(res => {
-      this.dialogRef.close({type: 'archive', appointmentId: this.displayData.appointmentId});
+    this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData?.appointmentId, {}).subscribe(res => {
+      this.dialogRef.close({type: 'archive', appointmentId: this.displayData?.appointmentId});
     });
   }
 
@@ -103,7 +103,7 @@ export class AnamnesCheckComponent implements OnInit {
     const emitData = {
       title: 'v-contact',
       data: {
-        appointmentId: this.displayData.appointmentId
+        appointmentId: this.displayData?.appointmentId
       }
     };
     this.sharedService.check.emit(emitData);
@@ -114,11 +114,11 @@ export class AnamnesCheckComponent implements OnInit {
     const emitData = {
       title: 'call',
       data: {
-        appointmentId: this.displayData.appointmentId,
-        callbackId: this.displayData.callbackId,
-        phoneNumber: this.displayData.phoneNumber,
-        firstName: this.displayData.patientFirstName,
-        lastName: this.displayData.patientLastName,
+        appointmentId: this.displayData?.appointmentId,
+        callbackId: this.displayData?.callbackId,
+        phoneNumber: this.displayData?.phoneNumber,
+        firstName: this.displayData?.patientFirstName,
+        lastName: this.displayData?.patientLastName,
         question: true
       }
     };

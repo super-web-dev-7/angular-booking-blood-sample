@@ -17,12 +17,20 @@ import {SearchInputComponent} from './search-input/search-input.component';
 import {HttpService} from '../../../service/http/http.service';
 import {SuccessDialogComponent} from './answer-inquiry/success-dialog/success-dialog.component';
 import {SocketService} from '../../../service/socket/socket.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 
 @Component({
   selector: 'app-doctor-dashboard',
   templateUrl: './doctor-dashboard.component.html',
-  styleUrls: ['./doctor-dashboard.component.scss']
+  styleUrls: ['./doctor-dashboard.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class DoctorDashboardComponent implements OnInit {
   currentUser: any;
@@ -60,6 +68,7 @@ export class DoctorDashboardComponent implements OnInit {
     successful: 'Abgeschlossene Termine'
   };
   editingAppointment = [];
+  expandedElement = null;
 
   constructor(
     public authService: AuthService,
@@ -82,6 +91,7 @@ export class DoctorDashboardComponent implements OnInit {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithActiveCallback').subscribe((res: any) => {
       this.activeCallbackDataSource.data = res;
       this.allInquiry = res;
+      this.expandedElement = this.activeCallbackDataSource.data;
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithoutArchived').subscribe((res: any) => {
       this.dataSourceE.data = res;
@@ -107,6 +117,17 @@ export class DoctorDashboardComponent implements OnInit {
       this.editingAppointment = this.editingAppointment.filter(item => {
         return item.socketId !== socketId;
       });
+    });
+    this.sharedService.tabletArchive.subscribe(data => {
+      if (data.table === 0) {
+        const index = this.allInquiry.findIndex(item => item.id === data.appointmentId);
+        this.allInquiry.splice(index, 1);
+        this.activeCallbackDataSource = this.allInquiry;
+      } else if (data.table === 1) {
+        const index = this.allAnamnesis.findIndex(item => item.id === data.appointmentId);
+        this.allAnamnesis.splice(index, 1);
+        this.anamnesisDataSource = this.allAnamnesis;
+      }
     });
   }
 

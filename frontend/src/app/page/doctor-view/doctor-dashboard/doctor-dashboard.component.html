@@ -224,12 +224,8 @@
               <app-order-icon columnName="status" [orderStatus]="orderStatusC"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.id !== 1">
+              <span>
                 {{status[element.adminStatus]}}
-              </span>
-              <span *ngIf="element.id === 1" class="spec-text">
-                <img src="/assets/images/info_icon.svg" alt="info" class="mr-10" style="margin-left: -10px">
-                {{"In Bearbeitung durch Dr. Med. Jessica Johns"}}
               </span>
             </td>
           </ng-container>
@@ -260,7 +256,7 @@
     </mat-card>
   </div>
 </div>
-<!--<div class="main-container mt-5 d-block d-md-none">
+<div class="main-container mt-5 d-block d-md-none">
   <div class="table-toolbar flex-column">
     <div class="row">
       <div class="col-8">
@@ -299,13 +295,7 @@
   </div>
   <div class="table-container mt-54">
       <div style="margin-left: -30px; margin-right: -30px;border-top: 4px solid #F389CC;position: relative;">
-        <div style="height: 50px; width: 100%; background: #384C61;position:absolute;top: 115px;display: flex;align-items: center;color:#fff;">
-          <button mat-icon-button aria-label="more"  class="mx-2">
-            <img src="/assets/images/chat.svg" alt="edit">
-          </button>
-          Patientenrückfrage bearbeiten
-        </div>
-        <table mat-table [dataSource]="activeCallbackDataSource" matSort (matSortChange)="onSort($event)">
+        <table mat-table [dataSource]="activeCallbackDataSource" matSort (matSortChange)="onInquirySort($event)">
           <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef> # </th>
             <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
@@ -314,7 +304,7 @@
           <ng-container matColumnDef="patientName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Patientenname
-              <app-order-icon columnName="patientName" [orderStatus]="orderStatus"></app-order-icon>
+              <app-order-icon columnName="patientName" [orderStatus]="orderStatusA"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element"> {{element.patientFirstName}} {{element.patientLastName}} </td>
           </ng-container>
@@ -322,7 +312,7 @@
           <ng-container matColumnDef="appointmentDate">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Datum
-              <app-order-icon columnName="appointmentDate" [orderStatus]="orderStatus"></app-order-icon>
+              <app-order-icon columnName="appointmentDate" [orderStatus]="orderStatusA"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element" class="t-width"> {{getTimeDuration(element.startTime, element.duration)}} </td>
           </ng-container>
@@ -330,15 +320,18 @@
           <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Status
-              <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
+              <app-order-icon columnName="status" [orderStatus]="orderStatusA"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element" class="t-width">
-              <span>
+              <span *ngIf="conditionEditing(element, 1) === -1">
                 {{'Anfrage offen'}}
               </span>
-             &lt;!&ndash; <span *ngIf="element.id === 1" class="spec-text">
-                {{"In Bearbeitung durch Dr. Med. Jessica Johns"}}
-              </span>&ndash;&gt;
+              <span *ngIf="conditionEditing(element, 1) >= 0" class="spec-text">
+                <img src="/assets/images/info_icon.svg" alt="info" class="mr-10" style="margin-left: -10px">
+                {{"In Bearbeitung durch Dr. Med. "}}
+                {{editingAppointment[conditionEditing(element, 1)].doctorFirstName}}
+                {{editingAppointment[conditionEditing(element, 1)].doctorLastName}}
+              </span>
             </td>
           </ng-container>
 
@@ -348,27 +341,32 @@
               <button mat-icon-button aria-label="more" (click)="openAnswer(element.id)">
                 <img src="/assets/images/chat_icon.svg" alt="edit">
               </button>
-             &lt;!&ndash; <button mat-icon-button aria-label="more" (click)="searchItem()" *ngIf="element.id === 1">
-                <mat-icon>search</mat-icon>
-              </button>&ndash;&gt;
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+              <div class="example-element-detail"
+                   [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                   <div>test test test</div>
+              </div>
             </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns.slice(0, displayedColumns.length - 1)"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns.slice(0, displayedColumns.length - 1);"></tr>
+          <!--<tr mat-header-row *matHeaderRowDef="displayedColumns.slice(0, displayedColumns.length - 1)"></tr>
+          <tr mat-row *matRowDef="let element; columns: displayedColumns.slice(0, displayedColumns.length - 1);"
+              class="example-element-row"
+              [class.example-expanded-row]="expandedElement === element"
+              (click)="expandedElement = expandedElement === element ? null : element">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>-->
         </table>
       </div>
   </div>
   <div class="table-container mt-30">
     <div style="margin-left: -30px; margin-right: -30px;border-top: 4px solid #50E3C2;position:relative;">
-&lt;!&ndash;      <div style="height: 50px; width: 100%; background: #384C61;position:absolute;top: 115px;display: flex;align-items: center;color: #fff;" (click)="checkAnamnes()">&ndash;&gt;
-      <div style="height: 50px; width: 100%; background: #384C61;position:absolute;top: 115px;display: flex;align-items: center;color: #fff;">
-        <button mat-icon-button aria-label="more" class="mx-2">
-          <img src="/assets/images/edit_icon.svg" alt="edit">
-        </button>
-        Amnamnesebogen prüfen
-      </div>
-      <table mat-table [dataSource]="anamnesisDataSource" matSort (matSortChange)="onSort($event)">
+      <table mat-table [dataSource]="anamnesisDataSource" matSort (matSortChange)="onAnamsSort($event)">
         <ng-container matColumnDef="no">
           <th mat-header-cell *matHeaderCellDef> # </th>
           <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
@@ -377,31 +375,34 @@
         <ng-container matColumnDef="patientName">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             Patientenname
-            <app-order-icon columnName="patientName" [orderStatus]="orderStatus"></app-order-icon>
+            <app-order-icon columnName="patientName" [orderStatus]="orderStatusB"></app-order-icon>
           </th>
-          <td mat-cell *matCellDef="let element"> {{element.patientName}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.patientFirstName}} {{element.patientLastName}} </td>
         </ng-container>
 
         <ng-container matColumnDef="appointmentDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             Datum
-            <app-order-icon columnName="appointmentDate" [orderStatus]="orderStatus"></app-order-icon>
+            <app-order-icon columnName="appointmentDate" [orderStatus]="orderStatusB"></app-order-icon>
           </th>
-          <td mat-cell *matCellDef="let element" class="t-width"> {{element.appointmentDate}} </td>
+          <td mat-cell *matCellDef="let element" class="t-width"> {{getTimeDuration(element.startTime, element.duration)}} </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             Status
-            <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
+            <app-order-icon columnName="status" [orderStatus]="orderStatusB"></app-order-icon>
           </th>
           <td mat-cell *matCellDef="let element" class="t-width">
-            <span *ngIf="element.id !== 1">
-              {{element.status}}
-            </span>
-            <span *ngIf="element.id === 1" class="spec-text">
-              {{"In Bearbeitung durch Dr. Med. Marius Wilhelm"}}
-            </span>
+            <span *ngIf="conditionEditing(element, 2) === -1">
+                {{'Anfrage offen'}}
+              </span>
+            <span *ngIf="conditionEditing(element, 2) > -1" class="spec-text">
+                <img src="/assets/images/info_icon.svg" alt="info" class="mr-10" style="margin-left: -10px">
+              {{"In Bearbeitung durch Dr. Med. "}}
+              {{editingAppointment[conditionEditing(element, 2)].doctorFirstName}}
+              {{editingAppointment[conditionEditing(element, 2)].doctorLastName}}
+              </span>
           </td>
         </ng-container>
 
@@ -411,9 +412,6 @@
             <button mat-icon-button aria-label="more" (click)="checkAnamnes(element.id)">
               <img src="/assets/images/edit.svg" alt="edit">
             </button>
-           &lt;!&ndash; <button mat-icon-button aria-label="more" (click)="anamnesView()" *ngIf="element.id === 1">
-              <mat-icon>search</mat-icon>
-            </button>&ndash;&gt;
           </td>
         </ng-container>
 
@@ -424,13 +422,7 @@
   </div>
   <div class="table-container mt-30 mb-201">
     <div style="margin-left: -30px; margin-right: -30px;border-top: 4px solid #89DF8C;position:relative;">
-      <div style="height: 65px; width: 100%; background: #384C61;position:absolute;top: 115px;display: flex;align-items: center;color: #fff;">
-        <button mat-icon-button aria-label="more" class="mx-2">
-          <mat-icon>search</mat-icon>
-        </button>
-        Termindetails ansehen
-      </div>
-      <table mat-table [dataSource]="dataSourceE" matSort (matSortChange)="onSort($event)">
+      <table mat-table [dataSource]="dataSourceE" matSort (matSortChange)="onEventSort($event)">
           <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef> # </th>
             <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
@@ -439,73 +431,74 @@
           <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Datum
-              <app-order-icon columnName="date" [orderStatus]="orderStatus"></app-order-icon>
+              <app-order-icon columnName="date" [orderStatus]="orderStatusC"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+            <td mat-cell *matCellDef="let element"> {{getDate(element.startTime)}} </td>
           </ng-container>
 
           <ng-container matColumnDef="time">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Uhrzeit
-              <app-order-icon columnName="time" [orderStatus]="orderStatus"></app-order-icon>
+              <app-order-icon columnName="time" [orderStatus]="orderStatusC"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+            <td mat-cell *matCellDef="let element"> {{getTime(element.startTime)}} </td>
           </ng-container>
 
           <ng-container matColumnDef="package">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Paket
-              <app-order-icon columnName="package" [orderStatus]="orderStatus"></app-order-icon>
+              <app-order-icon columnName="package" [orderStatus]="orderStatusC"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element" style="max-width: 50px; overflow: hidden;"> {{element.package}} </td>
+            <td mat-cell *matCellDef="let element" style="max-width: 50px; overflow: hidden;"> {{element.packageName}} </td>
           </ng-container>
 
           <ng-container matColumnDef="appointmentLocation">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>
               Terminort
-              <app-order-icon columnName="appointmentLocation" [orderStatus]="orderStatus"></app-order-icon>
+              <app-order-icon columnName="appointmentLocation" [orderStatus]="orderStatusC"></app-order-icon>
             </th>
-            <td mat-cell *matCellDef="let element"> {{element.appointmentLocation}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.addressPlz}} {{element.addressOrt}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="doctorLast">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Arzt
-              <app-order-icon columnName="doctorLast" [orderStatus]="orderStatus"></app-order-icon>
-            </th>
-            <td mat-cell *matCellDef="let element"> {{element.doctorLast}} </td>
-          </ng-container>
+        <ng-container matColumnDef="doctorLast">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Arzt zuletzt
+            <app-order-icon columnName="doctorLast" [orderStatus]="orderStatusC"></app-order-icon>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            Dr. med. {{element.doctors[0].firstName}}
+            {{element.doctors[0].lastName}}
+            <span *ngIf="element.doctors.length > 1">(+{{element.doctors.length - 1}})</span>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-              Status
-              <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
-            </th>
-            <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.id !== 1">
-                {{element.status}}
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Status
+            <app-order-icon columnName="status" [orderStatus]="orderStatusC"></app-order-icon>
+          </th>
+          <td mat-cell *matCellDef="let element">
+              <span>
+                {{status[element.adminStatus]}}
               </span>
-              <span *ngIf="element.id === 1" class="spec-text">
-                {{"In Bearbeitung durch Dr. Med. Jessica Johns"}}
-              </span>
-            </td>
-          </ng-container>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef style="text-align: center"> Aktionen </th>
-            <td mat-cell *matCellDef="let element" style="text-align: center">
-              <button mat-icon-button aria-label="more" (click)="viewAppointment(element.id)">
-                <mat-icon>search</mat-icon>
-              </button>
-              &lt;!&ndash;<button mat-icon-button aria-label="more" (click)="editItem(element.id)" *ngIf="element.id === 2">
-                <img src="/assets/images/edit.svg" alt="edit">
-              </button>&ndash;&gt;
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef style="text-align: center"> Aktionen </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center">
+            <button mat-icon-button aria-label="more" (click)="viewAppointment(element.id)">
+              <mat-icon>search</mat-icon>
+            </button>
+            <!--<button mat-icon-button aria-label="more" (click)="editItem(element.id)">
+              <img src="/assets/images/edit.svg" alt="edit">
+            </button>-->
+          </td>
+        </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="['no', 'date', 'package', 'doctorLast', 'status']"></tr>
           <tr mat-row *matRowDef="let row; columns: ['no', 'date', 'package', 'doctorLast', 'status'];"></tr>
         </table>
     </div>
   </div>
-</div>-->
+</div>

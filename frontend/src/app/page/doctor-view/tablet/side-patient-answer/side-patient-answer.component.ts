@@ -65,7 +65,7 @@ export class SidePatientAnswerComponent implements OnInit {
       const emitData = {
         title: 't-history',
         data: {
-          appointmentId: this.displayData.appointmentId,
+          appointmentId: this.displayData?.appointmentId,
         }
       };
       this.sharedService.tabletLeftSide.emit(emitData);
@@ -82,7 +82,7 @@ export class SidePatientAnswerComponent implements OnInit {
       const emitData = {
         title: 't-anamnes',
         data: {
-          appointmentId: this.displayData.appointmentId,
+          appointmentId: this.displayData?.appointmentId,
         }
       };
       this.sharedService.tabletLeftSide.emit(emitData);
@@ -99,11 +99,11 @@ export class SidePatientAnswerComponent implements OnInit {
       const emitData = {
         title: 't-recall',
         data: {
-          appointmentId: this.displayData.appointmentId,
-          callbackId: this.displayData.id,
-          firstName: this.displayData.patientFirstName,
-          lastName: this.displayData.patientLastName,
-          phoneNumber: this.displayData.phoneNumber,
+          appointmentId: this.displayData?.appointmentId,
+          callbackId: this.displayData?.id,
+          firstName: this.displayData?.patientFirstName,
+          lastName: this.displayData?.patientLastName,
+          phoneNumber: this.displayData?.phoneNumber,
           question: false
         }
       };
@@ -120,8 +120,8 @@ export class SidePatientAnswerComponent implements OnInit {
       const emitData = {
         title: 't-mail',
         data: {
-          appointmentId: this.displayData.appointmentId,
-          callbackId: this.displayData.id,
+          appointmentId: this.displayData?.appointmentId,
+          callbackId: this.displayData?.id,
           question: false
         }
       };
@@ -135,6 +135,17 @@ export class SidePatientAnswerComponent implements OnInit {
       if (res) {
         this.isSuccess = true;
       }
+    });
+  }
+
+  archive = () => {
+    this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData.appointmentId, {}).subscribe(res => {
+      const emitData = {
+        table: 0,
+        appointmentId: this.displayData?.appointmentId
+      };
+      this.sharedService.tabletArchive.emit(emitData);
+      this.close();
     });
   }
 
