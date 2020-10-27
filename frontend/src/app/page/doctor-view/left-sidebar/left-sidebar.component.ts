@@ -39,28 +39,7 @@ export class LeftSidebarComponent implements OnInit {
   }
 
   archive = () => {
-    this.router.navigateByUrl('/doctor/archive/patient-inquiry').then(r => {
-      this.sharedService.test.emit();
-      this.close();
-    });
-  }
-
-  inquiry = () => {
-    this.router.navigateByUrl('/doctor/archive/patient-inquiry').then(r => {
-      this.sharedService.test.emit();
-      this.close();
-    });
-  }
-
-  anamnes = () => {
-    this.router.navigateByUrl('/doctor/archive/anamnes-release').then(r => {
-      this.sharedService.test.emit();
-      this.close();
-    });
-  }
-
-  events = () => {
-    this.router.navigateByUrl('/doctor/archive/events').then(r => {
+    this.router.navigateByUrl('/doctor/archive').then(r => {
       this.sharedService.test.emit();
       this.close();
     });

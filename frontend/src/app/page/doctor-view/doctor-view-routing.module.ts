@@ -34,7 +34,7 @@ const routes: Routes = [
   },
   {
     path: 'archive',
-    component: ArchiveComponent
+    component: ArchiveEventComponent
   },
   {
     path: 'archive/patient-inquiry',
