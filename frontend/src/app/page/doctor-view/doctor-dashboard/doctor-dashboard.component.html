@@ -383,7 +383,7 @@
       <table mat-table [dataSource]="anamnesisDataSource" matSort (matSortChange)="onAnamsSort($event)" multiTemplateDataRows>
         <ng-container matColumnDef="no">
           <th mat-header-cell *matHeaderCellDef> # </th>
-          <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
+          <td mat-cell *matCellDef="let element; let i = dataIndex"> {{currentPage * pageSize + i + 1}} </td>
         </ng-container>
 
         <ng-container matColumnDef="patientName">
@@ -475,7 +475,7 @@
       <table mat-table [dataSource]="dataSourceE" matSort (matSortChange)="onEventSort($event)" multiTemplateDataRows>
           <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef> # </th>
-            <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
+            <td mat-cell *matCellDef="let element; let i = dataIndex"> {{currentPage * pageSize + i + 1}} </td>
           </ng-container>
 
           <ng-container matColumnDef="date">

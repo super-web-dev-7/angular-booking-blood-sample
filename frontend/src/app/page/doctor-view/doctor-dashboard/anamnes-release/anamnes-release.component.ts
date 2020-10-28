@@ -13,11 +13,19 @@ import {URL_JSON} from '../../../../utils/url_json';
 import {HttpService} from '../../../../service/http/http.service';
 import * as moment from 'moment';
 import {SocketService} from '../../../../service/socket/socket.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-anamnes-release',
   templateUrl: './anamnes-release.component.html',
-  styleUrls: ['./anamnes-release.component.scss']
+  styleUrls: ['./anamnes-release.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class AnamnesReleaseComponent implements OnInit {
   currentUser: any;
@@ -31,10 +39,12 @@ export class AnamnesReleaseComponent implements OnInit {
   pageSize = 5;
   dataSourceA = new MatTableDataSource<any>();
   displayedColumns: string[] = ['no', 'patientName', 'appointmentDate', 'status', 'actions'];
+  displayedColumnsAMobile: string[] = ['no', 'patientName', 'appointmentDate', 'status'];
   isTablet = false;
   isMobile = false;
   allAnamnesis: any;
   editingAppointment = [];
+  expandedElementA = null;
 
   constructor(
     public authService: AuthService,
@@ -52,6 +62,7 @@ export class AnamnesReleaseComponent implements OnInit {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsByAnamnes').subscribe((res: any) => {
       this.dataSourceA.data = res;
       this.allAnamnesis = res;
+      this.expandedElementA = this.dataSourceA.data;
     });
     this.httpService.get(URL_JSON.DOCTOR + '/getEditingStatus').subscribe((res: any) => {
       this.editingAppointment = res;
@@ -145,11 +156,14 @@ export class AnamnesReleaseComponent implements OnInit {
   }
 
   anamnesView = (id) => {
+    const index = this.editingAppointment.findIndex(item => item.appointmentId === id && item.table === 2);
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
+    if (this.isTablet || this.isMobile) {
       const data = {
         title: 'v-anam',
         appointmentId: id,
+        editingDoctorData: this.editingAppointment[index]
       };
       this.sharedService.tabletSide.emit(data);
     } else {
@@ -157,7 +171,7 @@ export class AnamnesReleaseComponent implements OnInit {
       dialogRef = this.dialog.open(AnamnesViewComponent, {
         width: '827px',
         height: '844px',
-        data: {appointmentId: id}
+        data: {appointmentId: id, editingDoctorData: this.editingAppointment[index]}
       });
       dialogRef.afterClosed().subscribe(res => {
         this.sharedService.closeHistory.emit();

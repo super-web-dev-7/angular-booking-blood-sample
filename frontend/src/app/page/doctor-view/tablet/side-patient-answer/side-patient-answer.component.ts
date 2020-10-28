@@ -59,8 +59,13 @@ export class SidePatientAnswerComponent implements OnInit {
 
   openSideHistory = () => {
     if (this.isMobile) {
-      this.close();
-      this.sharedService.answer.emit('contact');
+      const emitData = {
+        title: 'contact',
+        data: {
+          appointmentId: this.displayData?.appointmentId,
+        }
+      };
+      this.sharedService.answer.emit(emitData);
     } else {
       const emitData = {
         title: 't-history',
@@ -76,8 +81,13 @@ export class SidePatientAnswerComponent implements OnInit {
 
   openAnamneses = () => {
     if (this.isMobile) {
-      this.close();
-      this.sharedService.answer.emit('medical');
+      const emitData = {
+        title: 'medical',
+        data: {
+          appointmentId: this.displayData?.appointmentId,
+        }
+      };
+      this.sharedService.answer.emit(emitData);
     } else {
       const emitData = {
         title: 't-anamnes',
@@ -93,8 +103,18 @@ export class SidePatientAnswerComponent implements OnInit {
 
   openRecall = () => {
     if (this.isMobile) {
-      this.close();
-      this.sharedService.answer.emit('call');
+      const emitData = {
+        title: 'call',
+        data: {
+          appointmentId: this.displayData?.appointmentId,
+          callbackId: this.displayData?.id,
+          firstName: this.displayData?.patientFirstName,
+          lastName: this.displayData?.patientLastName,
+          phoneNumber: this.displayData?.phoneNumber,
+          question: false
+        }
+      };
+      this.sharedService.answer.emit(emitData);
     } else {
       const emitData = {
         title: 't-recall',
@@ -114,8 +134,15 @@ export class SidePatientAnswerComponent implements OnInit {
 
   openMessage = () => {
     if (this.isMobile) {
-      this.close();
-      this.sharedService.tabletLeftSide.emit('t-mail');
+      const emitData = {
+        title: 't-mail',
+        data: {
+          appointmentId: this.displayData?.appointmentId,
+          callbackId: this.displayData?.id,
+          question: false
+        }
+      };
+      this.sharedService.tabletLeftSide.emit(emitData);
     } else {
       const emitData = {
         title: 't-mail',

@@ -84,18 +84,6 @@
   </div>
   <div class="table-container mt-5 d-block d-md-none">
     <div style="margin-left: -30px; margin-right: -30px;position: relative;">
-      <div style="height: 65px; width: 100%; background: #384C61;position:absolute;top: 115px;display: flex;align-items: center;color: #fff;">
-        <button mat-icon-button aria-label="more" class="mx-2">
-          <mat-icon>search</mat-icon>
-        </button>
-        Termindetails ansehen
-      </div>
-      <div style="height: 60px; width: 100%; background: #384C61;position:absolute;top: 181px;display: flex;align-items: center;color: #fff;">
-        <button mat-icon-button aria-label="more" class="mx-2">
-          <img src="/assets/images/edit_icon.svg" alt="edit">
-        </button>
-        Befund erstellen
-      </div>
       <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSort($event)">
           <ng-container matColumnDef="no">
             <th mat-header-cell *matHeaderCellDef> # </th>

@@ -13,11 +13,19 @@ import {HttpService} from '../../../../service/http/http.service';
 import {URL_JSON} from '../../../../utils/url_json';
 import * as moment from 'moment';
 import {SocketService} from '../../../../service/socket/socket.service';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-patinet-inquiry',
   templateUrl: './patinet-inquiry.component.html',
-  styleUrls: ['./patinet-inquiry.component.scss']
+  styleUrls: ['./patinet-inquiry.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class PatinetInquiryComponent implements OnInit {
   currentUser: any;
@@ -30,10 +38,13 @@ export class PatinetInquiryComponent implements OnInit {
   pageSize = 5;
   activeCallbackDataSource = new MatTableDataSource<any>();
   displayedColumns: string[] = ['no', 'patientName', 'appointmentDate', 'status', 'actions'];
+  displayedColumnsMobile: string[] = ['no', 'patientName', 'appointmentDate', 'status'];
   isTablet = false;
+  isMobile = false;
   allInquiry;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   editingAppointment = [];
+  expandedElement = null;
 
   constructor(
     public authService: AuthService,
@@ -46,11 +57,14 @@ export class PatinetInquiryComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
+    this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     this.activeCallbackDataSource.sort = this.sort;
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithActiveCallback').subscribe((res: any) => {
       console.log('resA', res);
       this.activeCallbackDataSource.data = res;
       this.allInquiry = res;
+      this.expandedElement = this.activeCallbackDataSource.data;
     });
     this.httpService.get(URL_JSON.DOCTOR + '/getEditingStatus').subscribe((res: any) => {
       this.editingAppointment = res;
@@ -138,18 +152,21 @@ export class PatinetInquiryComponent implements OnInit {
   }
 
   searchItem = (id) => {
+    const index = this.editingAppointment.findIndex(item => item.appointmentId === id && item.table === 1);
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
+    if (this.isTablet || this.isMobile) {
       const data = {
         title: 'inquiry',
         appointmentId: id,
+        editingDoctorData: this.editingAppointment[index]
       };
       this.sharedService.tabletSide.emit(data);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(SearchModalComponent, {
         width: '827px',
-        data: {appointmentId: id}
+        data: {appointmentId: id, editingDoctorData: this.editingAppointment[index]}
       });
       dialogRef.afterClosed().subscribe(res => {
         this.sharedService.closeHistory.emit();
@@ -172,7 +189,8 @@ export class PatinetInquiryComponent implements OnInit {
       table: 1
     });
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
+    if (this.isTablet || this.isMobile) {
       const data = {
         title: 'answer',
         appointmentId: id,

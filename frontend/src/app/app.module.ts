@@ -22,6 +22,7 @@ import { ChartComponent } from './components/chart/chart.component';
 import { SessionExpireAlertComponent } from './components/session-expire-alert/session-expire-alert.component';
 import {PatientLayoutModule} from './layout/patient-layout/patient-layout.module';
 import {DoctorLayoutModule} from './layout/doctor-layout/doctor-layout.module';
+import { SmsVerificationComponent } from './page/sms-verification/sms-verification.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {DoctorLayoutModule} from './layout/doctor-layout/doctor-layout.module';
     AuthComponent,
     ChartComponent,
     SessionExpireAlertComponent,
+    SmsVerificationComponent,
   ],
   imports: [
     BrowserModule,
