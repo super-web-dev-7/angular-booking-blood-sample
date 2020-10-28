@@ -1,10 +1,11 @@
 import express from 'express';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
-import helmet from "helmet";
-import router from "../routes";
-import bodyParser from "body-parser";
+import helmet from 'helmet';
+import bodyParser from 'body-parser';
+
 import jwt from './jwt';
+import router from '../routes';
 
 dotenv.config();
 

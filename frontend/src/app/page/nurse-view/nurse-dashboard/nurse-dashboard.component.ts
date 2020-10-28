@@ -311,7 +311,6 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
   }
 
   appointmentTaken = () => {
-    console.log(this.selectedAppointment);
     if (!this.appointmentForm.invalid) {
       const emailData = {
         email: this.customEmail ? this.customEmail : this.defaultEmail,
@@ -336,6 +335,20 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
   }
 
   patientNotThere = () => {
-    this.isSubmit = true;
+    const emailData = {
+      email: this.customEmail ? this.customEmail : this.defaultEmail,
+      content: this.customText,
+      subject: 'Patient Not There'
+    };
+    const smsData = {
+      subject: 'Patient Not There',
+      receiver: this.selectedAppointment.patientId,
+      phoneNumber: this.customNumber ? this.customNumber : this.defaultNumber,
+      content: this.customText
+    };
+    this.httpService.post(URL_JSON.BASE + '/nurse/appointment_not_there', {emailData, smsData}).subscribe(res => {
+      // this.close();
+      this.isSubmit = true;
+    });
   }
 }

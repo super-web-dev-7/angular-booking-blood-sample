@@ -351,6 +351,7 @@
           </button>
         </div>
       </div>
+
       <!--    5-->
       <div *ngIf="isPatientNotThereMenuOpen" class="right-popup">
         <div style="padding-left: 12%;">
@@ -379,19 +380,25 @@
             </div>
             <div *ngIf="!isSubmit">
               <div class="d-flex avatar pink">
-                <div class="round">
+                <div class="round" (click)="isEditEmail = !isEditEmail">
                   <mat-icon>email</mat-icon>
                 </div>
                 <div>
-                  {{defaultEmail}}
+                  <span *ngIf="!isEditEmail">{{customEmail ? customEmail : defaultEmail}}</span>
+                  <mat-form-field class="w-100" *ngIf="isEditEmail">
+                    <input autocomplete="off" matInput [(ngModel)]="customEmail">
+                  </mat-form-field>
                 </div>
               </div>
               <div class="d-flex avatar green">
-                <div class="round">
+                <div class="round" (click)="isEditNumber = !isEditNumber">
                   <mat-icon>smartphone</mat-icon>
                 </div>
                 <div>
-                  {{selectedAppointment.patientNumber}}
+                  <span *ngIf="!isEditNumber">{{customNumber ? customNumber : defaultNumber}}</span>
+                  <mat-form-field class="w-100" *ngIf="isEditNumber">
+                    <input autocomplete="off" matInput [(ngModel)]="customNumber">
+                  </mat-form-field>
                 </div>
               </div>
               <div class="d-flex avatar yellow">

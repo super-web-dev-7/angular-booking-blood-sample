@@ -1,6 +1,7 @@
 import db from '../models';
 import {sendMail} from '../helper/email';
-import {sendSMS} from "../helper/sms";
+import {sendSMS} from '../helper/sms';
+import cron from 'node-cron';
 
 const User = db.user;
 const WorkingGroup = db.workingGroup;
@@ -104,5 +105,50 @@ exports.appointmentTaken = async (req, res) => {
 }
 
 exports.appointmentNotThere = async (req, res) => {
-
+    const emailData = req.body.emailData;
+    const smsData = req.body.smsData;
+    const emailResult = await sendMail(emailData);
+    const smsResult = await sendSMS(smsData);
+    res.status(200).json({emailResult, smsResult});
 }
+
+cron.schedule('* * * * *', async function () {
+    console.log('----------------Running cron jobs ----------------');
+    const now = new Date();
+    const currentMillisecond = now.getTime();
+    console.log(currentMillisecond);
+    const template1 = await Template.findOne({where: {assign: '60 minutes before Appointment'}, raw: true});
+    const template2 = await Template.findOne({where: {assign: '24 hours before Appointment'}, raw: true});
+    const allAppointments = await db.sequelize.query(`
+        SELECT a.id, a.name, a.time, users.id AS userId, users.phoneNumber 
+        FROM appointments AS a
+        JOIN users ON a.userId=users.id
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    let appointment60 = [];
+    let appointment24 = [];
+    for (const appointment of allAppointments) {
+        if (3600 * 1000 - 60 * 1000 <= appointment.time - currentMillisecond
+            && appointment.time - currentMillisecond < 3600 * 1000) {
+            appointment60.push(appointment);
+            await sendSMS({
+                subject: '60 minutes before Appointment',
+                receiver: appointment.userId,
+                phoneNumber: appointment.phoneNumber,
+                content: template1.message
+            });
+        }
+        if (24 * 3600 * 1000 - 60 * 1000 <= appointment.time - currentMillisecond
+            && appointment.time - currentMillisecond < 24 * 3600 * 1000) {
+            appointment24.push(appointment);
+            await sendSMS({
+                subject: '24 hours before Appointment',
+                receiver: appointment.userId,
+                phoneNumber: appointment.phoneNumber,
+                content: template2.message
+            });
+        }
+    }
+    console.log(appointment60);
+    console.log(appointment24);
+    // console.log(allAppointments);
+});
