@@ -36,9 +36,14 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
   customEmail = '';
   isEditEmail = false;
 
+  defaultNumber = '';
+  customNumber = '';
+  isEditNumber = false;
+
   isEditText = false;
   defaultText = '';
   customText = 'Sehr geehrte Frau Skywalker, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Mit freundlichen Grüßen Schwester 1';
+
   isSubmit = false;
   allAppointments;
   appointments = [];
@@ -196,7 +201,9 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
 
   openRightMenu = (index) => {
     this.isRightMenuOpen = true;
+    console.log(this.selectedAppointment);
     this.defaultEmail = this.selectedAppointment.patientEmail;
+    this.defaultNumber = this.selectedAppointment.patientNumber;
     if (index === 0) {
       this.isPatientPreparedMenuOpen = true;
       this.customText = this.getTemplate('Patient Prepared');
@@ -257,11 +264,11 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
   }
 
   appointmentDelay = () => {
-    const emailData = {
-      email: this.customEmail ? this.customEmail : this.defaultEmail,
-      content: this.customText,
-      subject: 'Appointment Delay'
-    };
+    // const emailData = {
+    //   email: this.customEmail ? this.customEmail : this.defaultEmail,
+    //   content: this.customText,
+    //   subject: 'Appointment Delay'
+    // };
 
     const smsData = {
       subject: 'Appointment Delay',
@@ -269,7 +276,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
       phoneNumber: this.selectedAppointment.patientNumber,
       content: this.customText
     };
-    this.httpService.post(URL_JSON.BASE + '/nurse/appointment_delay', {emailData, smsData})
+    this.httpService.post(URL_JSON.BASE + '/nurse/appointment_delay', {emailData: null, smsData})
       .subscribe((res: any) => {
       console.log(res);
       this.close();

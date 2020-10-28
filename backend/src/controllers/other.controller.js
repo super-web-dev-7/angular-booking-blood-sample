@@ -81,11 +81,9 @@ exports.getSmsHistory = async (req, res) => {
 }
 
 exports.appointmentDelay = async (req, res) => {
-    const emailData = req.body.emailData;
     const smsData = req.body.smsData;
-    const emailResult = await sendMail(emailData);
     const smsResult = await sendSMS(smsData);
-    res.status(200).json({emailResult, smsResult});
+    res.status(200).json({smsResult});
 }
 
 exports.appointmentShift = async (req, res) => {
