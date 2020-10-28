@@ -126,8 +126,12 @@ export class StatisticsComponent implements OnInit {
         });
       }
       this.monthlyData = res;
-      const monthNegativeAverage = res.reduce((a, b) => a.negative_value + b.negative_value);
-      const monthPositiveAverage = res.reduce((a, b) => a.positive_value + b.positive_value);
+      let monthPositiveAverage = 0;
+      let monthNegativeAverage = 0;
+      for (const item of res) {
+        monthPositiveAverage += item.positive_value;
+        monthNegativeAverage += item.negative_value;
+      }
       this.averageData = {
         monthNegativeAverage,
         monthPositiveAverage,
