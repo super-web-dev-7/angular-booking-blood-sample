@@ -59,6 +59,8 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.currentUser = this.authService.currentUserValue;
+    console.log('userinfo', this.currentUser);
     this.subsVar = this.authService.showExpireAlertSubject.subscribe(value => {
       if (value) {
         this.dialog.open(SessionExpireAlertComponent, {disableClose: true});

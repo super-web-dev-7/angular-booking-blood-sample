@@ -11,6 +11,7 @@ import {AuthGuard} from './guard/auth.guard';
 import {RoleGuard} from './guard/role.guard';
 import {DoctorLayoutComponent} from './layout/doctor-layout/doctor-layout.component';
 import {PatientLayoutComponent} from './layout/patient-layout/patient-layout.component';
+import {SmsVerificationComponent} from './page/sms-verification/sms-verification.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: 'register',
         component: RegisterComponent
+      },
+      {
+        path: 'sms-verification',
+        component: SmsVerificationComponent
       }
     ]
   },

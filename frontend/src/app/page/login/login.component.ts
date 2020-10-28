@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
           } else if (res.role === 'Doctor') {
             this.router.navigate(['/doctor']);
           } else {
-            this.router.navigate(['/patient']);
+            this.router.navigate(['/sms-verification']);
           }
           // this.f.password.setValue(null);
         },
