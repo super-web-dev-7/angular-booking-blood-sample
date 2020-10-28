@@ -4,7 +4,7 @@
     <div class="main-container-div">
       <div class="left-border-div">
         <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
-        <p class="p-576E82">Check-Up: Männergesundheit</p>
+        <p class="p-576E82">Check-Up: {{displayData?.packageName}}</p>
         <p class="p-272140" *ngIf="!displayData?.differentPlace">
           {{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}
         </p>
