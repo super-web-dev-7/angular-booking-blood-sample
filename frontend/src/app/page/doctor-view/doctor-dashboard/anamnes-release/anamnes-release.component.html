@@ -99,7 +99,7 @@
     </mat-card>
   </div>
 </div>
-<!--<div class="main-container mt-5 d-block d-md-none">
+<div class="main-container mt-5 d-block d-md-none">
   <div class="table-toolbar flex-column">
     <div class="row">
       <div class="col-8">
@@ -138,10 +138,10 @@
   </div>
   <div class="table-container mt-30">
     <div style="margin-left: -30px; margin-right: -30px;border-top: 4px solid #50E3C2;">
-      <table mat-table [dataSource]="dataSourceA" matSort (matSortChange)="onSort($event)">
+      <table mat-table [dataSource]="dataSourceA" matSort (matSortChange)="onSort($event)" multiTemplateDataRows>
         <ng-container matColumnDef="no">
           <th mat-header-cell *matHeaderCellDef> # </th>
-          <td mat-cell *matCellDef="let element; let i = index"> {{currentPage * pageSize + i + 1}} </td>
+          <td mat-cell *matCellDef="let element; let i = dataIndex"> {{currentPage * pageSize + i + 1}} </td>
         </ng-container>
 
         <ng-container matColumnDef="patientName">
@@ -149,15 +149,15 @@
             Patientenname
             <app-order-icon columnName="patientName" [orderStatus]="orderStatus"></app-order-icon>
           </th>
-          <td mat-cell *matCellDef="let element"> {{element.patientName}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.patientFirstName}} {{element.patientLastName}} </td>
         </ng-container>
 
         <ng-container matColumnDef="appointmentDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            Datum
+            Termindatum
             <app-order-icon columnName="appointmentDate" [orderStatus]="orderStatus"></app-order-icon>
           </th>
-          <td mat-cell *matCellDef="let element" class="t-width"> {{element.appointmentDate}} </td>
+          <td mat-cell *matCellDef="let element" class="t-width"> {{getTimeDuration(element.startTime, element.duration)}} </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
@@ -166,16 +166,19 @@
             <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
           </th>
           <td mat-cell *matCellDef="let element" class="t-width">
-            <span *ngIf="element.id !== 1">
-              {{element.status}}
-            </span>
-            <span *ngIf="element.id === 1" class="spec-text">
-              {{"In Bearbeitung durch Dr. Med. Marius Wilhelm"}}
-            </span>
+              <span *ngIf="conditionEditing(element, 2) === -1">
+                {{'Anfrage offen'}}
+              </span>
+            <span *ngIf="conditionEditing(element, 2) > -1" class="spec-text">
+                <img src="/assets/images/info_icon.svg" alt="info" class="mr-10" style="margin-left: -10px">
+              {{"In Bearbeitung durch Dr. Med. "}}
+              {{editingAppointment[conditionEditing(element, 2)].doctorFirstName}}
+              {{editingAppointment[conditionEditing(element, 2)].doctorLastName}}
+              </span>
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="actions">
+        <!--<ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef style="text-align: center"> Anamnesebogen prüfen </th>
           <td mat-cell *matCellDef="let element" style="text-align: center">
             <button mat-icon-button aria-label="more" (click)="checkAnamnes(element.id)" *ngIf="element.id !== 1">
@@ -185,11 +188,47 @@
               <mat-icon>search</mat-icon>
             </button>
           </td>
+        </ng-container>-->
+
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell
+              *matCellDef="let element"
+              [attr.colspan]="displayedColumns.length"
+              style="background: #384c61;color: #ffffff;"
+          >
+            <div class="example-element-detail"
+                 [@detailExpand]="element == expandedElementA ? 'expanded' : 'collapsed'">
+              <div class="d-flex" style="padding: 6px 20px">
+                <button *ngIf="conditionEditing(element, 2) === -1"
+                        mat-icon-button
+                        aria-label="more"
+                        (click)="checkAnamnes(element.id)"
+                >
+                  <img src="/assets/images/white_edit.svg" alt="edit" class="ml-10">
+                </button>
+                <button mat-icon-button
+                        aria-label="more"
+                        (click)="anamnesView(element.id)"
+                        *ngIf="conditionEditing(element, 2) > -1"
+                >
+                  <mat-icon style="color: #ffffff" class="ml-10">search</mat-icon>
+                </button>
+                <p class="p-mobile ml-10">
+                  Amnamnesebogen prüfen
+                </p>
+              </div>
+            </div>
+          </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns.slice(0, displayedColumns.length - 1)"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns.slice(0, displayedColumns.length - 1);"></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsAMobile"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumnsAMobile;"
+            class="example-element-row"
+            [class.example-expanded-row]="expandedElementA === element"
+            (click)="expandedElementA = expandedElementA === element ? null : element">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail'];" class="example-detail-row"></tr>
       </table>
     </div>
   </div>
-</div>-->
+</div>

@@ -9,11 +9,19 @@ import {SearchInputComponent} from '../search-input/search-input.component';
 import {URL_JSON} from '../../../../utils/url_json';
 import {HttpService} from '../../../../service/http/http.service';
 import * as moment from 'moment';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
-  styleUrls: ['./event.component.scss']
+  styleUrls: ['./event.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class EventComponent implements OnInit {
   currentUser: any;
@@ -26,7 +34,9 @@ export class EventComponent implements OnInit {
   pageSize = 5;
   dataSourceE = new MatTableDataSource<any>();
   displayedColumnsE: string[] = ['no', 'date', 'time', 'package', 'appointmentLocation', 'doctorLast', 'status', 'actions'];
+  displayedColumnsEMobile: string[] = ['no', 'date', 'package', 'doctorLast', 'status'];
   isTablet = false;
+  isMobile = false;
   allEvents: any;
   status = {
     upcoming: 'Offene Termine',
@@ -34,6 +44,7 @@ export class EventComponent implements OnInit {
     canceled: 'Storniert / Verschoben',
     successful: 'Abgeschlossene Termine'
   };
+  expandedElementE = null;
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
@@ -45,12 +56,14 @@ export class EventComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithoutArchived').subscribe((res: any) => {
       this.dataSourceE.data = res;
       this.allEvents = res;
-      console.log('eventSource@@@@@@@@', res);
+      this.expandedElementE = this.dataSourceE.data;
     });
   }
+
   filter = () => {
     this.dataSourceE.data = this.allEvents.filter(item => {
       return this.getDate(item.startTime).includes(this.filterValue)
@@ -152,16 +165,24 @@ export class EventComponent implements OnInit {
     });
   }
 
-  viewAppointment = () => {
+  viewAppointment = (id) => {
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
-      this.sharedService.tabletSide.emit('v-appointment');
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
+    if (this.isTablet || this.isMobile) {
+      const data = {
+        title: 'v-appointment',
+        appointmentId: id,
+      };
+      this.sharedService.tabletSide.emit(data);
     } else {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(ViewAppointmentComponent, {
         width: '827px',
+        data: {appointmentId: id}
       });
-      this.afterClosed(dialogRef);
+      dialogRef.afterClosed().subscribe(res => {
+        this.sharedService.closeHistory.emit();
+      });
     }
   }
 

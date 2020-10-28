@@ -379,7 +379,8 @@ export class DoctorDashboardComponent implements OnInit {
   anamnesView = (id) => {
     const index = this.editingAppointment.findIndex(item => item.appointmentId === id && item.table === 2);
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet) {
+    this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
+    if (this.isTablet || this.isMobile) {
       const data = {
         title: 'v-anam',
         appointmentId: id,
