@@ -74,7 +74,7 @@ export class OpenDatesComponent implements OnInit {
         this.appointments = this.allAppointment.filter(item => item.adminStatus === 'successful');
       }
       for (const appointment of this.appointments) {
-        if (!this.agencies.includes(item => item.id === appointment.agency.id)) {
+        if (this.agencies.findIndex(item => item.id === appointment.agency.id) === -1) {
           this.agencies.push(appointment.agency);
         }
       }
