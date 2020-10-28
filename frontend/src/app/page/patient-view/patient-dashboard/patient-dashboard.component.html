@@ -24,8 +24,11 @@
               {{getTimeDuration(item.startTime, item.duration)}}
             </p>
             <p class="p-576E82">Check-Up: {{item.packageName}}</p>
-            <p class="p-272140">
+            <p class="p-272140" *ngIf="!item?.differentPlace">
               {{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}
+            </p>
+            <p class="p-272140" *ngIf="item?.differentPlace">
+              {{item.otherStreet}}, {{item.otherPostalCode}} {{item.otherCity}}
             </p>
             <button
               mat-icon-button style="margin-left: 10px">
@@ -54,7 +57,8 @@
               Bitte neuen Termin wählen
             </p>
             <p class="p-white-14 ml-20">Check-Up: {{item.packageName}}</p>
-            <p class="p-white-14 ml-20">{{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}</p>
+            <p class="p-white-14 ml-20" *ngIf="!item?.differentPlace">{{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}</p>
+            <p class="p-white-14 ml-20" *ngIf="item?.differentPlace">{{item.otherStreet}}, {{item.otherPostalCode}} {{item.otherCity}}</p>
             <button
               mat-icon-button style="margin-left: 10px">
               <mat-icon style="color: white">keyboard_arrow_down</mat-icon>
@@ -80,7 +84,12 @@
                 {{getTimeDuration(item.startTime, item.duration)}}
               </p>
               <p class="p-576E82">Check-Up: {{item.packageName}}</p>
-              <p class="p-272140">{{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}</p>
+              <p class="p-272140" *ngIf="!item?.differentPlace">
+                {{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}
+              </p>
+              <p class="p-272140" *ngIf="item?.differentPlace">
+                {{item.otherStreet}}, {{item.otherPostalCode}} {{item.otherCity}}
+              </p>
               <button
                 mat-icon-button
                 style="margin-left: 10px"

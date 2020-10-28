@@ -4,7 +4,12 @@
     <div class="left-border-div">
       <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
       <p class="p-576E82">Check-Up: Männergesundheit</p>
-      <p class="p-272140">{{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}</p>
+      <p class="p-272140" *ngIf="!displayData?.differentPlace">
+        {{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}
+      </p>
+      <p class="p-272140" *ngIf="displayData?.differentPlace">
+        {{displayData?.otherStreet}} {{displayData?.otherPostalCode}}, {{displayData?.otherCity}}
+      </p>
     </div>
     <div class="mt-47">
       <p class="p-272140">150.95 €</p>
