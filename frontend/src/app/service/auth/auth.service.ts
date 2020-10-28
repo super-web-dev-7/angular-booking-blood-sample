@@ -44,6 +44,8 @@ export class AuthService {
   }
 
   login = (email: string, password: string) => {
+    this.clearIntervals();
+    this.showExpireAlertSubject.next(false);
     return this.http.post<any>(`${URL_JSON.AUTH}/login`, {email, password})
       .pipe(map((res: any) => {
         if (res) {
