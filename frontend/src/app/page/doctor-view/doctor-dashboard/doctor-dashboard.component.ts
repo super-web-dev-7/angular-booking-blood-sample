@@ -3,6 +3,7 @@ import {BreakpointObserver} from '@angular/cdk/layout';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {MatSort} from '@angular/material/sort';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import * as moment from 'moment';
 
 import {AuthService} from '../../../service/auth/auth.service';
@@ -17,8 +18,6 @@ import {SearchInputComponent} from './search-input/search-input.component';
 import {HttpService} from '../../../service/http/http.service';
 import {SuccessDialogComponent} from './answer-inquiry/success-dialog/success-dialog.component';
 import {SocketService} from '../../../service/socket/socket.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -54,6 +53,7 @@ export class DoctorDashboardComponent implements OnInit {
   currentPage = 0;
   pageSize = 5;
   displayedColumns: string[] = ['no', 'patientName', 'appointmentDate', 'status', 'actions'];
+  displayedColumnsMobile: string[] = ['no', 'patientName', 'appointmentDate'];
   displayedColumnsA: string[] = ['no', 'patientName', 'appointmentDate', 'status', 'actions'];
   displayedColumnsE: string[] = ['no', 'date', 'time', 'package', 'appointmentLocation', 'doctorLast', 'status', 'actions'];
   isTablet = false;
@@ -103,7 +103,6 @@ export class DoctorDashboardComponent implements OnInit {
     });
 
     this.socketService.editingNotification.subscribe(data => {
-      console.log(data);
       if (data.type) {
         this.editingAppointment.push(data);
       } else {
