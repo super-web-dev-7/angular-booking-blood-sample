@@ -44,6 +44,7 @@ exports.getContactHistory = async (req, res) => {
     const appointment = await sequelize.query(`
         SELECT appointments.id AS id, appointments.time AS startTime,
             patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
+            patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode,
             packages.name AS packageName,
             calendars.duration_appointment AS duration
         FROM appointments
