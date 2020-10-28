@@ -53,9 +53,11 @@ export class DoctorDashboardComponent implements OnInit {
   currentPage = 0;
   pageSize = 5;
   displayedColumns: string[] = ['no', 'patientName', 'appointmentDate', 'status', 'actions'];
-  displayedColumnsMobile: string[] = ['no', 'patientName', 'appointmentDate'];
+  displayedColumnsMobile: string[] = ['no', 'patientName', 'appointmentDate', 'status'];
   displayedColumnsA: string[] = ['no', 'patientName', 'appointmentDate', 'status', 'actions'];
+  displayedColumnsAMobile: string[] = ['no', 'patientName', 'appointmentDate', 'status'];
   displayedColumnsE: string[] = ['no', 'date', 'time', 'package', 'appointmentLocation', 'doctorLast', 'status', 'actions'];
+  displayedColumnsEMobile: string[] = ['no', 'date', 'package', 'doctorLast', 'status'];
   isTablet = false;
   isMobile = false;
   allAnamnesis: any;
@@ -69,6 +71,8 @@ export class DoctorDashboardComponent implements OnInit {
   };
   editingAppointment = [];
   expandedElement = null;
+  expandedElementA = null;
+  expandedElementE = null;
 
   constructor(
     public authService: AuthService,
@@ -87,6 +91,7 @@ export class DoctorDashboardComponent implements OnInit {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsByAnamnes').subscribe((res: any) => {
       this.anamnesisDataSource.data = res;
       this.allAnamnesis = res;
+      this.expandedElementA = this.anamnesisDataSource.data;
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithActiveCallback').subscribe((res: any) => {
       this.activeCallbackDataSource.data = res;
@@ -96,6 +101,7 @@ export class DoctorDashboardComponent implements OnInit {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithoutArchived').subscribe((res: any) => {
       this.dataSourceE.data = res;
       this.allEvents = res;
+      this.expandedElementE = this.dataSourceE.data;
     });
 
     this.httpService.get(URL_JSON.DOCTOR + '/getEditingStatus').subscribe((res: any) => {
