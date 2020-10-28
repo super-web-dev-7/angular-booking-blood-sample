@@ -63,7 +63,7 @@ export class SidePatientInquiryComponent implements OnInit {
       const emitData = {
         title: 't-history',
         data: {
-          appointmentId: this.displayData.appointmentId,
+          appointmentId: this.displayData?.appointmentId,
         }
       };
       this.sharedService.tabletLeftSide.emit(emitData);
@@ -80,7 +80,7 @@ export class SidePatientInquiryComponent implements OnInit {
       const emitData = {
         title: 't-anamnes',
         data: {
-          appointmentId: this.displayData.appointmentId,
+          appointmentId: this.displayData?.appointmentId,
         }
       };
       this.sharedService.tabletLeftSide.emit(emitData);
