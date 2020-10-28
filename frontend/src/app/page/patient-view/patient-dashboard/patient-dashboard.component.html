@@ -141,7 +141,12 @@
               {{getTimeDuration(item.startTime, item.duration)}}
             </p>
             <p class="p-576E82">Check-Up: {{item.packageName}}</p>
-            <p class="p-272140">{{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}</p>
+            <p class="p-272140" *ngIf="!item?.differentPlace">
+              {{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}
+            </p>
+            <p class="p-272140" *ngIf="item?.differentPlace">
+              {{item.otherStreet}}, {{item.otherPostalCode}} {{item.otherCity}}
+            </p>
             <button mat-stroked-button class="finding-green">
               Befund unsehen
             </button>
