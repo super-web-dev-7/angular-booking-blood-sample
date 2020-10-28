@@ -132,7 +132,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
       pressure: [null, Validators.required],
       pulse: [null, Validators.required],
       oxygen: [null, Validators.required],
-      size: [null, Validators.required],
+      height: [null, Validators.required],
       weight: [null, Validators.required],
     });
   }
@@ -273,13 +273,17 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     const smsData = {
       subject: 'Appointment Delay',
       receiver: this.selectedAppointment.patientId,
-      phoneNumber: this.selectedAppointment.patientNumber,
+      phoneNumber: this.customNumber ? this.customNumber : this.defaultNumber,
       content: this.customText
     };
     this.httpService.post(URL_JSON.BASE + '/nurse/appointment_delay', {emailData: null, smsData})
       .subscribe((res: any) => {
       console.log(res);
-      this.close();
+      if (res.smsResult) {
+        this.close();
+      } else {
+        console.log('sms failed');
+      }
     });
   }
 
@@ -292,7 +296,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     const smsData = {
       subject: 'Appointment Moving',
       receiver: this.selectedAppointment.patientId,
-      phoneNumber: this.selectedAppointment.patientNumber,
+      phoneNumber: this.customNumber ? this.customNumber : this.defaultNumber,
       content: this.customText
     };
     this.httpService.post(URL_JSON.BASE + '/nurse/appointment_delay', {emailData, smsData})
@@ -302,14 +306,29 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
       });
   }
 
+  get af(): any {
+    return this.appointmentForm.controls;
+  }
+
   appointmentTaken = () => {
+    console.log(this.selectedAppointment);
     if (!this.appointmentForm.invalid) {
-      const data = {
+      const emailData = {
         email: this.customEmail ? this.customEmail : this.defaultEmail,
         content: this.customText,
         subject: 'Appointment Done'
       };
-      this.httpService.post(URL_JSON.BASE + 'sendEmail', data).subscribe(res => {
+      const data = {
+        appointmentId: this.selectedAppointment.id,
+        nurseId: this.currentUser.id,
+        pressure: this.af.pressure.value,
+        pulse: this.af.pulse.value,
+        oxygen: this.af.oxygen.value,
+        height: this.af.height.value,
+        weight: this.af.weight.value,
+        content: this.customText
+      };
+      this.httpService.post(URL_JSON.BASE + '/nurse/appointment_taken', {emailData, data}).subscribe(res => {
         // this.close();
         this.isSubmit = true;
       });

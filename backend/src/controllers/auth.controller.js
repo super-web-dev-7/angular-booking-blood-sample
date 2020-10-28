@@ -11,7 +11,7 @@ const sessionTimeByRole = {
     'Superadmin': 480,
     'AG-Admin': 480,
     'Nurse': 480,
-    'Doctor': 1,
+    'Doctor': 30,
     'Patient': 30
 }
 

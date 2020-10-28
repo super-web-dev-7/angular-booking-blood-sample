@@ -303,6 +303,18 @@ exports.getAppointmentsWithoutArchived = async (req, res) => {
     res.status(200).json(response);
 }
 
+exports.getAppointmentsDetailWithoutArchived = async (req, res) => {
+    const appointmentId = req.params.id;
+    const appointmentResult = await sequelize.query(`
+        SELECT res.id, res.appointmentId, res.pressure, res.pulse, res.oxygen, res.height, res.weight, res.content,
+            users.firstName, users.lastName, users.id AS userId
+        FROM appointment_results AS res
+        JOIN users ON res.nurseId=users.id
+        WHERE res.appointmentId=${appointmentId} AND res.isActive=1
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    res.status(200).json(appointmentResult);
+}
+
 exports.getAppointmentsWithArchived = async (req, res) => {
     const allAppointment = await sequelize.query(`
         SELECT appointments.id AS id, appointments.time AS startTime, appointments.adminStatus AS adminStatus,

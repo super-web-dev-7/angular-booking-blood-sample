@@ -17,13 +17,20 @@ export const sendMail = async (data) => {
         debug: true,
         logger: true
     });
-    return await transporter.sendMail(option, function (err, result) {
-        if (err) {
-            console.log('error >>> ', err)
-            return false;
-        }
-        console.log('result >>> ', result)
+    return await transporter.sendMail(option).then(async result => {
+        console.log('result >>>> ', result);
         return true;
-
-    })
+    }).catch(async error => {
+        console.log('error >>>> ', error);
+        return false;
+    });
+    // return await transporter.sendMail(option, function (err, result) {
+    //     if (err) {
+    //         console.log('error >>> ', err)
+    //         return false;
+    //     }
+    //     console.log('result >>> ', result)
+    //     return true;
+    //
+    // })
 }

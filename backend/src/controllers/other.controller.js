@@ -1,5 +1,4 @@
 import db from '../models';
-import Axios from 'axios';
 import {sendMail} from '../helper/email';
 import {sendSMS} from "../helper/sms";
 
@@ -9,8 +8,9 @@ const Calendar = db.calendar;
 const Template = db.template;
 const Package = db.package;
 const Appointment = db.appointment;
-const ZipCode = db.zipCodeModel;
+// const ZipCode = db.zipCodeModel;
 const DistrictModel = db.districtModel;
+const AppointmentResult = db.appointmentResult;
 
 exports.getSuperAdminDashboardValues = async (req, res) => {
     const response = {
@@ -95,7 +95,12 @@ exports.appointmentShift = async (req, res) => {
 }
 
 exports.appointmentTaken = async (req, res) => {
-
+    const emailData = req.body.emailData;
+    const emailResult = await sendMail(emailData);
+    const data = req.body.data;
+    await AppointmentResult.update({isActive: false}, {where: {appointmentId: data.appointmentId}});
+    await AppointmentResult.create(data);
+    res.status(200).json({emailResult});
 }
 
 exports.appointmentNotThere = async (req, res) => {
