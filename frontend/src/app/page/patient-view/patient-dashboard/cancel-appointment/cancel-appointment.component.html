@@ -15,8 +15,11 @@
         <p class="p-576E82">
           Check-Up: Männergesundheit
         </p>
-        <p class="p-272140">
+        <p class="p-272140" *ngIf="!displayData?.differentPlace">
           {{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}
+        </p>
+        <p class="p-272140" *ngIf="displayData?.differentPlace">
+          {{displayData?.otherStreet}} {{displayData?.otherPostalCode}}, {{displayData?.otherCity}}
         </p>
       </div>
       <div class="add-message">
