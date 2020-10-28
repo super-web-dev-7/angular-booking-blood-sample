@@ -149,7 +149,7 @@ export class PatinetInquiryComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(SearchModalComponent, {
         width: '827px',
-        data: {callbackId: id}
+        data: {appointmentId: id}
       });
       dialogRef.afterClosed().subscribe(res => {
         this.sharedService.closeHistory.emit();

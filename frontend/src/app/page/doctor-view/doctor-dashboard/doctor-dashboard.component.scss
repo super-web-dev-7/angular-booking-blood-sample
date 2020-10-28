@@ -137,6 +137,24 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
   .custom-button-light-green {
     margin-left: 0!important;
   }
+  .expanded-div {
+    display: flex;
+    align-items: center;
+    background-color: #384C61;
+    color: #ffffff;
+    padding-left: 24px;
+    width: 100%
+  }
+  .mobile-button {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .p-mobile {
+    font-size: 16px;
+    padding-top: 10px;
+    color: #ffffff;
+  }
 }
 
 ::ng-deep .mat-sort-header-arrow[style] {
