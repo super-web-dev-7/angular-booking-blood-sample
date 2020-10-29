@@ -52,7 +52,7 @@ export class NewComponent implements OnInit {
     });
     this.patientForm = this.formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
-      phoneNumber: [null, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],
+      phoneNumber: [null, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{11,13}$')]],
       password: [null, Validators.required],
       confirmPassword: [null, Validators.required],
       firstName: [null, Validators.required],

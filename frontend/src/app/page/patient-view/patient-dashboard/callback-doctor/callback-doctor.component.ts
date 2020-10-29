@@ -38,7 +38,7 @@ export class CallbackDoctorComponent implements OnInit {
       this.defaultPhone = this.displayData.patientNumber;
     });
     this.callbackForm = this.formBuilder.group({
-      phone: [null, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],
+      phone: [null, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{11,13}$')]],
       schedule: [null, [Validators.required]],
       message: [null, Validators.required],
     });

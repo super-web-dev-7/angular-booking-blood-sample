@@ -15,7 +15,7 @@ import {MustMatch} from '../../../../shared/confirm-password.validator';
 })
 export class EditProfileComponent implements OnInit {
   patientForm: FormGroup;
-  phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{10}$';
+  phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{11,13}$';
   genders = [
     {label: 'Female', value: 'Weiblich'},
     {label: 'Male', value: 'Männlich'},

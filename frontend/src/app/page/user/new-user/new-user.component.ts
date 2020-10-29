@@ -47,7 +47,7 @@ export class NewUserComponent implements OnInit {
       firstName: [this.data?.firstName, Validators.required],
       lastName: [this.data?.lastName, Validators.required],
       email: [this.data?.email, [Validators.required, Validators.email]],
-      phoneNumber: [this.data?.phoneNumber, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],
+      phoneNumber: [this.data?.phoneNumber, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{11,13}$')]],
       password: [null, Validators.required],
       isActive: [this.data ? this.data?.isActive : false, Validators.required]
     });
