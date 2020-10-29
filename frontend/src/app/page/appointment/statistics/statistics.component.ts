@@ -62,6 +62,9 @@ export class StatisticsComponent implements OnInit {
   fromDate: any = '';
   toDate: any = '';
 
+  allAgency = [];
+  selectedAgency = 0;
+
   constructor(
     public httpService: HttpService,
     iconRegistry: MatIconRegistry,
@@ -75,6 +78,10 @@ export class StatisticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.analysisByAgency();
+    this.httpService.get(URL_JSON.AGENCY + '/get').subscribe((res: any) => {
+      console.log(res);
+      this.allAgency = res;
+    });
     this.httpService.get(URL_JSON.APPOINTMENT + '/analysisByPackage').subscribe((res: any) => {
       for (const [index, item] of res.entries()) {
         this.packageData.push({
@@ -126,23 +133,33 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
+  selectAgency = id => {
+    console.log(id);
+    this.selectedAgency = id;
+    this.analysisByAgency();
+  }
+
   getNumberFromString = (value) => {
     return parseInt(value, 10);
   }
 
   analysisByAgency = () => {
-    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisByAgency?from=' + this.fromDate + '&to=' + this.toDate)
+    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisByAgency?from=' +
+      this.fromDate + '&to=' + this.toDate + '&agency=' + this.selectedAgency)
       .subscribe((res: any) => {
         this.data = [];
-        this.data.push({
-          label: 'Termine gesamp',
-          detailData: [
-            {color: '#50E3C2', value: this.getNumberFromString(res.total.confirm_count), icon: 'done'},
-            {color: '#F389CC', value: this.getNumberFromString(res.total.open_date_count), icon: 'feeling'},
-            {color: '#E87C60', value: this.getNumberFromString(res.total.cancel_count), icon: 'close'},
-            {color: '#89DF8C', value: this.getNumberFromString(res.total.success_count), icon: 'thumb-up'}
-          ]
-        });
+        if (!this.selectedAgency) {
+          this.data.push({
+            label: 'Termine gesamp',
+            detailData: [
+              {color: '#50E3C2', value: this.getNumberFromString(res.total.confirm_count), icon: 'done'},
+              {color: '#F389CC', value: this.getNumberFromString(res.total.open_date_count), icon: 'feeling'},
+              {color: '#E87C60', value: this.getNumberFromString(res.total.cancel_count), icon: 'close'},
+              {color: '#89DF8C', value: this.getNumberFromString(res.total.success_count), icon: 'thumb-up'}
+            ]
+          });
+        }
+
         for (const agency of res.agency) {
           this.data.push({
             label: agency.agencyName,
@@ -158,17 +175,14 @@ export class StatisticsComponent implements OnInit {
   }
 
   changeDateFrom = event => {
-    console.log(event.value.toString());
     const date = new Date(event.value);
     this.fromDate = date.getTime();
-    console.log(this.fromDate);
     this.analysisByAgency();
   }
 
   changeDateTo = event => {
     const date = new Date(event.value);
     this.toDate = date.getTime() + 86400 * 1000 * 2;
-    console.log(this.toDate);
     this.analysisByAgency();
   }
 }

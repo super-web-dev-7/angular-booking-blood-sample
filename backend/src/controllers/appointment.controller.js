@@ -369,6 +369,15 @@ exports.analysisByAgency = async (req, res) => {
             query = `WHERE appointments.createdAt <= DATE('${date}') `;
         }
     }
+
+    if (req.query.agency && req.query.agency !== '0') {
+        if (query) {
+            query += `AND appointments.agencyId=${req.query.agency} `;
+        } else {
+            query = `WHERE appointments.agencyId=${req.query.agency} `;
+        }
+    }
+
     console.log(query);
 
     const allAgencies = await db.sequelize.query(`
