@@ -7,4 +7,6 @@ const router = Router();
 router.route('/createMedicalQuestion').post(patientController.createMedicalQuestion);
 router.route('/createCallbackForDoctor').post(patientController.createCallback);
 
+router.route('/cancel_appointment_by_patient').post(patientController.cancelAppointmentByPatient);
+
 export default router;

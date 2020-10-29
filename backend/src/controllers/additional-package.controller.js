@@ -14,12 +14,11 @@ exports.create = (req, res) => {
 };
 
 exports.get = async (req, res) => {
-    console.log('kkkkkkkk');
-    if (req.query) {
-        console.log('query >>>> ', req.query);
+    let query = {};
+    if (req.query.status) {
+        query.status = req.query.status;
     }
-    const allPackage = await AdditionalPackage.findAll({where: {}});
-    console.log('all >>>>>>>>> ', allPackage);
+    const allPackage = await AdditionalPackage.findAll({where: query});
     res.status(200).json(allPackage);
 }
 
