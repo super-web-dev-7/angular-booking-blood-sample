@@ -4,8 +4,8 @@ import db from '../models';
 const SMSHistory = db.smsHistory;
 export const sendSMS = async (data) => {
     const SMSData = {
-        recipientAddressList: ['8613124260482'],
-        messageContent: 'example message content',
+        recipientAddressList: [data.phoneNumber],
+        messageContent: data.content,
     };
     return Axios({
         method: 'POST',
