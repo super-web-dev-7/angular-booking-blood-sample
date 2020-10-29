@@ -227,11 +227,11 @@
           <td mat-cell
               *matCellDef="let element"
               [attr.colspan]="displayedColumnsE.length"
-              style="background: #384c61;color: #ffffff;"
+              style="background: #384c61;color: #ffffff;padding-left: 10px"
           >
             <div class="example-element-detail"
                  [@detailExpand]="element == expandedElementE ? 'expanded' : 'collapsed'">
-              <div class="d-flex" style="padding: 6px 20px">
+              <div class="d-flex" style="padding: 6px 0px">
                 <button mat-icon-button
                         aria-label="more"
                         (click)="viewAppointment(element.id)"

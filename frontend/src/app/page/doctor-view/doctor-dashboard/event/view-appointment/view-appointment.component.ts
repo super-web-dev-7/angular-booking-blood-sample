@@ -12,6 +12,7 @@ import {SharedService} from '../../../../../service/shared/shared.service';
 })
 export class ViewAppointmentComponent implements OnInit {
   displayData: any;
+  resultData: any;
   isContactHistory = false;
   isMedicalHistory = false;
 
@@ -25,6 +26,10 @@ export class ViewAppointmentComponent implements OnInit {
   ngOnInit(): void {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;
+    });
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsDetailWithoutArchived/' + this.data.appointmentId)
+      .subscribe((res: any) => {
+      this.resultData = res[0];
     });
     this.sharedService.closeHistory.subscribe(res => {
       this.isMedicalHistory = false;

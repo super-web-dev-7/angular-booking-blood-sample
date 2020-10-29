@@ -51,8 +51,13 @@ export class SideCheckAnamnesComponent implements OnInit {
 
   openSideHistory = () => {
     if (this.isMobile) {
-      this.close();
-      this.sharedService.answer.emit('contact');
+      const emitData = {
+        title: 'contact',
+        data: {
+          appointmentId: this.displayData?.appointmentId,
+        }
+      };
+      this.sharedService.answer.emit(emitData);
     } else {
       const emitData = {
         title: 't-history',
@@ -68,8 +73,18 @@ export class SideCheckAnamnesComponent implements OnInit {
 
   openRecall = () => {
     if (this.isMobile) {
-      this.close();
-      this.sharedService.answer.emit('call');
+      const emitData = {
+        title: 'call',
+        data: {
+          appointmentId: this.displayData?.appointmentId,
+          callbackId: this.displayData?.id,
+          firstName: this.displayData?.patientFirstName,
+          lastName: this.displayData?.patientLastName,
+          phoneNumber: this.displayData?.phoneNumber,
+          question: false
+        }
+      };
+      this.sharedService.answer.emit(emitData);
     } else {
       const emitData = {
         title: 't-recall',
@@ -89,7 +104,15 @@ export class SideCheckAnamnesComponent implements OnInit {
 
   openMessage = () => {
     if (this.isMobile) {
-      this.close();
+      const emitData = {
+        title: 't-mail',
+        data: {
+          appointmentId: this.displayData?.appointmentId,
+          callbackId: this.displayData?.id,
+          question: true
+        }
+      };
+      this.sharedService.tabletLeftSide.emit(emitData);
     } else {
       const emitData = {
         title: 't-mail',

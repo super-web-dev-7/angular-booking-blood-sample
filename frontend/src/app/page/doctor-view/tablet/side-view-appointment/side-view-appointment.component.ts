@@ -12,7 +12,10 @@ import {URL_JSON} from '../../../../utils/url_json';
 export class SideViewAppointmentComponent implements OnInit {
   @Output() closeSide = new EventEmitter();
   @Input() appointmentID;
+  @Input() isMobile;
+  @Input() isTablet;
   displayData: any;
+  resultData: any;
   isAnamnes = false;
   isSideHistory = false;
   constructor(
@@ -28,6 +31,10 @@ export class SideViewAppointmentComponent implements OnInit {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.appointmentID).subscribe((res: any) => {
       this.displayData = res;
     });
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsDetailWithoutArchived/' + this.appointmentID)
+      .subscribe((res: any) => {
+        this.resultData = res[0];
+      });
   }
 
   close = () => {
@@ -43,26 +50,46 @@ export class SideViewAppointmentComponent implements OnInit {
   }
 
   openMedicalHistory = () => {
+    if (this.isMobile) {
+      const emitData = {
+        title: 'medical',
+        data: {
+          appointmentId: this.displayData?.id,
+        }
+      };
+      this.sharedService.answer.emit(emitData);
+    } else {
+      const emitData = {
+        title: 't-anamnes',
+        data: {
+          appointmentId: this.displayData.id,
+        }
+      };
+      this.sharedService.tabletLeftSide.emit(emitData);
+    }
     this.isAnamnes = true;
     this.isSideHistory = false;
-    const emitData = {
-      title: 't-anamnes',
-      data: {
-        appointmentId: this.displayData.appointmentId,
-      }
-    };
-    this.sharedService.tabletLeftSide.emit(emitData);
   }
 
   openContactHistory = () => {
+    if (this.isMobile) {
+      const emitData = {
+        title: 'contact',
+        data: {
+          appointmentId: this.displayData?.id,
+        }
+      };
+      this.sharedService.answer.emit(emitData);
+    } else {
+      const emitData = {
+        title: 't-history',
+        data: {
+          appointmentId: this.displayData.id,
+        }
+      };
+      this.sharedService.tabletLeftSide.emit(emitData);
+    }
     this.isAnamnes = false;
     this.isSideHistory = true;
-    const emitData = {
-      title: 't-history',
-      data: {
-        appointmentId: this.displayData.id,
-      }
-    };
-    this.sharedService.tabletLeftSide.emit(emitData);
   }
 }

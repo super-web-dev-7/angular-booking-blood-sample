@@ -194,11 +194,11 @@
           <td mat-cell
               *matCellDef="let element"
               [attr.colspan]="displayedColumns.length"
-              style="background: #384c61;color: #ffffff;"
+              style="background: #384c61;color: #ffffff;padding-left: 10px"
           >
             <div class="example-element-detail"
                  [@detailExpand]="element == expandedElementA ? 'expanded' : 'collapsed'">
-              <div class="d-flex" style="padding: 6px 20px">
+              <div class="d-flex" style="padding: 6px 0px">
                 <button *ngIf="conditionEditing(element, 2) === -1"
                         mat-icon-button
                         aria-label="more"
