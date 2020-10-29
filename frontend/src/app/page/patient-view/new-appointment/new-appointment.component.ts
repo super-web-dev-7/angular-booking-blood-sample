@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {HttpService} from '../../../service/http/http.service';
 
 @Component({
   selector: 'app-new-appointment',
@@ -9,21 +10,45 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog
 })
 export class NewAppointmentComponent implements OnInit {
   appointmentForm: FormGroup;
+  city = null;
   constructor(
     public dialog: MatDialog,
     public formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private dialogRef: MatDialogRef<NewAppointmentComponent>
+    private dialogRef: MatDialogRef<NewAppointmentComponent>,
+    public httpService: HttpService
   ) { }
 
   ngOnInit(): void {
     this.appointmentForm = this.formBuilder.group({
-      zipcode: [this.data?.zipcode, Validators.required],
+      plz: [null, Validators.required],
     });
   }
 
-  newAppointment = () => {
-    this.dialogRef.close(true);
+  get f(): any {
+    return this.appointmentForm.controls;
+  }
+
+  submit = () => {
+    if (this.appointmentForm.invalid || this.f.plz.errors) {
+      return;
+    }
+    const data = {
+      status: true,
+      plz: this.f.plz.value,
+      city: this.city
+    };
+    this.dialogRef.close(data);
+  }
+
+  checkPostalCode = () => {
+      this.httpService.checkPostalCode(this.f.plz.value).subscribe((res: any) => {
+        if (!res) {
+          this.f.plz.setErrors(Validators.required);
+        } else {
+          this.f.plz.setErrors(null);
+          this.city = res.city;
+        }
+      });
   }
 
   close = () => {

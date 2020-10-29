@@ -80,11 +80,13 @@ export class PatientDashboardComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((res) => {
-      this.router.navigateByUrl('/patient');
-      this.dialog.open(AppointmentNewComponent, {
-        width: '1182px',
-        data: {data: res}
-      });
+      if (res.status) {
+        this.router.navigateByUrl('/patient');
+        this.dialog.open(AppointmentNewComponent, {
+          width: '1182px',
+          data: res
+        });
+      }
     });
   }
 
