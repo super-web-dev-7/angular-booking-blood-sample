@@ -111,25 +111,11 @@
       >
         <img src="assets/images/timeicon-light.svg" alt="light">
       </button>
-      <div class="schedule-item-container">
-        <div class="label">19.08.2020 10:41</div>
-        <div class="value">Termin bestätigt<br>Termin im Kalender der Schwester eingetragen</div>
-      </div>
-      <div class="schedule-item-container">
-        <div class="label">19.08.2020 10:37</div>
-        <div class="value">Dr. med. Jessica Johns: Anamnesebogen freigegeben</div>
-      </div>
-      <div class="schedule-item-container">
-        <div class="label">19.08.2020 10:29</div>
-        <div class="value">Dr. med. Jessica Johns:Patienten-Rückfrage erfolgreich bearbeitet</div>
-      </div>
-      <div class="schedule-item-container">
-        <div class="label">19.08.2020 10:00</div>
-        <div class="value">Patienten-Rückfrage eingegangen</div>
-      </div>
-      <div class="schedule-item-container">
-        <div class="label">18.08.2020 15:03</div>
-        <div class="value">Anamnesebogen hochgeladen</div>
+      <div *ngFor="let history of contactHistoryData">
+        <div class="schedule-item-container">
+          <div class="label">{{getDate(history.createdAt)}}</div>
+          <div class="value">{{history.type}}</div>
+        </div>
       </div>
     </div>
   </div>
