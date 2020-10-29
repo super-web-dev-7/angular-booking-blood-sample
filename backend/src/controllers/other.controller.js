@@ -133,7 +133,7 @@ cron.schedule('* * * * *', async function () {
                 subject: '60 minutes before Appointment',
                 receiver: appointment.userId,
                 phoneNumber: appointment.phoneNumber,
-                content: template1.message
+                content: template1.message ? template1.message : '60 min remains until appointment.'
             });
         }
         if (24 * 3600 * 1000 - 60 * 1000 <= appointment.time - currentMillisecond
@@ -143,7 +143,7 @@ cron.schedule('* * * * *', async function () {
                 subject: '24 hours before Appointment',
                 receiver: appointment.userId,
                 phoneNumber: appointment.phoneNumber,
-                content: template2.message
+                content: template2.message ? template2.message : '24 hours remains until appointment.'
             });
         }
     }
