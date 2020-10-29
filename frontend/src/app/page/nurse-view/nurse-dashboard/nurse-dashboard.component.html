@@ -113,7 +113,7 @@
         </div>
       </div>
       <!--    2-->
-      <div *ngIf="isAppointmentDelayMenuOpen" class="right-popup">
+      <div *ngIf="isAppointmentDelayMenuOpen" class="right-popup" [ngClass]="{'loading-background':isLoading}">
         <div style="padding-left: 12%;">
           <div class="text-right close-icon">
             <button mat-icon-button (click)="rightSidenav.close()" class="back-button">
@@ -135,6 +135,9 @@
               <div>{{getTimeString(selectedAppointment.startTime, 'DD.MM.YYYY, HH:mm')}} — {{getEndTime(selectedAppointment.startTime, selectedAppointment.duration)}}</div>
             </div>
             <div>
+              <div class="d-flex justify-content-center" *ngIf="isLoading">
+                <mat-spinner></mat-spinner>
+              </div>
               <div class="d-flex avatar pink">
                 <div class="round">
                   <mat-icon>email</mat-icon>
@@ -183,7 +186,7 @@
         </div>
       </div>
       <!--    3-->
-      <div *ngIf="isShiftScheduleMenuOpen" class="right-popup">
+      <div *ngIf="isShiftScheduleMenuOpen" class="right-popup" [ngClass]="{'loading-background':isLoading}">
         <div style="padding-left: 12%;">
           <div class="text-right close-icon">
             <button mat-icon-button (click)="rightSidenav.close()" class="back-button">
@@ -205,6 +208,9 @@
               <div>{{getTimeString(selectedAppointment.startTime, 'DD.MM.YYYY, HH:mm')}} — {{getEndTime(selectedAppointment.startTime, selectedAppointment.duration)}}</div>
             </div>
             <div>
+              <div class="d-flex justify-content-center" *ngIf="isLoading">
+                <mat-spinner></mat-spinner>
+              </div>
               <div class="d-flex avatar pink">
                 <div class="round" (click)="isEditEmail = !isEditEmail">
                   <mat-icon>email</mat-icon>
@@ -249,7 +255,7 @@
         </div>
       </div>
       <!--    4-->
-      <div *ngIf="isAppointmentTakenMenuOpen" class="right-popup">
+      <div *ngIf="isAppointmentTakenMenuOpen" class="right-popup" [ngClass]="{'loading-background':isLoading}">
         <div style="padding-left: 12%;">
           <div class="text-right close-icon">
             <button mat-icon-button (click)="rightSidenav.close()" class="back-button">
@@ -273,6 +279,9 @@
                 , {{selectedAppointment.otherPostalCode}} Berlin</div>
               <div>{{selectedAppointment.packageName}}</div>
               <div>{{getTimeString(selectedAppointment.startTime, 'DD.MM.YYYY, HH:mm')}} — {{getEndTime(selectedAppointment.startTime, selectedAppointment.duration)}}</div>
+            </div>
+            <div class="d-flex justify-content-center" *ngIf="isLoading">
+              <mat-spinner></mat-spinner>
             </div>
             <div *ngIf="!isSubmit">
               <div class="d-flex avatar pink">
@@ -353,7 +362,7 @@
       </div>
 
       <!--    5-->
-      <div *ngIf="isPatientNotThereMenuOpen" class="right-popup">
+      <div *ngIf="isPatientNotThereMenuOpen" class="right-popup" [ngClass]="{'loading-background':isLoading}">
         <div style="padding-left: 12%;">
           <div class="text-right close-icon">
             <button mat-icon-button (click)="rightSidenav.close()" class="back-button">
@@ -377,6 +386,9 @@
                 , {{selectedAppointment.otherPostalCode}} Berlin</div>
               <div>{{selectedAppointment.packageName}}</div>
               <div>{{getTimeString(selectedAppointment.startTime, 'DD.MM.YYYY, HH:mm')}} — {{getEndTime(selectedAppointment.startTime, selectedAppointment.duration)}}</div>
+            </div>
+            <div class="d-flex justify-content-center" *ngIf="isLoading">
+              <mat-spinner></mat-spinner>
             </div>
             <div *ngIf="!isSubmit">
               <div class="d-flex avatar pink">

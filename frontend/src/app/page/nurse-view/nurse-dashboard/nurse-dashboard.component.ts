@@ -60,6 +60,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
   appointmentForm: FormGroup;
   showAlert = false;
   subsVar: any;
+  isLoading: boolean;
 
   constructor(
     public authService: AuthService,
@@ -103,6 +104,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     this.httpService.get(URL_JSON.TEMPLATE + '/getAllKeywords').subscribe((res: any) => {
       this.allKeywords = res;
     });
+    this.isLoading = false;
   }
 
   ngOnDestroy(): void {
@@ -269,6 +271,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     //   content: this.customText,
     //   subject: 'Appointment Delay'
     // };
+    this.isLoading = true;
 
     const smsData = {
       subject: 'Appointment Delay',
@@ -279,6 +282,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     this.httpService.post(URL_JSON.BASE + '/nurse/appointment_delay', {emailData: null, smsData})
       .subscribe((res: any) => {
       console.log(res);
+      this.isLoading = false;
       if (res.smsResult) {
         this.close();
       } else {
@@ -288,6 +292,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
   }
 
   shiftSchedule = () => {
+    this.isLoading = true;
     const emailData = {
       email: this.customEmail ? this.customEmail : this.defaultEmail,
       content: this.customText,
@@ -301,6 +306,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     };
     this.httpService.post(URL_JSON.BASE + '/nurse/appointment_delay', {emailData, smsData})
       .subscribe((res: any) => {
+        this.isLoading = false;
         console.log(res);
         this.close();
       });
@@ -311,6 +317,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
   }
 
   appointmentTaken = () => {
+    this.isLoading = true;
     if (!this.appointmentForm.invalid) {
       const emailData = {
         email: this.customEmail ? this.customEmail : this.defaultEmail,
@@ -330,11 +337,13 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
       this.httpService.post(URL_JSON.BASE + '/nurse/appointment_taken', {emailData, data}).subscribe(res => {
         // this.close();
         this.isSubmit = true;
+        this.isLoading = false;
       });
     }
   }
 
   patientNotThere = () => {
+    this.isLoading = true;
     const emailData = {
       email: this.customEmail ? this.customEmail : this.defaultEmail,
       content: this.customText,
@@ -349,6 +358,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     this.httpService.post(URL_JSON.BASE + '/nurse/appointment_not_there', {emailData, smsData}).subscribe(res => {
       // this.close();
       this.isSubmit = true;
+      this.isLoading = false;
     });
   }
 }
