@@ -2,9 +2,11 @@
   <div class="pd-17">
     <h1 style="margin-top: 9px">Neuer <span style="font-weight: 100"> Termin</span></h1>
     <div class="mt-47">
-      <mat-form-field class="w-100">
-        <mat-label>Bitte PLZ eingeben</mat-label>
-        <input formControlName="zipcode" autocomplete="off" matInput>
+      <mat-form-field class="w-100 mt-4">
+        <mat-label>PLZ</mat-label>
+        <input formControlName="plz" autocomplete="off" matInput (keyup)="checkPostalCode()">
+        <mat-icon *ngIf="f.plz.touched && !f.plz.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+        <mat-icon *ngIf="f.plz.touched && f.plz.errors" style="color: red" matSuffix>close</mat-icon>
       </mat-form-field>
       <div style="margin-top: 101px" class="float-right">
         <div class="d-flex">
@@ -18,7 +20,7 @@
           <button
             mat-stroked-button
             class="custom-button-384 ml-10"
-            (click)="newAppointment()"
+            (click)="submit()"
           >
             Nach Terminen suchen
           </button>
@@ -27,6 +29,4 @@
     </div>
   </div>
 </form>
-
-<!--second form-->
 

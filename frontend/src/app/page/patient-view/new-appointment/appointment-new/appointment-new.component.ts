@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {HttpService} from '../../../../service/http/http.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {URL_JSON} from '../../../../utils/url_json';
 
 @Component({
   selector: 'app-appointment-new',
@@ -7,18 +10,33 @@ import {MatDialogRef} from '@angular/material/dialog';
   styleUrls: ['./appointment-new.component.scss']
 })
 export class AppointmentNewComponent implements OnInit {
-  packages = [
-    {id: 1, name: 'Package1'},
-    {id: 2, name: 'Package2'},
-    {id: 3, name: 'Package3'},
-  ];
+  packages = [];
+  displayData = [];
   selectedPackage = null;
-  isValid = false;
+  selectedBoard = null;
+  appointmentForm: FormGroup;
   constructor(
-    private dialogRef: MatDialogRef<AppointmentNewComponent>
+    private dialogRef: MatDialogRef<AppointmentNewComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public httpService: HttpService,
+    public formBuilder: FormBuilder,
   ) { }
 
   ngOnInit(): void {
+    this.appointmentForm = this.formBuilder.group({
+      plz: [this.data?.plz, Validators.required],
+      ort: [this.data?.city, Validators.required]
+    });
+    this.httpService.get(URL_JSON.PACKAGE + '/getWithQuery?status=Public').subscribe((res: any) => {
+      this.displayData = res;
+    });
+    this.httpService.get(URL_JSON.ADDITIONAL_PACKAGE + '/get?status=Public').subscribe((res: any) => {
+      this.packages = res;
+    });
+  }
+
+  get f(): any {
+    return this.appointmentForm.controls;
   }
 
   close = () => {
@@ -27,5 +45,9 @@ export class AppointmentNewComponent implements OnInit {
 
   selectPackage = (id) => {
     this.selectedPackage = id;
+  }
+
+  selectBoard = (id) => {
+    this.selectedBoard = id;
   }
 }
