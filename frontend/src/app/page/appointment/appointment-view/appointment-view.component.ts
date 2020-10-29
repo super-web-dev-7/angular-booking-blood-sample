@@ -2,6 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import * as moment from 'moment';
+import {HttpService} from '../../../service/http/http.service';
+import {URL_JSON} from '../../../utils/url_json';
 
 @Component({
   selector: 'app-appointment-view',
@@ -12,14 +14,21 @@ export class AppointmentViewComponent implements OnInit {
 
   isShowPatient = false;
   isShowSchedule = false;
+  contactHistoryData: any;
   constructor(
     public dialogRef: MatDialogRef<any>,
     public router: Router,
+    public httpService: HttpService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
   }
 
   ngOnInit(): void {
+    this.httpService.get(URL_JSON.DOCTOR + '/getContactHistory/' + this.data.id).subscribe((res: any) => {
+      if (res) {
+        this.contactHistoryData = res.contactHistory;
+      }
+    });
   }
 
   close = () => {
