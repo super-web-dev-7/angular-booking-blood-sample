@@ -481,9 +481,11 @@
                        *ngIf="workingStartHour / 2 + index === getDate(appointment.startTime, 'hour')">
                     <div class="appointment-container">
                       <div class="appointment-inner-container"
-                           [ngClass]="{'border-green' : !appointment.ready, 'border-pink': appointment.ready}">
-                        <div *ngIf="!appointment.ready" class="appointment-status-green">Termin wahrgenommen</div>
-                        <div *ngIf="appointment.ready" class="appointment-status-pink">Patient vorbereitet</div>
+                           [ngClass]="{'border-green' : appointment.nurseStatus === 'taken', 'border-pink': appointment.nurseStatus === 'ready',
+                           'border-black': appointment.nurseStatus === 'standard'}">
+                        <div *ngIf="appointment.nurseStatus === 'taken'" class="appointment-status-green">Termin wahrgenommen</div>
+                        <div *ngIf="appointment.nurseStatus === 'ready'" class="appointment-status-pink">Patient vorbereitet</div>
+                        <div *ngIf="appointment.nurseStatus === 'standard'" class="appointment-status-black">Buchung bestätigt</div>
                         <div class="patient-name">{{appointment.patientFirstName}} {{appointment.patientLastName}}</div>
                         <div class="patient-address" *ngIf="!appointment.differentPlace">{{appointment.addressStreet}} {{appointment.addressOrt}}
                           , {{appointment.addressPlz}} Berlin

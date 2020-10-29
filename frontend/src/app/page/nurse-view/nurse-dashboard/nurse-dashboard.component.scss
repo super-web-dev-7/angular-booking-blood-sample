@@ -271,6 +271,11 @@
                 color: #F389CC;
               }
 
+              .appointment-status-black {
+                font-size: 10px;
+                color: #000000;
+              }
+
               .patient-name {
                 font-size: 16px;
                 font-weight: 400;
@@ -295,6 +300,10 @@
 
             .border-pink {
               border-color: #F389CC;
+            }
+
+            .border-black {
+              border-color: #000;
             }
           }
 
