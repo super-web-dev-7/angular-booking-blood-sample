@@ -25,6 +25,7 @@ export class StatisticsComponent implements OnInit {
   colorArray = ['#50E3C2', '#F389CC', '#E87C60', '#89DF8C', '#4A90E2', '#F5A623'];
 
   packageTotal = 0;
+  showDetailPeriod = false;
 
   barChartData = [
     // {positive: 16, negative: 5, label: 'März'},

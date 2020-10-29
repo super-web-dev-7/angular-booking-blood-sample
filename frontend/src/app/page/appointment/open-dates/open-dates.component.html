@@ -12,7 +12,7 @@
     </div>
     <div class="d-flex">
       <div class="search-field-container">
-        <input type="text" placeholder="Search...">
+        <input type="text" placeholder="Search..." [(ngModel)]="filterValue" (ngModelChange)="filter()">
         <mat-icon>search</mat-icon>
       </div>
       <button class="custom-button ml-3" mat-stroked-button [routerLink]="'/appointment/new'">Neuen Termin anlegen</button>
