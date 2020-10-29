@@ -1,33 +1,35 @@
 <h3 class="header-title">Terminstatistik</h3>
 
 <div class="d-flex justify-content-between flex-wrap">
-  <div class="select-agency">
+  <div class="select-agency" [ngClass]="{'invisible': showDetailPeriod}">
     <button class="custom-button mr-3" mat-stroked-button>Alle</button>
     <button class="custom-button mr-3" mat-stroked-button>Agenture 1</button>
     <button class="custom-button mr-3" mat-stroked-button>Agenture 2</button>
   </div>
-  <button *ngIf="!showDetailPeriod" mat-raised-button class="period-button" (click)="showDetailPeriod = true">
-    Gesamtzeitraum
-    <mat-icon class="float-right">expand_more</mat-icon>
-  </button>
-  <button *ngIf="showDetailPeriod" mat-raised-button class="period-button" (click)="showDetailPeriod = false">
-    Gesamtzeitraum
-    <mat-icon class="float-right">expand_more</mat-icon>
-  </button>
-  <mat-form-field *ngIf="showDetailPeriod" class="period-button">
-    <input matInput [matDatepicker]="pickerFrom">
-    <mat-datepicker-toggle matSuffix [for]="pickerFrom">
-      <mat-icon svgIcon="custom-calendar" aria-hidden="false" aria-label="calendar" matDatepickerToggleIcon style="margin-top: -5px"></mat-icon>
-    </mat-datepicker-toggle>
-    <mat-datepicker #pickerFrom></mat-datepicker>
-  </mat-form-field>
-  <mat-form-field *ngIf="showDetailPeriod" class="period-button">
-    <input matInput [matDatepicker]="pickerTo">
-    <mat-datepicker-toggle matSuffix [for]="pickerTo">
-      <mat-icon svgIcon="custom-calendar" aria-hidden="false" aria-label="calendar" matDatepickerToggleIcon style="margin-top: -5px"></mat-icon>
-    </mat-datepicker-toggle>
-    <mat-datepicker #pickerTo></mat-datepicker>
-  </mat-form-field>
+  <div class="float-right">
+    <button *ngIf="!showDetailPeriod" mat-raised-button class="period-button" (click)="showDetailPeriod = true">
+      Gesamtzeitraum
+      <mat-icon class="float-right">expand_more</mat-icon>
+    </button>
+    <button *ngIf="showDetailPeriod" mat-raised-button class="period-button" (click)="showDetailPeriod = false">
+      Gesamtzeitraum
+      <mat-icon class="float-right">expand_more</mat-icon>
+    </button>
+    <mat-form-field *ngIf="showDetailPeriod" class="period-button">
+      <input matInput [matDatepicker]="pickerFrom" (dateChange)="changeDateFrom($event)">
+      <mat-datepicker-toggle matSuffix [for]="pickerFrom">
+        <mat-icon svgIcon="custom-calendar" aria-hidden="false" aria-label="calendar" matDatepickerToggleIcon style="margin-top: -5px"></mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #pickerFrom></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field *ngIf="showDetailPeriod" class="period-button">
+      <input matInput [matDatepicker]="pickerTo" (dateChange)="changeDateTo($event)">
+      <mat-datepicker-toggle matSuffix [for]="pickerTo">
+        <mat-icon svgIcon="custom-calendar" aria-hidden="false" aria-label="calendar" matDatepickerToggleIcon style="margin-top: -5px"></mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #pickerTo></mat-datepicker>
+    </mat-form-field>
+  </div>
 </div>
 
 <div class="d-flex justify-content-between flex-wrap mt-5">

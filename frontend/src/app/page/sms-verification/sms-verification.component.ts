@@ -38,9 +38,9 @@ export class SmsVerificationComponent implements OnInit {
       email: '',
       code: this.f.code.value
     };
-    this.authService.verifyCode(data).subscribe((res: any) => {
-      console.log(res);
-    });
+    // this.authService.verifyCode(data).subscribe((res: any) => {
+    //   console.log(res);
+    // });
   }
 
 }
