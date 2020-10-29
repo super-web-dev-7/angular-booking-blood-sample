@@ -105,6 +105,53 @@ export class OverviewAdditionalComponent implements OnInit {
 
   onSort = (event) => {
     this.orderStatus = event;
+    const events = [...this.allPackages];
+    if (event.active === 'name') {
+      events.sort((a, b) => {
+        const x = a.name;
+        const y = b.name;
+        if (event.direction === 'asc') {
+          return x < y ? 1 : -1;
+        } else if (event.direction === 'desc') {
+          return x > y ? 1 : -1;
+        }
+      });
+      if (event.direction === '') {
+        this.dataSource.data = this.allPackages;
+      } else {
+        this.dataSource.data = events;
+      }
+    } else if (event.active === 'number') {
+      events.sort((a, b) => {
+        const x = a.number;
+        const y = b.number;
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+      if (event.direction === '') {
+        this.dataSource.data = this.allPackages;
+      } else {
+        this.dataSource.data = events;
+      }
+    } else if (event.active === 'price') {
+      events.sort((a, b) => {
+        const x = a.price;
+        const y = b.price;
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+      if (event.direction === '') {
+        this.dataSource.data = this.allPackages;
+      } else {
+        this.dataSource.data = events;
+      }
+    }
   }
 
 }
