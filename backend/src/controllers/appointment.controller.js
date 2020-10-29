@@ -353,6 +353,24 @@ exports.getAppointmentsWithArchived = async (req, res) => {
 }
 
 exports.analysisByAgency = async (req, res) => {
+    console.log(req.query);
+    let query = ''
+    if (req.query.from) {
+        let date = new Date(parseInt(req.query.from, 10));
+        date = date.toISOString();
+        query = `WHERE appointments.createdAt >= DATE('${date}') `;
+    }
+    if (req.query.to) {
+        let date = new Date(parseInt(req.query.to, 10));
+        date = date.toISOString();
+        if (query) {
+            query += `AND appointments.createdAt <= DATE('${date}') `;
+        } else {
+            query = `WHERE appointments.createdAt <= DATE('${date}') `;
+        }
+    }
+    console.log(query);
+
     const allAgencies = await db.sequelize.query(`
         SELECT 
             appointments.agencyId AS agencyId, agencies.name AS agencyName,
@@ -362,6 +380,7 @@ exports.analysisByAgency = async (req, res) => {
             COALESCE(SUM(appointments.adminStatus="successful"), 0) AS success_count            
         FROM appointments
         JOIN agencies ON agencies.id=appointments.agencyId
+        ${query}
         GROUP BY appointments.agencyId
     `, {type: db.Sequelize.QueryTypes.SELECT});
     const totalValue = await db.sequelize.query(`
@@ -371,6 +390,7 @@ exports.analysisByAgency = async (req, res) => {
             COALESCE(SUM(appointments.adminStatus="canceled"), 0) AS cancel_count,
             COALESCE(SUM(appointments.adminStatus="successful"), 0) AS success_count   
         FROM appointments
+        ${query}
     `, {type: db.Sequelize.QueryTypes.SELECT});
     const response = {
         total: totalValue[0],

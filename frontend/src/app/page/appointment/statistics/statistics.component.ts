@@ -27,8 +27,7 @@ export class StatisticsComponent implements OnInit {
   packageTotal = 0;
   showDetailPeriod = false;
 
-  barChartData = [
-  ];
+  barChartData = [];
 
   monthArray = [
     'Januar',
@@ -60,8 +59,8 @@ export class StatisticsComponent implements OnInit {
   dataPerPatient: any;
   averageData: any;
 
-  fromDate: any = null;
-  toDate: any = null;
+  fromDate: any = '';
+  toDate: any = '';
 
   constructor(
     public httpService: HttpService,
@@ -132,31 +131,34 @@ export class StatisticsComponent implements OnInit {
   }
 
   analysisByAgency = () => {
-    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisByAgency').subscribe((res: any) => {
-      this.data.push({
-        label: 'Termine gesamp',
-        detailData: [
-          {color: '#50E3C2', value: this.getNumberFromString(res.total.confirm_count), icon: 'done'},
-          {color: '#F389CC', value: this.getNumberFromString(res.total.open_date_count), icon: 'feeling'},
-          {color: '#E87C60', value: this.getNumberFromString(res.total.cancel_count), icon: 'close'},
-          {color: '#89DF8C', value: this.getNumberFromString(res.total.success_count), icon: 'thumb-up'}
-        ]
-      });
-      for (const agency of res.agency) {
+    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisByAgency?from=' + this.fromDate + '&to=' + this.toDate)
+      .subscribe((res: any) => {
+        this.data = [];
         this.data.push({
-          label: agency.agencyName,
+          label: 'Termine gesamp',
           detailData: [
-            {color: '#50E3C2', value: this.getNumberFromString(agency.confirm_count), icon: 'done'},
-            {color: '#F389CC', value: this.getNumberFromString(agency.open_date_count), icon: 'feeling'},
-            {color: '#E87C60', value: this.getNumberFromString(agency.cancel_count), icon: 'close'},
-            {color: '#89DF8C', value: this.getNumberFromString(agency.success_count), icon: 'thumb-up'}
+            {color: '#50E3C2', value: this.getNumberFromString(res.total.confirm_count), icon: 'done'},
+            {color: '#F389CC', value: this.getNumberFromString(res.total.open_date_count), icon: 'feeling'},
+            {color: '#E87C60', value: this.getNumberFromString(res.total.cancel_count), icon: 'close'},
+            {color: '#89DF8C', value: this.getNumberFromString(res.total.success_count), icon: 'thumb-up'}
           ]
         });
-      }
-    });
+        for (const agency of res.agency) {
+          this.data.push({
+            label: agency.agencyName,
+            detailData: [
+              {color: '#50E3C2', value: this.getNumberFromString(agency.confirm_count), icon: 'done'},
+              {color: '#F389CC', value: this.getNumberFromString(agency.open_date_count), icon: 'feeling'},
+              {color: '#E87C60', value: this.getNumberFromString(agency.cancel_count), icon: 'close'},
+              {color: '#89DF8C', value: this.getNumberFromString(agency.success_count), icon: 'thumb-up'}
+            ]
+          });
+        }
+      });
   }
 
   changeDateFrom = event => {
+    console.log(event.value.toString());
     const date = new Date(event.value);
     this.fromDate = date.getTime();
     console.log(this.fromDate);
@@ -165,7 +167,7 @@ export class StatisticsComponent implements OnInit {
 
   changeDateTo = event => {
     const date = new Date(event.value);
-    this.toDate = date.getTime();
+    this.toDate = date.getTime() + 86400 * 1000 * 2;
     console.log(this.toDate);
     this.analysisByAgency();
   }
