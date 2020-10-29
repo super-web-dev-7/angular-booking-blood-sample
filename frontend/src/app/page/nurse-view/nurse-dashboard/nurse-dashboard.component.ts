@@ -256,21 +256,16 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
 
   patientPrepared = () => {
     const data = {
-      ready: true
+      nurseStatus: 'ready'
     };
-    this.httpService.update(URL_JSON.APPOINTMENT + '/ready/' + this.selectedAppointment.id, data).subscribe((res: any) => {
+    this.httpService.update(URL_JSON.APPOINTMENT + '/nurse_status/' + this.selectedAppointment.id, data).subscribe((res: any) => {
       const index = this.allAppointments.findIndex(item => item.id === this.selectedAppointment.id);
-      this.allAppointments[index].ready = res.ready;
+      this.allAppointments[index].nurseStatus = 'ready';
       this.close();
     });
   }
 
   appointmentDelay = () => {
-    // const emailData = {
-    //   email: this.customEmail ? this.customEmail : this.defaultEmail,
-    //   content: this.customText,
-    //   subject: 'Appointment Delay'
-    // };
     this.isLoading = true;
 
     const smsData = {
@@ -337,7 +332,16 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
       this.httpService.post(URL_JSON.BASE + '/nurse/appointment_taken', {emailData, data}).subscribe(res => {
         // this.close();
         this.isSubmit = true;
-        this.isLoading = false;
+        this.httpService.update(URL_JSON.APPOINTMENT + '/nurse_status/' + this.selectedAppointment.id,
+          {nurseStatus: 'taken'}).subscribe(() => {
+          const index = this.allAppointments.findIndex(item => item.id === this.selectedAppointment.id);
+          this.allAppointments[index].nurseStatus = 'taken';
+          this.close();
+          this.isLoading = false;
+        }, error => {
+            console.log(error);
+            this.isLoading = false;
+        });
       });
     }
   }

@@ -14,7 +14,12 @@ exports.create = (req, res) => {
 };
 
 exports.get = async (req, res) => {
+    console.log('kkkkkkkk');
+    if (req.query) {
+        console.log('query >>>> ', req.query);
+    }
     const allPackage = await AdditionalPackage.findAll({where: {}});
+    console.log('all >>>>>>>>> ', allPackage);
     res.status(200).json(allPackage);
 }
 

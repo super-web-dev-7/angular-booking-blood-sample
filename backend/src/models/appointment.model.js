@@ -6,8 +6,8 @@ module.exports = (sequelize, Sequelize) => {
         time: {
             type: Sequelize.BIGINT
         },
-        ready: {
-            type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false
+        nurseStatus: {
+            type: Sequelize.ENUM('standard', 'ready', 'taken'), defaultValue: 'standard'
         },
         adminStatus: {
             type: Sequelize.ENUM('upcoming', 'confirmed', 'canceled', 'successful'), defaultValue: 'upcoming'

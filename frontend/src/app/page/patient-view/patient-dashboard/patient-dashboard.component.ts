@@ -59,15 +59,15 @@ export class PatientDashboardComponent implements OnInit {
     const url = this.router.url.split('/');
     if (url[2] === 'new_appointment') {
       this.openDialog();
+    } else {
+      this.httpService.get(URL_JSON.PACKAGE + '/getAllPackagesWithAppointment').subscribe((res: any) => {
+        this.allPackages = res;
+      });
+      this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentByPatient/' + this.currentUser.id).subscribe((res: any) => {
+        console.log(res);
+        this.allAppointments = res;
+      });
     }
-
-    this.httpService.get(URL_JSON.PACKAGE + '/getAllPackagesWithAppointment').subscribe((res: any) => {
-      this.allPackages = res;
-    });
-    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentByPatient/' + this.currentUser.id).subscribe((res: any) => {
-      console.log(res);
-      this.allAppointments = res;
-    });
   }
 
   getTimeDuration = (startTime, duration) => {
@@ -79,10 +79,11 @@ export class PatientDashboardComponent implements OnInit {
       width: '662px'
     });
 
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.afterClosed().subscribe((res) => {
       this.router.navigateByUrl('/patient');
       this.dialog.open(AppointmentNewComponent, {
         width: '1182px',
+        data: {data: res}
       });
     });
   }

@@ -62,7 +62,7 @@ exports.update = async (req, res) => {
 
 exports.getAppointmentByNurse = async (req, res) => {
     const allAppointment = await sequelize.query(`
-        SELECT appointments.id AS id, appointments.time AS startTime, appointments.ready AS ready,
+        SELECT appointments.id AS id, appointments.time AS startTime, appointments.nurseStatus AS nurseStatus,
             users.id AS patientId, users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.id AS patientDetailId, patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
             patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode, 
@@ -83,7 +83,7 @@ exports.getAppointmentByNurse = async (req, res) => {
 
 exports.getAppointmentByPatient = async (req, res) => {
     const allAppointment = await sequelize.query(`
-        SELECT appointments.id AS id, appointments.time AS startTime, appointments.ready AS ready, appointments.adminStatus AS adminStatus,
+        SELECT appointments.id AS id, appointments.time AS startTime, appointments.nurseStatus AS nurseStatus, appointments.adminStatus AS adminStatus,
             users.id AS patientId, users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.id AS patientDetailId, patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
             patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode, 
@@ -104,7 +104,7 @@ exports.getAppointmentByPatient = async (req, res) => {
 
 exports.getAppointmentDetail = async (req, res) => {
     const appointment = await sequelize.query(`
-        SELECT appointments.id AS id, appointments.time AS startTime, appointments.ready AS ready, appointments.adminStatus AS adminStatus,
+        SELECT appointments.id AS id, appointments.time AS startTime, appointments.nurseStatus AS nurseStatus, appointments.adminStatus AS adminStatus,
             users.id AS patientId, users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.id AS patientDetailId, patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
             patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode, 
@@ -172,10 +172,10 @@ exports.getAppointmentWithQuestionById = async (req, res) => {
     res.status(200).json(appointment);
 }
 
-exports.appointmentReady = async (req, res) => {
+exports.appointmentStatusByNurse = async (req, res) => {
     const id = req.params.id;
     await Appointment.update(req.body, {where: {id}});
-    res.status(200).json({id, ready: req.body.ready});
+    res.status(200).json({id, nurseStatus: req.body.nurseStatus});
 }
 
 exports.getAppointmentsByAnamnesArchived = async (req, res) => {

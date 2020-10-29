@@ -8,7 +8,7 @@ router.route('/get').get(appointmentController.get);
 router.route('/update/:id').put(appointmentController.update);
 router.route('/delete/:id').delete(appointmentController.delete);
 router.route('/getAppointmentByNurse/:id').get(appointmentController.getAppointmentByNurse);
-router.route('/ready/:id').put(appointmentController.appointmentReady);
+router.route('/nurse_status/:id').put(appointmentController.appointmentStatusByNurse);
 
 router.route('/getAppointmentByPatient/:id').get(appointmentController.getAppointmentByPatient);
 router.route('/getAppointmentDetail/:id').get(appointmentController.getAppointmentDetail);
