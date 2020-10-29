@@ -12,10 +12,23 @@
 
   mat-icon {
     color: #C3C6D1;
-    margin-top: 6px;
+    margin-top: 5px;
   }
 }
+button.period-button mat-icon {
+  margin-top: 5px!important;
+}
 
+::ng-deep .mat-form-field-infix {
+  padding-top: 4px!important;
+}
+
+mat-form-field.period-button {
+  padding-right: 10px;
+  ::ng-deep .mat-form-field-underline {
+    display: none;
+  }
+}
 .select-agency {
   button {
     padding: 0 25px;

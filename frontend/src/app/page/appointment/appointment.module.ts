@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterModule} from '@angular/router';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 
@@ -36,7 +36,8 @@ import { AppointmentViewComponent } from './appointment-view/appointment-view.co
         ReactiveFormsModule,
         RouterModule,
         NgxChartsModule,
-        NgxMatSelectSearchModule
+        NgxMatSelectSearchModule,
+        FormsModule
     ]
 })
 export class AppointmentModule { }

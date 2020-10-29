@@ -92,9 +92,22 @@ export class OpenDatesComponent implements OnInit {
     return moment(time).format('HH:mm');
   }
 
+  getFullName = (firstName, lastName) => {
+    return firstName + ' ' + lastName;
+  }
+
   onPaginateChange = ($event: PageEvent) => {
     this.currentPage = $event.pageIndex;
     this.pageSize = $event.pageSize;
+  }
+
+  filter = () => {
+    this.dataSource.data = this.appointments.filter(item => {
+      return this.getDate(item.time).includes(this.filterValue)
+        || this.getTime(item.time).includes(this.filterValue)
+        || this.getFullName(item.user.firstName, item.user.lastName).includes(this.filterValue)
+        || this.getFullName(item.nurse.firstName, item.nurse.lastName).includes(this.filterValue);
+    });
   }
 
   selectButton = (id) => {
@@ -127,6 +140,68 @@ export class OpenDatesComponent implements OnInit {
 
   onSort = (event) => {
     this.orderStatus = event;
+    const events = [...this.appointments];
+    if (event.active === 'date') {
+      events.sort((a, b) => {
+        const x = this.getDate(a.time);
+        const y = this.getDate(b.time);
+        if (event.direction === 'asc') {
+          return x < y ? 1 : -1;
+        } else if (event.direction === 'desc') {
+          return x > y ? 1 : -1;
+        }
+      });
+      if (event.direction === '') {
+        this.dataSource.data = this.appointments;
+      } else {
+        this.dataSource.data = events;
+      }
+    } else if (event.active === 'time') {
+      events.sort((a, b) => {
+        const x = this.getTime(a.time);
+        const y = this.getTime(b.time);
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+      if (event.direction === '') {
+        this.dataSource.data = this.appointments;
+      } else {
+        this.dataSource.data = events;
+      }
+    } else if (event.active === 'patient') {
+      events.sort((a, b) => {
+        const x = this.getFullName(a.user.firstName, a.user.lastName);
+        const y = this.getFullName(b.user.firstName, b.user.lastName);
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+      if (event.direction === '') {
+        this.dataSource.data = this.appointments;
+      } else {
+        this.dataSource.data = events;
+      }
+    } else if (event.active === 'nurse') {
+      events.sort((a, b) => {
+        const x = this.getFullName(a.nurse.firstName, a.nurse.lastName);
+        const y = this.getFullName(b.nurse.firstName, b.nurse.lastName);
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+      if (event.direction === '') {
+        this.dataSource.data = this.appointments;
+      } else {
+        this.dataSource.data = events;
+      }
+    }
   }
 
   detail = element => {
