@@ -64,6 +64,8 @@
       *ngIf="viewAppointment"
       (closeSide)="closeRightSide($event)"
       [appointmentID]="appointmentId"
+      [isMobile]="isMobile"
+      [isTablet]="isTablet"
     ></app-side-view-appointment>
   </mat-sidenav>
   <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Doctor' ? '#F2F7FB' : '#fafafa'}">

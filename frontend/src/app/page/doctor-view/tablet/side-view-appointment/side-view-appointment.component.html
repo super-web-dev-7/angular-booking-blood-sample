@@ -54,23 +54,23 @@
     <div class="result-text mt-38">
       <div class="d-flex-between">
         <p class="p-272140">Blutdruck</p>
-        <p class="p-272140">140/90</p>
+        <p class="p-272140">{{resultData?.pressure}}</p>
       </div>
       <div class="d-flex-between mt-24">
         <p class="p-272140">Puls</p>
-        <p class="p-272140">80</p>
+        <p class="p-272140">{{resultData?.pulse}}</p>
       </div>
       <div class="d-flex-between mt-24">
         <p class="p-272140">Sauerstoffsättigung</p>
-        <p class="p-272140">97%</p>
+        <p class="p-272140">{{resultData?.oxygen}}</p>
       </div>
       <div class="d-flex-between mt-24">
         <p class="p-272140">Größe</p>
-        <p class="p-272140">1,83m</p>
+        <p class="p-272140">{{resultData?.height}}</p>
       </div>
       <div class="d-flex-between mt-24">
         <p class="p-272140">Gewicht</p>
-        <p class="p-272140">95kg</p>
+        <p class="p-272140">{{resultData?.weight}}</p>
       </div>
     </div>
     <div class="personal-div">
@@ -78,13 +78,9 @@
         <img src="/assets/images/1.jpg" alt="avatar" class="avatar">
       </div>
       <div class="comment-div">
-        <p class="mt-16">Natalie Bergmann</p>
-        <p class="mt-16">
-          Kommentar Lirum Larum. Patientin gut<br/>
-          drauf, fährt in den Urlaub und braucht<br/>
-          den Bericht kurzfristig. Der Kommentar<br/>
-          wird an das Labor übermittelt.
-        </p>
+        <p class="mt-16">{{resultData?.firstName}} {{resultData?.lastName}}</p>
+        <div class="mt-16" [innerHTML]="resultData?.content">
+        </div>
       </div>
     </div>
     <span class="org-text d-flex mt-47">
