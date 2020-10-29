@@ -24,6 +24,7 @@ import patientRecall from './patient_recall.model';
 import editingStatus from './editing_status.model';
 import smsHistory from './sms_history.model';
 import appointmentResult from './appointment_result.model';
+import verificationCode from './verification_code.model';
 
 
 const sequelize = new Sequelize(config.mysql.database, config.mysql.user, config.mysql.password, {
@@ -61,6 +62,7 @@ db.patientRecall = patientRecall(sequelize, Sequelize);
 db.editingStatus = editingStatus(sequelize, Sequelize);
 db.smsHistory = smsHistory(sequelize, Sequelize);
 db.appointmentResult = appointmentResult(sequelize, Sequelize);
+db.verificationCode = verificationCode(sequelize, Sequelize);
 
 // Relations
 db.patient.belongsTo(db.user);

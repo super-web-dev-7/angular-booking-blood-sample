@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../service/auth/auth.service';
+import {HttpService} from '../../service/http/http.service';
 
 @Component({
   selector: 'app-sms-verification',
@@ -15,7 +16,8 @@ export class SmsVerificationComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     public router: Router,
-    public authService: AuthService
+    public authService: AuthService,
+    public httpService: HttpService
   ) { }
 
   ngOnInit(): void {
@@ -32,6 +34,13 @@ export class SmsVerificationComponent implements OnInit {
     if (this.verificationForm.invalid) {
       return;
     }
+    const data = {
+      email: '',
+      code: this.f.code.value
+    };
+    this.authService.verifyCode(data).subscribe((res: any) => {
+      console.log(res);
+    });
   }
 
 }

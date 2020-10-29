@@ -13,6 +13,8 @@ import {AuthService} from '../../service/auth/auth.service';
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
+  public verificationForm: FormGroup;
+  public showVerifyForm = false;
   error;
   constructor(
     public formBuilder: FormBuilder,
@@ -28,10 +30,18 @@ export class LoginComponent implements OnInit {
       ])],
       password: [null, Validators.required]
     });
+
+    this.verificationForm = this.formBuilder.group({
+      code: [null, Validators.required]
+    });
   }
 
   get f(): any {
     return this.loginForm.controls;
+  }
+
+  get vf(): any {
+    return this.verificationForm.controls;
   }
 
   login = () => {
@@ -46,16 +56,35 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/nurse-view']);
           } else if (res.role === 'Doctor') {
             this.router.navigate(['/doctor']);
-          } else {
-            this.router.navigate(['/sms-verification']);
+          } else if (res.role === 'Patient') {
+            this.showVerifyForm = true;
+            // this.router.navigate(['/sms-verification'], );
           }
           // this.f.password.setValue(null);
         },
         error => {
+          console.log(error);
           this.error = error.error.message;
         }
       );
     }
   }
 
+  submit = () => {
+    if (this.verificationForm.invalid) {
+      return;
+    }
+    const data = {
+      email: this.f.email.value.toLowerCase(),
+      password: this.f.password.value,
+      code: this.vf.code.value
+    };
+    this.authService.verifyCode(data).subscribe((res: any) => {
+      this.router.navigate(['/patient']);
+      this.showVerifyForm = false;
+    }, error => {
+      console.log(error);
+      this.error = error.error.message;
+    });
+  }
 }

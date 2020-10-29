@@ -116,7 +116,6 @@ cron.schedule('* * * * *', async function () {
     console.log('----------------Running cron jobs ----------------');
     const now = new Date();
     const currentMillisecond = now.getTime();
-    console.log(currentMillisecond);
     const template1 = await Template.findOne({where: {assign: '60 minutes before Appointment'}, raw: true});
     const template2 = await Template.findOne({where: {assign: '24 hours before Appointment'}, raw: true});
     const allAppointments = await db.sequelize.query(`

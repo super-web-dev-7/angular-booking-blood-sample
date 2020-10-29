@@ -48,14 +48,20 @@ export class AuthService {
     this.showExpireAlertSubject.next(false);
     return this.http.post<any>(`${URL_JSON.AUTH}/login`, {email, password})
       .pipe(map((res: any) => {
+        console.log(res);
         if (res) {
-          localStorage.setItem('previmo_user', res.token);
-          this.currentUserSubject.next(jwt_decode(res.token));
-          if (this.loginInterval) {
-            clearInterval(this.loginInterval);
-            this.loginInterval = null;
+          if (res.token) {
+            localStorage.setItem('previmo_user', res.token);
+            this.currentUserSubject.next(jwt_decode(res.token));
+            if (this.loginInterval) {
+              clearInterval(this.loginInterval);
+              this.loginInterval = null;
+            }
+            this.loginInterval = setInterval(this.checkSessionTime, 1000);
+          } else {
+            console.log(res);
+            return res;
           }
-          this.loginInterval = setInterval(this.checkSessionTime, 1000);
         }
         return jwt_decode(res.token);
       }));
@@ -109,5 +115,22 @@ export class AuthService {
         this.resetInterval = setInterval(this.checkSessionTime, 1000);
       }
     });
+  }
+
+  verifyCode = (data) => {
+    this.clearIntervals();
+    this.showExpireAlertSubject.next(false);
+    return this.http.post<any>(`${URL_JSON.AUTH}/verify_code`, {data}).pipe(map(res => {
+      if (res) {
+        localStorage.setItem('previmo_user', res.token);
+        this.currentUserSubject.next(jwt_decode(res.token));
+        if (this.loginInterval) {
+          clearInterval(this.loginInterval);
+          this.loginInterval = null;
+        }
+        this.loginInterval = setInterval(this.checkSessionTime, 1000);
+      }
+      return jwt_decode(res.token);
+    }));
   }
 }

@@ -2,8 +2,10 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../models';
 import config from '../config/config';
+import {sendSMS} from '../helper/sms';
 
 const User = db.user;
+const VerificationCode = db.verificationCode;
 const Op = db.Sequelize.Op;
 
 const saltRounds = 10;
@@ -37,22 +39,37 @@ exports.login = async (req, res) => {
         if (!user.isActive) {
             res.status(400).send({
                 message: 'User is not active.'
-            })
+            });
+            return;
         }
         const passwordIsValid = bcrypt.compareSync(auth_data.password, user.password);
         if (passwordIsValid) {
             // Passwords match
-            const token = jwt.sign({
-                id: user.id,
-                email: user.email,
-                role: user.role,
-                firstName: user.firstName,
-                lastName: user.lastName
-            }, config.jwtSecret, {
-                // expiresIn: 35
-                expiresIn: sessionTimeByRole[user.role] * 60
-            });
-            res.json({token});
+            if (user.role === 'Patient') {
+                const code = generateDigitalCode(6);
+                console.log(code);
+                const smsData = {
+                    subject: 'Patient Verification Code',
+                    receiver: user.id,
+                    phoneNumber: user.phoneNumber,
+                    content: code
+                }
+                sendSMS(smsData);
+                VerificationCode.create({email: user.email.toLowerCase(), code});
+                res.json({role: 'Patient', sms: 'sms sent'});
+            } else {
+                const token = jwt.sign({
+                    id: user.id,
+                    email: user.email,
+                    role: user.role,
+                    firstName: user.firstName,
+                    lastName: user.lastName
+                }, config.jwtSecret, {
+                    // expiresIn: 35
+                    expiresIn: sessionTimeByRole[user.role] * 60
+                });
+                res.json({token});
+            }
         } else {
             // Passwords don't match
             res.status(400).send({
@@ -62,6 +79,57 @@ exports.login = async (req, res) => {
     } else {
         res.status(400).send({
             message: 'Incorrect Username Or password!'
+        });
+    }
+}
+
+exports.verifyCode = async (req, res) => {
+    const data = req.body.data;
+    const verificationCode = await VerificationCode.findOne({
+        where: {
+            email: data.email.toLowerCase(),
+            code: data.code,
+            isActive: true
+        }
+    });
+    if (verificationCode) {
+        const user = await User.findOne({where: {email: data.email.toLowerCase()}});
+        if (user) {
+            if (!user.isActive) {
+                res.status(400).send({
+                    message: 'User is not active.'
+                });
+                return;
+            }
+            const passwordIsValid = bcrypt.compareSync(data.password, user.password);
+            if (passwordIsValid) {
+                // Passwords match
+                const token = jwt.sign({
+                    id: user.id,
+                    email: user.email,
+                    role: user.role,
+                    firstName: user.firstName,
+                    lastName: user.lastName
+                }, config.jwtSecret, {
+                    // expiresIn: 35
+                    expiresIn: sessionTimeByRole[user.role] * 60
+                });
+                res.json({token});
+                VerificationCode.destroy({where: {email: data.email.toLowerCase()}});
+            } else {
+                // Passwords don't match
+                res.status(400).send({
+                    message: 'Incorrect Username Or Password!'
+                });
+            }
+        } else {
+            res.status(400).send({
+                message: 'Incorrect Email Or Password'
+            });
+        }
+    } else {
+        res.status(400).send({
+            message: 'Incorrect Code'
         });
     }
 }
@@ -91,6 +159,16 @@ exports.forgotPassword = async (req, res) => {
 function generateKey(length) {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
+function generateDigitalCode(length) {
+    let result = '';
+    const characters = '0123456789';
     const charactersLength = characters.length;
     for (let i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
