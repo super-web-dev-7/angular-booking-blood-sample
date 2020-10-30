@@ -8,5 +8,6 @@ router.route('/createMedicalQuestion').post(patientController.createMedicalQuest
 router.route('/createCallbackForDoctor').post(patientController.createCallback);
 
 router.route('/cancel_appointment_by_patient').post(patientController.cancelAppointmentByPatient);
+router.route('/shift_appointment_by_patient').post(patientController.shiftAppointmentByPatient);
 
 export default router;

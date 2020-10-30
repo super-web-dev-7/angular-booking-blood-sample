@@ -1,5 +1,13 @@
 import * as nodeMailer from "nodemailer";
 
+/*
+email_data = {
+    email: 'test@gmail.com',
+    subject: 'subject',
+    content: 'email content'
+}
+*/
+
 export const sendMail = async (data) => {
     const option = {
         to: data.email,
