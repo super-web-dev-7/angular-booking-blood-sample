@@ -2,9 +2,8 @@
 
 <div class="d-flex justify-content-between flex-wrap">
   <div class="select-agency" [ngClass]="{'invisible': showDetailPeriod}">
-    <button class="custom-button mr-3" mat-stroked-button>Alle</button>
-    <button class="custom-button mr-3" mat-stroked-button>Agenture 1</button>
-    <button class="custom-button mr-3" mat-stroked-button>Agenture 2</button>
+    <button class="custom-button mr-3" mat-stroked-button (click)="selectAgency(0)">Alle</button>
+    <button class="custom-button mr-3" mat-stroked-button *ngFor="let item of allAgency" (click)="selectAgency(item.id)">{{item.name}}</button>
   </div>
   <div class="float-right">
     <button *ngIf="!showDetailPeriod" mat-raised-button class="period-button" (click)="showDetailPeriod = true">
