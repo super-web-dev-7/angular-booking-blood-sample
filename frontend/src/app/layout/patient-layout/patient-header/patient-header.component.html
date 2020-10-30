@@ -25,7 +25,7 @@
         (click)="openRightSidebar()"
         *ngIf="isTablet || isMobile"
       />
-      <span *ngIf="!isMobile && !isTablet" class="ml-2 text-capitalize">{{currentUser.role}}</span>
+      <span *ngIf="!isMobile && !isTablet" class="ml-2 text-capitalize">{{currentUser.firstName}} {{currentUser.lastName}}</span>
     </div>
     <button
       *ngIf="!isMobile && !isTablet"
