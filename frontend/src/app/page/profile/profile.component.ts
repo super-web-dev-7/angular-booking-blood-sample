@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {HttpService} from '../../service/http/http.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
@@ -16,16 +16,17 @@ export class ProfileComponent implements OnInit {
     private dialogRef: MatDialogRef<ProfileComponent>,
     public httpService: HttpService,
     public formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
   ngOnInit(): void {
     this.profileForm = this.formBuilder.group({
-      email: [null, [Validators.required, Validators.email]],
-      phoneNumber: [null, [Validators.required, Validators.pattern(this.phoneNumberPattern)]],
+      email: [this.data?.email, [Validators.required, Validators.email]],
+      phoneNumber: [this.data?.phoneNumber, [Validators.required, Validators.pattern(this.phoneNumberPattern)]],
       password: [null, Validators.required],
       confirmPassword: [null, Validators.required],
-      firstName: [null, Validators.required],
-      lastName: [null, Validators.required]
+      firstName: [this.data?.firstName, Validators.required],
+      lastName: [this.data?.lastName, Validators.required]
     });
   }
 

@@ -62,6 +62,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
   showAlert = false;
   subsVar: any;
   isLoading: boolean;
+  userData: any;
 
   constructor(
     public authService: AuthService,
@@ -71,16 +72,19 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     public formBuilder: FormBuilder,
     public dialog: MatDialog
   ) {
+    this.currentUser = this.authService.currentUserValue;
   }
 
   ngOnInit(): void {
-    this.currentUser = this.authService.currentUserValue;
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 599px)');
     let dialog;
     this.subsVar = this.authService.showExpireAlertSubject.subscribe(value => {
       if (value) {
         dialog = this.dialog.open(SessionExpireAlertComponent, {disableClose: true});
       }
+    });
+    this.httpService.get(URL_JSON.USER + '/getUser/' + this.currentUser?.id).subscribe( (res: any) => {
+      this.userData = res;
     });
 
     this.initForm();
@@ -257,6 +261,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     let dialogRef: MatDialogRef<any>;
     dialogRef = this.dialog.open(ProfileComponent, {
       width: '730px',
+      data: this.userData
     });
     dialogRef.afterClosed().subscribe(res => {});
   }
