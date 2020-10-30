@@ -18,10 +18,19 @@ exports.createMedicalQuestion = async (req, res) => {
 
 exports.createCallback = async (req, res) => {
     const newCallbackData = req.body;
+    const callback = CallbackDoctor.findOne({where: {appointmentId: newCallbackData.appointmentId}});
     await Appointment.update({callbackStatus: true}, {where: {id: newCallbackData.appointmentId}});
-    await ContactHistory.create({appointmentId: newCallbackData.appointmentId, type: 'Rückruf erstellt'});
-    const newCallback = await CallbackDoctor.create(newCallbackData);
-    res.status(201).json(newCallback);
+    if (callback) {
+        await ContactHistory.create({appointmentId: newCallbackData.appointmentId, type: 'Rückruf aktualisiert'});
+        await CallbackDoctor.update(newCallbackData, {appointmentId: newCallbackData.appointmentId});
+        res.status(200).json({
+            message: 'updated'
+        });
+    } else {
+        await ContactHistory.create({appointmentId: newCallbackData.appointmentId, type: 'Rückruf erstellt'});
+        const newCallback = await CallbackDoctor.create(newCallbackData);
+        res.status(201).json(newCallback);
+    }
 }
 
 exports.cancelAppointmentByPatient = async (req, res) => {
