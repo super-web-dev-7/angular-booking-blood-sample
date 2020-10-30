@@ -15,6 +15,8 @@ export class MoveAppointmentComponent implements OnInit {
   allTimes = [];
   selectedPTime = null;
   displayData: any;
+  city = null;
+  street = null;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -28,7 +30,7 @@ export class MoveAppointmentComponent implements OnInit {
       plz: [null, Validators.required],
       ort: [null, Validators.required],
       street: [null, Validators.required],
-      message: ['', Validators.required]
+      message: [null, Validators.required]
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;
@@ -44,6 +46,18 @@ export class MoveAppointmentComponent implements OnInit {
       return '';
     }
     return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');
+  }
+
+  checkPostalCode = () => {
+    this.httpService.checkPostalCode(this.f.plz.value).subscribe((res: any) => {
+      if (!res) {
+        this.f.plz.setErrors(Validators.required);
+      } else {
+        this.f.plz.setErrors(null);
+        this.f.ort.setValue(res.city);
+        this.f.street.setValue(res.district);
+      }
+    });
   }
 
   submit = () => {

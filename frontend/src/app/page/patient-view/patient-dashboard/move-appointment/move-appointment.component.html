@@ -32,7 +32,9 @@
                 <div class="d-flex-between w-100">
                   <mat-form-field class="w-45">
                     <mat-label>PLZ</mat-label>
-                    <input formControlName="plz" autocomplete="off" matInput>
+                    <input formControlName="plz" autocomplete="off" matInput (keyup)="checkPostalCode()">
+                    <mat-icon *ngIf="f.plz.touched && !f.plz.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+                    <mat-icon *ngIf="f.plz.touched && f.plz.errors" style="color: red" matSuffix>close</mat-icon>
                   </mat-form-field>
                   <mat-form-field class="w-45">
                     <mat-label>Ort</mat-label>
