@@ -20,13 +20,14 @@ export class EditAnamnesisComponent implements OnInit {
     'Gegen Diabetes', 'Gegen Bluthochdruck', 'Schilddrüsenüberfunktion', 'Schilddrüsenunterfunktion'
   ];
   selectValues = {
-    smoking: true,
+    smoking: false,
     alcohol: false,
-    takeMedication: true,
-    heartAttack: true,
-    previousIllness: true,
-    additionalInfo: true
+    takeMedication: false,
+    heartAttack: false,
+    previousIllness: false,
+    additionalInfo: false
   };
+  displayData: any;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -38,6 +39,9 @@ export class EditAnamnesisComponent implements OnInit {
 
   ngOnInit(): void {
     this.saved = false;
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithQuestionById/' + this.data?.appointmentId).subscribe((res: any) => {
+      this.displayData = res;
+    });
     this.editAnamsForm = this.formBuilder.group({
       name: [null, Validators.required],
       gender: [null, Validators.required],

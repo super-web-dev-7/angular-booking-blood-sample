@@ -196,8 +196,10 @@
           </button>
           <button
             mat-stroked-button
-            class="custom-button-s-384C61 ml-10"
+            class="custom-button ml-10"
             (click)="submit()"
+            [disabled]="editAnamsForm.invalid"
+            [ngClass]="{'primary':editAnamsForm.valid}"
           >
             Anamnesedaten speichern
           </button>
