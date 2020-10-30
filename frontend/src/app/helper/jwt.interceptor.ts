@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 
@@ -33,6 +33,7 @@ export class JwtInterceptor implements HttpInterceptor {
           return;
         }
         this.router.navigate(['login']);
+        return throwError(err);
       }
     }));
   }

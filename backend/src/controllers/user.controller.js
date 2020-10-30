@@ -82,6 +82,16 @@ exports.getPatientById = async (req, res) => {
     res.status(200).json(patient[0])
 }
 
+exports.getUserInfo = async (req, res) => {
+    const user = await User.findOne({where: {id: req.params.id}, raw: true});
+    if (user && user.role === 'Patient') {
+        const patient = await Patient.findOne({where: {user_id: req.params.id}});
+        res.status(200).json({...user, patient});
+    } else {
+        res.status(200).json(user);
+    }
+}
+
 exports.getAgAdminInWorkingGroup = async (req, res) => {
     const admins = await User.findAll({where: {role: 'AG-Admin', isActive: true}});
     const groups = await WorkingGroup.findAll({where: {}});

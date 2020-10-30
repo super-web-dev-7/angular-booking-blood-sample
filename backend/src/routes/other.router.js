@@ -11,6 +11,7 @@ router.route('/sms_history/get').get(otherController.getSmsHistory);
 
 router.route('/zipcode/checkPostalCode/:code').get(otherController.checkPostalCode);
 router.route('/zipcode/getPostalCodeByName').get(otherController.getPostalCodeByName);
+router.route('/zipcode/check_postal_code_all/:code').get(otherController.checkPostalCodeAll);
 
 router.route('/sendEmail').post(otherController.sendEmail);
 router.route('/sendSMS').post(otherController.sendSMS);

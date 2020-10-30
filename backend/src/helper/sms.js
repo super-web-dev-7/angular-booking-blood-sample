@@ -1,6 +1,15 @@
 import Axios from "axios";
 import db from '../models';
 
+/*
+sms_data = {
+    subject: 'sms subject',
+    receiver: id,
+    phoneNumber: '1234567890',
+    content: 'sms content'
+}
+*/
+
 const SMSHistory = db.smsHistory;
 export const sendSMS = async (data) => {
     const SMSData = {

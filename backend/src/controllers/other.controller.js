@@ -9,7 +9,7 @@ const Calendar = db.calendar;
 const Template = db.template;
 const Package = db.package;
 const Appointment = db.appointment;
-// const ZipCode = db.zipCodeModel;
+const ZipCode = db.zipCodeModel;
 const DistrictModel = db.districtModel;
 const AppointmentResult = db.appointmentResult;
 
@@ -59,6 +59,11 @@ exports.sendEmail = async (req, res) => {
 exports.checkPostalCode = async (req, res) => {
     const district = await DistrictModel.findOne({where: {zipcode: req.params.code}, raw: true});
     res.status(200).json(district)
+}
+
+exports.checkPostalCodeAll = async (req, res) => {
+    const district = await ZipCode.findOne({where: {plz: req.params.code}, raw: true});
+    res.status(200).json(district);
 }
 
 exports.getPostalCodeByName = async (req, res) => {
