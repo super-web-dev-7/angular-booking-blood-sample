@@ -7,6 +7,7 @@ import {SidebarComponent} from './sidebar/sidebar.component';
 import {MaterialModule} from '../../material/material.module';
 import {MainLayoutComponent} from './main-layout.component';
 import {PatientViewModule} from '../../page/patient-view/patient-view.module';
+import {DoctorViewModule} from '../../page/doctor-view/doctor-view.module';
 
 @NgModule({
   declarations: [
@@ -14,11 +15,12 @@ import {PatientViewModule} from '../../page/patient-view/patient-view.module';
     SidebarComponent,
     MainLayoutComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    MaterialModule,
-    PatientViewModule,
-  ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        MaterialModule,
+        PatientViewModule,
+        DoctorViewModule,
+    ]
 })
 export class MainLayoutModule { }

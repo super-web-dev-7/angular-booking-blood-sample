@@ -1,0 +1,64 @@
+<form [formGroup]="profileForm" class="p-2">
+  <div class="pd-17">
+    <h1>Profil <span style="font-weight: 100">bearbeiten</span></h1>
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field class="mt-4">
+          <mat-label>E-Mail-Adresse</mat-label>
+          <input formControlName="email" autocomplete="off" matInput>
+          <mat-icon *ngIf="f.email.touched && !f.email.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+          <mat-icon *ngIf="f.email.touched && f.email.errors" style="color: red" matSuffix>close</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="mt-4">
+          <mat-label>Handynummer</mat-label>
+          <input type="text" formControlName="phoneNumber" autocomplete="off" matInput>
+          <mat-icon *ngIf="f.phoneNumber.touched && !f.phoneNumber.errors" style="color: greenyellow" matSuffix>done
+          </mat-icon>
+          <mat-icon *ngIf="f.phoneNumber.touched && f.phoneNumber.errors" style="color: red" matSuffix>close</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field class="mt-4">
+          <mat-label>Passwort</mat-label>
+          <input formControlName="password" autocomplete="off" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 d-flex">
+        <mat-form-field class="mt-4">
+          <mat-label>Passwort</mat-label>
+          <input formControlName="confirmPassword" autocomplete="off" matInput>
+          <mat-error *ngIf="f.confirmPassword.errors?.mustMatch">Password must match.</mat-error>
+        </mat-form-field>
+        <button type="button" class="custom-button mt-2" style="width: 190px;" mat-stroked-button
+                (click)="generatePassword()">Generieren
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field class="mt-4">
+          <mat-label>Vorname</mat-label>
+          <input formControlName="firstName" autocomplete="off" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="mt-4">
+          <mat-label>Nachname</mat-label>
+          <input formControlName="lastName" autocomplete="off" matInput>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="d-flex align-items-end justify-content-end mt-38">
+      <button class="custom-button mr-3" mat-stroked-button (click)="close()">
+        Abbrechen
+      </button>
+      <button class="custom-button primary primary-button" mat-stroked-button (click)="submit()">
+        Profil speichern
+      </button>
+    </div>
+  </div>
+</form>

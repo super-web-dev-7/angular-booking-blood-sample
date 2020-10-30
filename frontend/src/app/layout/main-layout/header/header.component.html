@@ -10,7 +10,10 @@
       <img src="/assets/images/avatar.png" alt="user-avatar">
       <span *ngIf="!isMobile" class="ml-2 text-capitalize">{{currentUser.role}}</span>
     </div>
-    <button *ngIf="!isMobile" (click)="logout()" class="ml-3" mat-icon-button aria-label="more">
+    <button *ngIf="!isMobile && currentUser.role === 'Superadmin'" (click)="logout()" class="ml-3" mat-icon-button aria-label="more">
+      <mat-icon>more_horiz</mat-icon>
+    </button>
+    <button *ngIf="!isMobile && currentUser.role === 'AG-Admin'" (click)="openRightSidebar()" class="ml-3" mat-icon-button aria-label="more">
       <mat-icon>more_horiz</mat-icon>
     </button>
   </div>

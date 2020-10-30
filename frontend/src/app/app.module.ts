@@ -23,6 +23,7 @@ import { SessionExpireAlertComponent } from './components/session-expire-alert/s
 import {PatientLayoutModule} from './layout/patient-layout/patient-layout.module';
 import {DoctorLayoutModule} from './layout/doctor-layout/doctor-layout.module';
 import { SmsVerificationComponent } from './page/sms-verification/sms-verification.component';
+import {ProfileComponent} from './page/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { SmsVerificationComponent } from './page/sms-verification/sms-verificati
     ChartComponent,
     SessionExpireAlertComponent,
     SmsVerificationComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

@@ -15,8 +15,6 @@ export class MoveAppointmentComponent implements OnInit {
   allTimes = [];
   selectedPTime = null;
   displayData: any;
-  city = null;
-  street = null;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -34,7 +32,6 @@ export class MoveAppointmentComponent implements OnInit {
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;
-      console.log('@@@@@@@@@@@@@', res);
     });
   }
 
