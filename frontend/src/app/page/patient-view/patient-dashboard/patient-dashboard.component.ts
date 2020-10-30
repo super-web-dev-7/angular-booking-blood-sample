@@ -291,6 +291,7 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(AppointmentHistoryComponent, {
         width: '662px',
+        data: {appointmentId: this.selectedAppointment}
       });
       dialogRef.afterClosed().subscribe(res => {
       });
