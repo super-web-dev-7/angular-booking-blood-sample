@@ -10,14 +10,19 @@
   <div class="main-side-container">
     <h1 *ngIf="isTablet">Schwester <span style="font-weight: 100">anrufen</span></h1>
     <div class="left-border-div mt-38">
-      <p class="p-272140">12.09.2020 09:00 - 10:15</p>
-      <p class="p-576E82">Check-Up: Männergesundheit</p>
-      <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+      <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
+      <p class="p-576E82">Check-Up: {{displayData?.packageName}}</p>
+      <p class="p-272140" *ngIf="!displayData?.differentPlace">
+        {{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}
+      </p>
+      <p class="p-272140" *ngIf="displayData?.differentPlace">
+        {{displayData?.otherStreet}} {{displayData?.otherPostalCode}}, {{displayData?.otherCity}}
+      </p>
     </div>
     <div class="d-flex mt-45">
       <img src="/assets/images/1.jpg" alt="sister" class="call-circle-avatar">
       <p class="p-272140-tablet" style="margin-left: 18px;margin-top:20px">
-        Natalie Bergmann
+        {{nurseInfo?.nurseFirstName}} {{nurseInfo?.nurseLastName}}
       </p>
     </div>
     <div class="text-center" style="margin-top: 250px;display:flex;justify-content: center">

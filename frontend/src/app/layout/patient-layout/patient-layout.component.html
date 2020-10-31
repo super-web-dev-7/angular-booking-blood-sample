@@ -31,6 +31,7 @@
       *ngIf="openCallSister"
       [isMobile]="isMobile"
       [isTablet]="isTablet"
+      [appointmentId]="appointmentID"
     ></app-popup-call-sister>
     <app-popup-callback-doctor
       (closeSide)="closeRightSide($event)"
