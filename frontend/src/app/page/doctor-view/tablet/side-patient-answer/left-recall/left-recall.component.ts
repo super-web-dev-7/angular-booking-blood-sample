@@ -20,7 +20,7 @@ export class LeftRecallComponent implements OnInit {
 
   ngOnInit(): void {
     this.PatientCallForm = this.formBuilder.group({
-      time: [null, Validators.required],
+      title: [null, Validators.required],
       message: [null, Validators.required],
       patient: [null, Validators.required]
     });
@@ -42,7 +42,7 @@ export class LeftRecallComponent implements OnInit {
       callbackId: this.callbackInfo.callbackId,
       message: this.f.message.value,
       appointmentId: this.callbackInfo.appointmentId,
-      time: this.f.time.value?.toLocaleString(),
+      title: this.f.title.value,
       phoneNumber: this.callbackInfo.phoneNumber,
       patientNotThere: this.f.patient.value,
     };

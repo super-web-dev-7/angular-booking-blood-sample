@@ -15,11 +15,9 @@
         {{callbackData.firstName}} {{callbackData.lastName}}<br/> {{callbackData.phoneNumber}}
       </p>
       <div class="select-form">
-        <mat-form-field>
-          <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" formControlName="time">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <ngx-mat-datetime-picker #picker>
-          </ngx-mat-datetime-picker>
+        <mat-form-field class="w-100">
+          <mat-label>Title</mat-label>
+          <input formControlName="title" autocomplete="off" matInput>
         </mat-form-field>
       </div>
       <div class="textarea-form">
