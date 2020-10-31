@@ -1,6 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SharedService} from '../../../../service/shared/shared.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-popup-new-appointment',
@@ -9,10 +10,13 @@ import {SharedService} from '../../../../service/shared/shared.service';
 })
 export class PopupNewAppointmentComponent implements OnInit {
   @Output() closeSide = new EventEmitter();
+  @Input() isMobile;
+  @Input() isTablet;
   appointmentForm: FormGroup;
   constructor(
     public formBuilder: FormBuilder,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    public router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -22,7 +26,8 @@ export class PopupNewAppointmentComponent implements OnInit {
   }
 
   close = () => {
-    this.closeSide.emit(false);
+    this.router.navigateByUrl('/patient');
+    this.closeSide.emit();
   }
 
   arrangeAppointment = () => {

@@ -75,19 +75,26 @@ export class PatientDashboardComponent implements OnInit {
   }
 
   openDialog = () => {
-    const dialogRef = this.dialog.open(NewAppointmentComponent, {
-      width: '662px'
-    });
+    if (this.isMobile || this.isTablet) {
+      const emitData = {
+        title: 'new',
+      };
+      this.sharedService.patientPopup.emit(emitData);
+    } else {
+      const dialogRef = this.dialog.open(NewAppointmentComponent, {
+        width: '662px'
+      });
 
-    dialogRef.afterClosed().subscribe((res) => {
-      this.router.navigateByUrl('/patient');
-      if (res?.status) {
-        this.dialog.open(AppointmentNewComponent, {
-          width: '1182px',
-          data: res
-        });
-      }
-    });
+      dialogRef.afterClosed().subscribe((res) => {
+        this.router.navigateByUrl('/patient');
+        if (res?.status) {
+          this.dialog.open(AppointmentNewComponent, {
+            width: '1182px',
+            data: res
+          });
+        }
+      });
+    }
   }
 
   cancelAppointment = () => {
@@ -258,18 +265,7 @@ export class PatientDashboardComponent implements OnInit {
   }
 
   newAppointment = () => {
-    this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    if (this.isTablet || this.isMobile) {
-      const emitData = {
-        title: 'new',
-        data: {
-          appointmentId: this.selectedAppointment
-        }
-      };
-      this.sharedService.patientPopup.emit(emitData);
-    } else {
-      this.router.navigateByUrl('/patient/new_appointment');
-    }
+    this.router.navigateByUrl('/patient/new_appointment');
   }
 
   openHistory = (id) => {

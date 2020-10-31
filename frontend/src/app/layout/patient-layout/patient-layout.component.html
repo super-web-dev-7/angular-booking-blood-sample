@@ -11,7 +11,7 @@
     </ng-template>
   </mat-sidenav>
   <mat-sidenav
-    [opened]="isRightSidebarOpen && currentUser.role === 'Patient'"
+    [opened]="isRightSidebarOpen"
     [mode]="'over'"
     #rightSide
     [ngClass]="{'mobile-mat-sidenav': isMobile && !menuOpen}"
@@ -69,6 +69,8 @@
     ></app-popup-shift-schedule>
     <app-popup-new-appointment
       (closeSide)="closeRightSide($event)"
+      [isMobile]="isMobile"
+      [isTablet]="isTablet"
       *ngIf="openNewPopup"
     ></app-popup-new-appointment>
     <app-popup-arrange-appointment

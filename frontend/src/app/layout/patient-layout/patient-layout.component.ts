@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {Router} from '@angular/router';
 import {MatDialog} from '@angular/material/dialog';
@@ -40,7 +40,8 @@ export class PatientLayoutComponent implements OnInit, OnDestroy {
     public router: Router,
     public breakpointObserver: BreakpointObserver,
     private sharedService: SharedService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private cdRef: ChangeDetectorRef
   ) {
 
     breakpointObserver.observe([
@@ -107,7 +108,8 @@ export class PatientLayoutComponent implements OnInit, OnDestroy {
         this.titleEnd = 'Historie';
       }
       this.isRightSidebarOpen = true;
-      this.appointmentID = res.data.appointmentId;
+      this.appointmentID = res.data?.appointmentId;
+      this.cdRef.detectChanges();
     });
   }
 
@@ -122,7 +124,7 @@ export class PatientLayoutComponent implements OnInit, OnDestroy {
   }
 
   setRightOpen = (event) => {
-    this.isRightSidebarOpen = event;
+    this.isRightSidebarOpen = true;
     this.menuOpen = true;
   }
 
