@@ -39,7 +39,7 @@ export class CallbackDoctorComponent implements OnInit {
     });
     this.callbackForm = this.formBuilder.group({
       phone: [null, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{11,13}$')]],
-      schedule: [null, [Validators.required]],
+      title: [null, [Validators.required]],
       message: [null, Validators.required],
     });
     this.dateControl = new FormControl(new Date());
@@ -81,7 +81,7 @@ export class CallbackDoctorComponent implements OnInit {
       date: selectedDate,
       time: this.selectedTime,
       phoneNumber: this.f.phone.value,
-      schedule: this.f.schedule.value?.toLocaleString(),
+      title: this.f.title.value,
       message: this.f.message.value
     };
     this.httpService.post(URL_JSON.PATIENT + '/createCallbackForDoctor', data).subscribe((res: any) => {
