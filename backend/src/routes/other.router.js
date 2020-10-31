@@ -1,6 +1,7 @@
 import {Router} from 'express';
 
 import * as otherController from '../controllers/other.controller';
+import * as calendarController from '../controllers/calendar.controller';
 
 const router = Router();
 
@@ -21,5 +22,9 @@ router.route('/nurse/appointment_delay').post(otherController.appointmentDelay);
 router.route('/nurse/appointment_shift').post(otherController.appointmentShift);
 router.route('/nurse/appointment_taken').post(otherController.appointmentTaken);
 router.route('/nurse/appointment_not_there').post(otherController.appointmentNotThere);
+
+// Get Booking Time
+router.route('/booking_time/agency/:agencyId').get(calendarController.getBookingTimeByAgency);
+router.route('/booking_time/package/:packageId').get(calendarController.getBookingTimeByPackage);
 
 export default router;
