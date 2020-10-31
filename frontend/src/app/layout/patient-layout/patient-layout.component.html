@@ -80,7 +80,8 @@
   </mat-sidenav>
   <mat-sidenav-content
     class="page-wrapper"
-    [ngStyle]="{'background' : currentUser.role === 'Patient' ? '#F2F7FB' : '#fafafa'}">
+    style="background: #F2F7FB"
+  >
     <div class="background-container" *ngIf="!isMobile && !isTablet"></div>
     <app-patient-header (setOpen)="setOpen($event)" [isMobile]="isMobile" (setRightOpen)="setRightOpen($event)"></app-patient-header>
     <div class="main-content-container">
