@@ -93,12 +93,12 @@
               <button
                 mat-icon-button
                 style="margin-left: 10px"
-                (click)="openPersonalInfo()"
+                (click)="openPersonalInfo(item.id)"
               >
-                <mat-icon class="p-0">{{showDetail ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
+                <mat-icon class="p-0">{{showDetail && showDetailId === item.id ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
               </button>
             </div>
-            <div class="personal-info mt-15" *ngIf="showDetail">
+            <div class="personal-info mt-15" *ngIf="showDetail && showDetailId === item.id">
               <p class="p-272140">Sebastian Naumann</p>
               <p class="p-272140">Männlich, 39 Jahre, 1.83m, 95kg</p>
               <ul>

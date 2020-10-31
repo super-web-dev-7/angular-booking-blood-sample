@@ -28,6 +28,7 @@ import {DialogSuccessComponent} from './dialog-success/dialog-success.component'
 })
 export class PatientDashboardComponent implements OnInit {
   showDetail: boolean;
+  showDetailId = null;
   isMobile = false;
   isTablet = false;
   allPackages = [];
@@ -179,8 +180,13 @@ export class PatientDashboardComponent implements OnInit {
     }
   }
 
-  openPersonalInfo = () => {
+  openPersonalInfo = (id) => {
     this.showDetail = !this.showDetail;
+    if (this.showDetailId) {
+      this.showDetailId = null;
+    } else {
+      this.showDetailId = id;
+    }
   }
 
   openCallbackDoctor = () => {
