@@ -116,7 +116,7 @@ export class AnamnesCheckComponent implements OnInit {
       data: {
         appointmentId: this.displayData?.appointmentId,
         callbackId: this.displayData?.callbackId,
-        phoneNumber: this.displayData?.phoneNumber,
+        phoneNumber: this.displayData?.patientNumber,
         firstName: this.displayData?.patientFirstName,
         lastName: this.displayData?.patientLastName,
         question: true

@@ -49,7 +49,7 @@ export class AppointmentNewComponent implements OnInit {
   }
 
   close = () => {
-    this.dialogRef.close(false);
+    this.dialogRef.close();
   }
 
   selectPackage = (id) => {

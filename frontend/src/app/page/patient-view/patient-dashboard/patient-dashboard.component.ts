@@ -262,17 +262,7 @@ export class PatientDashboardComponent implements OnInit {
       };
       this.sharedService.patientPopup.emit(emitData);
     } else {
-      let dialogRef: MatDialogRef<any>;
-      dialogRef = this.dialog.open(NewAppointmentComponent, {
-        width: '662px',
-      });
-      dialogRef.afterClosed().subscribe(res => {
-        if (res) {
-          this.dialog.open(AppointmentNewComponent, {
-            width: '1182px',
-          });
-        }
-      });
+      this.router.navigateByUrl('/patient/new_appointment');
     }
   }
 
@@ -288,8 +278,7 @@ export class PatientDashboardComponent implements OnInit {
       };
       this.sharedService.patientPopup.emit(emitData);
     } else {
-      let dialogRef: MatDialogRef<any>;
-      dialogRef = this.dialog.open(AppointmentHistoryComponent, {
+      const dialogRef = this.dialog.open(AppointmentHistoryComponent, {
         width: '662px',
         data: {appointmentId: this.selectedAppointment}
       });
