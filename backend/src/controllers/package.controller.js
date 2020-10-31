@@ -53,6 +53,7 @@ exports.getAllPackagesWithAppointment = async (req, res) => {
         packages.id AS id, packages.name AS name, COUNT(appointments.id) AS total 
     FROM packages 
     LEFT JOIN appointments ON appointments.packageId=packages.id 
+    WHERE appointments.userId=${req.params.userId}
     GROUP BY packages.id`, {type: db.Sequelize.QueryTypes.SELECT});
     res.status(200).json(allPackages);
 }

@@ -60,7 +60,7 @@ export class PatientDashboardComponent implements OnInit {
     if (url[2] === 'new_appointment') {
       this.openDialog();
     } else {
-      this.httpService.get(URL_JSON.PACKAGE + '/getAllPackagesWithAppointment').subscribe((res: any) => {
+      this.httpService.get(URL_JSON.PACKAGE + '/getAllPackagesWithAppointment/' + this.currentUser.id).subscribe((res: any) => {
         this.allPackages = res;
       });
       this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentByPatient/' + this.currentUser.id).subscribe((res: any) => {
@@ -276,7 +276,8 @@ export class PatientDashboardComponent implements OnInit {
     }
   }
 
-  openHistory = () => {
+  openHistory = (id) => {
+    this.selectedAppointment = id;
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet || this.isMobile) {
       const emitData = {
