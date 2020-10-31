@@ -73,6 +73,11 @@
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
+            <div class="d-flex flex-wrap expansion-panel-container">
+              <div class="text-center w-100" style="margin-left: 76px">
+                <app-booking-time-picker [data]="allTimes" (setSelectedTime)="selectedPTime = $event"></app-booking-time-picker>
+              </div>
+            </div>
           </mat-expansion-panel>
           <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>

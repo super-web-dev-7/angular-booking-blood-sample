@@ -15,6 +15,8 @@ export class AppointmentNewComponent implements OnInit {
   selectedPackage = null;
   selectedBoard = null;
   appointmentForm: FormGroup;
+  allTimes = [];
+  selectedPTime = null;
   constructor(
     private dialogRef: MatDialogRef<AppointmentNewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -29,9 +31,16 @@ export class AppointmentNewComponent implements OnInit {
     });
     this.httpService.get(URL_JSON.PACKAGE + '/getWithQuery?status=Public').subscribe((res: any) => {
       this.displayData = res;
+      console.log('package', res);
     });
     this.httpService.get(URL_JSON.ADDITIONAL_PACKAGE + '/get?status=Public').subscribe((res: any) => {
       this.packages = res;
+    });
+  }
+
+  getBookingTime = (id) => {
+    this.httpService.get(URL_JSON.BASE + '/booking_time/package/' + id).subscribe((res: any) => {
+      this.allTimes = res;
     });
   }
 
@@ -49,5 +58,6 @@ export class AppointmentNewComponent implements OnInit {
 
   selectBoard = (id) => {
     this.selectedBoard = id;
+    this.getBookingTime(id);
   }
 }

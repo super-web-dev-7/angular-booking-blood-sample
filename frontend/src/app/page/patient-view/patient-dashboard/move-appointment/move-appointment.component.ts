@@ -51,7 +51,6 @@ export class MoveAppointmentComponent implements OnInit {
   getBookingTime = (id) => {
     this.httpService.get(URL_JSON.BASE + '/booking_time/package/' + id).subscribe((res: any) => {
       this.allTimes = res;
-      console.log('alltimes', res);
     });
   }
 
