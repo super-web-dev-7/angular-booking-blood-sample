@@ -25,12 +25,10 @@ export class ViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
   }
 
   sendManual = () => {
     this.httpService.post(URL_JSON.BASE + '/sendSMS', this.data).subscribe((res: any) => {
-      console.log(res);
     });
   }
 }

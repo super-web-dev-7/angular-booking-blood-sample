@@ -1,4 +1,4 @@
-<form [formGroup]="patientForm" class="p-2">
+<form [formGroup]="patientForm" class="p-2" *ngIf="!showVerifyForm">
   <div class="pd-17">
     <h1>Profil <span style="font-weight: 100">bearbeiten</span></h1>
     <div class="row">
@@ -87,8 +87,11 @@
     <div class="row">
       <div class="col-md-6">
         <mat-form-field class="mt-4">
-          <mat-label>Alter</mat-label>
-          <input formControlName="age" autocomplete="off" type="number" matInput>
+          <mat-label>Geburtsdatum</mat-label>
+          <input matInput autocomplete="off" disabled formControlName="ageView" />
+          <input style="display: none;" matInput [matDatepicker]="picker" formControlName="age" autocomplete="off" (dateChange)="setDateAndAge($event)" disabled>
+          <mat-icon matSuffix (click)="picker.open()">event</mat-icon>
+          <mat-datepicker #picker disabled="false"></mat-datepicker>
         </mat-form-field>
       </div>
       <div class="col-md-6">
@@ -155,3 +158,25 @@
   </div>
 </form>
 
+<!--verify form-->
+
+<form [formGroup]="verifyForm" class="p-2" *ngIf="showVerifyForm">
+  <div class="pd-17">
+    <h1>Profil <span style="font-weight: 100">bearbeiten</span></h1>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-form-field class="mt-4">
+          <mat-label>Enter 6 digit code</mat-label>
+          <input formControlName="code" autocomplete="off" matInput>
+          <mat-error *ngIf="error">{{error}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-end justify-content-end mt-38">
+      <button class="custom-button primary primary-button" mat-stroked-button (click)="verify()">
+        Verify
+      </button>
+    </div>
+  </div>
+</form>

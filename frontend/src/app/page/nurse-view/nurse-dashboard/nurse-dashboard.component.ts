@@ -208,7 +208,6 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
 
   openRightMenu = (index) => {
     this.isRightMenuOpen = true;
-    console.log(this.selectedAppointment);
     this.defaultEmail = this.selectedAppointment.patientEmail;
     this.defaultNumber = this.selectedAppointment.patientNumber;
     if (index === 0) {
@@ -292,7 +291,6 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     };
     this.httpService.post(URL_JSON.BASE + '/nurse/appointment_delay', {emailData: null, smsData})
       .subscribe((res: any) => {
-      console.log(res);
       this.isLoading = false;
       if (res.smsResult) {
         this.close();
@@ -316,9 +314,8 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
       content: this.customText
     };
     this.httpService.post(URL_JSON.BASE + '/nurse/appointment_delay', {emailData, smsData})
-      .subscribe((res: any) => {
+      .subscribe(() => {
         this.isLoading = false;
-        console.log(res);
         this.close();
       });
   }

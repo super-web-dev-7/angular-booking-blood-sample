@@ -48,7 +48,6 @@ export class AuthService {
     this.showExpireAlertSubject.next(false);
     return this.http.post<any>(`${URL_JSON.AUTH}/login`, {email, password})
       .pipe(map((res: any) => {
-        console.log(res);
         if (res) {
           if (res.token) {
             localStorage.setItem('previmo_user', res.token);
@@ -59,7 +58,6 @@ export class AuthService {
             }
             this.loginInterval = setInterval(this.checkSessionTime, 1000);
           } else {
-            console.log(res);
             return res;
           }
         }
@@ -132,5 +130,17 @@ export class AuthService {
       }
       return jwt_decode(res.token);
     }));
+  }
+
+  resetToken = token => {
+    this.clearIntervals();
+    this.showExpireAlertSubject.next(false);
+    localStorage.setItem('previmo_user', token);
+    this.currentUserSubject.next(jwt_decode(token));
+    if (this.loginInterval) {
+      clearInterval(this.loginInterval);
+      this.loginInterval = null;
+    }
+    this.loginInterval = setInterval(this.checkSessionTime, 1000);
   }
 }

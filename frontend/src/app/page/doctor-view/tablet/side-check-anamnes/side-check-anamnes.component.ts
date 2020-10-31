@@ -130,7 +130,6 @@ export class SideCheckAnamnesComponent implements OnInit {
   cancel = () => {
     this.httpService.update(URL_JSON.DOCTOR + '/cancelAppointment/' + this.displayData?.appointmentId, {}).subscribe((res: any) => {
       if (res) {
-        console.log('res', res);
       }
     });
   }

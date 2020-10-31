@@ -46,7 +46,6 @@ export class OverviewComponent implements OnInit {
     this.dataSource.sort = this.sort;
 
     this.httpService.get(URL_JSON.BASE + '/sms_history/get').subscribe((res: any) => {
-      console.log(res);
       this.dataSource.data = res;
       this.allSMS = res;
     });

@@ -64,7 +64,6 @@ export class PatientDashboardComponent implements OnInit {
         this.allPackages = res;
       });
       this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentByPatient/' + this.currentUser.id).subscribe((res: any) => {
-        console.log(res);
         this.allAppointments = res;
       });
     }

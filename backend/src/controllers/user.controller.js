@@ -1,6 +1,9 @@
 import bcrypt from 'bcrypt';
 import db from '../models';
 import Sequelize from "sequelize";
+import {sendSMS} from "../helper/sms";
+import jwt from "jsonwebtoken";
+import config from "../config/config";
 
 const User = db.user;
 const WorkingGroup = db.workingGroup;
@@ -9,8 +12,17 @@ const Calendar = db.calendar;
 const Agency = db.agency;
 const Patient = db.patient;
 const Appointment = db.appointment;
+const VerificationCode = db.verificationCode;
 const sequelize = db.sequelize;
 // const Op = db.sequelize;
+
+const sessionTimeByRole = {
+    'Superadmin': 480,
+    'AG-Admin': 480,
+    'Nurse': 480,
+    'Doctor': 30,
+    'Patient': 30
+}
 
 exports.create = (req, res) => {
     const newUser = req.body;
@@ -85,8 +97,8 @@ exports.getPatientById = async (req, res) => {
 exports.getUserInfo = async (req, res) => {
     const user = await User.findOne({where: {id: req.params.id}, raw: true});
     if (user && user.role === 'Patient') {
-        const patient = await Patient.findOne({where: {user_id: req.params.id}});
-        res.status(200).json({...user, patient});
+        const patient = await Patient.findOne({where: {user_id: req.params.id}, raw: true});
+        res.status(200).json({...patient, ...user, patientId: patient.id});
     } else {
         res.status(200).json(user);
     }
@@ -123,7 +135,6 @@ exports.unassignedInCalendar = async (req, res) => {
 }
 
 exports.unassignedInAgency = async (req, res) => {
-    console.log({...req.query, isActive: true});
     const allDoctors = await User.findAll({where: {...req.query, isActive: true}});
     const unassignedDoctors = [];
     for (const doctor of allDoctors) {
@@ -197,6 +208,101 @@ exports.update = async (req, res) => {
             })
         });
     })
+}
+
+exports.updateProfile = async (req, res) => {
+    const id = req.params.id;
+    const userData = req.body.user;
+    const user = await User.findByPk(id, {raw: true});
+    if (user.phoneNumber === req.body.user.phoneNumber) {
+        bcrypt.hash(userData.password, saltRounds, async (err, hash) => {
+            userData.password = hash;
+            await User.update(userData, {where: {id}});
+            const updatedUser = await User.findByPk(id);
+            const token = jwt.sign({
+                id: updatedUser.id,
+                email: updatedUser.email,
+                role: updatedUser.role,
+                firstName: updatedUser.firstName,
+                lastName: updatedUser.lastName
+            }, config.jwtSecret, {
+                // expiresIn: 35
+                expiresIn: sessionTimeByRole[user.role] * 60
+            });
+            if (user.role === 'Patient' && req.body.patient) {
+                await Patient.update(req.body.patient, {where: {user_id: id}});
+            }
+            res.status(200).json({token});
+        });
+    } else {
+        const code = generateDigitalCode(6);
+        const smsData = {
+            subject: 'Verification Code',
+            receiver: id,
+            phoneNumber: userData.phoneNumber,
+            content: code
+        };
+        sendSMS(smsData);
+        VerificationCode.create({email: user.email.toLowerCase(), code});
+        res.status(200).json({
+            message: 'sent code',
+            token: null
+        });
+    }
+}
+
+exports.verifyCode = async (req, res) => {
+    const id = req.params.id;
+    const data = req.body;
+    const userData = data.user;
+    const patientData = data.patient;
+    const verificationCode = await VerificationCode.findOne({
+        where: {
+            email: data.user.email.toLowerCase(),
+            code: data.code,
+            isActive: true
+        }
+    });
+
+    if (verificationCode) {
+        bcrypt.hash(userData.password, saltRounds, async (err, hash) => {
+            userData.password = hash;
+            await User.update(req.body.user, {where: {id}});
+            await User.update(req.body.user, {where: {id}});
+            const updatedUser = await User.findByPk(id);
+            const token = jwt.sign({
+                id: updatedUser.id,
+                email: updatedUser.email,
+                role: updatedUser.role,
+                firstName: updatedUser.firstName,
+                lastName: updatedUser.lastName
+            }, config.jwtSecret, {
+                // expiresIn: 35
+                expiresIn: sessionTimeByRole[updatedUser.role] * 60
+            });
+            if (updatedUser.role === 'Patient' && data.patient) {
+                await Patient.update(data.patient, {where: {user_id: id}});
+            }
+            res.status(200).json({token});
+        })
+
+        VerificationCode.destroy({where: {email: data.user.email.toLowerCase()}});
+
+    } else {
+        res.status(400).json({
+            message: 'Incorrect code!'
+        })
+    }
+}
+
+const generateDigitalCode = (length) => {
+    let result = '';
+    const characters = '0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
 }
 
 exports.updatePatientById = async (req, res) => {

@@ -79,7 +79,6 @@ export class StatisticsComponent implements OnInit {
   ngOnInit(): void {
     this.analysisByAgency();
     this.httpService.get(URL_JSON.AGENCY + '/get').subscribe((res: any) => {
-      console.log(res);
       this.allAgency = res;
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/analysisByPackage').subscribe((res: any) => {
@@ -134,7 +133,6 @@ export class StatisticsComponent implements OnInit {
   }
 
   selectAgency = id => {
-    console.log(id);
     this.selectedAgency = id;
     this.analysisByAgency();
   }

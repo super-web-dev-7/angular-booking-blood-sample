@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import * as moment from 'moment';
 
 import {URL_JSON} from '../../../../utils/url_json';
 import {AuthService} from '../../../../service/auth/auth.service';
@@ -15,13 +16,17 @@ import {MustMatch} from '../../../../shared/confirm-password.validator';
 })
 export class EditProfileComponent implements OnInit {
   patientForm: FormGroup;
+  verifyForm: FormGroup;
   phoneNumberPattern = '^((\\+91-?)|0)?[0-9]{11,13}$';
   genders = [
     {label: 'Female', value: 'Weiblich'},
     {label: 'Male', value: 'Männlich'},
     {label: 'Divers', value: 'Divers'},
   ];
-  patientData: any;
+  patientInfo: any;
+  userInfo: any;
+  showVerifyForm = false;
+  error: any = null;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -33,11 +38,6 @@ export class EditProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.data) {
-      this.httpService.get(URL_JSON.USER + '/getPatientById/' + this.data.id).subscribe((res: any) => {
-        this.patientData = res;
-      });
-    }
     this.patientForm = this.formBuilder.group({
       email: [this.data?.email, [Validators.required, Validators.email]],
       phoneNumber: [this.data?.phoneNumber, [Validators.required, Validators.pattern(this.phoneNumberPattern)]],
@@ -48,6 +48,7 @@ export class EditProfileComponent implements OnInit {
       salutation: [this.data?.salutation, Validators.required],
       street: [this.data?.street, Validators.required],
       age: [this.data?.age, Validators.required],
+      ageView: [this.data ? this.getAgeType(this.data.age) : null, Validators.required],
       gender: [this.data?.gender, Validators.required],
       plz: [this.data?.plz, Validators.required],
       ort: [this.data?.ort, Validators.required],
@@ -61,6 +62,9 @@ export class EditProfileComponent implements OnInit {
     }, {
       validators: MustMatch('password', 'confirmPassword')
     });
+    this.verifyForm = this.formBuilder.group({
+      code: [null, Validators.required]
+    });
     if (this.f.differentPlace.value) {
       this.f.otherStreet.setValidators([Validators.required]);
       this.f.otherPostalCode.setValidators([Validators.required]);
@@ -73,6 +77,26 @@ export class EditProfileComponent implements OnInit {
 
   get f(): any {
     return this.patientForm.controls;
+  }
+
+  get vf(): any {
+    return this.verifyForm.controls;
+  }
+
+  getAgeType = (date) => {
+    const today = new Date();
+    const birthDate = new Date(date);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate()))
+    {
+      age--;
+    }
+    return moment(birthDate).format('DD/MM/YYYY') + `  (${age > 0 ? age : 0} Jahre)`;
+  }
+
+  setDateAndAge = event => {
+    this.f.ageView.setValue(this.getAgeType(event.value));
   }
 
   generatePassword = () => {
@@ -129,12 +153,15 @@ export class EditProfileComponent implements OnInit {
       return;
     }
 
-    const data = {
+    this.userInfo = {
       email: this.f.email.value,
       phoneNumber: this.f.phoneNumber.value,
       password: this.f.password.value,
       firstName: this.f.firstName.value,
-      lastName: this.f.lastName.value,
+      lastName: this.f.lastName.value
+    };
+
+    this.patientInfo = {
       salutation: this.f.salutation.value,
       street: this.f.street.value,
       age: this.f.age.value,
@@ -149,20 +176,32 @@ export class EditProfileComponent implements OnInit {
       otherCity: this.f.otherCity.value,
       otherPostalCode: this.f.otherPostalCode.value
     };
-    if (this.data) {
-      this.httpService.update(URL_JSON.USER + '/update/patient/' + this.data.user_id, data).subscribe((res: any) => {
-        res.id = this.data.user_id;
-        this.dialogRef.close(res);
-      }, () => {
-        this.snackBar.open('Dieser User ist bereits im System vorhanden.', '', { duration: 2000 });
+
+    this.httpService.update(URL_JSON.USER + '/profile/update/' + this.data.id, {user: this.userInfo, patient: this.patientInfo})
+      .subscribe((res: any) => {
+        if (!res.token) {
+          this.showVerifyForm = true;
+        } else {
+          this.authService.resetToken(res.token);
+          this.close();
+        }
       });
-    } else {
-      this.httpService.create(URL_JSON.USER + '/patient', data).subscribe(res => {
-        this.dialogRef.close(res);
-      }, () => {
-        this.snackBar.open('Dieser User ist bereits im System vorhanden.', '', {duration: 2000});
-      });
-    }
   }
 
+  verify = () => {
+    if (this.verifyForm.invalid) {
+      return;
+    }
+    this.httpService.update(URL_JSON.USER + '/profile/verify_phone_number/' + this.data.id, {
+      user: this.userInfo,
+      patient: this.patientInfo,
+      code: this.vf.code.value
+    }).subscribe((res: any) => {
+      if (res.token) {
+        this.authService.resetToken(res.token);
+        this.showVerifyForm = false;
+      }
+      this.close();
+    });
+  }
 }

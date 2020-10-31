@@ -353,7 +353,6 @@ exports.getAppointmentsWithArchived = async (req, res) => {
 }
 
 exports.analysisByAgency = async (req, res) => {
-    console.log(req.query);
     let query = ''
     if (req.query.from) {
         let date = new Date(parseInt(req.query.from, 10));
@@ -377,8 +376,6 @@ exports.analysisByAgency = async (req, res) => {
             query = `WHERE appointments.agencyId=${req.query.agency} `;
         }
     }
-
-    console.log(query);
 
     const allAgencies = await db.sequelize.query(`
         SELECT 
