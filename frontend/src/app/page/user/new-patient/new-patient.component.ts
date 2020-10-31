@@ -103,11 +103,11 @@ export class NewPatientComponent implements OnInit {
 
   checkPostalCode = (type) => {
     if (type === 'plz') {
-      this.httpService.checkPostalCode(this.f.plz.value).subscribe((res: any) => {
+      this.httpService.get(URL_JSON.BASE + '/zipcode/check_postal_code_all/' + this.f.plz.value).subscribe((res: any) => {
         if (!res) {
           this.f.plz.setErrors(Validators.required);
         } else {
-          this.f.ort.setValue(res?.city);
+          this.f.ort.setValue(res?.ort);
           this.f.plz.setErrors(null);
         }
       });

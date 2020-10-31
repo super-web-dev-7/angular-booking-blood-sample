@@ -13,7 +13,7 @@
     </div>
     <div class="notify-container">
       <div class="d-flex-between flex-wrap">
-        <div class="notify-board mt-15"
+        <div class="notify-board mt-10"
              *ngFor="let item of packageData"
              (click)="selectBoard(item.id)"
              [ngStyle]="{'background': selectedBoard === item.id ? '#4A90E2' : '#ffffff'}"
@@ -68,6 +68,11 @@
               </div>
             </mat-panel-title>
           </mat-expansion-panel-header>
+          <div class="d-flex flex-wrap expansion-panel-container">
+            <div class="text-center w-100" style="margin-left: 76px">
+              <app-booking-time-picker [data]="allTimes" (setSelectedTime)="selectedPTime = $event"></app-booking-time-picker>
+            </div>
+          </div>
         </mat-expansion-panel>
         <mat-expansion-panel hideToggle>
           <mat-expansion-panel-header>

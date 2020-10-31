@@ -1,0 +1,42 @@
+p {
+  text-align: left;
+  color: #272140;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  font-size: 16px;
+}
+.border-bottom-1 {
+  border-bottom: 1px solid #4B6480;
+}
+.border-top-1 {
+  border-top: 1px solid #4B6480;
+  padding-top: 10px;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+.up-down-container {
+  display: flex;
+  flex-direction: column;
+  color: #C3C6D1;
+  position: absolute;
+  right: 0;
+  top: 32px;
+  transform: translateY(-4px);
+  mat-icon {
+    cursor: pointer;
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+  }
+  .less-icon {
+    top: -6px;
+  }
+  .more-icon {
+    bottom: -6px;
+  }
+}

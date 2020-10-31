@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   public verificationForm: FormGroup;
   public showVerifyForm = false;
   error;
+  codeError;
   constructor(
     public formBuilder: FormBuilder,
     public router: Router,
@@ -84,7 +85,7 @@ export class LoginComponent implements OnInit {
       this.showVerifyForm = false;
     }, error => {
       console.log(error);
-      this.error = error.error.message;
+      this.codeError = error.error.message;
     });
   }
 }

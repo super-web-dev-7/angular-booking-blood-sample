@@ -122,11 +122,11 @@ export class NewComponent implements OnInit {
 
   checkPostalCode = (type) => {
     if (type === 'patient') {
-      this.httpService.checkPostalCode(this.pf.plz.value).subscribe((res: any) => {
+      this.httpService.get(URL_JSON.BASE + '/zipcode/check_postal_code_all/' + this.pf.plz.value).subscribe((res: any) => {
         if (!res) {
           this.pf.plz.setErrors(Validators.required);
         } else {
-          this.pf.ort.setValue(res?.city);
+          this.pf.ort.setValue(res?.ort);
           this.pf.plz.setErrors(null);
         }
       });
@@ -162,7 +162,7 @@ export class NewComponent implements OnInit {
 
   selectAgency = (agency) => {
     this.selectedAgency = agency.id;
-    this.httpService.get(URL_JSON.CALENDAR + '/getById/' + agency.calendar_id).subscribe((res: any) => {
+    this.httpService.get(URL_JSON.BASE + '/booking_time/agency/' + agency.id).subscribe((res: any) => {
       this.makeAppointmentTime(res);
     });
   }
@@ -172,27 +172,9 @@ export class NewComponent implements OnInit {
   }
 
   makeAppointmentTime = calendar  => {
-    const date = new Date();
-    this.allTimes = [];
+    this.allTimes = calendar;
     this.randomTimes = [];
-    const currentDay = date.getDay();
-    let plusDate = 0;
-    const durationAppointment = calendar.duration_appointment * 60 * 1000;
-    const restTime = calendar.rest_time * 60 * 1000;
-    while (currentDay + plusDate < 6) {
-      const workingTimeFrom = this.getMillisecondsFromNumber(calendar.working_time_from, plusDate);
-      const workingTimeUntil = this.getMillisecondsFromNumber(calendar.working_time_until, plusDate);
-      let time = workingTimeFrom;
-      while ((time + durationAppointment) < workingTimeUntil) {
-        if (time > date.getTime()) {
-          if (this.allAppointment.findIndex(item => item.time === time && item.agencyId === this.selectedAgency) === -1) {
-            this.allTimes.push(time);
-          }
-        }
-        time += durationAppointment + restTime;
-      }
-      plusDate++;
-    }
+
     for (const i of new Array(4)) {
       if (this.allTimes.length === 0) {
         break;

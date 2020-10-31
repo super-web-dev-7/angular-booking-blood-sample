@@ -85,8 +85,8 @@
     <app-patient-header (setOpen)="setOpen($event)" [isMobile]="isMobile" (setRightOpen)="setRightOpen($event)"></app-patient-header>
     <div class="main-content-container">
       <div class="subheader">
-        <h1 *ngIf="isTablet || (isMobile && title === 'dashboard')"><b>Hallo {{currentUser.firstName}} {{currentUser.lastName}}</b>, Dashboard</h1>
-        <h1 *ngIf="!isTablet && !isMobile">Hallo, <b>{{currentUser.firstName}} {{currentUser.lastName}}</b>.</h1>
+        <h1 *ngIf="isTablet || (isMobile && title === 'dashboard')"><b>Hallo <span class="text-capitalize">{{currentUser.firstName}} {{currentUser.lastName}}</span></b>, Dashboard</h1>
+        <h1 *ngIf="!isTablet && !isMobile">Hallo, <b><span class="text-capitalize">{{currentUser.firstName}} {{currentUser.lastName}}</span></b>.</h1>
         <h1 *ngIf="isMobile && title !== 'dashboard'">{{title}} <span style="font-weight: 100">{{titleEnd}}</span></h1>
       </div>
       <router-outlet></router-outlet>

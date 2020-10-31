@@ -1,0 +1,12 @@
+<div class="d-flex justify-content-center flex-column position-relative disable-user-select">
+  <p class="opacity-50 border-bottom-1" *ngIf="index > 0">{{getDate(data[index-1])}}</p>
+  <p class="opacity-50 border-bottom-1" *ngIf="index === 0">No time to display</p>
+  <p *ngIf="data[index]" style="padding-bottom: 0px">{{getDate(data[index])}}</p>
+  <p class="opacity-50 border-bottom-0 border-top-1" *ngIf="data[index+1]">{{getDate(data[index+2])}}</p>
+  <div class="up-down-container">
+    <mat-icon class="less-icon" (click)="up()" *ngIf="index > 0">expand_less</mat-icon>
+    <mat-icon class="less-icon" *ngIf="index === 0" style="opacity: 0.5">expand_less</mat-icon>
+    <mat-icon class="more-icon" (click)="down()">expand_more</mat-icon>
+  </div>
+</div>
+

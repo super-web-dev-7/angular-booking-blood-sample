@@ -18,6 +18,8 @@ export class ChangePackageComponent implements OnInit {
   packageData: any;
   currentUser: any;
   selectedBoard = null;
+  allTimes = [];
+  selectedPTime = null;
   constructor(
     private dialogRef: MatDialogRef<ChangePackageComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -29,12 +31,21 @@ export class ChangePackageComponent implements OnInit {
     this.currentUser = this.authService.currentUserValue;
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;
+      if (this.displayData) {
+        this.getBookingTime(this.displayData.packageId);
+      }
     });
     this.httpService.get(URL_JSON.PACKAGE + '/getWithQuery?status=Public').subscribe((res: any) => {
       this.packageData = res;
     });
     this.httpService.get(URL_JSON.ADDITIONAL_PACKAGE + '/get?status=Public').subscribe((res: any) => {
       this.packages = res;
+    });
+  }
+
+  getBookingTime = (id) => {
+    this.httpService.get(URL_JSON.BASE + '/booking_time/package/' + id).subscribe((res: any) => {
+      this.allTimes = res;
     });
   }
 
