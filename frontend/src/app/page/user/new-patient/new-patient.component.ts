@@ -25,6 +25,7 @@ export class NewPatientComponent implements OnInit {
     {label: 'Divers', value: 'Divers'},
   ];
   patientData: any;
+  paymentSelectionError = false;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -56,8 +57,8 @@ export class NewPatientComponent implements OnInit {
       plz: [this.data?.plz, Validators.required],
       ort: [this.data?.ort, Validators.required],
       differentPlace: [this.data ? this.data?.differentPlace : false, Validators.required],
-      customerStore: [this.data ? this.data?.customerStore : false, Validators.required],
-      alternative: [this.data ? this.data?.alternative : false, Validators.required],
+      customerStore: [this.data ? this.data?.customerStore : false],
+      alternative: [this.data ? this.data?.alternative : false],
       sendSMS: [this.data ? this.data?.sendSMS : false, Validators.required],
       otherStreet: [this.data?.otherStreet],
       otherPostalCode: [this.data?.otherPostalCode],
@@ -130,6 +131,9 @@ export class NewPatientComponent implements OnInit {
 
   changeCheckboxValue = (item) => {
     this.f[item].setValue(!this.f[item].value);
+    if (item === 'alternative' || item === 'customerStore') {
+      this.paymentSelectionError = false;
+    }
     if (item === 'differentPlace') {
       if (this.f[item].value) {
         this.f.otherStreet.setValidators([Validators.required]);
@@ -148,6 +152,9 @@ export class NewPatientComponent implements OnInit {
 
   createPatient = () => {
     if (this.patientForm.invalid) {
+      return;
+    } else if (!this.f.alternative.value && !this.f.customerStore.value) {
+      this.paymentSelectionError = true;
       return;
     }
 

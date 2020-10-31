@@ -233,7 +233,7 @@
           </mat-form-field>
         </div>
         <div class="d-flex mt-3 ml-3 flex-column">
-          <div class="width-50 ml-3 d-flex align-items-center" (click)="changeCheckboxValue('differentPlace')">
+          <div class="width-50 ml-3 d-flex align-items-center cursor-pointer" (click)="changeCheckboxValue('differentPlace')">
             <div class="checkbox-container">
               <div *ngIf="pf.differentPlace.value" class="check-mark"></div>
             </div>
@@ -256,14 +256,14 @@
           </div>
         </div>
         <div class="d-flex mt-3 ml-3">
-          <div class="width-50 ml-3 d-flex align-items-center" (click)="changeCheckboxValue('customerStore')">
+          <div class="width-50 ml-3 d-flex align-items-center cursor-pointer" (click)="changeCheckboxValue('customerStore')">
             <div class="checkbox-container">
               <div *ngIf="pf.customerStore.value" class="check-mark"></div>
             </div>
             <span>Kunde hinterlegt Zahlungsmittel</span>
             <mat-checkbox *ngIf="false" formControlName="customerStore">Kunde hinterlegt Zahlungsmittel</mat-checkbox>
           </div>
-          <div class="width-50 ml-3 d-flex align-items-center" (click)="changeCheckboxValue('alternative')">
+          <div class="width-50 ml-3 d-flex align-items-center cursor-pointer" (click)="changeCheckboxValue('alternative')">
             <div class="checkbox-container">
               <div *ngIf="pf.alternative.value" class="check-mark"></div>
             </div>
@@ -272,13 +272,16 @@
           </div>
         </div>
         <div class="mt-3 ml-3">
-          <div class="width-50 ml-3 d-flex align-items-center" (click)="changeCheckboxValue('sendSMS')">
+          <div class="width-50 ml-3 d-flex align-items-center cursor-pointer" (click)="changeCheckboxValue('sendSMS')">
             <div class="checkbox-container">
               <div *ngIf="pf.sendSMS.value" class="check-mark"></div>
             </div>
             <span>Code via SMS senden</span>
             <mat-checkbox *ngIf="false" formControlName="sendSMS">Code via SMS senden</mat-checkbox>
           </div>
+        </div>
+        <div class="mt-15 ml-3" *ngIf="paymentSelectionError">
+          <p class="p-14" style="color: red;margin-left: 20px">Please select at least one payment method</p>
         </div>
       </div>
       <div>

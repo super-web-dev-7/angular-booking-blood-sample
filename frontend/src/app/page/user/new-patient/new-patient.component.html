@@ -108,7 +108,7 @@
   <div class="row mt-4">
     <div class="col-md-3">
       <div class="d-flex" (click)="changeCheckboxValue('differentPlace')">
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center cursor-pointer">
           <div class="checkbox-container">
             <div *ngIf="f.differentPlace.value" class="check-mark"></div>
           </div>
@@ -119,7 +119,7 @@
     </div>
     <div class="col-md-3">
       <div class="d-flex" (click)="changeCheckboxValue('customerStore')">
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center cursor-pointer">
           <div class="checkbox-container">
             <div *ngIf="f.customerStore.value" class="check-mark"></div>
           </div>
@@ -130,7 +130,7 @@
     </div>
     <div class="col-md-3">
       <div class="d-flex" (click)="changeCheckboxValue('alternative')">
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center cursor-pointer">
           <div class="checkbox-container">
             <div *ngIf="f.alternative.value" class="check-mark"></div>
           </div>
@@ -141,7 +141,7 @@
     </div>
     <div class="col-md-3">
       <div class="d-flex" (click)="changeCheckboxValue('sendSMS')">
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center cursor-pointer">
           <div class="checkbox-container">
             <div *ngIf="f.sendSMS.value" class="check-mark"></div>
           </div>
@@ -167,6 +167,9 @@
         <mat-label>Ort</mat-label>
         <input autocomplete="off" type="text" matInput formControlName="otherCity">
       </mat-form-field>
+    </div>
+    <div class="float-right mr-10" *ngIf="paymentSelectionError" style="padding-top: 20px;margin-right: 15px">
+      <p class="p-14" style="color: red">Please select at least one payment method</p>
     </div>
     <div class="d-flex align-items-end justify-content-end">
       <button class="custom-button mr-3" mat-stroked-button (click)="close()">

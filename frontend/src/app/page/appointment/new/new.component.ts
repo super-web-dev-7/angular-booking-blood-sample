@@ -31,6 +31,7 @@ export class NewComponent implements OnInit {
   allPatient$ = [];
   selectedPTime = null;
   allAppointment = [];
+  paymentSelectionError = false;
   constructor(
     public formBuilder: FormBuilder,
     public httpService: HttpService,
@@ -65,8 +66,8 @@ export class NewComponent implements OnInit {
       ageView: [null, Validators.required],
       gender: [null, Validators.required],
       differentPlace: [false, Validators.required],
-      customerStore: [false, Validators.required],
-      alternative: [false, Validators.required],
+      customerStore: [false],
+      alternative: [false],
       sendSMS: [false, Validators.required],
       otherStreet: [null],
       otherPostalCode: [null],
@@ -208,6 +209,9 @@ export class NewComponent implements OnInit {
 
   changeCheckboxValue = (item) => {
     this.pf[item].setValue(!this.pf[item].value);
+    if (item === 'alternative' || item === 'customerStore') {
+      this.paymentSelectionError = false;
+    }
     if (item === 'differentPlace') {
       if (this.pf[item].value) {
         this.pf.otherStreet.setValidators([Validators.required]);
@@ -258,6 +262,9 @@ export class NewComponent implements OnInit {
 
   addPatient = () => {
     if (this.patientForm.invalid) {
+      return;
+    } else if (!this.pf.alternative.value && !this.pf.customerStore.value) {
+      this.paymentSelectionError = true;
       return;
     }
     const data = {
