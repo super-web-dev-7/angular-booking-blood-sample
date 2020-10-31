@@ -128,7 +128,8 @@ exports.getAppointmentWithNurseInfo = async (req, res) => {
     const appointments = await sequelize.query(`
         SELECT appointments.id AS id, 
                 patient.id AS patientId, patient.email AS patientEmail, patient.phoneNumber AS patientPhoneNumber,
-                nurse.id AS nurseId, nurse.email AS nurseEmail, nurse.phoneNumber AS nursePhoneNumber
+                nurse.id AS nurseId, nurse.email AS nurseEmail, nurse.phoneNumber AS nursePhoneNumber,
+                nurse.firstName AS nurseFirstName, nurse.lastName AS nurseLastName
         FROM appointments
         JOIN agencies ON appointments.agencyId=agencies.id
         JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id
