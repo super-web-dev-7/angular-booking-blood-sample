@@ -11,6 +11,7 @@ import * as moment from 'moment';
 })
 export class CallSisterComponent implements OnInit {
   displayData: any;
+  nurseInfo: any;
   constructor(
     private dialogRef: MatDialogRef<CallSisterComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -18,6 +19,10 @@ export class CallSisterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithNurseInfo/' + this.data.appointmentId).subscribe((res: any) => {
+      this.nurseInfo = res;
+      console.log('resssss. res', res);
+    });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;
     });
