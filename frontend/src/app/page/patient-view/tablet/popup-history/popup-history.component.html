@@ -10,20 +10,21 @@
   <div class="main-side-container">
     <h1 *ngIf="isTablet">Termin <span style="font-weight: 100">Historie</span></h1>
     <div class="mt-47">
-      <div class="left-border-div position-relative">
-        <p class="p-272140">12.09.2020 09:00 - 10:15</p>
-        <p class="p-576E82">Check-Up: Männergesundheit</p>
-        <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
-        <p class="p-272140" style="margin-top: 34px">11.09.2020 07:12<br/> Arztrückruf angefragt</p>
-        <p class="p-272140" style="margin-top: 43px">09.09.2020 14:15<br/> Termin bestätigt</p>
-        <p class="p-272140" style="margin-top: 21px">09.09.2020 14:12<br/> Anamnese freigegeben</p>
-        <p class="p-272140" style="margin-top: 21px">04.09.2020 10:47</p>
-        <div class="before-dot location-a"></div>
-        <div class="before-dot location-b"></div>
-        <div class="before-dot location-c"></div>
-        <div class="before-dot location-d"></div>
+      <div class="left-border-div" [ngClass]="{'set-scroll': historyData?.length > 8}">
+        <p class="p-16 ml-20">{{getTimeDuration(appointmentData?.startTime, appointmentData?.duration)}}</p>
+        <p class="p-576E82">Check-up: <span>{{appointmentData?.packageName}}</span></p>
+        <p class="p-14 ml-20" *ngIf="!appointmentData?.differentPlace">{{appointmentData?.addressStreet}} {{appointmentData?.addressPlz}}, {{appointmentData?.addressOrt}}</p>
+        <p class="p-14 ml-20" *ngIf="appointmentData?.differentPlace">{{appointmentData?.otherStreet}} {{appointmentData?.otherPostalCode}}, {{appointmentData?.otherCity}}</p>
+        <div *ngFor="let history of historyData">
+          <div class="d-flex mt-24">
+            <mat-icon class="dot">lens</mat-icon>
+            <div class="d-block ml-20">
+              <p class="p-16">{{formatTime(history.createdAt)}}</p>
+              <p class="p-14">{{history.type}}</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <p class="p-272140">Terminreservierung online</p>
     </div>
   </div>
 </div>
