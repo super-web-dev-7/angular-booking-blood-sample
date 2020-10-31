@@ -34,7 +34,7 @@
         <mat-label>Enter 6 digit code</mat-label>
         <input matInput formControlName="code" placeholder="">
       </mat-form-field>
-      <mat-error *ngIf="error">{{error}}</mat-error>
+      <mat-error *ngIf="codeError">{{codeError}}</mat-error>
     </mat-card-content>
   </mat-card>
   <button mat-stroked-button class="custom-button-384 mt-47">Send code</button><br/>

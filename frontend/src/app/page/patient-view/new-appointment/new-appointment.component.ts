@@ -1,7 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {HttpService} from '../../../service/http/http.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-new-appointment',
@@ -15,7 +16,8 @@ export class NewAppointmentComponent implements OnInit {
     public dialog: MatDialog,
     public formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<NewAppointmentComponent>,
-    public httpService: HttpService
+    public httpService: HttpService,
+    public router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -53,6 +55,7 @@ export class NewAppointmentComponent implements OnInit {
 
   close = () => {
     this.dialogRef.close(false);
+    this.router.navigateByUrl('/patient');
   }
 
 }
