@@ -124,6 +124,25 @@ exports.getAppointmentDetail = async (req, res) => {
     res.status(200).json(response);
 }
 
+exports.getAppointmentWithNurseInfo = async (req, res) => {
+    const appointments = await sequelize.query(`
+        SELECT appointments.id AS id, 
+                patient.id AS patientId, patient.email AS patientEmail, patient.phoneNumber AS patientPhoneNumber,
+                nurse.id AS nurseId, nurse.email AS nurseEmail, nurse.phoneNumber AS nursePhoneNumber
+        FROM appointments
+        JOIN agencies ON appointments.agencyId=agencies.id
+        JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id
+        JOIN working_groups ON working_group_agencies.groupId=working_groups.id
+        JOIN calendars ON working_groups.calendar_id=calendars.id
+        JOIN users AS patient ON appointments.userId=patient.id
+        JOIN patients ON patients.user_id=patient.id
+        JOIN packages ON appointments.packageId=packages.id
+        JOIN users AS nurse ON calendars.nurse=nurse.id
+        WHERE appointments.id=${req.params.appointmentId}
+    `, {type: Sequelize.QueryTypes.SELECT});
+    res.status(200).json(appointments.length > 0 ? appointments[0] : null);
+}
+
 exports.getAppointmentsByAnamnes = async (req, res) => {
     const allAppointment = await sequelize.query(`
         SELECT appointments.id AS id, appointments.time AS startTime, appointments.adminStatus AS adminStatus,

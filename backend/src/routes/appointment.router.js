@@ -12,6 +12,7 @@ router.route('/nurse_status/:id').put(appointmentController.appointmentStatusByN
 
 router.route('/getAppointmentByPatient/:id').get(appointmentController.getAppointmentByPatient);
 router.route('/getAppointmentDetail/:id').get(appointmentController.getAppointmentDetail);
+router.route('/getAppointmentWithNurseInfo/:appointmentId').get(appointmentController.getAppointmentWithNurseInfo);
 
 router.route('/getAppointmentsByAnamnes').get(appointmentController.getAppointmentsByAnamnes);
 router.route('/getAppointmentWithQuestionById/:id').get(appointmentController.getAppointmentWithQuestionById);
