@@ -1,136 +1,144 @@
-<div class="pd-17">
-  <h1>Paket  <span style="font-weight: 100"> wechseln</span></h1>
-  <div class="main-container-div">
-    <div class="left-border-div">
-      <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
-      <p class="p-576E82">Check-Up: {{displayData?.packageName}}</p>
-      <p class="p-272140" *ngIf="!displayData?.differentPlace">
-        {{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}
-      </p>
-      <p class="p-272140" *ngIf="displayData?.differentPlace">
-        {{displayData?.otherStreet}} {{displayData?.otherPostalCode}}, {{displayData?.otherCity}}
-      </p>
-    </div>
-    <div class="notify-container">
-      <div class="d-flex-between flex-wrap">
-        <div class="notify-board mt-10"
-             *ngFor="let item of packageData"
-             (click)="selectBoard(item.id)"
-             [ngStyle]="{'background': selectedBoard === item.id ? '#4A90E2' : '#ffffff'}"
-        >
-          <div class="d-flex a-center">
-            <div class="n-circle" [ngStyle]="{'background': selectedBoard === item.id ? '#ffffff' : '#4A90E2'}">
-              <img src="/assets/images/male.svg" alt="male" *ngIf="selectedBoard !== item.id">
-              <img src="/assets/images/blue-male.svg" alt="male" *ngIf="selectedBoard === item.id">
+<form [formGroup]="changePackageForm">
+  <div class="pd-17">
+    <h1>Paket  <span style="font-weight: 100"> wechseln</span></h1>
+    <div class="main-container-div">
+      <div class="left-border-div">
+        <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
+        <p class="p-576E82">Check-Up: {{displayData?.packageName}}</p>
+        <p class="p-272140" *ngIf="!displayData?.differentPlace">
+          {{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}
+        </p>
+        <p class="p-272140" *ngIf="displayData?.differentPlace">
+          {{displayData?.otherStreet}} {{displayData?.otherPostalCode}}, {{displayData?.otherCity}}
+        </p>
+      </div>
+      <div class="notify-container">
+        <div class="d-flex-between flex-wrap">
+          <div class="notify-board mt-10"
+               *ngFor="let item of packageData"
+               (click)="selectBoard(item.id)"
+               [ngStyle]="{'background': selectedBoard === item.id ? '#4A90E2' : '#ffffff'}"
+          >
+            <div class="d-flex a-center">
+              <div class="n-circle" [ngStyle]="{'background': selectedBoard === item.id ? '#ffffff' : '#4A90E2'}">
+                <img src="/assets/images/male.svg" alt="male" *ngIf="selectedBoard !== item.id">
+                <img src="/assets/images/blue-male.svg" alt="male" *ngIf="selectedBoard === item.id">
+              </div>
+              <p style="margin-left: 15px" [ngClass]="{'p-white':selectedBoard === item.id}">{{item.name}}</p>
             </div>
-            <p style="margin-left: 15px" [ngClass]="{'p-white':selectedBoard === item.id}">{{item.name}}</p>
+            <mat-icon class="p-0" *ngIf="selectedBoard !== item.id">more_horiz</mat-icon>
+            <mat-icon class="p-white" *ngIf="selectedBoard === item.id">done</mat-icon>
           </div>
-          <mat-icon class="p-0" *ngIf="selectedBoard !== item.id">more_horiz</mat-icon>
-          <mat-icon class="p-white" *ngIf="selectedBoard === item.id">done</mat-icon>
+        </div>
+      </div>
+      <div class="detail-options">
+        <mat-accordion>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex avatar pink">
+                  <div class="round">
+                    <mat-icon>group_work</mat-icon>
+                  </div>
+                  <div>Zusatzpakete</div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="d-flex flex-wrap expansion-panel-container">
+              <div style="margin-left: 76px">
+                <button
+                  type="button"
+                  mat-stroked-button
+                  class="select-button"
+                  *ngFor="let item of packages"
+                  [ngClass]="{'primary': selectedPackage === item.id}"
+                  (click)="selectPackage(item.id)">
+                  {{item.name}}
+                </button>
+              </div>
+            </div>
+          </mat-expansion-panel>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex avatar green">
+                  <div class="round">
+                    <img src="/assets/images/clock_icon.svg" alt="clock">
+                  </div>
+                  <div>Neuen Termin auswählen</div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="d-flex flex-wrap expansion-panel-container">
+              <div class="text-center w-100" style="margin-left: 76px">
+                <app-booking-time-picker [data]="allTimes" (setSelectedTime)="selectedPTime = $event"></app-booking-time-picker>
+              </div>
+            </div>
+          </mat-expansion-panel>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex avatar yellow justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <div class="round">
+                      <mat-icon>euro_symbol</mat-icon>
+                    </div>
+                    <div>Zahlungsmittel</div>
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="d-flex flex-wrap expansion-panel-container">
+              <mat-form-field appearance="fill" style="margin-left: 76px">
+                <mat-label></mat-label>
+                <mat-select formControlName="payment">
+                  <mat-option
+                    [value]="payment.value"
+                    *ngFor="let payment of paymentOptions"
+                    [disabled]="userInfo?.alternative || userInfo?.customerStore"
+                  >
+                    {{payment.label}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </mat-expansion-panel>
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex avatar blue justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <div class="round">
+                      <mat-icon>lens</mat-icon>
+                    </div>
+                    <div>Nachricht hinzufügen</div>
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+      <div class="d-flex-between mt-37">
+        <div></div>
+        <div class="d-flex">
+          <button
+            type="button"
+            mat-stroked-button
+            (click)="close()"
+            class="custom-button"
+          >
+            Abbrechen
+          </button>
+          <button
+            mat-stroked-button
+            class="custom-package-button ml-10"
+            [ngClass]="{'primary': isValid}"
+          >
+            Paket wechseln
+          </button>
         </div>
       </div>
     </div>
-    <div class="detail-options">
-      <mat-accordion>
-        <mat-expansion-panel hideToggle>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <div class="d-flex avatar pink">
-                <div class="round">
-                  <mat-icon>group_work</mat-icon>
-                </div>
-                <div>Zusatzpakete</div>
-              </div>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="d-flex flex-wrap expansion-panel-container">
-            <div style="margin-left: 76px">
-              <button
-                type="button"
-                mat-stroked-button
-                class="select-button"
-                *ngFor="let item of packages"
-                [ngClass]="{'primary': selectedPackage === item.id}"
-                (click)="selectPackage(item.id)">
-                {{item.name}}
-              </button>
-            </div>
-          </div>
-        </mat-expansion-panel>
-        <mat-expansion-panel hideToggle>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <div class="d-flex avatar green">
-                <div class="round">
-                  <img src="/assets/images/clock_icon.svg" alt="clock">
-                </div>
-                <div>Neuen Termin auswählen</div>
-              </div>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="d-flex flex-wrap expansion-panel-container">
-            <div class="text-center w-100" style="margin-left: 76px">
-              <app-booking-time-picker [data]="allTimes" (setSelectedTime)="selectedPTime = $event"></app-booking-time-picker>
-            </div>
-          </div>
-        </mat-expansion-panel>
-        <mat-expansion-panel hideToggle>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <div class="d-flex avatar yellow justify-content-between">
-                <div class="d-flex align-items-center">
-                  <div class="round">
-                    <mat-icon>euro_symbol</mat-icon>
-                  </div>
-                  <div>Zahlungsmittel</div>
-                </div>
-              </div>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="d-flex flex-wrap expansion-panel-container">
-            <mat-form-field appearance="fill" style="margin-left: 76px">
-              <mat-label>Heidelpay</mat-label>
-              <mat-select>
-                <mat-option value="option">Option</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </mat-expansion-panel>
-        <mat-expansion-panel hideToggle>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <div class="d-flex avatar blue justify-content-between">
-                <div class="d-flex align-items-center">
-                  <div class="round">
-                    <mat-icon>lens</mat-icon>
-                  </div>
-                  <div>Nachricht hinzufügen</div>
-                </div>
-              </div>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
-    <div class="d-flex-between mt-37">
-      <div></div>
-      <div class="d-flex">
-        <button
-          type="button"
-          mat-stroked-button
-          (click)="close()"
-          class="custom-button"
-        >
-          Abbrechen
-        </button>
-        <button
-          mat-stroked-button
-          class="custom-package-button ml-10"
-          [ngClass]="{'primary': isValid}"
-        >
-          Paket wechseln
-        </button>
-      </div>
-    </div>
   </div>
-</div>
+</form>
