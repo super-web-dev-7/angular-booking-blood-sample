@@ -4,6 +4,7 @@ const Calendar = db.calendar;
 const District = db.district;
 const Group = db.workingGroup;
 const User = db.user;
+const Appointment = db.appointment;
 
 exports.create = (req, res) => {
     const newCalendar = req.body;
@@ -114,4 +115,72 @@ exports.getUnusedCalendars = async (req, res) => {
         response.push({...calendar.dataValues, districts});
     }
     res.status(200).json(response);
+}
+
+exports.getBookingTimeByAgency = async (req, res) => {
+    const agencyId = req.params.agencyId;
+    const calendars = await db.sequelize.query(`
+        SELECT c.*
+        FROM calendars c
+        JOIN working_groups ON working_groups.calendar_id=c.id
+        JOIN working_group_agencies ON working_group_agencies.groupId=working_groups.id
+        WHERE working_group_agencies.agencyId=${agencyId}
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    const calendar = calendars.length > 0 ? calendars[0] : null;
+    if (!calendar) {
+        res.status(200).json([]);
+        return;
+    }
+    const appointments = await Appointment.findAll({where: {agencyId}, raw: true});
+    const date = new Date();
+    const millisecondOfDay = 86400 * 1000;
+    let currentDay = date.getDay();
+    // let currentDay = 3;
+    currentDay = (currentDay + 2) % 7;
+    const response = [];
+    let plusDate = 0;
+    const durationAppointment = calendar.duration_appointment * 60 * 1000;
+    const restTime = calendar.rest_time * 60 * 1000;
+    let workingTimeFrom = getMillisecondsFromNumber(calendar.working_time_from) + millisecondOfDay * 2;
+    let workingTimeUntil = getMillisecondsFromNumber(calendar.working_time_until) + millisecondOfDay * 2;
+    while (true) {
+        if (currentDay === 0 || currentDay === 6) {
+            currentDay = (currentDay + 1) % 7;
+        } else {
+
+            let time = workingTimeFrom;
+            while ((time + durationAppointment) < workingTimeUntil) {
+                if (time > date.getTime()) {
+                    if (appointments.findIndex(item => item.time === time) === -1) {
+                        response.push(time);
+                    }
+                }
+                time += durationAppointment + restTime;
+            }
+            plusDate++;
+            currentDay = (currentDay + 1) % 7;
+            if (plusDate === 5) {
+                break;
+            }
+        }
+        workingTimeFrom += millisecondOfDay;
+        workingTimeUntil += millisecondOfDay;
+    }
+    res.status(200).json(response);
+}
+
+exports.getBookingTimeByPackage = async (req, res) => {
+
+}
+
+const getMillisecondsFromNumber = (num) => {
+    const now = new Date();
+    const date = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+        Math.floor(num / 2),
+        num % 2 === 0 ? 0 : 30
+    );
+    return date.getTime();
 }
