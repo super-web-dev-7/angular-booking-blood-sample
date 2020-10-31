@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  BASE_URL: 'http://192.168.1.22:7000/',
-  API_URL: 'http://192.168.1.22:7000/api/',
-  SOCKET_URL: 'http://192.168.1.22:7000'
+  BASE_URL: 'http://localhost:7000/',
+  API_URL: 'http://localhost:7000/api/',
+  SOCKET_URL: 'http://localhost:7000'
 };
 
 /*

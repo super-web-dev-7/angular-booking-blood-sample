@@ -7,9 +7,21 @@
   >
     <app-sidebar (menuClick)="menuClick($event)"></app-sidebar>
   </mat-sidenav>
+  <mat-sidenav
+    [opened]="isRightSidebarOpen && currentUser.role === 'AG-Admin'"
+    [mode]="'over'"
+    position="end"
+    (closed)="isRightSidebarOpen = false"
+    disableClose
+  >
+    <app-right-sidebar
+      (closeSide)="closeRightSide($event)"
+      *ngIf="openRightMenu"
+    ></app-right-sidebar>
+  </mat-sidenav>
   <mat-sidenav-content class="page-wrapper" [ngStyle]="{'background' : currentUser.role === 'Doctor' || currentUser.role === 'Patient' ? '#F2F7FB' : '#fafafa'}">
     <div class="background-container" *ngIf="!isMobile"></div>
-    <app-header (setOpen)="setOpen($event)" [isMobile]="isMobile"></app-header>
+    <app-header (setOpen)="setOpen($event)" [isMobile]="isMobile" (setRightOpen)="setRightSideOpen($event)"></app-header>
     <div class="main-content-container">
       <div class="subheader">
         <h1 *ngIf="currentUser.role !== 'Patient'">Willkommen zurück, <b>{{currentUser.role}}</b>.</h1>

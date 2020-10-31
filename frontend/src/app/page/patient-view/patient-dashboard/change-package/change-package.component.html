@@ -2,64 +2,31 @@
   <h1>Paket  <span style="font-weight: 100"> wechseln</span></h1>
   <div class="main-container-div">
     <div class="left-border-div">
-      <p class="p-272140">
-        12.09.2020 09:00 - 10:15
+      <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
+      <p class="p-576E82">Check-Up: {{displayData?.packageName}}</p>
+      <p class="p-272140" *ngIf="!displayData?.differentPlace">
+        {{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}
       </p>
-      <p class="p-576E82">
-        Check-Up: Männergesundheit
-      </p>
-      <p class="p-272140">
-        Marienstraße 4, 15387 Berlin
+      <p class="p-272140" *ngIf="displayData?.differentPlace">
+        {{displayData?.otherStreet}} {{displayData?.otherPostalCode}}, {{displayData?.otherCity}}
       </p>
     </div>
     <div class="notify-container">
-      <div class="d-flex-between">
-        <div class="notify-board" style="background: #4A90E2">
+      <div class="d-flex-between flex-wrap">
+        <div class="notify-board mt-15"
+             *ngFor="let item of packageData"
+             (click)="selectBoard(item.id)"
+             [ngStyle]="{'background': selectedBoard === item.id ? '#4A90E2' : '#ffffff'}"
+        >
           <div class="d-flex a-center">
-            <div class="n-circle" style="background: #ffffff">
-              <img src="/assets/images/blue-male.svg" alt="mail">
+            <div class="n-circle" [ngStyle]="{'background': selectedBoard === item.id ? '#ffffff' : '#4A90E2'}">
+              <img src="/assets/images/male.svg" alt="male" *ngIf="selectedBoard !== item.id">
+              <img src="/assets/images/blue-male.svg" alt="male" *ngIf="selectedBoard === item.id">
             </div>
-            <p class="p-white" style="margin-left: 15px">Männermedizin</p>
+            <p style="margin-left: 15px" [ngClass]="{'p-white':selectedBoard === item.id}">{{item.name}}</p>
           </div>
-          <mat-icon class="p-white">done</mat-icon>
-        </div>
-        <div class="notify-board">
-          <div class="d-flex a-center">
-            <div class="n-circle" style="background: #F389CC">
-              <mat-icon style="color: white">search</mat-icon>
-            </div>
-            <p style="margin-left: 15px">Gesundheits-Check-Up</p>
-          </div>
-          <mat-icon class="p-0">more_horiz</mat-icon>
-        </div>
-        <div class="notify-board">
-          <div class="d-flex a-center">
-            <div class="n-circle" style="background: #E87C60">
-              <mat-icon class="p-white">bug_report</mat-icon>
-            </div>
-            <p style="margin-left: 15px">Corona</p>
-          </div>
-          <mat-icon class="p-0">more_horiz</mat-icon>
-        </div>
-      </div>
-      <div class="d-flex mt-15">
-        <div class="notify-board">
-          <div class="d-flex a-center">
-            <div class="n-circle" style="background: #89DF8C">
-              <p style="color:#ffffff">+</p>
-            </div>
-            <p style="margin-left: 15px">Gutes Immunsystem</p>
-          </div>
-          <mat-icon class="p-0">more_horiz</mat-icon>
-        </div>
-        <div class="notify-board ml-20">
-          <div class="d-flex a-center">
-            <div class="n-circle" style="background: #ffffff">
-              <img src="/assets/images/fire.svg" alt="mail">
-            </div>
-            <p style="margin-left: 15px">Sexuelle Gesundheit</p>
-          </div>
-          <mat-icon class="p-0">more_horiz</mat-icon>
+          <mat-icon class="p-0" *ngIf="selectedBoard !== item.id">more_horiz</mat-icon>
+          <mat-icon class="p-white" *ngIf="selectedBoard === item.id">done</mat-icon>
         </div>
       </div>
     </div>

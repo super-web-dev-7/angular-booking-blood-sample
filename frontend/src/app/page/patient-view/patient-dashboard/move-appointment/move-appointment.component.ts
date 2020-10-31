@@ -15,8 +15,6 @@ export class MoveAppointmentComponent implements OnInit {
   allTimes = [];
   selectedPTime = null;
   displayData: any;
-  city = null;
-  street = null;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -27,9 +25,9 @@ export class MoveAppointmentComponent implements OnInit {
 
   ngOnInit(): void {
     this.moveForm = this.formBuilder.group({
-      plz: [null, Validators.required],
-      ort: [null, Validators.required],
-      street: [null, Validators.required],
+      plz: [null],
+      ort: [null],
+      street: [null],
       message: [null, Validators.required]
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.data.appointmentId).subscribe((res: any) => {

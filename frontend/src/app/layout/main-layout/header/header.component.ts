@@ -29,6 +29,10 @@ export class HeaderComponent implements OnInit {
     this.setOpen.emit(true);
   }
 
+  openRightSidebar = () => {
+    this.setRightOpen.emit(true);
+  }
+
   logout = () => {
     this.authService.logout();
   }

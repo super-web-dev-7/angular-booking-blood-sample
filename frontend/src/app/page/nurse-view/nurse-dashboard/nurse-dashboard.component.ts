@@ -3,13 +3,14 @@ import {BreakpointObserver} from '@angular/cdk/layout';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import * as moment from 'moment';
 
 import {AuthService} from '../../../service/auth/auth.service';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 import {SessionExpireAlertComponent} from '../../../components/session-expire-alert/session-expire-alert.component';
+import {ProfileComponent} from '../../profile/profile.component';
 
 @Component({
   selector: 'app-nurse-dashboard',
@@ -61,6 +62,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
   showAlert = false;
   subsVar: any;
   isLoading: boolean;
+  userData: any;
 
   constructor(
     public authService: AuthService,
@@ -70,16 +72,19 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     public formBuilder: FormBuilder,
     public dialog: MatDialog
   ) {
+    this.currentUser = this.authService.currentUserValue;
   }
 
   ngOnInit(): void {
-    this.currentUser = this.authService.currentUserValue;
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 599px)');
     let dialog;
     this.subsVar = this.authService.showExpireAlertSubject.subscribe(value => {
       if (value) {
         dialog = this.dialog.open(SessionExpireAlertComponent, {disableClose: true});
       }
+    });
+    this.httpService.get(URL_JSON.USER + '/getUser/' + this.currentUser?.id).subscribe( (res: any) => {
+      this.userData = res;
     });
 
     this.initForm();
@@ -248,6 +253,17 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     this.isSubmit = false;
     this.isEditText = false;
     this.isEditEmail = false;
+  }
+
+  openProfile = () => {
+    this.isRightMenuOpen = false;
+    this.isProfileMenuOpen = false;
+    let dialogRef: MatDialogRef<any>;
+    dialogRef = this.dialog.open(ProfileComponent, {
+      width: '730px',
+      data: this.userData
+    });
+    dialogRef.afterClosed().subscribe(res => {});
   }
 
   logout = () => {

@@ -18,6 +18,8 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
   isMobile = false;
   currentUser: any;
   subsVar: any;
+  isRightSidebarOpen = false;
+  openRightMenu = false;
 
   constructor(
     breakpointObserver: BreakpointObserver,
@@ -51,6 +53,16 @@ export class MainLayoutComponent implements OnInit, OnDestroy {
 
   setOpen = ($event: any) => {
     this.isOpen = true;
+  }
+
+  setRightSideOpen = (event) => {
+    this.isRightSidebarOpen = event;
+    this.openRightMenu = true;
+  }
+
+  closeRightSide = (event) => {
+    this.isRightSidebarOpen = false;
+    this.openRightMenu = false;
   }
 
   menuClick = (link) => {

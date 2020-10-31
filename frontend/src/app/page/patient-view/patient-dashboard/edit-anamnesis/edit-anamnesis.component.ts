@@ -20,13 +20,14 @@ export class EditAnamnesisComponent implements OnInit {
     'Gegen Diabetes', 'Gegen Bluthochdruck', 'Schilddrüsenüberfunktion', 'Schilddrüsenunterfunktion'
   ];
   selectValues = {
-    smoking: true,
+    smoking: false,
     alcohol: false,
-    takeMedication: true,
-    heartAttack: true,
-    previousIllness: true,
-    additionalInfo: true
+    takeMedication: false,
+    heartAttack: false,
+    previousIllness: false,
+    additionalInfo: false
   };
+  displayData: any;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -46,6 +47,29 @@ export class EditAnamnesisComponent implements OnInit {
       weight: [null, Validators.required],
       disease: [null, Validators.required]
     });
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithQuestionById/' + this.data?.appointmentId).subscribe((res: any) => {
+      this.displayData = res;
+      if (res.length > 0) {
+        this.setValues(res[0]);
+      }
+    });
+  }
+
+  setValues = (data) => {
+    this.f.name.setValue(data.patientFirstName + '' + data.patientLastName);
+    this.f.gender.setValue(data.gender);
+    this.f.age.setValue(data.age);
+    this.f.height.setValue(data.height);
+    this.f.weight.setValue(data.weight);
+    this.f.disease.setValue(data.disease);
+    this.selectValues = {
+      smoking: data.smoking,
+      alcohol: data.alcohol,
+      takeMedication: data.takeMedication,
+      heartAttack: data.heartAttack,
+      previousIllness: data.previousIllness,
+      additionalInfo: data.additionalInfo
+    };
   }
 
   get f(): any {
