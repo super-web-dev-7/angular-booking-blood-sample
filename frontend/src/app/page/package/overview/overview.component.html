@@ -39,8 +39,9 @@
               <app-order-icon columnName="assign" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element">
-              {{element.working_groups[0]?.working_group.name}}
-              {{element.working_groups.length > 1 ? '(+' + (element.working_groups.length - 1) + ')' : ''}}
+              {{element.working_group.name}}
+<!--              {{element.working_groups[0]?.working_group.name}}-->
+<!--              {{element.working_groups.length > 1 ? '(+' + (element.working_groups.length - 1) + ')' : ''}}-->
             </td>
           </ng-container>
 

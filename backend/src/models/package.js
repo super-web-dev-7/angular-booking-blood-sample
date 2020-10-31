@@ -16,6 +16,9 @@ module.exports = (sequelize, Sequelize) => {
         status: {
             type: Sequelize.ENUM('Inactive', 'Public', 'Intern')
         },
+        groupId: {
+            type: Sequelize.INTEGER
+        },
         content: {
             type: Sequelize.TEXT
         }
