@@ -1,6 +1,6 @@
 .patient-popup-container {
   width: 495px;
-  height: 100%;
+  height: 100vh;
   padding: 33px;
   background-color: #ffffff;
   .close {
@@ -33,7 +33,7 @@ h1 {
 @media only screen and (max-width: 767px) {
   .patient-popup-container {
     width: 100% !important;
-    height: 100%;
+    height: 130vh;
     background-color: #ffffff;
     padding: 24px!important;
     top:50px;

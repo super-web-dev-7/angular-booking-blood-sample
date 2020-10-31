@@ -69,14 +69,12 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="d-block expansion-panel-container">
-              <mat-form-field class="w-100">
-                <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date" [formControl]="dateControl" formControlName="schedule">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <ngx-mat-datetime-picker #picker>
-                </ngx-mat-datetime-picker>
+              <mat-form-field class="w-100 mt-4">
+                <mat-label>Title</mat-label>
+                <input formControlName="title" autocomplete="off" matInput>
               </mat-form-field>
               <br/>
-              <mat-form-field appearance="fill" class="mt-15 w-100">
+              <mat-form-field appearance="outline" class="mt-15 w-100">
                 <mat-label></mat-label>
                 <textarea
                   matInput

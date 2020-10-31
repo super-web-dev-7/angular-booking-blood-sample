@@ -1,3 +1,4 @@
+<form [formGroup]="changePackageForm">
 <div class="patient-popup-container">
   <button
     type="button"
@@ -10,21 +11,30 @@
   <div class="main-side-container">
     <h1 *ngIf="isTablet">Paket <span style="font-weight: 100">wechseln</span></h1>
     <div class="left-border-div mt-38">
-      <p class="p-272140">12.09.2020 09:00 - 10:15</p>
-      <p class="p-576E82">Check-Up: Männergesundheit</p>
-      <p class="p-272140">Marienstraße 4, 15387 Berlin</p>
+      <p class="p-272140">{{getTimeDuration(displayData?.startTime, displayData?.duration)}}</p>
+      <p class="p-576E82">Check-Up: {{displayData?.packageName}}</p>
+      <p class="p-272140" *ngIf="!displayData?.differentPlace">
+        {{displayData?.addressStreet}} {{displayData?.addressPlz}}, {{displayData?.addressOrt}}
+      </p>
+      <p class="p-272140" *ngIf="displayData?.differentPlace">
+        {{displayData?.otherStreet}} {{displayData?.otherPostalCode}}, {{displayData?.otherCity}}
+      </p>
     </div>
     <div class="mt-47">
-      <div class="notify-board" style="background: #4A90E2">
+      <div class="notify-board"
+           (click)="selectBoard(packageData[0]?.id)"
+           [ngStyle]="{'background': selectedBoard === packageData[0]?.id ? '#4A90E2' : '#ffffff'}"
+      >
         <div class="d-flex a-center">
-          <div class="n-circle" style="background: #ffffff">
-            <img src="/assets/images/blue-male.svg" alt="male">
+          <div class="n-circle" [ngStyle]="{'background': selectedBoard === packageData[0]?.id ? '#ffffff' : '#4A90E2'}">
+            <img src="/assets/images/male.svg" alt="male" *ngIf="selectedBoard !== packageData[0]?.id">
+            <img src="/assets/images/blue-male.svg" alt="male" *ngIf="selectedBoard === packageData[0]?.id">
           </div>
-          <p class="p-white" style="margin-left: 15px">Männermedizin</p>
+          <p style="margin-left: 15px" [ngClass]="{'p-white':selectedBoard === packageData[0]?.id}">{{packageData[0]?.name}}</p>
         </div>
         <mat-icon class="p-white">done</mat-icon>
       </div>
-      <div class="mt-10 text-center" *ngIf="!isShow">
+      <div class="mt-10 text-center" *ngIf="!isShow && packageData.length > 1">
         <button
           mat-icon-button
           (click)="moreItems()"
@@ -33,7 +43,22 @@
         </button>
       </div>
       <div class="mt-15" *ngIf="isShow">
-        <div class="notify-board mt-15">
+        <div class="notify-board mt-10"
+             *ngFor="let item of packageData.slice(1)"
+             (click)="selectBoard(item.id)"
+             [ngStyle]="{'background': selectedBoard === item.id ? '#4A90E2' : '#ffffff'}"
+        >
+          <div class="d-flex a-center">
+            <div class="n-circle" [ngStyle]="{'background': selectedBoard === item.id ? '#ffffff' : '#4A90E2'}">
+              <img src="/assets/images/male.svg" alt="male" *ngIf="selectedBoard !== item.id">
+              <img src="/assets/images/blue-male.svg" alt="male" *ngIf="selectedBoard === item.id">
+            </div>
+            <p style="margin-left: 15px" [ngClass]="{'p-white':selectedBoard === item.id}">{{item.name}}</p>
+          </div>
+          <mat-icon class="p-0" *ngIf="selectedBoard !== item.id">more_horiz</mat-icon>
+          <mat-icon class="p-white" *ngIf="selectedBoard === item.id">done</mat-icon>
+        </div>
+        <!--<div class="notify-board mt-15">
           <div class="d-flex a-center">
             <div class="n-circle" style="background: #F389CC">
               <img src="/assets/images/female.svg" alt="mail">
@@ -68,7 +93,7 @@
             <p style="margin-left: 15px">Sexuelle Gesundheit</p>
           </div>
           <mat-icon class="p-0">more_horiz</mat-icon>
-        </div>
+        </div>-->
         <div class="mt-10 text-center">
           <button
             mat-icon-button
@@ -117,6 +142,11 @@
               </div>
             </mat-panel-title>
           </mat-expansion-panel-header>
+          <div class="d-flex flex-wrap expansion-panel-container">
+            <div class="text-center mt-4 w-100" style="margin-left: 76px">
+              <app-booking-time-picker [data]="allTimes" (setSelectedTime)="selectedPTime = $event"></app-booking-time-picker>
+            </div>
+          </div>
         </mat-expansion-panel>
         <mat-expansion-panel hideToggle>
           <mat-expansion-panel-header>
@@ -131,6 +161,19 @@
               </div>
             </mat-panel-title>
           </mat-expansion-panel-header>
+          <div class="d-flex flex-wrap expansion-panel-container">
+            <mat-form-field appearance="fill" style="margin-left: 76px">
+              <mat-label></mat-label>
+              <mat-select formControlName="payment" [disabled]="!(userInfo?.alternative && userInfo?.customerStore)">
+                <mat-option
+                  [value]="payment.value"
+                  *ngFor="let payment of paymentOptions"
+                >
+                  {{payment.label}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </mat-expansion-panel>
         <mat-expansion-panel hideToggle>
           <mat-expansion-panel-header>
@@ -159,3 +202,4 @@
     </div>
   </div>
 </div>
+</form>
