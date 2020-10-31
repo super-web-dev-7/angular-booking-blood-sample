@@ -54,8 +54,7 @@ export class NewAppointmentComponent implements OnInit {
   }
 
   close = () => {
-    this.dialogRef.close(false);
-    this.router.navigateByUrl('/patient');
+    this.dialogRef.close();
   }
 
 }
