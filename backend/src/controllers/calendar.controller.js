@@ -152,7 +152,7 @@ exports.getBookingTimeByAgency = async (req, res) => {
             while ((time + durationAppointment) < workingTimeUntil) {
                 if (time > date.getTime()) {
                     if (appointments.findIndex(item => item.time === time) === -1) {
-                        response.push(new Date(time));
+                        response.push(time);
                     }
                 }
                 time += durationAppointment + restTime;
