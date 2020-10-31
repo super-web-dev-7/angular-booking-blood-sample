@@ -24,6 +24,7 @@
       *ngIf="openCancelAppointment"
       [isMobile]="isMobile"
       [isTablet]="isTablet"
+      [appointmentId]="appointmentID"
     ></app-popup-cancel-appointment>
     <app-popup-call-sister
       (closeSide)="closeRightSide($event)"
@@ -62,6 +63,7 @@
       *ngIf="openMove"
       [isMobile]="isMobile"
       [isTablet]="isTablet"
+      [appointmentId]="appointmentID"
     ></app-popup-shift-schedule>
     <app-popup-new-appointment
       (closeSide)="closeRightSide($event)"
