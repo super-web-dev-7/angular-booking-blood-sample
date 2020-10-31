@@ -66,5 +66,6 @@ export class ChangePackageComponent implements OnInit {
 
   selectBoard = (id) => {
     this.selectedBoard = id;
+    this.getBookingTime(id);
   }
 }
