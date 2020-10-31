@@ -20,12 +20,7 @@ export class SidebarPatientComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe(value => {
-      this.currentUser = value;
-      if (this.currentUser.role === 'Patient') {
-        this.sidebar = PatientSidebar;
-      }
-    });
+    this.sidebar = PatientSidebar;
     this.selected = '/' + this.router.url.split('/')[1];
   }
 
