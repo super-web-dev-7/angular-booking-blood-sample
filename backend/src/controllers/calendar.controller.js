@@ -170,7 +170,55 @@ exports.getBookingTimeByAgency = async (req, res) => {
 }
 
 exports.getBookingTimeByPackage = async (req, res) => {
+    const packageId = req.params.packageId;
+    const calendars = await db.sequelize.query(`
+        SELECT c.*
+        FROM calendars c
+        JOIN working_groups ON working_groups.calendar_id=c.id
+        JOIN packages ON packages.groupId=working_groups.id
+        WHERE packages.id=${packageId}
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    const calendar = calendars.length > 0 ? calendars[0] : null;
+    if (!calendar) {
+        res.status(200).json([]);
+        return;
+    }
+    const appointments = await Appointment.findAll({where: {packageId}, raw: true});
+    const date = new Date();
+    const millisecondOfDay = 86400 * 1000;
+    let currentDay = date.getDay();
+    // let currentDay = 3;
+    currentDay = (currentDay + 2) % 7;
+    const response = [];
+    let plusDate = 0;
+    const durationAppointment = calendar.duration_appointment * 60 * 1000;
+    const restTime = calendar.rest_time * 60 * 1000;
+    let workingTimeFrom = getMillisecondsFromNumber(calendar.working_time_from) + millisecondOfDay * 2;
+    let workingTimeUntil = getMillisecondsFromNumber(calendar.working_time_until) + millisecondOfDay * 2;
+    while (true) {
+        if (currentDay === 0 || currentDay === 6) {
+            currentDay = (currentDay + 1) % 7;
+        } else {
 
+            let time = workingTimeFrom;
+            while ((time + durationAppointment) < workingTimeUntil) {
+                if (time > date.getTime()) {
+                    if (appointments.findIndex(item => item.time === time) === -1) {
+                        response.push(time);
+                    }
+                }
+                time += durationAppointment + restTime;
+            }
+            plusDate++;
+            currentDay = (currentDay + 1) % 7;
+            if (plusDate === 5) {
+                break;
+            }
+        }
+        workingTimeFrom += millisecondOfDay;
+        workingTimeUntil += millisecondOfDay;
+    }
+    res.status(200).json(response);
 }
 
 const getMillisecondsFromNumber = (num) => {

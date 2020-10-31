@@ -46,7 +46,7 @@
               mat-stroked-button
               class="select-button"
               *ngFor="let group of groups"
-              [ngClass]="{'primary': selectedGroup.includes(group.id)}"
+              [ngClass]="{'primary': selectedGroup === group.id}"
               (click)="selectGroup(group.id)">
               {{group.name}}
             </button>
