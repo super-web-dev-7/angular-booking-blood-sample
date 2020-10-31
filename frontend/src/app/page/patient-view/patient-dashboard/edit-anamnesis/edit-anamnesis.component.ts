@@ -39,9 +39,6 @@ export class EditAnamnesisComponent implements OnInit {
 
   ngOnInit(): void {
     this.saved = false;
-    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithQuestionById/' + this.data?.appointmentId).subscribe((res: any) => {
-      this.displayData = res;
-    });
     this.editAnamsForm = this.formBuilder.group({
       name: [null, Validators.required],
       gender: [null, Validators.required],
@@ -50,6 +47,29 @@ export class EditAnamnesisComponent implements OnInit {
       weight: [null, Validators.required],
       disease: [null, Validators.required]
     });
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithQuestionById/' + this.data?.appointmentId).subscribe((res: any) => {
+      this.displayData = res;
+      if (res.length > 0) {
+        this.setValues(res[0]);
+      }
+    });
+  }
+
+  setValues = (data) => {
+    this.f.name.setValue(data.patientFirstName + '' + data.patientLastName);
+    this.f.gender.setValue(data.gender);
+    this.f.age.setValue(data.age);
+    this.f.height.setValue(data.height);
+    this.f.weight.setValue(data.weight);
+    this.f.disease.setValue(data.disease);
+    this.selectValues = {
+      smoking: data.smoking,
+      alcohol: data.alcohol,
+      takeMedication: data.takeMedication,
+      heartAttack: data.heartAttack,
+      previousIllness: data.previousIllness,
+      additionalInfo: data.additionalInfo
+    };
   }
 
   get f(): any {
