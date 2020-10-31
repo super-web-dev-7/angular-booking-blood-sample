@@ -73,7 +73,6 @@ exports.getPostalCodeByName = async (req, res) => {
 exports.sendSMS = async (req, res) => {
     const data = req.body;
     const response = await sendSMS(data);
-    console.log(response);
     res.status(200).json(response);
 }
 
@@ -118,7 +117,7 @@ exports.appointmentNotThere = async (req, res) => {
 }
 
 cron.schedule('* * * * *', async function () {
-    console.log('----------------Running cron jobs ----------------');
+    // console.log('----------------Running cron jobs ----------------');
     const now = new Date();
     const currentMillisecond = now.getTime();
     const template1 = await Template.findOne({where: {assign: '60 minutes before Appointment'}, raw: true});
@@ -152,7 +151,6 @@ cron.schedule('* * * * *', async function () {
             });
         }
     }
-    console.log(appointment60);
-    console.log(appointment24);
-    // console.log(allAppointments);
+    // console.log(appointment60);
+    // console.log(appointment24);
 });

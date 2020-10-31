@@ -61,7 +61,6 @@ export class PatinetInquiryComponent implements OnInit {
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     this.activeCallbackDataSource.sort = this.sort;
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithActiveCallback').subscribe((res: any) => {
-      console.log('resA', res);
       this.activeCallbackDataSource.data = res;
       this.allInquiry = res;
       this.expandedElement = this.activeCallbackDataSource.data;

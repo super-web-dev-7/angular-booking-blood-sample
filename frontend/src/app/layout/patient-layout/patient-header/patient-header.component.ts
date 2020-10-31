@@ -20,7 +20,9 @@ export class PatientHeaderComponent implements OnInit {
     public router: Router,
     public breakpointObserver: BreakpointObserver,
   ) {
-    this.currentUser = this.authService.currentUserValue;
+    this.authService.currentUser.subscribe(value => {
+      this.currentUser = value;
+    });
   }
 
   ngOnInit(): void {

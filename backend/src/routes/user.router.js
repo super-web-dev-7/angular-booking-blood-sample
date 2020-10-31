@@ -16,6 +16,8 @@ router.route('/getUser/:id').get(userController.getUserInfo);
 
 router.route('/delete/:id').delete(userController.delete);
 router.route('/update/:id').put(userController.update);
+router.route('/profile/update/:id').put(userController.updateProfile);
+router.route('/profile/verify_phone_number/:id').put(userController.verifyCode);
 router.route('/updatePatientById/:id').put(userController.updatePatientById);
 
 export default router;

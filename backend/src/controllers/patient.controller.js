@@ -22,7 +22,7 @@ exports.createCallback = async (req, res) => {
     await Appointment.update({callbackStatus: true}, {where: {id: newCallbackData.appointmentId}});
     if (callback) {
         await ContactHistory.create({appointmentId: newCallbackData.appointmentId, type: 'Rückruf aktualisiert'});
-        await CallbackDoctor.update(newCallbackData, {appointmentId: newCallbackData.appointmentId});
+        await CallbackDoctor.update(newCallbackData, {where: {appointmentId: newCallbackData.appointmentId}});
         res.status(200).json({
             message: 'updated'
         });
@@ -69,7 +69,6 @@ exports.cancelAppointmentByPatient = async (req, res) => {
 }
 
 exports.shiftAppointmentByPatient = async (req, res) => {
-    console.log(req.body);
     const data = req.body;
     const appointments = await db.sequelize.query(`
         SELECT appointments.id AS id, 
@@ -100,9 +99,8 @@ exports.shiftAppointmentByPatient = async (req, res) => {
             subject: 'Patient Shift Appointment',
             content: 'Appointment was shifted'
         };
-        console.log(smsData, emailData);
-        // sendMail(emailData);
-        // sendSMS(smsData);
+        sendMail(emailData);
+        sendSMS(smsData);
 
         await Appointment.update({time: data.time}, {where: {id: data.appointmentId}});
         if (data.address) {

@@ -60,7 +60,6 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
-    console.log('userinfo', this.currentUser);
     this.subsVar = this.authService.showExpireAlertSubject.subscribe(value => {
       if (value) {
         this.dialog.open(SessionExpireAlertComponent, {disableClose: true});
@@ -180,8 +179,6 @@ export class DoctorLayoutComponent implements OnInit, OnDestroy {
   }
 
   closeRightSide = (event) => {
-    console.log('close side');
-    console.log(event);
     this.socketService.closeEmit();
     this.editingDoctorData = null;
     this.isRightSidebarOpen = false;

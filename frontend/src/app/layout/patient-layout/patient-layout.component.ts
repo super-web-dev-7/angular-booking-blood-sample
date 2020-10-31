@@ -49,7 +49,9 @@ export class PatientLayoutComponent implements OnInit, OnDestroy {
     ]).subscribe(result => {
       this.isOpen = !result.matches;
     });
-    this.currentUser = this.authService.currentUserValue;
+    this.authService.currentUser.subscribe(value => {
+      this.currentUser = value;
+    });
   }
 
   ngOnInit(): void {

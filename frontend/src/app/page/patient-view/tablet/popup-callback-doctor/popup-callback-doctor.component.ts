@@ -37,7 +37,6 @@ export class PopupCallbackDoctorComponent implements OnInit {
     this.selectedDay = 'today';
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.appointmentId).subscribe((res: any) => {
       this.displayData = res;
-      console.log('@@@@@@@@@', res);
       this.defaultPhone = this.displayData.patientNumber;
     });
     this.callbackForm = this.formBuilder.group({
