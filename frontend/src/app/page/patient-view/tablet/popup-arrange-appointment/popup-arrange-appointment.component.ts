@@ -1,5 +1,7 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {HttpService} from '../../../../service/http/http.service';
+import {URL_JSON} from '../../../../utils/url_json';
 
 @Component({
   selector: 'app-popup-arrange-appointment',
@@ -8,21 +10,48 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class PopupArrangeAppointmentComponent implements OnInit {
   @Output() closeSide = new EventEmitter();
-  appointmentForm: FormGroup;
-  packages = [
-    {id: 1, name: 'Package1'},
-    {id: 2, name: 'Package2'},
-  ];
+  @Input() isMobile;
+  @Input() isTablet;
+  @Input() addressData;
+  packages = [];
+  packageData = [];
   selectedPackage = null;
-  isValid = false;
+  selectedBoard = null;
+  appointmentForm: FormGroup;
+  allTimes = [];
+  selectedPTime = null;
+  isShow = false;
   constructor(
     public formBuilder: FormBuilder,
+    public httpService: HttpService,
   ) { }
 
   ngOnInit(): void {
     this.appointmentForm = this.formBuilder.group({
-      zipcode: ['', Validators.required],
+      plz: [this.addressData?.plz, Validators.required],
+      ort: [this.addressData?.ort, Validators.required]
     });
+    this.httpService.get(URL_JSON.PACKAGE + '/getWithQuery?status=Public').subscribe((res: any) => {
+      this.packageData = res;
+      console.log('package', res);
+    });
+    this.httpService.get(URL_JSON.ADDITIONAL_PACKAGE + '/get?status=Public').subscribe((res: any) => {
+      this.packages = res;
+    });
+  }
+
+  get f(): any {
+    return this.appointmentForm.controls;
+  }
+
+  getBookingTime = (id) => {
+    this.httpService.get(URL_JSON.BASE + '/booking_time/package/' + id).subscribe((res: any) => {
+      this.allTimes = res;
+    });
+  }
+
+  moreItems = () => {
+    this.isShow = !this.isShow;
   }
 
   close = () => {
@@ -31,6 +60,11 @@ export class PopupArrangeAppointmentComponent implements OnInit {
 
   selectPackage = (id) => {
     this.selectedPackage = id;
+  }
+
+  selectBoard = (id) => {
+    this.selectedBoard = id;
+    this.getBookingTime(id);
   }
 
 }

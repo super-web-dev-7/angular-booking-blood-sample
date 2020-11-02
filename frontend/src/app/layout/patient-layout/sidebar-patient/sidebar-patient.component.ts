@@ -26,7 +26,11 @@ export class SidebarPatientComponent implements OnInit {
 
   changeRoute = (selected, link) => {
     this.menuClick.emit(link);
-    this.selected = selected;
+    if (selected === '/patient/new_appointment') {
+      this.selected = '/patient';
+    } else {
+      this.selected = selected;
+    }
   }
 
 }

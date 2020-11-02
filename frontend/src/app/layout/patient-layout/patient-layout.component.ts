@@ -34,6 +34,7 @@ export class PatientLayoutComponent implements OnInit, OnDestroy {
   titleEnd: string;
   subsVar: any;
   appointmentID = null;
+  addressInfo = null;
 
   constructor(
     public authService: AuthService,
@@ -100,8 +101,13 @@ export class PatientLayoutComponent implements OnInit, OnDestroy {
         this.titleEnd = 'status';
       } else if (res.title === 'new') {
         this.openNewPopup = true;
+        this.title = 'Neuer';
+        this.titleEnd = 'Termin';
       } else if (res.title === 'arrange') {
         this.openArrange = true;
+        this.title = 'Neuer';
+        this.titleEnd = 'Termin';
+        this.addressInfo = res.data;
       } else if (res.title === 'history') {
         this.openHistory = true;
         this.title = 'Termin';
@@ -144,6 +150,7 @@ export class PatientLayoutComponent implements OnInit, OnDestroy {
     this.title = 'dashboard';
     this.titleEnd = '';
     this.appointmentID = null;
+    this.addressInfo = null;
   }
 
   closeLeftSide = (event) => {

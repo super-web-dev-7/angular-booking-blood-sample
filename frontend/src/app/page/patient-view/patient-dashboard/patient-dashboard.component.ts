@@ -57,18 +57,18 @@ export class PatientDashboardComponent implements OnInit {
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.currentUser = this.authService.currentUserValue;
+    this.httpService.get(URL_JSON.PACKAGE + '/getAllPackagesWithAppointment/' + this.currentUser.id).subscribe((res: any) => {
+      this.allPackages = res;
+    });
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentByPatient/' + this.currentUser.id).subscribe((res: any) => {
+      this.allAppointments = res;
+    });
     const url = this.router.url.split('/');
     if (url[2] === 'new_appointment') {
       this.openDialog();
-    } else {
-      this.httpService.get(URL_JSON.PACKAGE + '/getAllPackagesWithAppointment/' + this.currentUser.id).subscribe((res: any) => {
-        this.allPackages = res;
-      });
-      this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentByPatient/' + this.currentUser.id).subscribe((res: any) => {
-        this.allAppointments = res;
-      });
     }
   }
+
 
   getTimeDuration = (startTime, duration) => {
     return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');

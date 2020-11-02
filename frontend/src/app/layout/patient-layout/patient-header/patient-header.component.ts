@@ -34,6 +34,10 @@ export class PatientHeaderComponent implements OnInit {
     this.setOpen.emit(true);
   }
 
+  newAppointment = () => {
+    this.router.navigateByUrl('/patient/new_appointment');
+  }
+
   openRightSidebar = () => {
     this.setRightOpen.emit(true);
   }

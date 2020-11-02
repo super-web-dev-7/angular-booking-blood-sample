@@ -9,68 +9,69 @@
       <mat-icon>clear</mat-icon>
     </button>
     <div class="main-side-container">
-      <h1>Neuer <span style="font-weight: 100">Termin</span></h1>
+      <h1 *ngIf="isTablet">Neuer <span style="font-weight: 100">Termin</span></h1>
       <div class="mt-47">
         <div class="w-100 d-flex-between">
           <div class="col-md-4">
             <mat-form-field appearance="fill" class="w-99">
-              <mat-label>10555</mat-label>
-              <input matInput>
+              <mat-label></mat-label>
+              <input formControlName="plz" autocomplete="off" matInput>
             </mat-form-field>
           </div>
           <div class="col-md-8">
             <mat-form-field appearance="fill" class="w-99">
-              <mat-label>Ort</mat-label>
-              <input matInput>
+              <mat-label></mat-label>
+              <input formControlName="ort" autocomplete="off" matInput>
             </mat-form-field>
           </div>
         </div>
       </div>
       <div class="mt-47">
-        <div class="notify-board" style="background: #4A90E2">
+        <div class="notify-board"
+             (click)="selectBoard(packageData[0]?.id)"
+             [ngStyle]="{'background': selectedBoard === packageData[0]?.id ? '#4A90E2' : '#ffffff'}"
+        >
           <div class="d-flex a-center">
-            <div class="n-circle" style="background: #ffffff">
-              <img src="/assets/images/blue-male.svg" alt="male">
+            <div class="n-circle" [ngStyle]="{'background': selectedBoard === packageData[0]?.id ? '#ffffff' : '#4A90E2'}">
+              <img src="/assets/images/male.svg" alt="male" *ngIf="selectedBoard !== packageData[0]?.id">
+              <img src="/assets/images/blue-male.svg" alt="male" *ngIf="selectedBoard === packageData[0]?.id">
             </div>
-            <p class="p-white" style="margin-left: 15px">Männermedizin</p>
+            <p style="margin-left: 15px" [ngClass]="{'p-white':selectedBoard === packageData[0]?.id}">{{packageData[0]?.name}}</p>
           </div>
           <mat-icon class="p-white">done</mat-icon>
         </div>
-        <div class="notify-board mt-15">
-          <div class="d-flex a-center">
-            <div class="n-circle" style="background: #F389CC">
-              <img src="/assets/images/female.svg" alt="mail">
-            </div>
-            <p style="margin-left: 15px">Frauenmedizin</p>
-          </div>
-          <mat-icon class="p-0">more_horiz</mat-icon>
+        <div class="mt-10 text-center" *ngIf="!isShow && packageData.length > 1">
+          <button
+            mat-icon-button
+            (click)="moreItems()"
+          >
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
         </div>
-        <div class="notify-board mt-15">
-          <div class="d-flex a-center">
-            <div class="n-circle" style="background: #E87C60">
-              <mat-icon style="color: white">bug_report</mat-icon>
+        <div class="mt-15" *ngIf="isShow">
+          <div class="notify-board mt-10"
+               *ngFor="let item of packageData.slice(1)"
+               (click)="selectBoard(item.id)"
+               [ngStyle]="{'background': selectedBoard === item.id ? '#4A90E2' : '#ffffff'}"
+          >
+            <div class="d-flex a-center">
+              <div class="n-circle" [ngStyle]="{'background': selectedBoard === item.id ? '#ffffff' : '#4A90E2'}">
+                <img src="/assets/images/male.svg" alt="male" *ngIf="selectedBoard !== item.id">
+                <img src="/assets/images/blue-male.svg" alt="male" *ngIf="selectedBoard === item.id">
+              </div>
+              <p style="margin-left: 15px" [ngClass]="{'p-white':selectedBoard === item.id}">{{item.name}}</p>
             </div>
-            <p style="margin-left: 15px">Corona</p>
+            <mat-icon class="p-0" *ngIf="selectedBoard !== item.id">more_horiz</mat-icon>
+            <mat-icon class="p-white" *ngIf="selectedBoard === item.id">done</mat-icon>
           </div>
-          <mat-icon class="p-0">more_horiz</mat-icon>
-        </div>
-        <div class="notify-board mt-15">
-          <div class="d-flex a-center">
-            <div class="n-circle" style="background: #89DF8C">
-              <p style="color:#ffffff">+</p>
-            </div>
-            <p style="margin-left: 15px">Gutes Immunsystem</p>
+          <div class="mt-10 text-center">
+            <button
+              mat-icon-button
+              (click)="moreItems()"
+            >
+              <mat-icon>keyboard_arrow_up</mat-icon>
+            </button>
           </div>
-          <mat-icon class="p-0">more_horiz</mat-icon>
-        </div>
-        <div class="notify-board mt-15">
-          <div class="d-flex a-center">
-            <div class="n-circle" style="background: #ffffff">
-              <img src="/assets/images/fire.svg" alt="mail">
-            </div>
-            <p style="margin-left: 15px">Sexuelle Gesundheit</p>
-          </div>
-          <mat-icon class="p-0">more_horiz</mat-icon>
         </div>
       </div>
       <div class="detail-options">
@@ -111,6 +112,11 @@
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
+            <div class="d-flex flex-wrap expansion-panel-container">
+              <div class="text-center mt-4 w-100" style="margin-left: 76px">
+                <app-booking-time-picker [data]="allTimes" (setSelectedTime)="selectedPTime = $event"></app-booking-time-picker>
+              </div>
+            </div>
           </mat-expansion-panel>
           <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>
@@ -146,7 +152,8 @@
         <button
           mat-stroked-button
           class="custom-button-C7D"
-          [ngClass]="{'primary': isValid}"
+          [ngClass]="{'primary': appointmentForm.valid}"
+          [disabled]="appointmentForm.invalid"
         >
           Termin buchen
         </button>

@@ -195,7 +195,8 @@
       <button
         mat-stroked-button
         class="custom-button-C7D"
-        [ngClass]="{'primary': isValid}"
+        [ngClass]="{'primary': changePackageForm.valid}"
+        [disabled]="changePackageForm.invalid"
       >
         Paket wechseln
       </button>

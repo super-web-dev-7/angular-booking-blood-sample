@@ -76,6 +76,9 @@
     <app-popup-arrange-appointment
       (closeSide)="closeRightSide($event)"
       *ngIf="openArrange"
+      [isMobile]="isMobile"
+      [isTablet]="isTablet"
+      [addressData]="addressInfo"
     ></app-popup-arrange-appointment>
     <app-popup-history
       (closeSide)="closeRightSide($event)"

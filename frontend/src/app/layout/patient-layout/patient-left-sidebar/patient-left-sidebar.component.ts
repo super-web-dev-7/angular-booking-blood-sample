@@ -32,8 +32,8 @@ export class PatientLeftSidebarComponent implements OnInit {
   }
 
   newAppointment = () => {
-    this.sharedService.patientPopup.emit('new');
     this.close();
+    this.router.navigateByUrl('/patient/new_appointment');
   }
 
 }
