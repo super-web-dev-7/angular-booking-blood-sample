@@ -129,6 +129,10 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  getInteger = value => {
+    return Math.floor(value);
+  }
+
   @HostListener('window:resize', [])
   private onResize = () => {
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 599px)');

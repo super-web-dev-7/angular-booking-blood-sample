@@ -24,8 +24,9 @@
     <app-header (setOpen)="setOpen($event)" [isMobile]="isMobile" (setRightOpen)="setRightSideOpen($event)"></app-header>
     <div class="main-content-container">
       <div class="subheader">
-        <h1 *ngIf="currentUser.role !== 'Patient'">Willkommen zurück, <b>{{currentUser.role}}</b>.</h1>
-        <h1 *ngIf="currentUser.role === 'Patient'">Hallo, <b>{{currentUser.role}}</b>.</h1>
+<!--        <h1 *ngIf="currentUser.role !== 'Patient'">Willkommen zurück, <b>{{currentUser.role}}</b>.</h1>-->
+<!--        <h1 *ngIf="currentUser.role === 'Patient'">Hallo, <b>{{currentUser.role}}</b>.</h1>-->
+        <h1>Hallo {{currentUser?.firstName}} {{currentUser?.lastName}}</h1>
       </div>
       <router-outlet></router-outlet>
     </div>

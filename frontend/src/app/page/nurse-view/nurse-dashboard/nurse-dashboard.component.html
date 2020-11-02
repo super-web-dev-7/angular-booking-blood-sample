@@ -452,7 +452,7 @@
           <img (click)="isRightMenuOpen = true; isProfileMenuOpen = true;" class="avatar"
                src="/assets/images/avatar.png" alt="user-avatar">
         </div>
-        <h1 class="title"><span>Hallo Schwester 1</span>, Dashboard</h1>
+        <h1 class="title"><span>Hallo {{currentUser.firstName}} {{ currentUser.lastName}}</span>, Dashboard</h1>
       </div>
       <div class="main-body">
         <div class="calendar-container">
@@ -473,8 +473,11 @@
         </div>
         <div class="schedule-container">
           <div *ngFor="let hour of workingHourArray; let index = index;" class="time-label">
+            <div class="time-line"
+                 [ngStyle]="{'top': 'calc('+ now.getMinutes() / 60 * 100 +'% + 8px)'}"
+                 *ngIf="now.getHours() === getInteger(workingStartHour / 2) + index"></div>
             <div class="time-label-item time-label-hour">
-              <div>{{getFloor(workingStartHour / 2 + index)}}:{{'00'}}</div>
+              <div style="background-color: white;">{{getFloor(workingStartHour / 2 + index)}}:{{'00'}}</div>
               <div class="w-100">
                 <div class="w-100" *ngFor="let appointment of appointments">
                   <div class="w-100 position-relative"
@@ -506,30 +509,13 @@
               </div>
             </div>
             <div class="time-label-item">
-              <div
-                class="line-bar"
-                [ngClass]="{'active': now.getHours() === workingStartHour / 2 + index && now.getMinutes() <= 15}"
-              ></div>
-              <div class="current-time" *ngIf="now.getHours() === workingStartHour / 2 + index && now.getMinutes() <= 15">
-                {{getCurrentTimeFormat()}}
-              </div>
+              <div class="line-bar"></div>
             </div>
             <div class="time-label-item">
-              <div
-                class="double-line-bar"
-                [ngClass]="{'active': now.getHours() === workingStartHour / 2 + index && now.getMinutes() > 15 && now.getMinutes() <= 30}"></div>
-              <div class="current-time" *ngIf="now.getHours() === workingStartHour / 2 + index && now.getMinutes() > 15 && now.getMinutes() <= 30">
-                {{getCurrentTimeFormat()}}
-              </div>
+              <div class="double-line-bar"></div>
             </div>
             <div class="time-label-item">
-              <div
-                class="line-bar"
-                [ngClass]="{'active': now.getHours() === workingStartHour / 2 + index && now.getMinutes() > 30 && now.getMinutes() <= 45}"
-              ></div>
-              <div class="current-time" *ngIf="now.getHours() === workingStartHour / 2 + index && now.getMinutes() > 30 && now.getMinutes() <= 45">
-                {{getCurrentTimeFormat()}}
-              </div>
+              <div class="line-bar"></div>
             </div>
           </div>
         </div>

@@ -215,9 +215,18 @@
       color: #576E82;
 
       .time-label {
+        position: relative;
         font-size: 12px;
         display: flex;
         flex-direction: column;
+
+        .time-line {
+          position: absolute;
+          width: 50px;
+          margin-bottom: 10px;
+          margin-top: 10px;
+          border: 1px solid #FF5B74;
+        }
 
         .line-bar {
           margin-bottom: 10px;

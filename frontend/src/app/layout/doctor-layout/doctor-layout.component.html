@@ -73,8 +73,8 @@
     <app-doctor-header (setOpen)="setOpen($event)" [isMobile]="isMobile" (setRightSideOpen)="setRightSideOpen($event)"></app-doctor-header>
     <div class="main-content-container">
       <div class="subheader">
-        <h1 *ngIf="!isTablet && !isMobile">Willkommen zurück, <span class="d-none d-sm-block"><b>{{currentUser.role}}</b>.</span></h1>
-        <h1 *ngIf="isTablet">Hallo Dr.{{currentUser?.firstName}} {{currentUser?.lastName}}</h1>
+<!--        <h1 *ngIf="!isTablet && !isMobile">Willkommen zurück, <span class="d-none d-sm-block"><b>{{currentUser.role}}</b>.</span></h1>-->
+        <h1>Hallo Dr. med. {{currentUser?.firstName}} {{currentUser?.lastName}}</h1>
       </div>
       <router-outlet></router-outlet>
     </div>
