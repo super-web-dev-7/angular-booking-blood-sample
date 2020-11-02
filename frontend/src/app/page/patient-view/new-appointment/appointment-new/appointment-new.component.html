@@ -92,6 +92,19 @@
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
+            <div class="d-flex flex-wrap expansion-panel-container">
+              <mat-form-field appearance="fill" style="margin-left: 76px">
+                <mat-label></mat-label>
+                <mat-select formControlName="payment" [disabled]="!(userInfo?.alternative && userInfo?.customerStore)">
+                  <mat-option
+                    [value]="payment.value"
+                    *ngFor="let payment of paymentOptions"
+                  >
+                    {{payment.label}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </mat-expansion-panel>
           <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>
@@ -106,10 +119,24 @@
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
+            <div class="d-flex flex-wrap expansion-panel-container">
+              <mat-form-field
+                appearance="outline"
+                style="width: 100%;margin-left:76px"
+              >
+                <mat-label></mat-label>
+                <textarea
+                  matInput
+                  formControlName="message"
+                  placeholder=""
+                  rows="10"
+                ></textarea>
+              </mat-form-field>
+            </div>
           </mat-expansion-panel>
         </mat-accordion>
       </div>
-      <div class="d-flex-between mt-37">
+      <div class="d-flex-between mt-15">
         <div></div>
         <div class="d-flex">
           <button

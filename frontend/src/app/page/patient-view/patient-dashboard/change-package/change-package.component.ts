@@ -52,7 +52,8 @@ export class ChangePackageComponent implements OnInit {
     });
     this.getUserInfo(this.currentUser.id);
     this.changePackageForm = this.formBuilder.group({
-      payment: [this.paymentOptions[0].value, Validators.required]
+      payment: [this.paymentOptions[0].value, Validators.required],
+      message: [null, Validators.required]
     });
   }
 

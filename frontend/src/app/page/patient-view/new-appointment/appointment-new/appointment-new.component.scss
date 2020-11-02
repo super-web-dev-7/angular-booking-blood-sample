@@ -2,7 +2,6 @@
   margin-top: 27px;
 }
 .notify-container {
-  margin-top: 23px;
   width: 100%
 }
 .notify-board {
@@ -63,4 +62,10 @@ h1 {
 }
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
   background:none!important;
+}
+::ng-deep .mat-expansion-panel-spacing {
+  margin: 0!important;
+}
+::ng-deep .mat-expansion-panel-header {
+  height: 67px!important;
 }

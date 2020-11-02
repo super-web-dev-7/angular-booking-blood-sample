@@ -88,7 +88,7 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="d-flex flex-wrap expansion-panel-container">
-              <div style="margin-left: 76px">
+              <div style="margin-left: 55px">
                 <button
                   type="button"
                   mat-stroked-button
@@ -113,7 +113,7 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="d-flex flex-wrap expansion-panel-container">
-              <div class="text-center mt-4 w-100" style="margin-left: 76px">
+              <div class="text-center mt-4 w-100" style="margin-left: 55px">
                 <app-booking-time-picker [data]="allTimes" (setSelectedTime)="selectedPTime = $event"></app-booking-time-picker>
               </div>
             </div>
@@ -131,6 +131,19 @@
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
+            <div class="d-flex flex-wrap expansion-panel-container">
+              <mat-form-field appearance="fill" style="margin-left: 55px">
+                <mat-label></mat-label>
+                <mat-select formControlName="payment" [disabled]="!(userInfo?.alternative && userInfo?.customerStore)">
+                  <mat-option
+                    [value]="payment.value"
+                    *ngFor="let payment of paymentOptions"
+                  >
+                    {{payment.label}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </mat-expansion-panel>
           <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>
@@ -145,10 +158,24 @@
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
+            <div class="d-flex flex-wrap expansion-panel-container">
+              <mat-form-field
+                appearance="outline"
+                style="width: 100%;margin-left:55px"
+              >
+                <mat-label></mat-label>
+                <textarea
+                  matInput
+                  formControlName="message"
+                  placeholder=""
+                  rows="10"
+                ></textarea>
+              </mat-form-field>
+            </div>
           </mat-expansion-panel>
         </mat-accordion>
       </div>
-      <div style="margin-top: 66px" class="text-center">
+      <div style="margin-top: 30px" class="text-center">
         <button
           mat-stroked-button
           class="custom-button-C7D"

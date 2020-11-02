@@ -44,9 +44,6 @@
 .mat-expansion-panel {
   box-shadow: none;
 }
-::ng-deep .mat-expansion-panel-body {
-  padding: 0 16px -20px 30px!important;
-}
 .custom-package-button {
   background-color: #C7D7E3;
   color: #ffffff;
@@ -62,4 +59,10 @@ h1 {
 }
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
   background:none!important;
+}
+::ng-deep .mat-expansion-panel-spacing {
+  margin: 0!important;
+}
+::ng-deep .mat-expansion-panel-header {
+  height: 67px!important;
 }

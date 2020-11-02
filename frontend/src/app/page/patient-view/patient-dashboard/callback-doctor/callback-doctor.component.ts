@@ -22,7 +22,7 @@ export class CallbackDoctorComponent implements OnInit {
   isEditPhone = false;
   callbackForm: FormGroup;
   displayData: any;
-  defaultPhone: '';
+  defaultPhone = null;
   dateControl: any;
   constructor(
     public formBuilder: FormBuilder,
@@ -36,9 +36,10 @@ export class CallbackDoctorComponent implements OnInit {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;
       this.defaultPhone = this.displayData.patientNumber;
+      this.setPhone(res.patientNumber);
     });
     this.callbackForm = this.formBuilder.group({
-      phone: [null, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{11,13}$')]],
+      phone: [this.defaultPhone ? this.defaultPhone : null, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{11,13}$')]],
       title: [null, [Validators.required]],
       message: [null, Validators.required],
     });
@@ -47,6 +48,10 @@ export class CallbackDoctorComponent implements OnInit {
 
   get f(): any {
     return this.callbackForm.controls;
+  }
+
+  setPhone = (phone) => {
+    this.f.phone.setValue(phone);
   }
 
   getTimeDuration = (startTime, duration) => {
