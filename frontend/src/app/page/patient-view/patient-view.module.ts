@@ -36,6 +36,7 @@ import {
   NgxMatTimepickerModule
 } from '@angular-material-components/datetime-picker';
 import {BookingTimePickerComponent} from '../../components/booking-time-picker/booking-time-picker.component';
+import { MedicalQuestionShowComponent } from './patient-dashboard/medical-question-show/medical-question-show.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import {BookingTimePickerComponent} from '../../components/booking-time-picker/b
     PopupArrangeAppointmentComponent,
     PopupHistoryComponent,
     DialogSuccessComponent,
-    BookingTimePickerComponent
+    BookingTimePickerComponent,
+    MedicalQuestionShowComponent
   ],
   exports: [
     PatientSidebarComponent,

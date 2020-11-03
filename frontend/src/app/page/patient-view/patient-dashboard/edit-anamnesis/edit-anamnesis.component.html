@@ -4,10 +4,17 @@
     <div class="main-edit-container" *ngIf="!saved">
       <div class="left-div">
         <p>Ihre persönlichen Daten</p>
-        <mat-form-field class="mt-4 w-90">
-          <mat-label>Sebastian Naumann</mat-label>
-          <input formControlName="name" autocomplete="off" matInput>
-        </mat-form-field>
+        <div class="d-flex-between w-90">
+          <mat-form-field class="mt-4 w-45">
+            <mat-label>Vorname</mat-label>
+            <input formControlName="firstName" autocomplete="off" matInput>
+          </mat-form-field>
+          <mat-form-field class="mt-4 w-45">
+            <mat-label>Nachname</mat-label>
+            <input formControlName="lastName" autocomplete="off" matInput>
+          </mat-form-field>
+        </div>
+
         <div class="d-flex-between w-90">
           <mat-form-field class="w-45">
             <mat-label>Gender</mat-label>
@@ -94,7 +101,7 @@
           <p>Nehmen Sie regelmäßig Medikamente ein?</p>
           <div class="d-flex">
             <button
-              (click)="selectValues.takeMedication = true"
+              (click)="selectDiseaseStatus(true)"
               mat-stroked-button
               type="button"
               [ngClass]="{'primary primary-button': selectValues.takeMedication, 'custom-button-37': !selectValues.takeMedication}"
@@ -102,7 +109,7 @@
               Ja
             </button>
             <button
-              (click)="selectValues.takeMedication = false"
+              (click)="selectDiseaseStatus(false)"
               mat-stroked-button
               type="button"
               [ngClass]="{'primary primary-button': !selectValues.takeMedication, 'custom-button-37': selectValues.takeMedication}"

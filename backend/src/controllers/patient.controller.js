@@ -11,13 +11,28 @@ const Patient = db.patient;
 
 exports.createMedicalQuestion = async (req, res) => {
     await Appointment.update({anamnesisStatus: 'open'}, {where: {id: req.body.appointmentId}});
-    const newMedicalQuestion = await MedicalQuestion.create(req.body);
-    await ContactHistory.create({
-        appointmentId: req.body.appointmentId,
-        type: 'medical_question_created',
-        otherId: newMedicalQuestion.id
-    });
-    res.status(201).json(newMedicalQuestion);
+    console.log(req.body);
+    const medicalQuestion = await MedicalQuestion.findOne({where: {appointmentId: req.body.appointmentId}});
+    if (medicalQuestion) {
+        await MedicalQuestion.update(req.body, {where: {appointmentId: req.body.appointmentId}});
+        await ContactHistory.create({
+            appointmentId: req.body.appointmentId,
+            type: 'medical_question_updated',
+            otherId: medicalQuestion.otherId
+        });
+        const updatedMedicalQuestion = await MedicalQuestion.findOne({where: {appointmentId: req.body.appointmentId}});
+        res.status(200).json(updatedMedicalQuestion);
+    } else {
+        const newMedicalQuestion = await MedicalQuestion.create(req.body);
+        await ContactHistory.create({
+            appointmentId: req.body.appointmentId,
+            type: 'medical_question_created',
+            otherId: newMedicalQuestion.id
+        });
+        res.status(201).json(newMedicalQuestion);
+    }
+
+
 }
 
 exports.createCallback = async (req, res) => {

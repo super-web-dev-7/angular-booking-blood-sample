@@ -1,6 +1,9 @@
 module.exports = (sequelize, Sequelize) => {
     return sequelize.define('medical_question', {
-        name: {
+        firstName: {
+            type: Sequelize.STRING,
+        },
+        lastName: {
             type: Sequelize.STRING,
         },
         appointmentId: {

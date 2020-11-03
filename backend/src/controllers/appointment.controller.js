@@ -76,7 +76,7 @@ exports.getAppointmentByNurse = async (req, res) => {
         JOIN users ON appointments.userId=users.id
         JOIN patients ON patients.user_id=users.id
         JOIN packages ON appointments.packageId=packages.id
-        WHERE calendars.nurse=${req.params.id}
+        WHERE calendars.nurse=${req.params.id} AND appointments.nurseStatus!="initial"
     `, {type: Sequelize.QueryTypes.SELECT});
     res.status(200).json(allAppointment);
 }
@@ -99,7 +99,12 @@ exports.getAppointmentByPatient = async (req, res) => {
         JOIN packages ON appointments.packageId=packages.id
         WHERE appointments.userId=${req.params.id}
     `, {type: Sequelize.QueryTypes.SELECT});
-    res.status(200).json(allAppointment);
+    const response = [];
+    for (const appointment of allAppointment) {
+        const medicalQuestion = await db.medicalQuestion.findOne({where: {appointmentId: appointment.id}, raw: true});
+        response.push({...appointment, medicalQuestion});
+    }
+    res.status(200).json(response);
 }
 
 exports.getAppointmentDetail = async (req, res) => {
