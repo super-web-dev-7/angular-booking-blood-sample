@@ -103,7 +103,7 @@ exports.releaseAppointment = async (req, res) => {
     const id = req.params.id;
     await Appointment.update({adminStatus: 'confirmed'}, {where: {id}});
     await MedicalQuestion.update({isActive: false}, {where: {appointmentId: id}});
-    await ContactHistory.create({appointmentId: id, type: 'appointment_approved'});
+    await ContactHistory.create({appointmentId: id, type: 'appointment_confirmed'});
     const user = await sequelize.query(`
         SELECT users.email AS email, appointments.id AS appointmentId
         FROM appointments

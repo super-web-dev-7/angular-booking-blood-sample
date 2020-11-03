@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
                 'callback_answer',
                 'appointment_created',
                 'appointment_cancel',
-                'appointment_approved',
+                'appointment_confirmed',
                 'appointment_archived',
                 'medical_question_created',
                 'medical_question_answer',
