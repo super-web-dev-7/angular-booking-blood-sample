@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -6,13 +6,18 @@ import * as moment from 'moment';
   templateUrl: './booking-time-picker.component.html',
   styleUrls: ['./booking-time-picker.component.scss']
 })
-export class BookingTimePickerComponent implements OnInit {
+export class BookingTimePickerComponent implements OnInit, OnChanges {
   @Input() data;
   @Output() setSelectedTime = new EventEmitter();
-  index = 1;
+  index = 0;
   constructor() { }
 
   ngOnInit(): void {
+    this.setSelectedTime.emit(this.index);
+  }
+
+  ngOnChanges(change): void {
+    this.index = 0;
     this.setSelectedTime.emit(this.index);
   }
 

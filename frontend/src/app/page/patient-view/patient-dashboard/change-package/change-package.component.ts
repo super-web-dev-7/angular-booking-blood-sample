@@ -41,7 +41,8 @@ export class ChangePackageComponent implements OnInit {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;
       if (this.displayData) {
-        this.getBookingTime(this.displayData.packageId);
+        console.log(this.displayData);
+        this.selectBoard(this.displayData.packageId);
       }
     });
     this.httpService.get(URL_JSON.PACKAGE + '/getWithQuery?status=Public').subscribe((res: any) => {
@@ -62,7 +63,7 @@ export class ChangePackageComponent implements OnInit {
   }
 
   getBookingTime = (id) => {
-    this.httpService.get(URL_JSON.BASE + '/booking_time/package/' + id).subscribe((res: any) => {
+    this.httpService.get(URL_JSON.BASE + 'booking_time/package/' + id).subscribe((res: any) => {
       this.allTimes = res;
     });
   }
@@ -98,5 +99,15 @@ export class ChangePackageComponent implements OnInit {
   selectBoard = (id) => {
     this.selectedBoard = id;
     this.getBookingTime(id);
+  }
+
+  submit = () => {
+    const data = {
+      additionalPackageId: this.selectedPackage,
+      packageId: this.selectedBoard,
+      time: this.allTimes[this.selectedPTime]
+    };
+
+    console.log(data);
   }
 }
