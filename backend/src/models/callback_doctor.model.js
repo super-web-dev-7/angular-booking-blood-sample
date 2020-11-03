@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
         message: {
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         },
         isActive: {
             type: Sequelize.BOOLEAN, defaultValue: true, allowNull: false

@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import * as jwt_decode from 'jwt-decode';
 
 import {URL_JSON} from '../../utils/url_json';
+import {SocketService} from '../socket/socket.service';
 
 
 @Injectable({
@@ -23,7 +24,8 @@ export class AuthService {
 
   constructor(
     public http: HttpClient,
-    public router: Router
+    public router: Router,
+    public socketService: SocketService
   ) {
     this.showExpireAlertSubject = new BehaviorSubject<boolean>(false);
     this.showExpireAlert = this.showExpireAlertSubject.asObservable();
@@ -74,6 +76,7 @@ export class AuthService {
 
   logout = () => {
     this.clearIntervals();
+    this.socketService.closeEmit();
     localStorage.removeItem('previmo_user');
     this.currentUserSubject.next(null);
     this.showExpireAlertSubject.next(false);

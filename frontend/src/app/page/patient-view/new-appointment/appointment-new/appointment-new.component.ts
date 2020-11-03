@@ -43,7 +43,6 @@ export class AppointmentNewComponent implements OnInit {
     });
     this.httpService.get(URL_JSON.PACKAGE + '/getWithQuery?status=Public').subscribe((res: any) => {
       this.displayData = res;
-      console.log('package', res);
     });
     this.httpService.get(URL_JSON.ADDITIONAL_PACKAGE + '/get?status=Public').subscribe((res: any) => {
       this.packages = res;

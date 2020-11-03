@@ -21,6 +21,8 @@ export class SidePatientAnswerComponent implements OnInit {
   isSideHistory = false;
   isSuccess = false;
   displayData: any;
+  allData: any;
+  selectedMessage = null;
 
   constructor(
     public sharedService: SharedService,
@@ -31,12 +33,15 @@ export class SidePatientAnswerComponent implements OnInit {
 
   ngOnInit(): void {
     this.isSuccess = false;
-    this.sharedService.closeHistory.subscribe(res => {
+    this.sharedService.closeHistory.subscribe(() => {
       this.isAnamnes = false;
       this.isSideHistory = false;
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.appointmentId).subscribe((res: any) => {
-      this.displayData = res;
+      if (res.length > 0) {
+        this.displayData = res[0];
+      }
+      this.allData = res;
     });
   }
 
@@ -55,6 +60,12 @@ export class SidePatientAnswerComponent implements OnInit {
 
   formatTime = (time) => {
     return moment(time).format('DD.MM.YYYY HH:mm');
+  }
+
+  selectMessage = item => {
+    if (!item.answeredCallbackId) {
+      this.selectedMessage = item.id;
+    }
   }
 
   openSideHistory = () => {
@@ -133,12 +144,15 @@ export class SidePatientAnswerComponent implements OnInit {
   }
 
   openMessage = () => {
+    if (!this.selectedMessage) {
+      return;
+    }
     if (this.isMobile) {
       const emitData = {
         title: 't-mail',
         data: {
           appointmentId: this.displayData?.appointmentId,
-          callbackId: this.displayData?.id,
+          callbackId: this.selectedMessage,
           question: false
         }
       };
@@ -148,7 +162,7 @@ export class SidePatientAnswerComponent implements OnInit {
         title: 't-mail',
         data: {
           appointmentId: this.displayData?.appointmentId,
-          callbackId: this.displayData?.id,
+          callbackId: this.selectedMessage,
           question: false
         }
       };
@@ -166,7 +180,7 @@ export class SidePatientAnswerComponent implements OnInit {
   }
 
   archive = () => {
-    this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData.appointmentId, {}).subscribe(res => {
+    this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData.appointmentId, {}).subscribe(() => {
       const emitData = {
         table: 0,
         appointmentId: this.displayData?.appointmentId

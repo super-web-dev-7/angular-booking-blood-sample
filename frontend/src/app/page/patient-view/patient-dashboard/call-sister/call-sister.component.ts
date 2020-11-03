@@ -21,7 +21,6 @@ export class CallSisterComponent implements OnInit {
   ngOnInit(): void {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithNurseInfo/' + this.data.appointmentId).subscribe((res: any) => {
       this.nurseInfo = res;
-      console.log('resssss. res', res);
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;

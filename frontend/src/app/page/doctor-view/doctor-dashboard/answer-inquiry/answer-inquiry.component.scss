@@ -31,19 +31,42 @@ h1 {
 .modal-middle-div {
   width: 35%;
   margin-bottom: 43px;
+  max-height: 500px;
+  overflow-y: auto;
   p {
     font-size: 16px;
     color: #272140;
     margin-left: 33px;
   }
   .faq-text {
-    height: 325px;
+    //height: 325px;
+  }
+
+  .message-container {
+    padding-top: 10px;
+    padding-bottom: 20px;
+    cursor: pointer;
+
+    .check-icon {
+      color: green;
+      margin-left: 10px;
+      background-color: lightblue;
+      border-radius: 50%;
+    }
+  }
+
+  .selected {
+    background-color: #cfdce6!important;
+  }
+
+  .message-container:hover {
+    background-color: rgba(207, 220, 230, 0.5);
   }
 }
 .modal-right-div {
   width: 40%;
   p {
-    margin-left: 0px;
+    margin-left: 0;
     font-size: 16px;
   }
 }

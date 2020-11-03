@@ -198,18 +198,18 @@
           >
             <div class="example-element-detail"
                  [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-              <div class="d-flex" style="padding: 6px 0px">
+              <div class="d-flex"
+                   style="padding: 6px 0; cursor: pointer;"
+                   (click)="conditionEditing(element, 1) === -1 ? openAnswer(element.id) : searchItem(element.id)">
                 <button *ngIf="conditionEditing(element, 1) === -1"
                         mat-icon-button
                         aria-label="more"
-                        (click)="openAnswer(element.id)"
                 >
                   <img src="/assets/images/white_chat.svg" alt="edit" class="ml-10">
                 </button>
                 <button *ngIf="conditionEditing(element, 1) > -1"
                         mat-icon-button
                         aria-label="more"
-                        (click)="searchItem(element.id)"
                 >
                   <mat-icon style="color: #ffffff" class="ml-10">search</mat-icon>
                 </button>

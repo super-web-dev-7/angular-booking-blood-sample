@@ -21,6 +21,8 @@ export class SidePatientInquiryComponent implements OnInit {
   currentUser: any;
   isAnamnes = false;
   isSideHistory = false;
+  allData: any;
+  selectedMessage = null;
   constructor(
     public sharedService: SharedService,
     public breakpointObserver: BreakpointObserver,
@@ -30,10 +32,13 @@ export class SidePatientInquiryComponent implements OnInit {
 
   ngOnInit(): void {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.appointmentId).subscribe((res: any) => {
-      this.displayData = res;
+      if (res.length > 0) {
+        this.displayData = res[0];
+      }
+      this.allData = res;
     });
     this.currentUser = this.authService.currentUserValue;
-    this.sharedService.closeHistory.subscribe(res => {
+    this.sharedService.closeHistory.subscribe(() => {
       this.isAnamnes = false;
       this.isSideHistory = false;
     });
@@ -46,6 +51,12 @@ export class SidePatientInquiryComponent implements OnInit {
 
   formatTime = (time) => {
     return moment(time).format('DD.MM.YYYY HH:mm');
+  }
+
+  selectMessage = item => {
+    if (!item.answeredCallbackId) {
+      this.selectedMessage = item.id;
+    }
   }
 
   getTimeDuration = (startTime, duration) => {

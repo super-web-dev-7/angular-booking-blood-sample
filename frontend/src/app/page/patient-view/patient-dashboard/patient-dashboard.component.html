@@ -16,25 +16,54 @@
     <div class="row">
       <div class="col-md-4" *ngFor="let item of allAppointments">
         <div class="notify-view mt-15" *ngIf="item.adminStatus === 'confirmed'">
-          <div class="main-view" style="border-color: #4A90E2">
-            <p class="p-blue" style="margin-left: 20px">
-              Termin bestätigt
-            </p>
-            <p class="p-272140">
-              {{getTimeDuration(item.startTime, item.duration)}}
-            </p>
-            <p class="p-576E82">Check-Up: {{item.packageName}}</p>
-            <p class="p-272140" *ngIf="!item?.differentPlace">
-              {{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}
-            </p>
-            <p class="p-272140" *ngIf="item?.differentPlace">
-              {{item.otherStreet}}, {{item.otherPostalCode}} {{item.otherCity}}
-            </p>
-            <button
-              mat-icon-button style="margin-left: 10px">
-              <mat-icon class="p-0">keyboard_arrow_down</mat-icon>
-            </button>
+          <div>
+            <div class="main-view" style="border-color: #4A90E2">
+              <p class="p-blue" style="margin-left: 20px">
+                Termin bestätigt
+              </p>
+              <p class="p-272140">
+                {{getTimeDuration(item.startTime, item.duration)}}
+              </p>
+              <p class="p-576E82">Check-Up: {{item.packageName}}</p>
+              <p class="p-272140" *ngIf="!item?.differentPlace">
+                {{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}
+              </p>
+              <p class="p-272140" *ngIf="item?.differentPlace">
+                {{item.otherStreet}}, {{item.otherPostalCode}} {{item.otherCity}}
+              </p>
+              <button
+                mat-icon-button
+                style="margin-left: 10px"
+                (click)="openPersonalInfo(item.id)"
+              >
+                <mat-icon class="p-0">{{showDetail && showDetailId === item.id ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
+              </button>
+            </div>
+            <div class="personal-info mt-15" *ngIf="showDetail && showDetailId === item.id">
+              <p class="p-272140">Sebastian Naumann</p>
+              <p class="p-272140">Männlich, 39 Jahre, 1.83m, 95kg</p>
+              <ul>
+                <li class="p-272140">Nicht-Raucher</li>
+                <li class="p-272140">Trinkt Alkohol unregelmäßig bis gar nicht</li>
+                <li class="p-272140">Nimmt Medikamente: gegen Diabetes</li>
+                <li class="p-272140">keine Herzinfarkte / Schlaganfälle in der<br/> Familie bekannt</li>
+                <li class="p-272140">Keine Vorerkrankungen bekannt</li>
+              </ul>
+              <div class="d-flex mt-20 ml-20">
+                <button mat-stroked-button class="custom-button">
+                  Rechnung
+                </button>
+                <button
+                  mat-stroked-button
+                  class="custom-button ml-20"
+                  (click)="openHistory(item.id)"
+                >
+                  Historie
+                </button>
+              </div>
+            </div>
           </div>
+
           <button
             mat-icon-button
             class="mt-10-min"
@@ -46,24 +75,53 @@
           </button>
         </div>
         <div class="notify-view mt-15" style="background: #E87C60;" *ngIf="item.adminStatus === 'canceled'">
-          <div class="main-view" style="position: relative">
-            <div class="warning-div">
-              <img src="/assets/images/s_warning.svg" alt="warning" class="warning-icon">
+          <div>
+            <div class="main-view" style="position: relative">
+              <div class="warning-div">
+                <img src="/assets/images/s_warning.svg" alt="warning" class="warning-icon">
+              </div>
+              <p class="p-0-white ml-20" style="margin-top: -15px">
+                Nicht angetroffen
+              </p>
+              <p class="p-white ml-20">
+                Bitte neuen Termin wählen
+              </p>
+              <p class="p-white-14 ml-20">Check-Up: {{item.packageName}}</p>
+              <p class="p-white-14 ml-20" *ngIf="!item?.differentPlace">{{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}</p>
+              <p class="p-white-14 ml-20" *ngIf="item?.differentPlace">{{item.otherStreet}}, {{item.otherPostalCode}} {{item.otherCity}}</p>
+              <button
+                mat-icon-button
+                style="margin-left: 10px"
+                (click)="openPersonalInfo(item.id)"
+              >
+                <mat-icon class="p-0">{{showDetail && showDetailId === item.id ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
+              </button>
             </div>
-            <p class="p-0-white ml-20" style="margin-top: -15px">
-              Nicht angetroffen
-            </p>
-            <p class="p-white ml-20">
-              Bitte neuen Termin wählen
-            </p>
-            <p class="p-white-14 ml-20">Check-Up: {{item.packageName}}</p>
-            <p class="p-white-14 ml-20" *ngIf="!item?.differentPlace">{{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}</p>
-            <p class="p-white-14 ml-20" *ngIf="item?.differentPlace">{{item.otherStreet}}, {{item.otherPostalCode}} {{item.otherCity}}</p>
-            <button
-              mat-icon-button style="margin-left: 10px">
-              <mat-icon style="color: white">keyboard_arrow_down</mat-icon>
-            </button>
+            <div class="personal-info mt-15" *ngIf="showDetail && showDetailId === item.id">
+              <p class="p-272140">Sebastian Naumann</p>
+              <p class="p-272140">Männlich, 39 Jahre, 1.83m, 95kg</p>
+              <ul>
+                <li class="p-272140">Nicht-Raucher</li>
+                <li class="p-272140">Trinkt Alkohol unregelmäßig bis gar nicht</li>
+                <li class="p-272140">Nimmt Medikamente: gegen Diabetes</li>
+                <li class="p-272140">keine Herzinfarkte / Schlaganfälle in der<br/> Familie bekannt</li>
+                <li class="p-272140">Keine Vorerkrankungen bekannt</li>
+              </ul>
+              <div class="d-flex mt-20 ml-20">
+                <button mat-stroked-button class="custom-button">
+                  Rechnung
+                </button>
+                <button
+                  mat-stroked-button
+                  class="custom-button ml-20"
+                  (click)="openHistory(item.id)"
+                >
+                  Historie
+                </button>
+              </div>
+            </div>
           </div>
+
           <button
             mat-icon-button
             aria-label="more"
@@ -133,28 +191,57 @@
           </button>
         </div>
         <div class="notify-view mt-15" *ngIf="item.adminStatus === 'successful'">
-          <div class="main-view" style="border-color: #89DF8C">
-            <p class="p-green ml-20">
-              Befund freigegeben
-            </p>
-            <p class="p-272140">
-              {{getTimeDuration(item.startTime, item.duration)}}
-            </p>
-            <p class="p-576E82">Check-Up: {{item.packageName}}</p>
-            <p class="p-272140" *ngIf="!item?.differentPlace">
-              {{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}
-            </p>
-            <p class="p-272140" *ngIf="item?.differentPlace">
-              {{item.otherStreet}}, {{item.otherPostalCode}} {{item.otherCity}}
-            </p>
-            <button mat-stroked-button class="finding-green">
-              Befund unsehen
-            </button>
-            <button
-              mat-icon-button style="margin-left: 10px">
-              <mat-icon class="p-0">keyboard_arrow_down</mat-icon>
-            </button>
+          <div>
+            <div class="main-view" style="border-color: #89DF8C">
+              <p class="p-green ml-20">
+                Befund freigegeben
+              </p>
+              <p class="p-272140">
+                {{getTimeDuration(item.startTime, item.duration)}}
+              </p>
+              <p class="p-576E82">Check-Up: {{item.packageName}}</p>
+              <p class="p-272140" *ngIf="!item?.differentPlace">
+                {{item.addressStreet}}, {{item.addressPlz}} {{item.addressOrt}}
+              </p>
+              <p class="p-272140" *ngIf="item?.differentPlace">
+                {{item.otherStreet}}, {{item.otherPostalCode}} {{item.otherCity}}
+              </p>
+              <button mat-stroked-button class="finding-green">
+                Befund unsehen
+              </button>
+              <button
+                mat-icon-button
+                style="margin-left: 10px"
+                (click)="openPersonalInfo(item.id)"
+              >
+                <mat-icon class="p-0">{{showDetail && showDetailId === item.id ? 'keyboard_arrow_up' : 'keyboard_arrow_down'}}</mat-icon>
+              </button>
+            </div>
+            <div class="personal-info mt-15" *ngIf="showDetail && showDetailId === item.id">
+              <p class="p-272140">Sebastian Naumann</p>
+              <p class="p-272140">Männlich, 39 Jahre, 1.83m, 95kg</p>
+              <ul>
+                <li class="p-272140">Nicht-Raucher</li>
+                <li class="p-272140">Trinkt Alkohol unregelmäßig bis gar nicht</li>
+                <li class="p-272140">Nimmt Medikamente: gegen Diabetes</li>
+                <li class="p-272140">keine Herzinfarkte / Schlaganfälle in der<br/> Familie bekannt</li>
+                <li class="p-272140">Keine Vorerkrankungen bekannt</li>
+              </ul>
+              <div class="d-flex mt-20 ml-20">
+                <button mat-stroked-button class="custom-button">
+                  Rechnung
+                </button>
+                <button
+                  mat-stroked-button
+                  class="custom-button ml-20"
+                  (click)="openHistory(item.id)"
+                >
+                  Historie
+                </button>
+              </div>
+            </div>
           </div>
+
           <button
             mat-icon-button
             aria-label="more"

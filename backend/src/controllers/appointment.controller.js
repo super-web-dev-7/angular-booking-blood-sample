@@ -12,7 +12,7 @@ const sequelize = db.sequelize;
 exports.create = async (req, res) => {
     const newAppointment = req.body;
     Appointment.create(newAppointment).then(async data => {
-        await ContactHistory.create({type: 'Offene Termine', appointmentId: data.id});
+        await ContactHistory.create({type: 'appointment_created', appointmentId: data.id});
         res.status(201).json(data);
     }).catch(e => {
         res.status(400).send({
@@ -242,14 +242,15 @@ exports.getAppointmentsWithActiveCallback = async (req, res) => {
 
 exports.getAppointmentWithCallbackById = async (req, res) => {
     const id = req.params.id;
-    const appointment = await sequelize.query(`
+    const appointments = await sequelize.query(`
         SELECT appointments.id AS id, appointments.time AS startTime,
             users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
             patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode,
             packages.name AS packageName,
             calendars.duration_appointment AS duration,
-            callback_doctors.*
+            callback_doctors.*,
+            callback_answers.callbackId AS answeredCallbackId
         FROM appointments
         JOIN agencies ON appointments.agencyId=agencies.id
         JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id
@@ -259,10 +260,11 @@ exports.getAppointmentWithCallbackById = async (req, res) => {
         JOIN patients ON patients.user_id=users.id
         JOIN packages ON appointments.packageId=packages.id        
         JOIN callback_doctors ON callback_doctors.appointmentId=appointments.id
+        LEFT JOIN callback_answers ON callback_answers.callbackId=callback_doctors.id
         WHERE appointments.id=${id}
+        ORDER BY callback_doctors.createdAt DESC
     `, {type: Sequelize.QueryTypes.SELECT});
-    const response = appointment.length > 0 ? appointment[0] : null;
-    res.status(200).json(response);
+    res.status(200).json(appointments);
 }
 
 exports.getAppointmentsWithArchivedCallback = async (req, res) => {

@@ -21,6 +21,8 @@ export class AnswerInquiryComponent implements OnInit {
    messageForm: FormGroup;
    displayData: any;
    isSent = false;
+   allData: any;
+   selectedMessage = null;
   constructor(
     public dialog: MatDialog,
     private dialogRef: MatDialogRef<AnswerInquiryComponent>,
@@ -35,7 +37,10 @@ export class AnswerInquiryComponent implements OnInit {
       message: [null, Validators.required]
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.data.appointmentId).subscribe((res: any) => {
-      this.displayData = res;
+      if (res.length > 0) {
+        this.displayData = res[0];
+      }
+      this.allData = res;
     });
     this.sharedService.closeHistory.subscribe(res => {
       this.isMedicalHistory = false;
@@ -59,18 +64,28 @@ export class AnswerInquiryComponent implements OnInit {
     return this.messageForm.controls;
   }
 
+  selectMessage = item => {
+    if (!item.answeredCallbackId) {
+      this.selectedMessage = item.id;
+    }
+  }
+
   sendMessage = () => {
-    if (this.messageForm.invalid) {
+    if (this.messageForm.invalid || !this.selectedMessage) {
       return;
     }
     const data = {
-      callbackId: this.displayData.id,
+      callbackId: this.selectedMessage,
       answer: this.f.message.value,
     };
     if (data) {
       this.httpService.post(URL_JSON.DOCTOR + '/sendMessageToPatientAboutCallback', data).subscribe((res: any) => {
-        if (res) {
+        if (res || res.message === 'Email sent') {
           this.isSent = true;
+          const index = this.allData.findIndex(item => item.id === this.selectedMessage);
+          this.allData[index].answeredCallbackId = res.answer.id;
+          this.f.message.setValue(null);
+          this.selectedMessage = null;
         }
       });
     }

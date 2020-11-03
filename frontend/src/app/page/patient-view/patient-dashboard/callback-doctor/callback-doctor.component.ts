@@ -1,9 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import * as moment from 'moment';
+
 import {HttpService} from '../../../../service/http/http.service';
 import {URL_JSON} from '../../../../utils/url_json';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-callback-doctor',
@@ -39,8 +40,8 @@ export class CallbackDoctorComponent implements OnInit {
       this.setPhone(res.patientNumber);
     });
     this.callbackForm = this.formBuilder.group({
-      phone: [this.defaultPhone ? this.defaultPhone : null, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{11,13}$')]],
-      title: [null, [Validators.required]],
+      phone: [null, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{11,13}$')]],
+      title: [null, Validators.required],
       message: [null, Validators.required],
     });
     this.dateControl = new FormControl(new Date());
@@ -86,7 +87,7 @@ export class CallbackDoctorComponent implements OnInit {
       date: selectedDate,
       time: this.selectedTime,
       phoneNumber: this.f.phone.value,
-      title: this.f.title.value,
+      schedule: this.f.title.value,
       message: this.f.message.value
     };
     this.httpService.post(URL_JSON.PATIENT + '/createCallbackForDoctor', data).subscribe((res: any) => {

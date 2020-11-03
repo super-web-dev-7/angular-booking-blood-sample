@@ -69,14 +69,22 @@
     <p class="p-272140" *ngIf="displayData?.time === 'evening'">Abends (16:00 - 19:00)</p>
   </div>
   <div class="modal-right-div">
-    <p style="margin-top: 56px">
-      Kundennachricht {{formatTime(displayData?.createdAt)}}
-    </p>
-    <p style="margin-top: 57px">Terminablauf</p>
-    <div class="faq-text">
-      <p class="mt-24">
-        {{displayData?.message}}
+    <div *ngFor="let item of allData"
+         (click)="selectMessage(item)"
+         [ngClass]="{'selected': selectedMessage === item.id}"
+         class="message-container">
+      <p style="margin-top: 20px;">
+        Kundennachricht {{formatTime(item?.createdAt)}}
       </p>
+      <p style="display: flex;">
+        {{item?.schedule}}
+        <mat-icon class="check-icon" *ngIf="item.answeredCallbackId">done</mat-icon>
+      </p>
+      <div class="faq-text">
+        <p class="mt-14 pre-wrap">
+          {{item?.message}}
+        </p>
+      </div>
     </div>
     <div class="d-flex mt-38">
       <span class="org-text d-flex">

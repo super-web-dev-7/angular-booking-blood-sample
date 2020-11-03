@@ -11,7 +11,59 @@
           <mat-icon class="dot">lens</mat-icon>
           <div class="d-block ml-20">
             <p class="p-16">{{formatTime(history.createdAt)}}</p>
-            <p class="p-14">{{history.type}}</p>
+            <div class="p-14" *ngIf="history.type === 'callback_created'">
+              <span *ngIf="currentUser.role === 'Doctor'">Patientenrückfrage</span>
+              <span *ngIf="currentUser.role === 'Patient'">Arztrückruf angefragt</span>
+              <br>
+              <button
+                mat-icon-button
+                *ngIf="history.callback"
+                (click)="expandedId ? expandedId = null : expandedId = history.id">
+                <mat-icon>expand_more</mat-icon>
+              </button>
+              <div *ngIf="expandedId === history.id">
+                <p style="max-width: 250px;" class="pre-wrap">
+                  {{history.callback.message}}
+                </p>
+              </div>
+            </div>
+            <div class="p-14" *ngIf="history.type === 'callback_answer'">
+              <span *ngIf="currentUser.role === 'Doctor'">Arztrückruf erledigt</span>
+              <span *ngIf="currentUser.role === 'Patient'">Patientenrückfrage beantwortet</span>
+              <br>
+              <button
+                mat-icon-button
+                *ngIf="history.callback_answer"
+                (click)="expandedId ? expandedId = null : expandedId = history.id">
+                <mat-icon>expand_more</mat-icon>
+              </button>
+              <div *ngIf="expandedId === history.id">
+                <p style="max-width: 250px;" class="pre-wrap">
+                  {{history.callback_answer.answer}}
+                </p>
+              </div>
+            </div>
+            <p class="p-14" *ngIf="history.type === 'appointment_created'">
+
+            </p>
+            <p class="p-14" *ngIf="history.type === 'appointment_cancel'">
+              Termin abgesagt
+            </p>
+            <p class="p-14" *ngIf="history.type === 'appointment_approved'">
+              Termin bestätigt
+            </p>
+            <p class="p-14" *ngIf="history.type === 'appointment_archived'">
+              Termin archiv
+            </p>
+            <p class="p-14" *ngIf="history.type === 'medical_question_created'">
+
+            </p>
+            <p class="p-14" *ngIf="history.type === 'medical_question_answer'">
+
+            </p>
+            <p class="p-14" *ngIf="history.type === 'recall_created'">
+              Patienten rückruf
+            </p>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import {sendMail} from '../helper/email';
 const MedicalQuestion = db.medicalQuestion;
 const Appointment = db.appointment;
 const ContactHistory = db.contactHistory;
-const MedicalAnswer = db.medicalAnswer;
+// const MedicalAnswer = db.medicalAnswer;
 const CallbackDoctor = db.callbackDoctor;
 const PatientRecall = db.patientRecall;
 const EditingStatus = db.editingStatus;
@@ -58,6 +58,15 @@ exports.getContactHistory = async (req, res) => {
         WHERE appointments.id=${id}
     `, {type: db.Sequelize.QueryTypes.SELECT});
     const contactHistory = await ContactHistory.findAll({where: {appointmentId: id}, raw: true, nest: true});
+    for (const item of contactHistory) {
+        if (item.type === 'callback_created') {
+            item.callback = await CallbackDoctor.findByPk(item.otherId, {raw: true});
+        }
+
+        if (item.type === 'callback_answer') {
+            item.callback_answer = await db.callbackAnswer.findByPk(item.otherId, {raw: true});
+        }
+    }
     const response = {
         appointment,
         contactHistory
@@ -69,7 +78,7 @@ exports.cancelAppointment = async (req, res) => {
     const id = req.params.id;
     await Appointment.update({adminStatus: 'canceled'}, {where: {id}});
     await MedicalQuestion.update({isActive: false}, {where: {appointmentId: id}});
-    await ContactHistory.create({appointmentId: id, type: 'Termin abgesagt'});
+    await ContactHistory.create({appointmentId: id, type: 'appointment_cancel'});
 
     const user = await sequelize.query(`
         SELECT users.email AS email, appointments.id AS appointmentId 
@@ -94,7 +103,7 @@ exports.releaseAppointment = async (req, res) => {
     const id = req.params.id;
     await Appointment.update({adminStatus: 'confirmed'}, {where: {id}});
     await MedicalQuestion.update({isActive: false}, {where: {appointmentId: id}});
-    await ContactHistory.create({appointmentId: id, type: 'Termin bestätigt'});
+    await ContactHistory.create({appointmentId: id, type: 'appointment_approved'});
     const user = await sequelize.query(`
         SELECT users.email AS email, appointments.id AS appointmentId
         FROM appointments
@@ -117,29 +126,39 @@ exports.releaseAppointment = async (req, res) => {
 }
 
 exports.sendMessageToPatientAboutCallback = async (req, res) => {
-    const user = await sequelize.query(`
+    const callbackAnswer = await db.callbackAnswer.findOne({where: {callbackId: req.body.callbackId}});
+    console.log(callbackAnswer)
+    if (!callbackAnswer) {
+        const newCallbackAnswer = await db.callbackAnswer.create(req.body);
+        const callback = await CallbackDoctor.findOne({where: {id: req.body.callbackId}});
+        await ContactHistory.create({appointmentId: callback.appointmentId, type: 'callback_answer', otherId: newCallbackAnswer.id});
+        const user = await sequelize.query(`
         SELECT users.email AS email
         FROM callback_doctors 
         JOIN appointments ON appointments.id=callback_doctors.appointmentId
         JOIN users ON appointments.userId=users.id
         WHERE callback_doctors.id=${req.body.callbackId}
         `, {type: db.Sequelize.QueryTypes.SELECT});
-    if (user[0]) {
-        const mailData = {
-            email: user[0].email,
-            subject: 'Doctor Answer',
-            from: process.env.OWNER_EMAIL,
-            content: req.body.answer
+        if (user[0]) {
+            const mailData = {
+                email: user[0].email,
+                subject: 'Doctor Answer',
+                from: process.env.OWNER_EMAIL,
+                content: req.body.answer
+            }
+            sendMail(mailData);
         }
-        await sendMail(mailData);
+        res.status(201).json({message: 'Email sent', answer: newCallbackAnswer});
+    } else {
+        res.status(400).json({message: 'Already answered'});
     }
-    res.status(201).json({message: 'Email sent'});
+
 }
 
 exports.inquiryAnswered = async (req, res) => {
     const id = req.params.id;
     await Appointment.update({callbackStatus: false}, {where: {id}});
-    await ContactHistory.create({appointmentId: id, type: 'Rückruf beantwortet'});
+    // await ContactHistory.create({appointmentId: id, type: 'Rückruf beantwortet'});
     await CallbackDoctor.update({isActive: false}, {where: {appointmentId: id}});
     const user = await sequelize.query(`
         SELECT users.email AS email, appointments.id AS appointmentId
@@ -164,14 +183,14 @@ exports.inquiryAnswered = async (req, res) => {
 
 exports.createPatientRecall = async (req, res) => {
     const newRecall = await PatientRecall.create(req.body);
-    await ContactHistory.create({appointmentId: req.body.appointmentId, type: 'Patienten rückruf'});
+    await ContactHistory.create({appointmentId: req.body.appointmentId, type: 'recall_created'});
     res.status(201).json(newRecall);
 }
 
 exports.setAppointmentToArchive = async (req, res) => {
     const id = req.params.appointmentId;
     await Appointment.update({archive: true}, {where: {id}});
-    await ContactHistory.create({appointmentId: id, type: 'Termin archiv'});
+    await ContactHistory.create({appointmentId: id, type: 'appointment_archived'});
     res.status(200).json({message: 'archived'});
 }
 

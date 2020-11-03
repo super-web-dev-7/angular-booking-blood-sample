@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {HttpService} from '../../../../service/http/http.service';
@@ -65,7 +65,6 @@ export class PopupCancelAppointmentComponent implements OnInit {
     };
     this.httpService.post(URL_JSON.PATIENT + '/cancel_appointment_by_patient', data).subscribe((res: any) => {
       if (res) {
-        console.log(res);
       }
     });
     this.success = true;

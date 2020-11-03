@@ -76,3 +76,24 @@ h1 {
     padding: 15px;
   }
 }
+
+.message-container {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  cursor: pointer;
+
+  .check-icon {
+    color: green;
+    margin-left: 10px;
+    background-color: lightblue;
+    border-radius: 50%;
+  }
+}
+
+.selected {
+  background-color: #cfdce6!important;
+}
+
+.message-container:hover {
+  background-color: rgba(207, 220, 230, 0.5);
+}

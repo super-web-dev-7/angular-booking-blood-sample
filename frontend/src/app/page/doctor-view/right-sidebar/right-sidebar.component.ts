@@ -38,8 +38,7 @@ export class RightSidebarComponent implements OnInit {
       width: '730px',
       data: this.userData
     });
-    dialogRef.afterClosed().subscribe(res => {
-      console.log(this.currentUser);
+    dialogRef.afterClosed().subscribe(() => {
     });
   }
 

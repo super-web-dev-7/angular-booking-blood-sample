@@ -48,13 +48,23 @@
         </button>
       </div>
     </div>
-    <p class="p-272140-tablet mt-47">
-      Kundennachricht {{formatTime(displayData?.createdAt)}}
-    </p>
-    <p style="margin-top: 57px">{{displayData?.schedule}}</p>
-    <p class="p-14 mt-24">
-      {{displayData?.message}}
-    </p>
+    <div *ngFor="let item of allData"
+         (click)="selectMessage(item)"
+         [ngClass]="{'selected': selectedMessage === item.id}"
+         class="message-container">
+      <p style="margin-top: 20px;">
+        Kundennachricht {{formatTime(item?.createdAt)}}
+      </p>
+      <p style="display: flex;">
+        {{item?.schedule}}
+        <mat-icon class="check-icon" *ngIf="item.answeredCallbackId">done</mat-icon>
+      </p>
+      <div class="faq-text">
+        <p class="mt-14 pre-wrap">
+          {{item?.message}}
+        </p>
+      </div>
+    </div>
     <span class="org-text d-flex mt-47">
         <img src="/assets/images/info_icon.svg" alt="info" class="mr-10">
       {{"In Bearbeitung durch Dr. Med. "}} {{editingDoctorData?.doctorFirstName}} {{editingDoctorData?.doctorLastName}}

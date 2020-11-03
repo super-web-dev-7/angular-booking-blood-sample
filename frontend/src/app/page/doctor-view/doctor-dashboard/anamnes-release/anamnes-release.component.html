@@ -198,17 +198,17 @@
           >
             <div class="example-element-detail"
                  [@detailExpand]="element == expandedElementA ? 'expanded' : 'collapsed'">
-              <div class="d-flex" style="padding: 6px 0px">
+              <div class="d-flex"
+                   style="padding: 6px 0; cursor: pointer;"
+                   (click)="conditionEditing(element, 2) === -1 ? checkAnamnes(element.id) : anamnesView(element.id)">
                 <button *ngIf="conditionEditing(element, 2) === -1"
                         mat-icon-button
                         aria-label="more"
-                        (click)="checkAnamnes(element.id)"
                 >
                   <img src="/assets/images/white_edit.svg" alt="edit" class="ml-10">
                 </button>
                 <button mat-icon-button
                         aria-label="more"
-                        (click)="anamnesView(element.id)"
                         *ngIf="conditionEditing(element, 2) > -1"
                 >
                   <mat-icon style="color: #ffffff" class="ml-10">search</mat-icon>

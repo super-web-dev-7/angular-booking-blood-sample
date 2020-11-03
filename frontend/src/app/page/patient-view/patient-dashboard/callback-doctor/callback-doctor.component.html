@@ -47,8 +47,9 @@
             <mat-icon> stay_current_portrait</mat-icon>
           </div>
           <div>
-            <span *ngIf="!isEditPhone">{{this.f.phone.value && !this.f.phone.errors? this.f.phone.value:defaultPhone}}</span>
-            <mat-form-field class="w-100" *ngIf="isEditPhone">
+            <span [hidden]="isEditPhone">{{this.f.phone.value && !this.f.phone.errors? this.f.phone.value:defaultPhone}}</span>
+            <mat-form-field class="w-100" [hidden]="!isEditPhone">
+              <mat-label>ddd</mat-label>
               <input autocomplete="off" matInput formControlName="phone">
               <mat-icon *ngIf="f.phone.touched && !f.phone.errors" style="color: greenyellow" matSuffix>done</mat-icon>
               <mat-icon *ngIf="f.phone.touched && f.phone.errors" style="color: red" matSuffix>close</mat-icon>
@@ -70,15 +71,15 @@
             <div class="d-block expansion-panel-container" style="margin-left: 76px">
               <mat-form-field class="width-50 mt-4">
                 <mat-label>Title</mat-label>
-                <input formControlName="title" autocomplete="off" matInput>
+                <input formControlName="title" autocomplete="off" placeholder="Title" matInput>
               </mat-form-field>
               <br/>
               <mat-form-field appearance="outline" class="mt-15 width-50">
-                <mat-label></mat-label>
+                <mat-label>Message</mat-label>
                 <textarea
                   matInput
                   formControlName="message"
-                  placeholder=""
+                  placeholder="message"
                   rows="7"
                 ></textarea>
               </mat-form-field>

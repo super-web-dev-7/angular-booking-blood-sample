@@ -1,12 +1,12 @@
 .left-side-container {
   width: 350px;
+  padding-left: 30px;
   height: 100vh;
   background-color: #ffffff;
   display: flex;
-  justify-content: center;
   position: fixed;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   z-index: 2000!important;
   overflow-y: scroll!important;
   .main-div {

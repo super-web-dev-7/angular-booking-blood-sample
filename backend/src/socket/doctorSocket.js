@@ -16,12 +16,12 @@ export const doctorSocket = (io) => {
         socket.on('close_emit', async () => {
             socket.broadcast.emit('close_notification', socket.id);
             await EditingStatus.destroy({where: {socketId: socket.id}});
-        })
+        });
 
         socket.on('disconnect', async () => {
             socket.broadcast.emit('close_notification', socket.id);
             await EditingStatus.destroy({where: {socketId: socket.id}});
-        })
+        });
     });
 }
 

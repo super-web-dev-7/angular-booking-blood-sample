@@ -1,10 +1,11 @@
-import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {SharedService} from '../../../../../service/shared/shared.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {HttpService} from '../../../../../service/http/http.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
 import {URL_JSON} from '../../../../../utils/url_json';
+import {SharedService} from '../../../../../service/shared/shared.service';
+import {HttpService} from '../../../../../service/http/http.service';
 
 @Component({
   selector: 'app-left-message-popup',

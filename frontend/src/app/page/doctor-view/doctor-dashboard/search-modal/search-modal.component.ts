@@ -16,6 +16,8 @@ export class SearchModalComponent implements OnInit {
   displayData: any;
   isContactHistory = false;
   isMedicalHistory = false;
+  allData: any;
+  selectedMessage = null;
   constructor(
     private dialogRef: MatDialogRef<SearchModalComponent>,
     public authService: AuthService,
@@ -27,9 +29,12 @@ export class SearchModalComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authService.currentUserValue;
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.data.appointmentId).subscribe((res: any) => {
-      this.displayData = res;
+      if (res.length > 0) {
+        this.displayData = res[0];
+      }
+      this.allData = res;
     });
-    this.sharedService.closeHistory.subscribe(res => {
+    this.sharedService.closeHistory.subscribe(() => {
       this.isMedicalHistory = false;
       this.isContactHistory = false;
     });
@@ -48,6 +53,12 @@ export class SearchModalComponent implements OnInit {
 
   close = () => {
     this.dialogRef.close();
+  }
+
+  selectMessage = item => {
+    if (!item.answeredCallbackId) {
+      this.selectedMessage = item.id;
+    }
   }
 
   openMedicalHistory = () => {
