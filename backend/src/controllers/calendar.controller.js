@@ -55,7 +55,7 @@ exports.getById = async (req, res) => {
 exports.update = async (req, res) => {
     const data = req.body;
     const id = req.params.id;
-    Calendar.update(data, {returning: true, where: {id}}).then((rowUpdated) => {
+    Calendar.update(data, {returning: true, where: {id}}).then(() => {
         User.hasMany(Calendar, {foreignKey: 'nurse'})
         Calendar.belongsTo(User, {foreignKey: 'nurse'});
 
@@ -83,7 +83,7 @@ exports.delete = async (req, res) => {
         return;
     }
 
-    Calendar.destroy({where: {id: req.params.id}}).then(result => {
+    Calendar.destroy({where: {id: req.params.id}}).then(() => {
         res.status(204).json({});
     })
 }
@@ -150,7 +150,7 @@ exports.getBookingTimeByAgency = async (req, res) => {
 
             let time = workingTimeFrom;
             while ((time + durationAppointment) < workingTimeUntil) {
-                if (time > date.getTime()) {
+                if (time > date.getTime() + millisecondOfDay * 2) {
                     if (appointments.findIndex(item => item.time === time) === -1) {
                         response.push(time);
                     }
@@ -202,7 +202,7 @@ exports.getBookingTimeByPackage = async (req, res) => {
 
             let time = workingTimeFrom;
             while ((time + durationAppointment) < workingTimeUntil) {
-                if (time > date.getTime()) {
+                if (time > (date.getTime() + millisecondOfDay * 2)) {
                     if (appointments.findIndex(item => item.time === time) === -1) {
                         response.push(time);
                     }
