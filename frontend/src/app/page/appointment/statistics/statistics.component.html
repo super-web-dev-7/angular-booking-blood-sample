@@ -123,7 +123,7 @@
     <div class="line-chart-container">
       <div class="current-container">
         <mat-icon>person</mat-icon>
-        <span class="value">311</span>
+        <span class="value" *ngIf="dataPerPatient">{{dataPerPatient.all.all_patient}}</span>
         <span class="label">Patienten gesamt</span>
       </div>
       <div class="line-chart" *ngIf="dataPerPatient">

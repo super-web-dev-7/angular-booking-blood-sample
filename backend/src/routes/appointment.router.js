@@ -30,9 +30,9 @@ router.route('/getAppointmentsDetailWithoutArchived/:id').get(appointmentControl
 router.route('/getAppointmentsWithArchived').get(appointmentController.getAppointmentsWithArchived);
 
 
-router.route('/analysisByAgency').get(appointmentController.analysisByAgency);
-router.route('/analysisByPackage').get(appointmentController.analysisByPackage);
-router.route('/analysisPerMonth').get(appointmentController.analysisPerMonth);
-router.route('/analysisTotalPatient').get(appointmentController.analysisTotalPatient);
+router.route('/analysisByAgency/:userId').get(appointmentController.analysisByAgency);
+router.route('/analysisByPackage/:userId').get(appointmentController.analysisByPackage);
+router.route('/analysisPerMonth/:userId').get(appointmentController.analysisPerMonth);
+router.route('/analysisTotalPatient/:userId').get(appointmentController.analysisTotalPatient);
 
 export default router;

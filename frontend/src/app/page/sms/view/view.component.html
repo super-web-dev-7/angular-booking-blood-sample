@@ -40,7 +40,7 @@
       <div class="success-color ml-2">Manueller Versand war erfolgreich</div>
     </div>
     <button *ngIf="!data.status" class="custom-button primary primary-button ml-2" mat-stroked-button (click)="sendManual()">Manuell versenden</button>
-    <button class="custom-button ml-2" mat-stroked-button>Schließen</button>
+    <button class="custom-button ml-2" mat-stroked-button (click)="close()">Schließen</button>
 
   </div>
 </div>

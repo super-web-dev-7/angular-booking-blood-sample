@@ -62,8 +62,8 @@ mat-form-field.period-button {
 .summary-button {
   border-radius: 30px;
   height: 60px;
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  box-shadow: 0px 4px 16px #E3E8F4;
+  background: #FFFFFF 0 0 no-repeat padding-box;
+  box-shadow: 0 4px 16px #E3E8F4;
   width: 100%;
   margin-bottom: 1rem;
 }
@@ -185,6 +185,7 @@ mat-form-field.period-button {
     display: flex;
     flex-direction: column;
     color: white;
+    align-items: center;
 
     .mat-icon {
       font-size: 40px;
@@ -196,6 +197,7 @@ mat-form-field.period-button {
       padding: 10px 0;
       font-size: 41px;
       font-weight: bold;
+      text-align: center;
     }
 
     .label {

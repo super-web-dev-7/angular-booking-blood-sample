@@ -4,6 +4,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {curveCardinal} from 'd3-shape';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
+import {AuthService} from '../../../service/auth/auth.service';
 
 @Component({
   selector: 'app-statistics',
@@ -65,8 +66,10 @@ export class StatisticsComponent implements OnInit {
   allAgency = [];
   selectedAgency = 0;
 
+  currentUser: any;
   constructor(
     public httpService: HttpService,
+    public authService: AuthService,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer
   ) {
@@ -77,11 +80,12 @@ export class StatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentUser = this.authService.currentUserValue;
     this.analysisByAgency();
     this.httpService.get(URL_JSON.AGENCY + '/get').subscribe((res: any) => {
       this.allAgency = res;
     });
-    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisByPackage').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisByPackage/' + this.currentUser.id).subscribe((res: any) => {
       for (const [index, item] of res.entries()) {
         this.packageData.push({
           color: this.colorArray[index % this.colorArray.length],
@@ -98,7 +102,7 @@ export class StatisticsComponent implements OnInit {
       }
     });
 
-    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisPerMonth').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisPerMonth/' + this.currentUser.id).subscribe((res: any) => {
       for (const item of res) {
         this.barChartData.push({
           label: this.monthArray[item.month - 1],
@@ -121,11 +125,11 @@ export class StatisticsComponent implements OnInit {
       };
     });
 
-    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisTotalPatient').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisTotalPatient/' + this.currentUser.id).subscribe((res: any) => {
       for (const data of res.per_patient) {
         this.lineChartData[0].series.push({
-          name: this.monthArray[data.month - 1],
-          value: data.count_per_month
+          name: this.monthArray[data.month_label - 1],
+          value: data.patient_per_month
         });
       }
       this.dataPerPatient = res;
@@ -142,7 +146,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   analysisByAgency = () => {
-    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisByAgency?from=' +
+    this.httpService.get(URL_JSON.APPOINTMENT + '/analysisByAgency/' + this.currentUser.id + '?from=' +
       this.fromDate + '&to=' + this.toDate + '&agency=' + this.selectedAgency)
       .subscribe((res: any) => {
         this.data = [];

@@ -81,7 +81,12 @@ exports.createByPatient = async (req, res) => {
 }
 
 exports.get = async (req, res) => {
-    const allAppointment = await Appointment.findAll({where: {archive: false}, include: [User, Package, Agency], raw: true, nest: true});
+    const allAppointment = await Appointment.findAll({
+        where: {archive: false},
+        include: [User, Package, Agency],
+        raw: true,
+        nest: true
+    });
     let response = [];
     for (const appointment of allAppointment) {
         const doctors_id = JSON.parse(appointment.agency.doctors_id);
@@ -437,29 +442,37 @@ exports.getAppointmentsWithArchived = async (req, res) => {
     res.status(200).json(response);
 }
 
+const getWorkingGroupFromAdmin = async id => {
+    const userId = parseInt(id);
+    const workingGroups = await db.workingGroup.findAll({raw: true});
+    let value;
+    for (const workingGroup of workingGroups) {
+        const admins = JSON.parse(workingGroup.admin);
+        if (admins.includes(userId)) {
+            value = workingGroup;
+            break;
+        }
+    }
+    return value;
+}
+
 exports.analysisByAgency = async (req, res) => {
-    let query = ''
+    const userId = req.params.userId;
+    const workingGroup = await getWorkingGroupFromAdmin(userId);
+    let query = `WHERE working_group_agencies.groupId = ${workingGroup.id}`;
     if (req.query.from) {
         let date = new Date(parseInt(req.query.from, 10));
         date = date.toISOString();
-        query = `WHERE appointments.createdAt >= DATE('${date}') `;
+        query = `AND appointments.createdAt >= DATE('${date}') `;
     }
     if (req.query.to) {
         let date = new Date(parseInt(req.query.to, 10));
         date = date.toISOString();
-        if (query) {
-            query += `AND appointments.createdAt <= DATE('${date}') `;
-        } else {
-            query = `WHERE appointments.createdAt <= DATE('${date}') `;
-        }
+        query += `AND appointments.createdAt <= DATE('${date}') `;
     }
 
     if (req.query.agency && req.query.agency !== '0') {
-        if (query) {
-            query += `AND appointments.agencyId=${req.query.agency} `;
-        } else {
-            query = `WHERE appointments.agencyId=${req.query.agency} `;
-        }
+        query += `AND appointments.agencyId=${req.query.agency} `;
     }
 
     const allAgencies = await db.sequelize.query(`
@@ -471,6 +484,7 @@ exports.analysisByAgency = async (req, res) => {
             COALESCE(SUM(appointments.adminStatus="successful"), 0) AS success_count            
         FROM appointments
         JOIN agencies ON agencies.id=appointments.agencyId
+        JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id        
         ${query}
         GROUP BY appointments.agencyId
     `, {type: db.Sequelize.QueryTypes.SELECT});
@@ -481,6 +495,8 @@ exports.analysisByAgency = async (req, res) => {
             COALESCE(SUM(appointments.adminStatus="canceled"), 0) AS cancel_count,
             COALESCE(SUM(appointments.adminStatus="successful"), 0) AS success_count   
         FROM appointments
+        JOIN agencies ON agencies.id=appointments.agencyId
+        JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id    
         ${query}
     `, {type: db.Sequelize.QueryTypes.SELECT});
     const response = {
@@ -491,25 +507,34 @@ exports.analysisByAgency = async (req, res) => {
 }
 
 exports.analysisByPackage = async (req, res) => {
+    const userId = req.params.userId;
+    const workingGroup = await getWorkingGroupFromAdmin(userId);
     const response = await db.sequelize.query(`
         SELECT 
             appointments.packageId AS packageId, packages.name AS packageName,
             COUNT(appointments.id) AS count_by_package
         FROM appointments
         JOIN packages ON packages.id=appointments.packageId
+        JOIN agencies ON agencies.id=appointments.agencyId
+        JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id
+        WHERE working_group_agencies.groupId=${workingGroup.id}
         GROUP BY appointments.packageId
     `, {type: db.Sequelize.QueryTypes.SELECT});
     res.json(response);
 }
 
 exports.analysisPerMonth = async (req, res) => {
+    const userId = req.params.userId;
+    const workingGroup = await getWorkingGroupFromAdmin(userId);
     const response = await db.sequelize.query(`
         SELECT 
             MONTH(appointments.createdAt) AS MONTH, 
             CONVERT(IFNULL(SUM(CASE WHEN appointments.adminStatus="upcoming" THEN 1 END), 0), UNSIGNED INTEGER) AS positive_value, 
             CONVERT(IFNULL(SUM(CASE WHEN appointments.adminStatus="successful" THEN 1 END), 0), UNSIGNED INTEGER) AS negative_value
         FROM appointments
-        WHERE appointments.createdAt >= CURDATE() - INTERVAL 6 MONTH
+        JOIN agencies ON agencies.id=appointments.agencyId
+        JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id
+        WHERE appointments.createdAt >= CURDATE() - INTERVAL 6 MONTH AND working_group_agencies.groupId=${workingGroup.id}
         GROUP BY MONTH(appointments.createdAt)
     `, {type: db.Sequelize.QueryTypes.SELECT});
     res.json(response);
@@ -526,14 +551,21 @@ exports.analysisPerMonthWithComplete = async (req, res) => {
 }
 
 exports.analysisTotalPatient = async (req, res) => {
+    const userId = req.params.userId;
+    const workingGroup = await getWorkingGroupFromAdmin(userId);
     const allPatientCountPerMonth = await db.sequelize.query(`
-        SELECT MONTH(createdAt) as month, COUNT(*) as count_per_month
-        FROM users
-        WHERE createdAt >= CURDATE() - INTERVAL 6 MONTH AND role="Patient"
-        GROUP BY MONTH(createdAt)
+        SELECT month_label, COUNT(*) AS patient_per_month FROM (SELECT a.userId, MONTH(a.createdAt) AS month_label
+        FROM appointments AS a
+        JOIN working_group_agencies AS w ON w.agencyId=a.agencyId
+        WHERE w.groupId=${workingGroup.id} AND a.createdAt >= CURDATE() - INTERVAL 6 MONTH
+        GROUP BY a.userId) t GROUP BY month_label
     `, {type: db.Sequelize.QueryTypes.SELECT});
     const allPatientCount = await db.sequelize.query(`
-        SELECT COUNT(id) as all_patient_count FROM users WHERE role="Patient"
+        SELECT COUNT(*) AS all_patient FROM (SELECT a.userId, MONTH(a.createdAt) AS month_label
+        FROM appointments AS a
+        JOIN working_group_agencies AS w ON w.agencyId=a.agencyId
+        WHERE w.groupId=${workingGroup.id} AND a.createdAt >= CURDATE() - INTERVAL 6 MONTH
+        GROUP BY a.userId) t 
     `, {type: db.sequelize.QueryTypes.SELECT});
     const response = {
         all: allPatientCount[0],

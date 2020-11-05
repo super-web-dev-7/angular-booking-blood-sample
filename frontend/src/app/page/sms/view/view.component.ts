@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 
@@ -14,6 +14,7 @@ export class ViewComponent implements OnInit {
 
   constructor(
     public httpService: HttpService,
+    public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer
@@ -28,7 +29,12 @@ export class ViewComponent implements OnInit {
   }
 
   sendManual = () => {
-    this.httpService.post(URL_JSON.BASE + '/sendSMS', this.data).subscribe((res: any) => {
+    this.httpService.post(URL_JSON.BASE + '/sendSMS', this.data).subscribe(() => {
+      this.dialogRef.close();
     });
+  }
+
+  close = () => {
+    this.dialogRef.close();
   }
 }
