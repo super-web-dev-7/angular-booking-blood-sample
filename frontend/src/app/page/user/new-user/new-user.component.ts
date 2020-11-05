@@ -16,9 +16,7 @@ import {AuthService} from '../../../service/auth/auth.service';
 })
 export class NewUserComponent implements OnInit {
 
-  // selectedAllocation = null;
   selectedRole = null;
-  // allocations = [];
   roles = [
     {id: 1, name: 'Superadmin'},
     {id: 2, name: 'AG-Admin'},
@@ -91,7 +89,6 @@ export class NewUserComponent implements OnInit {
       password: this.f.password.value,
       isActive: this.f.isActive.value,
       role: this.getRoleName(this.selectedRole),
-      // allocation: this.selectedAllocation
     };
     if (this.data) {
       this.httpService.update(URL_JSON.USER + '/update/' + this.data.id, data).subscribe(() => {
