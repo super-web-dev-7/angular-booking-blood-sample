@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+
 import {HttpService} from '../../../../service/http/http.service';
 import {URL_JSON} from '../../../../utils/url_json';
 import {AuthService} from '../../../../service/auth/auth.service';
@@ -32,6 +34,7 @@ export class PopupArrangeAppointmentComponent implements OnInit {
     public formBuilder: FormBuilder,
     public httpService: HttpService,
     public authService: AuthService,
+    public router: Router
   ) {
     this.currentUser = this.authService.currentUserValue;
   }
@@ -50,6 +53,9 @@ export class PopupArrangeAppointmentComponent implements OnInit {
       this.packages = res;
     });
     this.getUserInfo(this.currentUser.id);
+    this.httpService.get(URL_JSON.BASE + '/booking_time/zipcode/' + this.addressData.plz).subscribe((res: any) => {
+      this.allTimes = res;
+    });
   }
 
   get f(): any {
@@ -69,17 +75,12 @@ export class PopupArrangeAppointmentComponent implements OnInit {
     });
   }
 
-  getBookingTime = (id) => {
-    this.httpService.get(URL_JSON.BASE + '/booking_time/package/' + id).subscribe((res: any) => {
-      this.allTimes = res;
-    });
-  }
-
   moreItems = () => {
     this.isShow = !this.isShow;
   }
 
   close = () => {
+    this.router.navigateByUrl('/patient');
     this.closeSide.emit(false);
   }
 
@@ -89,7 +90,31 @@ export class PopupArrangeAppointmentComponent implements OnInit {
 
   selectBoard = (id) => {
     this.selectedBoard = id;
-    this.getBookingTime(id);
   }
 
+  submit = () => {
+    if (this.appointmentForm.invalid) {
+      return;
+    }
+    if (!this.selectedPackage || !this.selectedBoard) {
+      return;
+    }
+    const data = {
+      packageId: this.selectedBoard,
+      additionalPackageId: this.selectedPackage,
+      time: this.allTimes[this.selectedPTime],
+      plz: this.f.plz.value,
+      ort: this.f.ort.value,
+      payment: this.f.payment.value,
+      message: this.f.message.value,
+      userId: this.currentUser.id
+    };
+    this.httpService.post(URL_JSON.APPOINTMENT + '/create_by_patient', data).subscribe((res: any) => {
+      if (res) {
+        if (res.message === 'success') {
+          this.close();
+        }
+      }
+    });
+  }
 }

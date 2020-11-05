@@ -33,7 +33,7 @@ export class PopupNewAppointmentComponent implements OnInit {
   }
 
   checkPostalCode = () => {
-    this.httpService.checkPostalCode(this.f.plz.value).subscribe((res: any) => {
+    this.httpService.checkPostalCodeForAppointment(this.f.plz.value).subscribe((res: any) => {
       if (!res) {
         this.f.plz.setErrors(Validators.required);
       } else {
@@ -43,8 +43,10 @@ export class PopupNewAppointmentComponent implements OnInit {
     });
   }
 
-  close = () => {
-    this.router.navigateByUrl('/patient');
+  close = (value) => {
+    if (!value) {
+      this.router.navigateByUrl('/patient');
+    }
     this.closeSide.emit();
   }
 
@@ -52,7 +54,7 @@ export class PopupNewAppointmentComponent implements OnInit {
     if (this.appointmentForm.invalid) {
       return;
     }
-    this.close();
+    this.close(true);
     const emitData = {
       title: 'arrange',
       data: {

@@ -113,6 +113,29 @@
         </button>
       </div>
     </mat-expansion-panel>
+    <mat-expansion-panel hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="d-flex avatar pink">
+            <div class="round">
+              <img src="assets/images/cube.png" alt="cube">
+            </div>
+            <div>Paket</div>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="d-flex flex-wrap expansion-panel-container">
+        <button
+          type="button"
+          mat-stroked-button
+          class="select-button"
+          *ngFor="let item of allPackages"
+          [ngClass]="{'primary': selectedPackage.includes(item.id)}"
+          (click)="selectPackage(item.id)">
+          {{item.name}}
+        </button>
+      </div>
+    </mat-expansion-panel>
     <mat-expansion-panel hideToggle disabled>
       <mat-expansion-panel-header>
         <mat-panel-title>

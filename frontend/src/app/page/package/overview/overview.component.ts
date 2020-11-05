@@ -15,7 +15,7 @@ import {URL_JSON} from '../../../utils/url_json';
 })
 export class OverviewComponent implements OnInit {
 
-  displayedColumns: string[] = ['no', 'name', 'number', 'assign', 'price', 'status', 'actions'];
+  displayedColumns: string[] = ['no', 'name', 'number', 'price', 'status', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
   currentPage = 0;
   pageSize = 5;
@@ -99,7 +99,6 @@ export class OverviewComponent implements OnInit {
         item.number.toString().includes(this.filterValue) ||
         item.price.toString().includes(this.filterValue) ||
         JSON.stringify(item.special_price).includes(this.filterValue) ||
-        item.working_group.name.includes(this.filterValue) ||
         item.status.includes(this.filterValue);
     });
   }
@@ -107,17 +106,6 @@ export class OverviewComponent implements OnInit {
   onSort = (event) => {
     this.orderStatus = event;
     const packages = [...this.allPackages];
-    if (event.active === 'assign') {
-      packages.sort((a, b) => {
-        const x = a.working_group.name;
-        const y = b.working_group.name;
-        if (event.direction === 'asc') {
-          return x.localeCompare(y, 'de');
-        } else if (event.direction === 'desc') {
-          return y.localeCompare(x, 'de');
-        }
-      });
-    }
     if (event.direction === '') {
       this.dataSource.data = this.allPackages;
     } else {

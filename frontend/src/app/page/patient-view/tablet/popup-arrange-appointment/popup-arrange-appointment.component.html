@@ -181,6 +181,7 @@
           class="custom-button-C7D"
           [ngClass]="{'primary': appointmentForm.valid}"
           [disabled]="appointmentForm.invalid"
+          (click)="submit()"
         >
           Termin buchen
         </button>

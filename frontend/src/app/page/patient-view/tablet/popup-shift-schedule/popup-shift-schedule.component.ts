@@ -40,19 +40,15 @@ export class PopupShiftScheduleComponent implements OnInit {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.appointmentId).subscribe((res: any) => {
       this.displayData = res;
       if (this.displayData) {
-        this.getBookingTime(this.displayData.packageId);
+        this.httpService.get(URL_JSON.BASE + 'booking_time/agency/' + this.displayData.agencyId).subscribe((resp: any) => {
+          this.allTimes = resp;
+        });
       }
     });
   }
 
   get f(): any {
     return this.moveForm.controls;
-  }
-
-  getBookingTime = (id) => {
-    this.httpService.get(URL_JSON.BASE + '/booking_time/package/' + id).subscribe((res: any) => {
-      this.allTimes = res;
-    });
   }
 
   getTimeDuration = (startTime, duration) => {

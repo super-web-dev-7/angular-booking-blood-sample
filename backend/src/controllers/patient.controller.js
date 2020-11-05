@@ -69,7 +69,6 @@ exports.cancelAppointmentByPatient = async (req, res) => {
         JOIN calendars ON working_groups.calendar_id=calendars.id
         JOIN users AS patient ON appointments.userId=patient.id
         JOIN patients ON patients.user_id=patient.id
-        JOIN packages ON appointments.packageId=packages.id
         JOIN users AS nurse ON calendars.nurse=nurse.id
         WHERE appointments.id=${bodyData.appointmentId}
     `, {type: db.Sequelize.QueryTypes.SELECT});

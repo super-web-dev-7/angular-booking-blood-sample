@@ -44,7 +44,10 @@ export class PopupChangePackageComponent implements OnInit {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.appointmentId).subscribe((res: any) => {
       this.displayData = res;
       if (this.displayData) {
-        this.getBookingTime(this.displayData.packageId);
+        this.selectBoard(this.displayData.packageId);
+        this.httpService.get(URL_JSON.BASE + 'booking_time/agency/' + this.displayData.agencyId).subscribe((resp: any) => {
+          this.allTimes = resp;
+        });
       }
     });
     this.httpService.get(URL_JSON.PACKAGE + '/getWithQuery?status=Public').subscribe((res: any) => {
@@ -72,12 +75,6 @@ export class PopupChangePackageComponent implements OnInit {
     this.isShow = !this.isShow;
   }
 
-  getBookingTime = (id) => {
-    this.httpService.get(URL_JSON.BASE + '/booking_time/package/' + id).subscribe((res: any) => {
-      this.allTimes = res;
-    });
-  }
-
   getUserInfo = (id) => {
     this.httpService.get(URL_JSON.USER + '/getPatientById/' + id).subscribe((res: any) => {
       this.userInfo = res;
@@ -103,6 +100,5 @@ export class PopupChangePackageComponent implements OnInit {
 
   selectBoard = (id) => {
     this.selectedBoard = id;
-    this.getBookingTime(id);
   }
 }

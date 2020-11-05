@@ -6,7 +6,6 @@ import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 import {AuthService} from '../../../service/auth/auth.service';
 
-
 @Component({
   selector: 'app-new',
   templateUrl: './new.component.html',
@@ -17,11 +16,14 @@ export class NewComponent implements OnInit {
   isAddAdminPopup = false;
   selectedAdmin = [];
   selectedCalendar = null;
+  selectedPackage = [];
+
   admins = [];
   calendars = [];
   groupForm: FormGroup;
   userForm: FormGroup;
   allAgency = [];
+  allPackages = [];
   selectedAgency = [];
   currentUser;
 
@@ -34,6 +36,9 @@ export class NewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    for (const item of this.data.packages) {
+      this.selectedPackage.push(item.packageId);
+    }
     this.currentUser = this.authService.currentUserValue;
     this.groupForm = this.formBuilder.group({
       name: [this.data?.name, Validators.required],
@@ -45,12 +50,14 @@ export class NewComponent implements OnInit {
       email: [null, [Validators.required, Validators.email]],
       password: [null, Validators.required]
     });
+
     this.httpService.get(URL_JSON.USER + '/getWorkingGroup').subscribe((res: any) => {
       this.admins = res;
       if (this.data) {
         this.admins = [...this.data.admins, ...this.admins];
       }
     });
+
     this.httpService.get(URL_JSON.CALENDAR + '/get_unused').subscribe((res: any) => {
       this.calendars = res;
       if (this.data) {
@@ -65,6 +72,10 @@ export class NewComponent implements OnInit {
           this.allAgency.push(item.agency);
         }
       }
+    });
+
+    this.httpService.get(URL_JSON.PACKAGE + '/get').subscribe((res: any) => {
+      this.allPackages = res;
     });
 
     this.selectedCalendar = this.data ? this.data?.calendar_id : 0;
@@ -113,6 +124,14 @@ export class NewComponent implements OnInit {
     }
   }
 
+  selectPackage = id => {
+    if (this.selectedPackage.includes(id)) {
+      this.selectedPackage.splice(this.selectedPackage.indexOf(id), 1);
+    } else {
+      this.selectedPackage.push(id);
+    }
+  }
+
   selectCalendar = (id) => {
     this.selectedCalendar = id;
   }
@@ -143,7 +162,7 @@ export class NewComponent implements OnInit {
     if (this.groupForm.invalid) {
       return;
     }
-    if (!this.selectedAdmin || !this.selectedCalendar) {
+    if (!this.selectedAdmin || !this.selectedCalendar || !this.selectedPackage) {
       return;
     }
     const data = {
@@ -151,7 +170,8 @@ export class NewComponent implements OnInit {
       isActive: this.f.isActive.value,
       admin: JSON.stringify(this.selectedAdmin),
       calendar_id: this.selectedCalendar,
-      agencyIds: this.selectedAgency
+      agencyIds: this.selectedAgency,
+      packageIds: this.selectedPackage
     };
     if (this.data) {
       this.httpService.update(URL_JSON.GROUP + '/update/' + this.data.id, data).subscribe((result) => {

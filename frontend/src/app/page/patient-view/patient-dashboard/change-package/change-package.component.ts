@@ -41,8 +41,10 @@ export class ChangePackageComponent implements OnInit {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;
       if (this.displayData) {
-        console.log(this.displayData);
         this.selectBoard(this.displayData.packageId);
+        this.httpService.get(URL_JSON.BASE + 'booking_time/agency/' + this.displayData.agencyId).subscribe((resp: any) => {
+          this.allTimes = resp;
+        });
       }
     });
     this.httpService.get(URL_JSON.PACKAGE + '/getWithQuery?status=Public').subscribe((res: any) => {
@@ -60,12 +62,6 @@ export class ChangePackageComponent implements OnInit {
 
   get f(): any {
     return this.changePackageForm.controls;
-  }
-
-  getBookingTime = (id) => {
-    this.httpService.get(URL_JSON.BASE + 'booking_time/package/' + id).subscribe((res: any) => {
-      this.allTimes = res;
-    });
   }
 
   getUserInfo = (id) => {
@@ -98,7 +94,6 @@ export class ChangePackageComponent implements OnInit {
 
   selectBoard = (id) => {
     this.selectedBoard = id;
-    this.getBookingTime(id);
   }
 
   submit = () => {

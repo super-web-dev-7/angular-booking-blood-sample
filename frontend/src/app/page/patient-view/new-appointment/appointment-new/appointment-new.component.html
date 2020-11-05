@@ -151,6 +151,7 @@
             class="custom-package-button ml-10"
             [disabled]="appointmentForm.invalid"
             [ngClass]="{'primary': appointmentForm.valid}"
+            (click)="submit()"
           >
             Termin buchen
           </button>

@@ -49,7 +49,7 @@ export class PatientDashboardComponent implements OnInit {
     public breakpointObserver: BreakpointObserver,
     private sharedService: SharedService,
     public httpService: HttpService,
-    public authService: AuthService
+    public authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -57,17 +57,20 @@ export class PatientDashboardComponent implements OnInit {
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.currentUser = this.authService.currentUserValue;
-    this.httpService.get(URL_JSON.PACKAGE + '/getAllPackagesWithAppointment/' + this.currentUser.id).subscribe((res: any) => {
-      this.allPackages = res;
-    });
-    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentByPatient/' + this.currentUser.id).subscribe((res: any) => {
-      this.allAppointments = res;
-      console.log(res);
-    });
+    this.initPageData();
     const url = this.router.url.split('/');
     if (url[2] === 'new_appointment') {
       this.openDialog();
     }
+  }
+
+  initPageData = () => {
+    this.httpService.get(URL_JSON.PACKAGE + '/getAllPackagesWithAppointment/' + this.currentUser.id).subscribe((res: any) => {
+      this.allPackages = [...res];
+    });
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentByPatient/' + this.currentUser.id).subscribe((res: any) => {
+      this.allAppointments = [...res];
+    });
   }
 
 
@@ -87,12 +90,16 @@ export class PatientDashboardComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe((res) => {
-        this.router.navigateByUrl('/patient');
-        if (res?.status) {
-          this.dialog.open(AppointmentNewComponent, {
+        if (res && res.status) {
+          const dialogRef1 = this.dialog.open(AppointmentNewComponent, {
             width: '1182px',
             data: res
           });
+          dialogRef1.afterClosed().subscribe(() => {
+            this.router.navigateByUrl('/patient');
+          });
+        } else {
+          this.router.navigateByUrl('/patient');
         }
       });
     }
@@ -115,7 +122,7 @@ export class PatientDashboardComponent implements OnInit {
         width: '662px',
         data: {appointmentId: this.selectedAppointment}
       });
-      dialogRef.afterClosed().subscribe(res => {
+      dialogRef.afterClosed().subscribe(() => {
       });
     }
   }
@@ -136,7 +143,7 @@ export class PatientDashboardComponent implements OnInit {
         width: '662px',
         data: {appointmentId: this.selectedAppointment}
       });
-      dialogRef.afterClosed().subscribe(res => {
+      dialogRef.afterClosed().subscribe(() => {
       });
     }
   }
@@ -183,7 +190,7 @@ export class PatientDashboardComponent implements OnInit {
         width: '1182px',
         data: {appointmentId: this.selectedAppointment}
       });
-      dialogRef.afterClosed().subscribe(res => {
+      dialogRef.afterClosed().subscribe(() => {
       });
     }
   }
@@ -239,7 +246,7 @@ export class PatientDashboardComponent implements OnInit {
         width: '662px',
         data: {appointmentId: this.selectedAppointment}
       });
-      dialogRef.afterClosed().subscribe(res => {
+      dialogRef.afterClosed().subscribe(() => {
       });
     }
   }
@@ -260,7 +267,7 @@ export class PatientDashboardComponent implements OnInit {
         width: '662px',
         data: {appointmentId: this.selectedAppointment}
       });
-      dialogRef.afterClosed().subscribe(res => {
+      dialogRef.afterClosed().subscribe(() => {
       });
     }
   }
@@ -285,7 +292,7 @@ export class PatientDashboardComponent implements OnInit {
         width: '662px',
         data: {appointmentId: this.selectedAppointment}
       });
-      dialogRef.afterClosed().subscribe(res => {
+      dialogRef.afterClosed().subscribe(() => {
       });
     }
   }

@@ -123,7 +123,7 @@ export class NewComponent implements OnInit {
 
   checkPostalCode = (type) => {
     if (type === 'patient') {
-      this.httpService.get(URL_JSON.BASE + '/zipcode/check_postal_code_all/' + this.pf.plz.value).subscribe((res: any) => {
+      this.httpService.get(URL_JSON.ZIPCODE + '/check_postal_code_all/' + this.pf.plz.value).subscribe((res: any) => {
         if (!res) {
           this.pf.plz.setErrors(Validators.required);
         } else {
@@ -254,7 +254,7 @@ export class NewComponent implements OnInit {
     };
     if (this.data) {
     } else {
-      this.httpService.create(URL_JSON.APPOINTMENT, data).subscribe(res => {
+      this.httpService.create(URL_JSON.APPOINTMENT, data).subscribe(() => {
         this.dialogRef.close();
       });
     }

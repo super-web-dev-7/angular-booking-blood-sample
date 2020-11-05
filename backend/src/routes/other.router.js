@@ -13,6 +13,7 @@ router.route('/sms_history/get').get(otherController.getSmsHistory);
 router.route('/zipcode/checkPostalCode/:code').get(otherController.checkPostalCode);
 router.route('/zipcode/getPostalCodeByName').get(otherController.getPostalCodeByName);
 router.route('/zipcode/check_postal_code_all/:code').get(otherController.checkPostalCodeAll);
+router.route('/zipcode/check_postal_code_appointment/:code').get(otherController.checkPostalCodeForAppointment);
 
 router.route('/sendEmail').post(otherController.sendEmail);
 router.route('/sendSMS').post(otherController.sendSMS);
@@ -25,6 +26,6 @@ router.route('/nurse/appointment_not_there').post(otherController.appointmentNot
 
 // Get Booking Time
 router.route('/booking_time/agency/:agencyId').get(calendarController.getBookingTimeByAgency);
-router.route('/booking_time/package/:packageId').get(calendarController.getBookingTimeByPackage);
+router.route('/booking_time/zipcode/:zipcode').get(calendarController.getBookingTimeByZipcode);
 
 export default router;

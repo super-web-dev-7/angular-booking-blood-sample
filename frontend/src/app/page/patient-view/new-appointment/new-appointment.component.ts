@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {HttpService} from '../../../service/http/http.service';
@@ -43,7 +43,7 @@ export class NewAppointmentComponent implements OnInit {
   }
 
   checkPostalCode = () => {
-      this.httpService.checkPostalCode(this.f.plz.value).subscribe((res: any) => {
+      this.httpService.checkPostalCodeForAppointment(this.f.plz.value).subscribe((res: any) => {
         if (!res) {
           this.f.plz.setErrors(Validators.required);
         } else {

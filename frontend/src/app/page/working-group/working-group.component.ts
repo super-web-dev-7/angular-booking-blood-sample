@@ -19,7 +19,7 @@ import {AuthService} from '../../service/auth/auth.service';
 })
 export class WorkingGroupComponent implements OnInit {
 
-  displayedColumns: string[] = ['no', 'name', 'group_admin', 'calendar_resource', 'agency', 'active', 'actions'];
+  displayedColumns: string[] = ['no', 'name', 'group_admin', 'calendar_resource', 'agency', 'package', 'active', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
   currentPage = 0;
   pageSize = 5;
@@ -63,7 +63,6 @@ export class WorkingGroupComponent implements OnInit {
         this.allGroup = res;
       });
     }
-
   }
 
   onPaginateChange = ($event: PageEvent) => {
@@ -114,7 +113,7 @@ export class WorkingGroupComponent implements OnInit {
       width: '700px'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       this.router.navigateByUrl('working-group/overview');
     });
   }
@@ -123,7 +122,7 @@ export class WorkingGroupComponent implements OnInit {
     const data = {
       isActive: event.checked
     };
-    this.httpService.update(URL_JSON.GROUP + '/update/' + id, data).subscribe(res => {
+    this.httpService.update(URL_JSON.GROUP + '/update/' + id, data).subscribe(() => {
     });
   }
 
@@ -185,8 +184,18 @@ export class WorkingGroupComponent implements OnInit {
       });
     } else if (event.active === 'agency') {
       groups.sort((a, b) => {
-        const x = a.agency.name;
-        const y = b.agency.name;
+        const x = a.agency[0].agency.name;
+        const y = b.agency[0].agency.name;
+        if (event.direction === 'asc') {
+          return x.localeCompare(y, 'de');
+        } else if (event.direction === 'desc') {
+          return y.localeCompare(x, 'de');
+        }
+      });
+    } else if (event.active === 'package') {
+      groups.sort((a, b) => {
+        const x = a.packages[0].package.name;
+        const y = b.packages[0].package.name;
         if (event.direction === 'asc') {
           return x.localeCompare(y, 'de');
         } else if (event.direction === 'desc') {

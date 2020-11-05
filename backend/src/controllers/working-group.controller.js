@@ -1,5 +1,4 @@
 import db from '../models';
-import Sequelize from "sequelize";
 
 const WorkingGroup = db.workingGroup;
 const Calendar = db.calendar;
@@ -8,6 +7,13 @@ const Package = db.package;
 const PackageGroup = db.packageGroup;
 const Agency = db.agency;
 const WorkingGroupAgency = db.workingGroupAgency;
+
+Calendar.hasMany(WorkingGroup, {foreignKey: 'calendar_id'});
+WorkingGroup.belongsTo(Calendar, {foreignKey: 'calendar_id'});
+Agency.hasMany(WorkingGroupAgency, {foreignKey: 'agencyId'});
+WorkingGroupAgency.belongsTo(Agency, {foreignKey: 'agencyId'});
+Package.hasMany(PackageGroup, {foreignKey: 'packageId'});
+PackageGroup.belongsTo(Package, {foreignKey: 'packageId'});
 
 exports.create = (req, res) => {
     const newGroup = req.body;
@@ -20,19 +26,21 @@ exports.create = (req, res) => {
                 }
             );
         }
-        res.send(data)
+        for (const packageId of newGroup.packageIds) {
+            await PackageGroup.create({
+                groupId: data.id,
+                packageId: packageId
+            });
+        }
+        res.send(data);
     }).catch(err => {
         res.status(400).send({
             message: err.errors[0].message || 'Some error occurred.'
-        })
-    })
+        });
+    });
 };
 
 exports.get = async (req, res) => {
-    Calendar.hasMany(WorkingGroup, {foreignKey: 'calendar_id'});
-    WorkingGroup.belongsTo(Calendar, {foreignKey: 'calendar_id'});
-    Agency.hasMany(WorkingGroupAgency, {foreignKey: 'agencyId'});
-    WorkingGroupAgency.belongsTo(Agency, {foreignKey: 'agencyId'});
     const id = parseInt(req.query.admin);
     const allWorkingGroup = await WorkingGroup.findAll({where: {}, include: [Calendar], raw: true, nest: true});
     const response = [];
@@ -43,12 +51,14 @@ exports.get = async (req, res) => {
             continue;
         }
         const workingGroupAgency = await WorkingGroupAgency.findAll({where: {groupId: workingGroup.id}, include: [Agency], raw: true, nest: true});
-
         for (const item of workingGroup.admin) {
             const user = await User.findByPk(item);
             admins.push(user);
         }
-        response.push({...workingGroup, admins, agency: workingGroupAgency});
+
+        const packageGroup = await PackageGroup.findAll({where: {groupId: workingGroup.id}, include: [Package], raw: true, nest: true});
+
+        response.push({...workingGroup, admins, agency: workingGroupAgency, packages: packageGroup});
     }
     res.status(200).json(response)
 }
@@ -59,7 +69,7 @@ exports.delete = async (req, res) => {
         res.status(400).json({message: 'This item can\'t delete.', status: 400});
         return;
     }
-    WorkingGroup.destroy({where: {id: req.params.id}}).then(result => {
+    WorkingGroup.destroy({where: {id: req.params.id}}).then(() => {
         res.status(204).json({});
     });
 }
@@ -78,12 +88,15 @@ exports.update = async (req, res) => {
                     }
                 );
             }
+            await PackageGroup.destroy({where: {groupId: id}});
+            for (const packageId of data.packageIds) {
+                await PackageGroup.create({
+                    groupId: id,
+                    packageId: packageId
+                });
+            }
         }
-        Calendar.hasMany(WorkingGroup, {foreignKey: 'calendar_id'});
-        WorkingGroup.belongsTo(Calendar, {foreignKey: 'calendar_id'});
-        Agency.hasMany(WorkingGroupAgency, {foreignKey: 'agencyId'});
-        WorkingGroupAgency.belongsTo(Agency, {foreignKey: 'agencyId'});
-        WorkingGroup.findOne({where: {id}, include: [Calendar]}).then(async (workingGroup) => {
+        WorkingGroup.findOne({where: {id}, include: [Calendar], raw: true, nest: true}).then(async (workingGroup) => {
             const admins = [];
             workingGroup.admin = JSON.parse(workingGroup.admin);
             for (const item of workingGroup.admin) {
@@ -91,12 +104,10 @@ exports.update = async (req, res) => {
                 admins.push(user);
             }
             const workingGroupAgency = await WorkingGroupAgency.findAll({where: {groupId: workingGroup.id}, include: [Agency], raw: true, nest: true})
-            res.status(200).json({...workingGroup.dataValues, admins, agency: workingGroupAgency});
+
+            const packageGroup = await PackageGroup.findAll({where: {groupId: workingGroup.id}, include: [Package], raw: true, nest: true});
+
+            res.status(200).json({...workingGroup, admins, agency: workingGroupAgency, packages: packageGroup});
         });
     });
 }
-//
-// exports.getUnusedGroup = async (req, res) => {
-//     const allGroups = await db.sequelize.query(`SELECT * FROM working_groups WHERE id NOT IN (SELECT groupId FROM agency_groups)`, {type: Sequelize.QueryTypes.SELECT});
-//     res.status(200).json(allGroups);
-// }

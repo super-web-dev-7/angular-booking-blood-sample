@@ -169,25 +169,44 @@ exports.getBookingTimeByAgency = async (req, res) => {
     res.status(200).json(response);
 }
 
-exports.getBookingTimeByPackage = async (req, res) => {
-    const packageId = req.params.packageId;
-    const calendars = await db.sequelize.query(`
-        SELECT c.*
-        FROM calendars c
-        JOIN working_groups ON working_groups.calendar_id=c.id
-        JOIN packages ON packages.groupId=working_groups.id
-        WHERE packages.id=${packageId}
-    `, {type: db.Sequelize.QueryTypes.SELECT});
-    const calendar = calendars.length > 0 ? calendars[0] : null;
+exports.getBookingTimeByZipcode = async (req, res) => {
+    // const packageId = req.params.packageId;
+    const zipcode = req.params.zipcode;
+    const districtModel = await db.districtModel.findOne({where: {zipcode}, raw: true});
+    if (!districtModel) {
+        res.status(400).json([]);
+        return;
+    }
+    const district = await District.findOne({where: {city: 'Berlin', district: districtModel.district}});
+    if (!district) {
+        res.status(400).json([]);
+        return;
+    }
+    let calendar = null;
+    const calendars = await Calendar.findAll({raw: true});
+    for (const item of calendars) {
+        const districtIds = JSON.parse(item.district_id);
+        if (districtIds.includes(district.id)) {
+            calendar = item;
+            break;
+        }
+    }
     if (!calendar) {
         res.status(200).json([]);
         return;
     }
-    const appointments = await Appointment.findAll({where: {packageId}, raw: true});
+    const appointments = await db.sequelize.query(`
+        SELECT appointments.id AS id, appointments.time AS time
+        FROM appointments
+        JOIN agencies ON appointments.agencyId=agencies.id
+        JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id
+        JOIN working_groups ON working_group_agencies.groupId=working_groups.id
+        JOIN calendars ON working_groups.calendar_id=calendars.id       
+        WHERE calendars.id=${calendar.id}        
+    `, {type: db.Sequelize.QueryTypes.SELECT});
     const date = new Date();
     const millisecondOfDay = 86400 * 1000;
     let currentDay = date.getDay();
-    // let currentDay = 3;
     currentDay = (currentDay + 2) % 7;
     const response = [];
     let plusDate = 0;

@@ -13,11 +13,9 @@ import {URL_JSON} from '../../../utils/url_json';
 })
 export class NewComponent implements OnInit {
 
-  selectedGroup = null;
   selectedStatus = null;
   isActive = false;
   content = null;
-  groups = [];
   statuses = [
     {
       name: 'Inaktiv',
@@ -54,26 +52,12 @@ export class NewComponent implements OnInit {
         // this.selectedGroup.push(group.groupId);
       // }
       // this.selectedGroup = this.data.working_group.groupId;
-      this.selectedGroup = this.data.working_group.id;
       this.selectedStatus = this.data.status;
       if (this.data.special_price) {
         this.isActive = true;
       }
       this.content = this.data.content;
     }
-
-    this.httpService.get(URL_JSON.GROUP + '/get').subscribe((res: any) => {
-      this.groups = res;
-    });
-  }
-
-  selectGroup = (id) => {
-    // if (this.selectedGroup.includes(id)) {
-    //   this.selectedGroup.splice(this.selectedGroup.indexOf(id), 1);
-    // } else {
-    //   this.selectedGroup.push(id);
-    // }
-    this.selectedGroup = id;
   }
 
   selectStatus = (id) => {
@@ -98,7 +82,6 @@ export class NewComponent implements OnInit {
       price: this.f.price.value,
       special_price: this.isActive ? this.f.specialPrice.value : null,
       isActive: this.isActive,
-      group_id: this.selectedGroup,
       status: this.selectedStatus,
       content: this.content
     };

@@ -66,7 +66,35 @@ exports.checkPostalCodeAll = async (req, res) => {
     res.status(200).json(district);
 }
 
-exports.getPostalCodeByName = async (req, res) => {
+exports.checkPostalCodeForAppointment = async (req, res) => {
+    const zipcode = req.params.code;
+    const districtModel = await db.districtModel.findOne({where: {zipcode}, raw: true});
+    if (!districtModel) {
+        res.status(200).json(null);
+        return;
+    }
+    const district = await db.district.findOne({where: {city: 'Berlin', district: districtModel.district}});
+    if (!district) {
+        res.status(200).json(null);
+        return;
+    }
+    let calendar = null;
+    const calendars = await Calendar.findAll({raw: true});
+    for (const item of calendars) {
+        const districtIds = JSON.parse(item.district_id);
+        if (districtIds.includes(district.id)) {
+            calendar = item;
+            break;
+        }
+    }
+    if (calendar) {
+        res.status(200).json(districtModel);
+    } else {
+        res.status(200).json(null);
+    }
+}
+
+exports.getPostalCodeByName = async () => {
 
 }
 

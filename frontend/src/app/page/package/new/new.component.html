@@ -32,29 +32,6 @@
         <mat-expansion-panel hideToggle>
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <div class="d-flex avatar pink">
-                <div class="round">
-                  <mat-icon>group</mat-icon>
-                </div>
-                <div>Arbeitsgruppe</div>
-              </div>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="d-flex flex-wrap expansion-panel-container">
-            <button
-              type="button"
-              mat-stroked-button
-              class="select-button"
-              *ngFor="let group of groups"
-              [ngClass]="{'primary': selectedGroup === group.id}"
-              (click)="selectGroup(group.id)">
-              {{group.name}}
-            </button>
-          </div>
-        </mat-expansion-panel>
-        <mat-expansion-panel hideToggle>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
               <div class="d-flex avatar green">
                 <div class="round">
                   <mat-icon>stop_circle</mat-icon>

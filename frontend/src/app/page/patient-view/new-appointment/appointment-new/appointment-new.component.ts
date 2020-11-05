@@ -17,7 +17,7 @@ export class AppointmentNewComponent implements OnInit {
   selectedBoard = null;
   appointmentForm: FormGroup;
   allTimes = [];
-  selectedPTime = null;
+  selectedPTime = 0;
   currentUser: any;
   userInfo: any;
   paymentOptions = [
@@ -48,6 +48,9 @@ export class AppointmentNewComponent implements OnInit {
       this.packages = res;
     });
     this.getUserInfo(this.currentUser.id);
+    this.httpService.get(URL_JSON.BASE + 'booking_time/zipcode/' + this.data.plz).subscribe((res: any) => {
+      this.allTimes = res;
+    });
   }
 
   getUserInfo = (id) => {
@@ -60,12 +63,6 @@ export class AppointmentNewComponent implements OnInit {
       } else {
         this.f.payment.setValue('alternative');
       }
-    });
-  }
-
-  getBookingTime = (id) => {
-    this.httpService.get(URL_JSON.BASE + '/booking_time/package/' + id).subscribe((res: any) => {
-      this.allTimes = res;
     });
   }
 
@@ -83,6 +80,32 @@ export class AppointmentNewComponent implements OnInit {
 
   selectBoard = (id) => {
     this.selectedBoard = id;
-    this.getBookingTime(id);
+  }
+
+  submit = () => {
+    if (this.appointmentForm.invalid) {
+      return;
+    }
+    if (!this.selectedPackage || !this.selectedBoard) {
+      return;
+    }
+    const data = {
+      packageId: this.selectedBoard,
+      additionalPackageId: this.selectedPackage,
+      time: this.allTimes[this.selectedPTime],
+      plz: this.f.plz.value,
+      ort: this.f.ort.value,
+      payment: this.f.payment.value,
+      message: this.f.message.value,
+      userId: this.currentUser.id
+    };
+    this.httpService.post(URL_JSON.APPOINTMENT + '/create_by_patient', data).subscribe((res: any) => {
+      if (res) {
+        if (res.message === 'success') {
+          this.dialogRef.close(true);
+        }
+      }
+      console.log(res);
+    });
   }
 }

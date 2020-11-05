@@ -21,6 +21,65 @@ exports.create = async (req, res) => {
     });
 }
 
+exports.createByPatient = async (req, res) => {
+    const additionalInfo = {
+        additionalPackageId: req.body.additionalPackageId,
+        payment: req.body.payment,
+        message: req.body.message
+    };
+
+    const data = {
+        packageId: req.body.packageId,
+        name: req.body.plz,
+        userId: req.body.userId,
+        time: req.body.time
+    };
+
+    const districtModel = await db.districtModel.findOne({where: {zipcode: req.body.plz}, raw: true});
+    if (!districtModel) {
+        res.status(400).json({message: 'Wrong zipcode'});
+        return;
+    }
+    const district = await db.district.findOne({where: {city: 'Berlin', district: districtModel.district}, raw: true});
+    if (!district) {
+        res.status(400).json({message: 'cannot find district'});
+        return;
+    }
+    let calendar;
+    const calendars = await db.calendar.findAll({raw: true, nest: true});
+    for (const item of calendars) {
+        const districtIds = JSON.parse(item.district_id);
+        if (districtIds.includes(district.id)) {
+            calendar = item;
+        }
+    }
+
+    if (!calendar) {
+        res.status(400).json({message: 'cannot find calendar'});
+        return;
+    }
+    const countByAgency = await db.sequelize.query(`
+        SELECT COUNT(a.id) AS COUNT, working_group_agencies.agencyId
+        FROM appointments a
+        RIGHT JOIN working_group_agencies ON working_group_agencies.agencyId=a.agencyId
+        JOIN working_groups ON working_groups.id=working_group_agencies.groupId
+        JOIN calendars ON working_groups.calendar_id=calendars.id
+        WHERE calendars.id=${calendar.id}
+        GROUP BY a.agencyId
+        ORDER BY COUNT
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+
+    if (countByAgency.length > 0) {
+        data.agencyId = countByAgency[0].agencyId;
+        const newAppointment = await Appointment.create(data);
+        additionalInfo.appointmentId = newAppointment.id;
+        await db.appointmentExtraInformation.create(additionalInfo);
+        res.status(200).json({message: 'success', newAppointment});
+    } else {
+        res.status(400).json({message: 'cannot find agency'});
+    }
+}
+
 exports.get = async (req, res) => {
     const allAppointment = await Appointment.findAll({where: {archive: false}, include: [User, Package, Agency], raw: true, nest: true});
     let response = [];
@@ -57,7 +116,7 @@ exports.delete = async (req, res) => {
     })
 }
 
-exports.update = async (req, res) => {
+exports.update = async () => {
 }
 
 exports.getAppointmentByNurse = async (req, res) => {
@@ -83,7 +142,7 @@ exports.getAppointmentByNurse = async (req, res) => {
 
 exports.getAppointmentByPatient = async (req, res) => {
     const allAppointment = await sequelize.query(`
-        SELECT appointments.id AS id, appointments.time AS startTime, appointments.nurseStatus AS nurseStatus, appointments.adminStatus AS adminStatus,
+        SELECT appointments.id AS id, appointments.time AS startTime, appointments.nurseStatus AS nurseStatus, appointments.adminStatus AS adminStatus, appointments.agencyId AS agencyId,
             users.id AS patientId, users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.id AS patientDetailId, patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
             patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode, 
@@ -109,7 +168,7 @@ exports.getAppointmentByPatient = async (req, res) => {
 
 exports.getAppointmentDetail = async (req, res) => {
     const appointment = await sequelize.query(`
-        SELECT appointments.id AS id, appointments.time AS startTime, appointments.nurseStatus AS nurseStatus, appointments.adminStatus AS adminStatus,
+        SELECT appointments.id AS id, appointments.time AS startTime, appointments.nurseStatus AS nurseStatus, appointments.adminStatus AS adminStatus, appointments.agencyId AS agencyId,
             users.id AS patientId, users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.id AS patientDetailId, patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
             patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode, 
@@ -141,8 +200,7 @@ exports.getAppointmentWithNurseInfo = async (req, res) => {
         JOIN working_groups ON working_group_agencies.groupId=working_groups.id
         JOIN calendars ON working_groups.calendar_id=calendars.id
         JOIN users AS patient ON appointments.userId=patient.id
-        JOIN patients ON patients.user_id=patient.id
-        JOIN packages ON appointments.packageId=packages.id
+        JOIN patients ON patients.user_id=patient.id        
         JOIN users AS nurse ON calendars.nurse=nurse.id
         WHERE appointments.id=${req.params.appointmentId}
     `, {type: Sequelize.QueryTypes.SELECT});
