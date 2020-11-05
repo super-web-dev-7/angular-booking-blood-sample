@@ -1,5 +1,5 @@
 <form [formGroup]="userForm" class="p-2">
-  <h1>Benutzer <span style="font-weight: 100">neu</span></h1>
+  <h1>Benutzer <span style="font-weight: 100" *ngIf="!data">neu</span><span style="font-weight: 100" *ngIf="data">editieren</span></h1>
 
   <div class="d-flex flex-wrap user-form">
     <mat-form-field class="mt-4">
@@ -84,7 +84,7 @@
         Abbrechen
       </button>
       <button class="custom-button primary primary-button" mat-stroked-button (click)="createUser()">
-        {{this.data ? 'Edit User' : 'Add New User'}}
+        {{this.data ? 'Benutzer editieren' : 'Benutzer neu'}}
       </button>
     </div>
   </div>

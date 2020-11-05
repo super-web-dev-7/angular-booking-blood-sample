@@ -36,8 +36,10 @@ export class NewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    for (const item of this.data.packages) {
-      this.selectedPackage.push(item.packageId);
+    if (this.data) {
+      for (const item of this.data.packages) {
+        this.selectedPackage.push(item.packageId);
+      }
     }
     this.currentUser = this.authService.currentUserValue;
     this.groupForm = this.formBuilder.group({

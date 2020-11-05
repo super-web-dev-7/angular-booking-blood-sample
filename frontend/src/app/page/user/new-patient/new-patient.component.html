@@ -1,5 +1,5 @@
 <form [formGroup]="patientForm" class="p-2">
-  <h1>Patient <span style="font-weight: 100">neu</span></h1>
+  <h1>Patient <span style="font-weight: 100" *ngIf="!data">neu</span><span style="font-weight: 100" *ngIf="data">editieren</span></h1>
   <div class="row">
     <div class="col-md-6">
       <mat-form-field class="mt-4">
@@ -176,7 +176,7 @@
         Abbrechen
       </button>
       <button class="custom-button primary primary-button" mat-stroked-button (click)="createPatient()">
-        Neuen Patienten anlegen
+        {{data ? 'Patienten editieren' : 'Patienten neu'}}
       </button>
     </div>
   </div>
