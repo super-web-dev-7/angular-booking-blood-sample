@@ -101,7 +101,6 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     });
 
     this.httpService.get(URL_JSON.CALENDAR + '/get_by_nurse/' + this.currentUser.id).subscribe((res: any) => {
-      console.log(res);
       if (res) {
           this.workingStartHour = res.working_time_from;
           this.workingEndHour = res.working_time_until;
@@ -272,7 +271,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
       width: '730px',
       data: this.userData
     });
-    dialogRef.afterClosed().subscribe(res => {});
+    dialogRef.afterClosed().subscribe(() => {});
   }
 
   logout = () => {
@@ -283,7 +282,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     const data = {
       nurseStatus: 'ready'
     };
-    this.httpService.update(URL_JSON.APPOINTMENT + '/nurse_status/' + this.selectedAppointment.id, data).subscribe((res: any) => {
+    this.httpService.update(URL_JSON.APPOINTMENT + '/nurse_status/' + this.selectedAppointment.id, data).subscribe(() => {
       const index = this.allAppointments.findIndex(item => item.id === this.selectedAppointment.id);
       this.allAppointments[index].nurseStatus = 'ready';
       this.close();
@@ -352,7 +351,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
         weight: this.af.weight.value,
         content: this.customText
       };
-      this.httpService.post(URL_JSON.BASE + '/nurse/appointment_taken', {emailData, data}).subscribe(res => {
+      this.httpService.post(URL_JSON.BASE + '/nurse/appointment_taken', {emailData, data}).subscribe(() => {
         // this.close();
         this.isSubmit = true;
         this.httpService.update(URL_JSON.APPOINTMENT + '/nurse_status/' + this.selectedAppointment.id,
@@ -382,7 +381,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
       phoneNumber: this.customNumber ? this.customNumber : this.defaultNumber,
       content: this.customText
     };
-    this.httpService.post(URL_JSON.BASE + '/nurse/appointment_not_there', {emailData, smsData}).subscribe(res => {
+    this.httpService.post(URL_JSON.BASE + '/nurse/appointment_not_there', {emailData, smsData}).subscribe(() => {
       // this.close();
       this.isSubmit = true;
       this.isLoading = false;

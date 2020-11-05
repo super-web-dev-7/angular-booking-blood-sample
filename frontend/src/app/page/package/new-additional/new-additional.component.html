@@ -1,5 +1,5 @@
 <div class="p-3">
-  <h1>Zusatzpaket neu</h1>
+  <h1>Zusatzpaket <span style="font-weight: 100" *ngIf="!data">neu</span><span style="font-weight: 100" *ngIf="data">editieren</span></h1>
 
   <div class="row">
     <div>
@@ -83,7 +83,9 @@
     </div>
     <div class="d-flex align-items-center">
       <button class="custom-button mr-3" mat-stroked-button (click)="close()">Abbrechen</button>
-      <button class="custom-button primary primary-button" mat-stroked-button (click)="onSubmit()">Neues Zusatzpaket anlegen</button>
+      <button class="custom-button primary primary-button" mat-stroked-button (click)="onSubmit()">
+        {{data ? 'Zusatzpaket editieren' : 'Zusatzpaket neu'}}
+      </button>
     </div>
   </div>
 </div>

@@ -38,7 +38,7 @@ export class AnamnesCheckComponent implements OnInit {
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithQuestionById/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res[0];
     });
-    this.sharedService.closeHistory.subscribe(res => {
+    this.sharedService.closeHistory.subscribe(() => {
       this.isCheckContact = false;
     });
   }
@@ -73,9 +73,6 @@ export class AnamnesCheckComponent implements OnInit {
   }
 
   release = () => {
-    if (!this.isSent) {
-      return;
-    }
     this.httpService.update(URL_JSON.DOCTOR + '/releaseAppointment/' + this.displayData?.appointmentId, {}).subscribe((res: any) => {
       if (res) {
         this.dialogRef.close({type: 'release'});
@@ -93,7 +90,7 @@ export class AnamnesCheckComponent implements OnInit {
   }
 
   archive = () => {
-    this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData?.appointmentId, {}).subscribe(res => {
+    this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData?.appointmentId, {}).subscribe(() => {
       this.dialogRef.close({type: 'archive', appointmentId: this.displayData?.appointmentId});
     });
   }

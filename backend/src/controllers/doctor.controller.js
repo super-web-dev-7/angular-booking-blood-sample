@@ -117,7 +117,7 @@ exports.releaseAppointment = async (req, res) => {
             from: process.env.OWNER_EMAIL,
             content: 'Your appointment was confirmed.'
         };
-        await sendMail(mailData);
+        sendMail(mailData);
     }
 
     // Send API to Laboratory
