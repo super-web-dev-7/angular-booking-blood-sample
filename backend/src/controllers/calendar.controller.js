@@ -52,6 +52,11 @@ exports.getById = async (req, res) => {
     res.status(200).json(response);
 }
 
+exports.getByNurse = async (req, res) => {
+    const calendar = await Calendar.findOne({where: {nurse: req.params.nurseId}, raw: true});
+    res.status(200).json(calendar);
+}
+
 exports.update = async (req, res) => {
     const data = req.body;
     const id = req.params.id;

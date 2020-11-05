@@ -41,7 +41,6 @@
     <div class="col-md-4">
       <mat-form-field class="mt-4">
         <mat-label>Anrede</mat-label>
-        <!--        <input formControlName="salutation" autocomplete="off" matInput>-->
         <mat-select formControlName="salutation">
           <mat-option value="Herr">Herr</mat-option>
           <mat-option value="Frau">Frau</mat-option>
@@ -86,7 +85,6 @@
   <div class="row">
     <div class="col-md-6">
       <mat-form-field class="mt-4">
-<!--        <input formControlName="age" autocomplete="off" type="number" matInput>-->
         <mat-label>Geburtsdatum</mat-label>
         <input matInput autocomplete="off" disabled formControlName="ageView" />
         <input style="display: none;" matInput [matDatepicker]="picker" formControlName="age" autocomplete="off" (dateChange)="setDateAndAge($event)" disabled>

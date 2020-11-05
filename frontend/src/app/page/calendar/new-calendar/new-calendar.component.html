@@ -1,5 +1,5 @@
 <form [formGroup]="scheduleForm" class="p-2">
-  <h1>Kalenderressource neu</h1>
+  <h1>Kalenderressource <span style="font-weight: 100" *ngIf="!data">neu</span><span style="font-weight: 100" *ngIf="data">editieren</span></h1>
 
   <div class="d-flex flex-wrap">
     <mat-form-field class="mt-4 w-100">
@@ -107,7 +107,9 @@
     </div>
     <div class="d-flex align-items-center">
       <button class="custom-button mr-3" mat-stroked-button (click)="onCloseDialog()">Abbrechen</button>
-      <button class="custom-button primary primary-button" mat-stroked-button (click)="onSubmitForm()">Neue Kalenderressource anlegen</button>
+      <button class="custom-button primary primary-button" mat-stroked-button (click)="onSubmitForm()">
+        {{data ? 'Kalenderressource editieren' : 'Kalenderressource neu'}}
+      </button>
     </div>
   </div>
 </form>

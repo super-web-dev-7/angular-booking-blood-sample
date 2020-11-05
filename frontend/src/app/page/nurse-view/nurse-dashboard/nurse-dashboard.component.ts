@@ -97,10 +97,16 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     }, 1000);
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentByNurse/' + this.currentUser.id).subscribe((res: any) => {
       this.allAppointments = res;
-      this.workingStartHour = res[0]?.workingTimeFrom;
-      this.workingEndHour = res[0]?.workingTimeUntil;
       this.getCurrentDayAppointment();
-      this.workingHourArray = new Array(Math.ceil((this.workingEndHour - this.workingStartHour) / 2));
+    });
+
+    this.httpService.get(URL_JSON.CALENDAR + '/get_by_nurse/' + this.currentUser.id).subscribe((res: any) => {
+      console.log(res);
+      if (res) {
+          this.workingStartHour = res.working_time_from;
+          this.workingEndHour = res.working_time_until;
+          this.workingHourArray = new Array(Math.ceil(this.workingEndHour - this.workingStartHour) / 2);
+      }
     });
     this.httpService.get(URL_JSON.TEMPLATE + '/getWithQuery?receiver=1').subscribe((res: any) => {
       this.textTemplate = res;
