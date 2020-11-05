@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
 import {curveCardinal} from 'd3-shape';
+import * as moment from 'moment';
+
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 import {AuthService} from '../../../service/auth/auth.service';
@@ -143,6 +145,11 @@ export class StatisticsComponent implements OnInit {
 
   getNumberFromString = (value) => {
     return parseInt(value, 10);
+  }
+
+  getDate = time => {
+    moment.locale('de');
+    return moment(time).format('DD.MM.YYYY');
   }
 
   analysisByAgency = () => {

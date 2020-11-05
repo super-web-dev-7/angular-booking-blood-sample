@@ -36,7 +36,7 @@
     <div class="ticket-header">
       <span><b class="text-black">00</b>%</span>
       <p class="text-center position-relative">
-        12.08.2020 - 12.10.2020
+        {{fromDate ? getDate(fromDate) : ''}} - {{toDate ? getDate(toDate - 86400 * 1000 * 2) : ''}}
       </p>
       <mat-icon class="ticket-header-icon" svgIcon="custom-calendar" aria-hidden="false" aria-label="calendar"
                 matDatepickerToggleIcon></mat-icon>

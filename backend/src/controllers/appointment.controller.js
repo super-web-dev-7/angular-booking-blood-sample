@@ -459,11 +459,11 @@ const getWorkingGroupFromAdmin = async id => {
 exports.analysisByAgency = async (req, res) => {
     const userId = req.params.userId;
     const workingGroup = await getWorkingGroupFromAdmin(userId);
-    let query = `WHERE working_group_agencies.groupId = ${workingGroup.id}`;
+    let query = `WHERE working_group_agencies.groupId = ${workingGroup.id} `;
     if (req.query.from) {
         let date = new Date(parseInt(req.query.from, 10));
         date = date.toISOString();
-        query = `AND appointments.createdAt >= DATE('${date}') `;
+        query += `AND appointments.createdAt >= DATE('${date}') `;
     }
     if (req.query.to) {
         let date = new Date(parseInt(req.query.to, 10));
@@ -474,6 +474,8 @@ exports.analysisByAgency = async (req, res) => {
     if (req.query.agency && req.query.agency !== '0') {
         query += `AND appointments.agencyId=${req.query.agency} `;
     }
+
+    console.log(query);
 
     const allAgencies = await db.sequelize.query(`
         SELECT 
@@ -489,14 +491,15 @@ exports.analysisByAgency = async (req, res) => {
         GROUP BY appointments.agencyId
     `, {type: db.Sequelize.QueryTypes.SELECT});
     const totalValue = await db.sequelize.query(`
-        SELECT
-            COALESCE(SUM(appointments.adminStatus="upcoming"), 0) AS open_date_count,
-            COALESCE(SUM(appointments.adminStatus="confirmed"), 0) AS confirm_count,
-            COALESCE(SUM(appointments.adminStatus="canceled"), 0) AS cancel_count,
-            COALESCE(SUM(appointments.adminStatus="successful"), 0) AS success_count   
-        FROM appointments
-        JOIN agencies ON agencies.id=appointments.agencyId
-        JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id    
+            SELECT
+                COALESCE(SUM(appointments.adminStatus="upcoming"), 0) AS open_date_count,
+                COALESCE(SUM(appointments.adminStatus="confirmed"), 0) AS confirm_count,
+                COALESCE(SUM(appointments.adminStatus="canceled"), 0) AS cancel_count,
+                COALESCE(SUM(appointments.adminStatus="successful"), 0) AS success_count,
+                MAX(appointments.createdAt) AS max_date, MIN(appointments.createdAt) AS min_date
+            FROM appointments
+            JOIN agencies ON agencies.id=appointments.agencyId
+            JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id    
         ${query}
     `, {type: db.Sequelize.QueryTypes.SELECT});
     const response = {
