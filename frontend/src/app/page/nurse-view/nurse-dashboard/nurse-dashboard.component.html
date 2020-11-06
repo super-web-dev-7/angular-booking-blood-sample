@@ -454,6 +454,7 @@
         </div>
         <h1 class="title"><span>Hallo {{currentUser.firstName}} {{ currentUser.lastName}}</span>, Dashboard</h1>
       </div>
+
       <div class="main-body">
         <div class="calendar-container">
           <div class="calendar-body disable-user-select">
@@ -481,7 +482,7 @@
               <div class="w-100">
                 <div class="w-100" *ngFor="let appointment of appointments">
                   <div class="w-100 position-relative"
-                       *ngIf="workingStartHour / 2 + index === getDate(appointment.startTime, 'hour')">
+                       *ngIf="getInteger(workingStartHour / 2) + index === getDate(appointment.startTime, 'hour')">
                     <div class="appointment-container">
                       <div class="appointment-inner-container"
                            [ngClass]="{'border-green' : appointment.nurseStatus === 'taken', 'border-pink': appointment.nurseStatus === 'ready',
@@ -520,25 +521,37 @@
           </div>
         </div>
       </div>
+
       <mat-menu #menu="matMenu">
         <div class="d-flex flex-row">
-          <button class="panel-width" mat-menu-item (click)="openRightMenu(0)">
+          <button class="panel-width"
+                  mat-menu-item
+                  (click)="openRightMenu(0)"
+                  [disabled]="selectedAppointment && selectedAppointment.nurseStatus === 'taken'">
             <span>Patient vorbereitet</span>
           </button>
           <button class="ml-1" mat-icon-button>
             <mat-icon class="close-icon">close</mat-icon>
           </button>
         </div>
-        <button mat-menu-item (click)="openRightMenu(1)">
+        <button mat-menu-item
+                [disabled]="selectedAppointment && selectedAppointment.nurseStatus === 'taken'"
+                (click)="openRightMenu(1)">
           <span>Termin Verspätung</span>
         </button>
-        <button mat-menu-item (click)="openRightMenu(2)">
+        <button mat-menu-item
+                [disabled]="selectedAppointment && selectedAppointment.nurseStatus === 'taken'"
+                (click)="openRightMenu(2)">
           <span>Termin verschieben</span>
         </button>
-        <button mat-menu-item (click)="openRightMenu(3)">
+        <button mat-menu-item
+                [disabled]="selectedAppointment && selectedAppointment.nurseStatus === 'taken'"
+                (click)="openRightMenu(3)">
           <span>Termin wahrgenommen</span>
         </button>
-        <button mat-menu-item (click)="openRightMenu(4)">
+        <button mat-menu-item
+                [disabled]="selectedAppointment && selectedAppointment.nurseStatus === 'taken'"
+                (click)="openRightMenu(4)">
           <span>Patient nicht da</span>
         </button>
       </mat-menu>

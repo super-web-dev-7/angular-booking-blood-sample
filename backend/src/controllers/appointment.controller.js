@@ -262,7 +262,11 @@ exports.getAppointmentWithQuestionById = async (req, res) => {
 
 exports.appointmentStatusByNurse = async (req, res) => {
     const id = req.params.id;
-    await Appointment.update(req.body, {where: {id}});
+    if (req.body.nurseStatus === 'taken') {
+        await Appointment.update({...req.body, adminStatus: 'successful'}, {where: {id}});
+    } else {
+        await Appointment.update(req.body, {where: {id}});
+    }
     res.status(200).json({id, nurseStatus: req.body.nurseStatus});
 }
 

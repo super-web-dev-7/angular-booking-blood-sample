@@ -128,10 +128,13 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     const currentDayStart = new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate(), 0, 0);
     this.appointments = [];
     for (const appointment of this.allAppointments) {
+      console.log(appointment.startTime);
+      console.log(currentDayStart.getTime(), currentDayStart.getTime() + 86400 * 1000);
       if (appointment.startTime > currentDayStart.getTime() && appointment.startTime < currentDayStart.getTime() + 86400 * 1000) {
         this.appointments.push(appointment);
       }
     }
+    console.log(this.appointments);
   }
 
   getInteger = value => {
