@@ -37,6 +37,10 @@ mat-sidenav-container {
 @media only screen and (max-width: 600px) {
   .main-content-container {
     padding: 3px;
+    .subheader {
+      color: #384C61;
+      padding-left: 30px;
+    }
   }
 }
 

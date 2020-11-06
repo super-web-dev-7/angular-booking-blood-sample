@@ -1,7 +1,7 @@
 <div class="header-container" [ngClass]="{'web-height': !isMobile, 'mobile-height': isMobile} ">
   <div class="logo-container">
-    <button *ngIf="isMobile" class="ml-3" mat-icon-button aria-label="more" (click)="openSidebar()">
-      <mat-icon>menu</mat-icon>
+    <button *ngIf="isMobile" class="ml-3" mat-button aria-label="more" (click)="openSidebar()">
+      <img src="/assets/images/menu.svg" alt="menu" class="menu-icon" />
     </button>
     <img *ngIf="isMobile" src="assets/images/logo_new.png" alt="logo">
   </div>

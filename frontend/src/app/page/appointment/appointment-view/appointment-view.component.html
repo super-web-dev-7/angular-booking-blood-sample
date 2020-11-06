@@ -44,7 +44,13 @@
   </div>
   <div class="item-container">
     <div class="label">Status</div>
-    <div class="value">Anamnesebogen freigegeben</div>
+    <div class="value">
+      Anamnesebogen freigegeben
+      <span *ngIf="data.adminStatus === 'upcoming'">1</span>
+      <span *ngIf="data.adminStatus === 'confirmed'">2</span>
+      <span *ngIf="data.adminStatus === 'canceled'">3</span>
+      <span *ngIf="data.adminStatus === 'successful'">4</span>
+    </div>
   </div>
   <div class="d-flex justify-content-end mt-5">
     <button class="custom-button" mat-stroked-button (click)="close()">Abbrechen</button>
