@@ -45,7 +45,7 @@ export class OverviewComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    this.httpService.get(URL_JSON.BASE + '/sms_history/get').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.BASE + 'sms_history/get').subscribe((res: any) => {
       this.dataSource.data = res;
       this.allSMS = res;
     });
@@ -53,7 +53,7 @@ export class OverviewComponent implements OnInit {
 
   viewItem = (item) => {
     const dialogRef = this.dialog.open(ViewComponent, {
-      width: '900px',
+      width: '1100px',
       data: item
     });
 

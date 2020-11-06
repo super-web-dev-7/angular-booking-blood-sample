@@ -68,7 +68,6 @@ export class NewComponent implements OnInit {
       differentPlace: [false, Validators.required],
       customerStore: [false],
       alternative: [false],
-      sendSMS: [false, Validators.required],
       otherStreet: [null],
       otherPostalCode: [null],
       otherCity: [null]
@@ -282,7 +281,6 @@ export class NewComponent implements OnInit {
       differentPlace: this.pf.differentPlace.value,
       customerStore: this.pf.customerStore.value,
       alternative: this.pf.alternative.value,
-      sendSMS: this.pf.sendSMS.value,
       otherStreet: this.pf.otherStreet.value,
       otherCity: this.pf.otherCity.value,
       otherPostalCode: this.pf.otherPostalCode.value

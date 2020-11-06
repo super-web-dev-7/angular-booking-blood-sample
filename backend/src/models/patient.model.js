@@ -30,9 +30,6 @@ module.exports = (sequelize, Sequelize) => {
         customerStore: {
             type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false
         },
-        sendSMS: {
-            type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false
-        },
         otherStreet: {
             type: Sequelize.STRING
         },

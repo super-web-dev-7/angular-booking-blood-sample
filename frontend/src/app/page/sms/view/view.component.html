@@ -6,19 +6,19 @@
         <div class="round">
           <mat-icon>stop_circle</mat-icon>
         </div>
-        <div>Automatisch</div>
+        <div>{{data.status ? 'Manuell' : 'Automatisch'}}</div>
       </div>
       <div class="d-flex avatar green">
         <div class="round">
           <mat-icon>group</mat-icon>
         </div>
-        <div>Empfänger</div>
+        <div>{{data.firstName}} {{data.lastName}} <br> {{data.phoneNumber}}</div>
       </div>
       <div class="d-flex avatar yellow">
         <div class="round">
           <mat-icon svgIcon="time-icon" aria-hidden="false" aria-label="time"></mat-icon>
         </div>
-        <div>Empfänger</div>
+        <div>{{getDate(data.createdAt)}}</div>
       </div>
     </div>
     <div class="col-9 pt-3">

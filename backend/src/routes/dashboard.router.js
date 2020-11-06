@@ -1,6 +1,5 @@
 import {Router} from 'express';
 import * as dashboardController from '../controllers/dashboard.controller';
-import permit from "../middlewares/roleMiddleware";
 
 const router = Router();
 

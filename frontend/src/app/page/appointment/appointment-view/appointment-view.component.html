@@ -1,5 +1,5 @@
 <div class="p-2 position-relative">
-  <h1>Termin neu</h1>
+  <h1>Termin ansehen</h1>
   <div class="item-container">
     <div class="label">PLZ</div>
     <div class="value">{{data.patient.plz}}</div>
@@ -19,14 +19,20 @@
   <div class="item-container">
     <div class="label">Patient</div>
     <div class="value">{{data.user.firstName}} {{data.user.lastName}}, {{data.patient.street}}, {{data.patient.plz}}, Berlin</div>
-<!--    <div class="value">Maria Zimmermann, Rosenweg 47, 10709 Berlin</div>-->
     <button (click)="isShowPatient = !isShowPatient; isShowSchedule = false;" *ngIf="!isShowPatient" mat-stroked-button class="add-button detail-patient white-blue">
       <mat-icon>person</mat-icon>
     </button>
   </div>
   <div class="item-container">
     <div class="label">Anamnesebogen</div>
-    <div class="value">namnese-checkup-maria-zimmermann.pdf</div>
+    <div class="value d-flex justify-content-between" style="width: calc(100% - 120px);">
+      <span>anamnese-checkup-{{data.user.firstName}}-{{data.user.lastName}}.pdf</span>
+      <mat-icon class="search-icon" (click)="showMedicalQuestion()">search</mat-icon>
+<!--      <button mat-icon-button aria-label="more">-->
+<!--        -->
+<!--      </button>-->
+    </div>
+
   </div>
   <div class="item-container">
     <div class="label">Schwester</div>
@@ -42,7 +48,6 @@
   </div>
   <div class="d-flex justify-content-end mt-5">
     <button class="custom-button" mat-stroked-button (click)="close()">Abbrechen</button>
-    <button class="custom-button primary primary-button ml-3" mat-stroked-button (click)="onSubmit()">Neuen Termin anlegen</button>
   </div>
 
   <div class="detail-patient-popup" *ngIf="isShowPatient">
@@ -85,14 +90,6 @@
             <div *ngIf="data.patient.customerStore" class="check-mark"></div>
           </div>
           <span>Kunde hinterlegt Zahlungsmittel</span>
-        </div>
-      </div>
-      <div class="d-flex" style="padding-bottom: 20px;">
-        <div class="d-flex align-items-center">
-          <div class="checkbox-container">
-            <div *ngIf="data.patient.sendSMS" class="check-mark green-mark"></div>
-          </div>
-          <span>Code via SMS senden</span>
         </div>
       </div>
     </div>

@@ -14,6 +14,7 @@ import {MaterialModule} from '../../material/material.module';
 import {DatetimePickerComponent} from '../../components/datetime-picker/datetime-picker.component';
 import {BarChartComponent} from '../../components/bar-chart/bar-chart.component';
 import { AppointmentViewComponent } from './appointment-view/appointment-view.component';
+import { ModalMedicalComponent } from './appointment-view/modal-medical/modal-medical.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { AppointmentViewComponent } from './appointment-view/appointment-view.co
         StatisticsComponent,
         DatetimePickerComponent,
         BarChartComponent,
-        AppointmentViewComponent
+        AppointmentViewComponent,
+        ModalMedicalComponent
     ],
     exports: [
         DatetimePickerComponent

@@ -271,15 +271,6 @@
             <mat-checkbox *ngIf="false" formControlName="alternative">Alternatives Zahlungsmittel</mat-checkbox>
           </div>
         </div>
-        <div class="mt-3 ml-3">
-          <div class="width-50 ml-3 d-flex align-items-center cursor-pointer" (click)="changeCheckboxValue('sendSMS')">
-            <div class="checkbox-container">
-              <div *ngIf="pf.sendSMS.value" class="check-mark"></div>
-            </div>
-            <span>Code via SMS senden</span>
-            <mat-checkbox *ngIf="false" formControlName="sendSMS">Code via SMS senden</mat-checkbox>
-          </div>
-        </div>
         <div class="mt-15 ml-3" *ngIf="paymentSelectionError">
           <p class="p-14" style="color: red;margin-left: 20px">Please select at least one payment method</p>
         </div>

@@ -1,5 +1,5 @@
 import db from '../models';
-import Sequelize from "sequelize";
+import Sequelize from 'sequelize';
 
 const Agency = db.agency;
 const User = db.user;

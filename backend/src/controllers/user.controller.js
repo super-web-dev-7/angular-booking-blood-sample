@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
 import db from '../models';
-import Sequelize from "sequelize";
-import {sendSMS} from "../helper/sms";
-import jwt from "jsonwebtoken";
-import config from "../config/config";
+import Sequelize from 'sequelize';
+import {sendSMS} from '../helper/sms';
+import jwt from 'jsonwebtoken/index';
+import config from '../config/config';
 
 const User = db.user;
 const WorkingGroup = db.workingGroup;
@@ -63,7 +63,6 @@ exports.createPatient = (req, res) => {
                 differentPlace: req.body.differentPlace,
                 customerStore: req.body.customerStore,
                 alternative: req.body.alternative,
-                sendSMS: req.body.sendSMS,
                 otherStreet: req.body.otherStreet,
                 otherCity: req.body.otherCity,
                 otherPostalCode: req.body.otherPostalCode
@@ -236,6 +235,7 @@ exports.updateProfile = async (req, res) => {
         });
     } else {
         const code = generateDigitalCode(6);
+        console.log(code);
         const smsData = {
             subject: 'Verification Code',
             receiver: id,
@@ -317,7 +317,7 @@ exports.updatePatientById = async (req, res) => {
             password: body.password,
             phoneNumber: body.phoneNumber
         };
-        User.update(data, {returning: true, where: {id}}).then((rowsUpdated) => {
+        User.update(data, {returning: true, where: {id}}).then(() => {
             const patientData = {
                 salutation: body.salutation,
                 street: body.street,
@@ -328,7 +328,6 @@ exports.updatePatientById = async (req, res) => {
                 differentPlace: body.differentPlace,
                 customerStore: body.customerStore,
                 alternative: body.alternative,
-                sendSMS: body.sendSMS,
                 otherStreet: body.otherStreet,
                 otherCity: body.otherCity,
                 otherPostalCode: body.otherPostalCode

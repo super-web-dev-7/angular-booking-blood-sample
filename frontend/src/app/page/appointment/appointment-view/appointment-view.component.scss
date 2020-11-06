@@ -13,6 +13,11 @@
 
   .value {
     color: #A9BBC9;
+
+    .search-icon {
+      cursor: pointer;
+      user-select: none;
+    }
   }
 }
 

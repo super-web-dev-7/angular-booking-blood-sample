@@ -1,5 +1,5 @@
 import config from '../config/config';
-import Sequelize from "sequelize";
+import Sequelize from 'sequelize';
 import user from './user.model';
 import calendar from './calendar.model';
 import district from './district.model';

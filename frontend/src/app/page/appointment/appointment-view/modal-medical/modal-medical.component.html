@@ -1,0 +1,13 @@
+<div *ngIf="data">
+  <ul>
+    <li class="p-272140">{{data.smoking ? 'Raucher' : 'Nicht-Raucher'}}</li>
+    <li class="p-272140">{{data.alcohol ? 'Trinkt Alkohol regelmäßig' : 'Trinkt Alkohol unregelmäßig bis gar nicht'}}</li>
+    <li class="p-272140">{{data.takeMedication ? 'Nimmt Medikamente: gegen Diabetes' : 'Nimmt nicht regelmäßig Medikamente ein'}}</li>
+    <li class="p-272140">{{data.heartAttack ? 'Es sind Herzinfarkte / Schlaganfälle in der Familie bekannt' : 'keine Herzinfarkte / Schlaganfälle in der Familie bekannt'}}</li>
+    <li class="p-272140">{{data.previousIllness ? 'Es sind Vorerkrankungen bekannt' : 'Keine Vorerkrankungen bekannt'}}</li>
+  </ul>
+</div>
+
+<div *ngIf="!data">
+  No question
+</div>

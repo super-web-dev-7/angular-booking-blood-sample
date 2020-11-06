@@ -1,6 +1,6 @@
 import db from '../models';
-import {sendMail} from "../helper/email";
-import {sendSMS} from "../helper/sms";
+import {sendMail} from '../helper/email';
+import {sendSMS} from '../helper/sms';
 
 const MedicalQuestion = db.medicalQuestion;
 const Appointment = db.appointment;

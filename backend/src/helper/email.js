@@ -1,4 +1,4 @@
-import * as nodeMailer from "nodemailer";
+import * as nodeMailer from 'nodemailer';
 
 /*
 email_data = {

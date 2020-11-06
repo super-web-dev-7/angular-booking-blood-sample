@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import * as workingGroupController from '../controllers/working-group.controller';
-import permit from "../middlewares/roleMiddleware";
+import permit from '../middlewares/roleMiddleware';
 
 const router = Router();
 

@@ -6,7 +6,6 @@ import {sendSMS} from '../helper/sms';
 
 const User = db.user;
 const VerificationCode = db.verificationCode;
-const Op = db.Sequelize.Op;
 
 const saltRounds = 10;
 const sessionTimeByRole = {
@@ -15,6 +14,20 @@ const sessionTimeByRole = {
     'Nurse': 480,
     'Doctor': 30,
     'Patient': 30
+}
+
+const getWorkingGroupFromAdmin = async id => {
+    const userId = parseInt(id);
+    const workingGroups = await db.workingGroup.findAll({raw: true});
+    let value;
+    for (const workingGroup of workingGroups) {
+        const admins = JSON.parse(workingGroup.admin);
+        if (admins.includes(userId)) {
+            value = workingGroup;
+            break;
+        }
+    }
+    return value;
 }
 
 exports.register = (req, res) => {
@@ -57,6 +70,25 @@ exports.login = async (req, res) => {
                 sendSMS(smsData);
                 VerificationCode.create({email: user.email.toLowerCase(), code});
                 res.json({role: 'Patient', sms: 'sms sent'});
+            } else if (user.role === 'AG-Admin') {
+                const workingGroup = await getWorkingGroupFromAdmin(user.id);
+                if (workingGroup) {
+                    const token = jwt.sign({
+                        id: user.id,
+                        email: user.email,
+                        role: user.role,
+                        firstName: user.firstName,
+                        lastName: user.lastName
+                    }, config.jwtSecret, {
+                        // expiresIn: 35
+                        expiresIn: sessionTimeByRole[user.role] * 60
+                    });
+                    res.json({token});
+                } else {
+                    res.status(400).send({
+                        message: 'This User is not approved.'
+                    })
+                }
             } else {
                 const token = jwt.sign({
                     id: user.id,

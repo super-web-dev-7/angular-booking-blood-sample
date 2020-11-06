@@ -2,8 +2,9 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import * as moment from 'moment';
+
 import {HttpService} from '../../../service/http/http.service';
-import {URL_JSON} from '../../../utils/url_json';
 
 @Component({
   selector: 'app-view',
@@ -28,10 +29,15 @@ export class ViewComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getDate = time => {
+    return moment(time).format('DD.MM.YYYY HH:mm');
+  }
+
   sendManual = () => {
-    this.httpService.post(URL_JSON.BASE + '/sendSMS', this.data).subscribe(() => {
-      this.dialogRef.close();
-    });
+    this.close();
+    // this.httpService.post(URL_JSON.BASE + '/sendSMS', this.data).subscribe(() => {
+    //   this.dialogRef.close();
+    // });
   }
 
   close = () => {

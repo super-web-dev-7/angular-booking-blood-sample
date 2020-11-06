@@ -104,7 +104,7 @@
     </div>
   </div>
   <div class="row mt-4">
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="d-flex" (click)="changeCheckboxValue('differentPlace')">
         <div class="d-flex align-items-center cursor-pointer">
           <div class="checkbox-container">
@@ -115,7 +115,7 @@
       </div>
       <mat-checkbox *ngIf="false" formControlName="differentPlace">Abweichender Abnahmeort</mat-checkbox>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="d-flex" (click)="changeCheckboxValue('customerStore')">
         <div class="d-flex align-items-center cursor-pointer">
           <div class="checkbox-container">
@@ -126,7 +126,7 @@
       </div>
       <mat-checkbox *ngIf="false" formControlName="customerStore">Kunde hinterlegt Zahlungsmittel</mat-checkbox>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="d-flex" (click)="changeCheckboxValue('alternative')">
         <div class="d-flex align-items-center cursor-pointer">
           <div class="checkbox-container">
@@ -136,17 +136,6 @@
         </div>
       </div>
       <mat-checkbox *ngIf="false" formControlName="alternative">Alternatives Zahlungsmittel</mat-checkbox>
-    </div>
-    <div class="col-md-3">
-      <div class="d-flex" (click)="changeCheckboxValue('sendSMS')">
-        <div class="d-flex align-items-center cursor-pointer">
-          <div class="checkbox-container">
-            <div *ngIf="f.sendSMS.value" class="check-mark"></div>
-          </div>
-          <span>Code via SMS senden</span>
-        </div>
-      </div>
-      <mat-checkbox *ngIf="false" formControlName="sendSMS">Code via SMS senden</mat-checkbox>
     </div>
   </div>
   <div [ngClass]="{'justify-content-end mt-5': !f.differentPlace.value, 'justify-content-between mt-3': f.differentPlace.value}" class=" d-flex" >

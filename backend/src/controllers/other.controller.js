@@ -106,9 +106,11 @@ exports.sendSMS = async (req, res) => {
 
 exports.getSmsHistory = async (req, res) => {
     const response = await db.sequelize.query(`
-        SELECT sms.id, sms.subject, sms.phoneNumber, sms.status, sms.content, sms.createdAt, users.firstName, users.lastName
+        SELECT sms.id, sms.subject, sms.phoneNumber, sms.status, sms.content, sms.createdAt,
+            users.firstName, users.lastName
         FROM sms_histories sms
         JOIN users ON sms.receiver=users.id
+        ORDER BY sms.createdAt DESC
     `, {type: db.Sequelize.QueryTypes.SELECT});
     res.json(response);
 }

@@ -1,5 +1,5 @@
 import db from '../models';
-import Sequelize from "sequelize";
+import Sequelize from 'sequelize';
 
 const Appointment = db.appointment;
 const Package = db.package;

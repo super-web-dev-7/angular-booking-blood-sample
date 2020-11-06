@@ -59,7 +59,6 @@ export class NewPatientComponent implements OnInit {
       differentPlace: [this.data ? this.data?.differentPlace : false, Validators.required],
       customerStore: [this.data ? this.data?.customerStore : false],
       alternative: [this.data ? this.data?.alternative : false],
-      sendSMS: [this.data ? this.data?.sendSMS : false, Validators.required],
       otherStreet: [this.data?.otherStreet],
       otherPostalCode: [this.data?.otherPostalCode],
       otherCity: [this.data?.otherCity]
@@ -173,7 +172,6 @@ export class NewPatientComponent implements OnInit {
       differentPlace: this.f.differentPlace.value,
       customerStore: this.f.customerStore.value,
       alternative: this.f.alternative.value,
-      sendSMS: this.f.sendSMS.value,
       otherStreet: this.f.otherStreet.value,
       otherCity: this.f.otherCity.value,
       otherPostalCode: this.f.otherPostalCode.value
