@@ -40,9 +40,9 @@ export class HttpService {
     return this.http.get(URL_JSON.ZIPCODE + '/check_postal_code_appointment/' + code);
   }
 
-  getPostalCodeByName = (name) => {
-    return this.http.get(URL_JSON.ZIPCODE + '/getPostalCodeByName?name=' + name);
-  }
+  // getPostalCodeByName = (name) => {
+  //   return this.http.get(URL_JSON.ZIPCODE + '/getPostalCodeByName?name=' + name);
+  // }
 
   // working-group
 

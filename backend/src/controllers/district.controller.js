@@ -41,6 +41,34 @@ exports.getUnassigned = async (req, res) => {
     res.status(200).json(unassignedDistrict);
 }
 
+exports.getAvailablePostalCode = async (req, res) => {
+    const adminId = parseInt(req.params.adminId);
+    console.log(adminId);
+    const response = [];
+    const workingGroups = await db.workingGroup.findAll({raw: true});
+    let value;
+    for (const workingGroup of workingGroups) {
+        const admins = JSON.parse(workingGroup.admin);
+        if (admins.includes(adminId)) {
+            value = workingGroup;
+            break;
+        }
+    }
+    console.log(value)
+    if (value) {
+        const calendar = await Calendar.findOne({where: {id: value.calendar_id}, raw: true});
+        const districtIds = JSON.parse(calendar.district_id);
+        for (const districtId of districtIds) {
+            const district = await District.findOne({where: {id: districtId}, raw: true});
+            const districtModels = await DistrictModel.findAll({where: {city: district.city, district: district.district}});
+            for (const districtModel of districtModels) {
+                response.push(districtModel);
+            }
+        }
+    }
+    res.status(200).json(response);
+}
+
 exports.delete = async (req, res) => {
     const allCalendar = await Calendar.findAll({where: {}});
     for (const calendar of allCalendar) {
@@ -51,7 +79,7 @@ exports.delete = async (req, res) => {
         }
     }
 
-    District.destroy({where: {id: req.params.id}}).then(result => {
+    District.destroy({where: {id: req.params.id}}).then(() => {
         res.status(204).json({});
     })
 }

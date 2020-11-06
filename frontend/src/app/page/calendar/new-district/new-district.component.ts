@@ -58,12 +58,12 @@ export class NewDistrictComponent implements OnInit {
     return this.districtForm.controls;
   }
 
-  changeDropdownList = () => {
-    if (this.f.name.value) {
-      this.httpService.getPostalCodeByName(this.f.name.value).subscribe((res: any) => {
-      });
-    }
-  }
+  // changeDropdownList = () => {
+  //   if (this.f.name.value) {
+  //     this.httpService.getPostalCodeByName(this.f.name.value).subscribe((res: any) => {
+  //     });
+  //   }
+  // }
 
   onSubmit = () => {
     if (this.districtForm.invalid) {

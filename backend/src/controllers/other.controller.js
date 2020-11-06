@@ -94,9 +94,9 @@ exports.checkPostalCodeForAppointment = async (req, res) => {
     }
 }
 
-exports.getPostalCodeByName = async () => {
-
-}
+// exports.getPostalCodeByName = async () => {
+//
+// }
 
 exports.sendSMS = async (req, res) => {
     const data = req.body;

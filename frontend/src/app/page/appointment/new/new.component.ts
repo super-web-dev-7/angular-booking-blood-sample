@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import {HttpService} from '../../../service/http/http.service';
 import {URL_JSON} from '../../../utils/url_json';
 import {MustMatch} from '../../../shared/confirm-password.validator';
+import {AuthService} from '../../../service/auth/auth.service';
 
 @Component({
   selector: 'app-new',
@@ -30,11 +31,14 @@ export class NewComponent implements OnInit {
   allPatient = [];
   allPatient$ = [];
   selectedPTime = null;
-  allAppointment = [];
+  // allAppointment = [];
   paymentSelectionError = false;
+  currentUser: any;
+  availableModel = [];
   constructor(
     public formBuilder: FormBuilder,
     public httpService: HttpService,
+    public authService: AuthService,
     public dialogRef: MatDialogRef<any>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     iconRegistry: MatIconRegistry,
@@ -47,6 +51,7 @@ export class NewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentUser = this.authService.currentUserValue;
     this.appointmentForm = this.formBuilder.group({
       name: [this.data?.name, Validators.required],
       patient: [null, Validators.required]
@@ -74,7 +79,7 @@ export class NewComponent implements OnInit {
     }, {
       validators: MustMatch('password', 'confirmPassword')
     });
-    this.httpService.get(URL_JSON.AGENCY + '/get').subscribe((res: any) => {
+    this.httpService.get(URL_JSON.AGENCY + '/get_by_admin/' + this.currentUser.id).subscribe((res: any) => {
       this.agencies = res;
     });
     this.httpService.get(URL_JSON.PACKAGE + '/getWithQuery?status=Public&status=Intern').subscribe((res: any) => {
@@ -84,8 +89,12 @@ export class NewComponent implements OnInit {
       this.allPatient = res;
       this.allPatient$ = res;
     });
-    this.httpService.get(URL_JSON.APPOINTMENT + '/get').subscribe((res: any) => {
-      this.allAppointment = res;
+    // this.httpService.get(URL_JSON.APPOINTMENT + '/get').subscribe((res: any) => {
+    //   this.allAppointment = res;
+    // });
+    this.httpService.get(URL_JSON.DISTRICT + '/get_available_postal_code/' + this.currentUser.id).subscribe((res: any) => {
+      console.log(res);
+      this.availableModel = res;
     });
     this.selectedPackage = null;
     this.selectedAgency = null;
@@ -132,13 +141,20 @@ export class NewComponent implements OnInit {
       });
     }
     if (type === 'appointment') {
-      this.httpService.checkPostalCode(this.f.name.value).subscribe((res: any) => {
-        if (!res || res?.city !== 'Berlin') {
-          this.f.name.setErrors(Validators.required);
-        } else {
-          this.f.name.setErrors(null);
-        }
-      });
+      const index = this.availableModel.findIndex(item => item.zipcode === parseInt(this.f.name.value, 10));
+      console.log(index, this.f.name.value);
+      if (index > -1) {
+        this.f.name.setErrors(null);
+      } else {
+        this.f.name.setErrors(Validators.required);
+      }
+      // this.httpService.checkPostalCode(this.f.name.value).subscribe((res: any) => {
+      //   if (!res || res?.city !== 'Berlin') {
+      //     this.f.name.setErrors(Validators.required);
+      //   } else {
+      //     this.f.name.setErrors(null);
+      //   }
+      // });
     }
   }
 

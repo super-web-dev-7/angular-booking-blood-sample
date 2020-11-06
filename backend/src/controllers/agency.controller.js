@@ -20,11 +20,27 @@ exports.create = (req, res) => {
 };
 
 exports.get = async (req, res) => {
+    let query = '';
+    if (req.params.adminId) {
+        const userId = parseInt(req.params.adminId);
+        const workingGroups = await db.workingGroup.findAll({raw: true});
+        let value;
+        for (const workingGroup of workingGroups) {
+            const admins = JSON.parse(workingGroup.admin);
+            if (admins.includes(userId)) {
+                value = workingGroup;
+                break;
+            }
+        }
+        if (value) {
+            query = `WHERE working_groups.id = ${value.id}`;
+        }
+    }
     const allAgency = await db.sequelize.query(`
     SELECT agencies.id AS id, agencies.name AS name, agencies.doctors_id AS doctors_id, working_groups.calendar_id AS calendar_id
     FROM agencies 
     JOIN working_group_agencies ON working_group_agencies.agencyId=agencies.id 
-    JOIN working_groups ON working_group_agencies.groupId=working_groups.id`, {type: Sequelize.QueryTypes.SELECT, raw: true, nest: true});
+    JOIN working_groups ON working_group_agencies.groupId=working_groups.id ${query}`, {type: Sequelize.QueryTypes.SELECT, raw: true, nest: true});
     const response = [];
     for (const agency of allAgency) {
         let doctors;
