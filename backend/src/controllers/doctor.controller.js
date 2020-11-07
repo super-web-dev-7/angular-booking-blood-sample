@@ -36,7 +36,7 @@ exports.sendMessageToPatient = async (req, res) => {
         await sendMail(mailData);
     }
     // }
-    res.status(201).json({message: 'Email sent'});
+    res.status(200).json({message: 'Email sent'});
 }
 
 exports.getContactHistory = async (req, res) => {
@@ -115,7 +115,7 @@ exports.releaseAppointment = async (req, res) => {
             email: user[0].email,
             subject: 'Appointment confirm',
             from: process.env.OWNER_EMAIL,
-            content: 'Your appointment was confirmed.'
+            content: 'Your appointment was approved.'
         };
         sendMail(mailData);
     }

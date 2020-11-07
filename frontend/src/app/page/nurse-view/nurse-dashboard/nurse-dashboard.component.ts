@@ -384,8 +384,9 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
       phoneNumber: this.customNumber ? this.customNumber : this.defaultNumber,
       content: this.customText
     };
-    this.httpService.post(URL_JSON.BASE + '/nurse/appointment_not_there', {emailData, smsData}).subscribe(() => {
-      // this.close();
+    this.httpService.post(URL_JSON.BASE + '/nurse/appointment_not_there',
+      {emailData, smsData, appointmentId: this.selectedAppointment.id})
+      .subscribe(() => {
       this.isSubmit = true;
       this.isLoading = false;
     });

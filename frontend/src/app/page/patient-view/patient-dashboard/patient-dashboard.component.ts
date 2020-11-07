@@ -145,6 +145,7 @@ export class PatientDashboardComponent implements OnInit {
         data: {appointmentId: this.selectedAppointment.id}
       });
       dialogRef.afterClosed().subscribe(() => {
+        this.initPageData();
       });
     }
   }

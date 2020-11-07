@@ -27,6 +27,7 @@ import appointmentResult from './appointment_result.model';
 import verificationCode from './verification_code.model';
 import callbackAnswer from './callback_answer.model';
 import appointmentExtraInformation from './appointment_extra_information.model';
+import medicalQuestionReminder from './medical_question_reminder.model';
 
 
 const sequelize = new Sequelize(config.mysql.database, config.mysql.user, config.mysql.password, {
@@ -67,6 +68,7 @@ db.appointmentResult = appointmentResult(sequelize, Sequelize);
 db.verificationCode = verificationCode(sequelize, Sequelize);
 db.callbackAnswer = callbackAnswer(sequelize, Sequelize);
 db.appointmentExtraInformation = appointmentExtraInformation(sequelize, Sequelize);
+db.medicalQuestionReminder = medicalQuestionReminder(sequelize, Sequelize);
 
 // Relations
 db.patient.belongsTo(db.user);

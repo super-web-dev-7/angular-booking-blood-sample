@@ -159,10 +159,85 @@ exports.appointmentTaken = async (req, res) => {
 exports.appointmentNotThere = async (req, res) => {
     const emailData = req.body.emailData;
     const smsData = req.body.smsData;
-    const emailResult = await sendMail(emailData);
-    const smsResult = await sendSMS(smsData);
-    res.status(200).json({emailResult, smsResult});
+    sendMail(emailData);
+    sendSMS(smsData);
+    await Appointment.update({adminStatus: 'canceled'}, {where: {id: req.body.appointmentId}});
+    res.status(200).json({message: 'Appointment canceled'});
 }
+
+cron.schedule('* * * * *', async function () {
+    console.log(new Date());
+    const appointmentsAfter2H = await db.sequelize.query(`
+        SELECT a.*,
+            patient.firstName AS patientFirstName, patient.lastName AS patientLastName,
+            working_groups.admin AS admins,
+            packages.name AS packageName
+        FROM appointments AS a
+        JOIN users AS patient ON patient.id=a.userId
+        JOIN working_group_agencies ON working_group_agencies.agencyId=a.agencyId
+        JOIN working_groups ON working_groups.id=working_group_agencies.groupId
+        JOIN packages ON packages.id=a.packageId
+        WHERE a.anamnesisStatus="open" AND 
+            a.nurseStatus="initial" AND 
+            a.adminStatus="upcoming" AND 
+            a.createdAt <= DATE_SUB(NOW(), INTERVAL 2 HOUR) AND 
+            (a.id NOT IN (
+                SELECT appointmentId FROM medical_question_reminders AS m WHERE m.type = '2h'
+            ))
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    for (const appointment of appointmentsAfter2H) {
+        console.log('id >>>>>>>>>>>> ', appointment.id)
+        const adminIds = JSON.parse(appointment.admins);
+        db.medicalQuestionReminder.create({appointmentId: appointment.id, type: '2h'});
+        for (const adminId of adminIds) {
+            const admin = await User.findByPk(adminId, {raw: true});
+            const data = {
+                email: admin.email,
+                subject: '2H',
+                content: `Appointment -> id: ${appointment.id}, packageName: ${appointment.packageName}, patient name: ${appointment.patientFirstName} ${appointment.patientLastName}`
+            };
+            console.log('2h email >>>>>>>>>>>>>> ', admin.email);
+            sendMail(data);
+        }
+    }
+
+    const appointmentsAfter4H = await db.sequelize.query(`
+        SELECT a.*,
+            patient.firstName AS patientFirstName, patient.lastName AS patientLastName,
+            working_groups.admin AS admins,
+            packages.name AS packageName
+        FROM appointments AS a
+        JOIN users AS patient ON patient.id=a.userId
+        JOIN working_group_agencies ON working_group_agencies.agencyId=a.agencyId
+        JOIN working_groups ON working_groups.id=working_group_agencies.groupId
+        JOIN packages ON packages.id=a.packageId
+        WHERE a.anamnesisStatus="open" AND 
+            a.nurseStatus="initial" AND 
+            a.adminStatus="upcoming" AND 
+            a.createdAt <= DATE_SUB(NOW(), INTERVAL 4 HOUR) AND 
+            (a.id NOT IN (
+                SELECT appointmentId FROM medical_question_reminders AS m WHERE m.type = '4h'
+            ))
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    console.log('**************** After 4h ****************');
+    for (const appointment of appointmentsAfter4H) {
+        console.log('id >>>>>>>>>>>> ', appointment.id)
+        const adminIds = JSON.parse(appointment.admins);
+        db.medicalQuestionReminder.create({appointmentId: appointment.id, type: '4h'});
+        for (const adminId of adminIds) {
+            const admin = await User.findByPk(adminId, {raw: true});
+            const data = {
+                email: admin.email,
+                subject: '4H',
+                content: `Appointment -> id: ${appointment.id}, packageName: ${appointment.packageName}, patient name: ${appointment.patientFirstName} ${appointment.patientLastName}`
+            };
+            console.log('4h email >>>>>>>>>>>>>> ', admin.email);
+            sendMail(data);
+        }
+    }
+
+    // const appointmentsAfter24H = await db.sequelize.query(``);
+})
 
 cron.schedule('* * * * *', async function () {
     // console.log('----------------Running cron jobs ----------------');

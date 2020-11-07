@@ -85,7 +85,6 @@ export class MoveAppointmentComponent implements OnInit {
   }
 
   submit = () => {
-    console.log(this.selectedPTime);
     if (this.selectedPTime === null) {
       return;
     }

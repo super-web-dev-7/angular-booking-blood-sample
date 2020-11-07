@@ -119,10 +119,12 @@
     </div>
     <div class="main-container-div" *ngIf="success">
       <div class="success-message">
-        <div class="green-dot"></div>
-        <p>Ihr Termin wurde verschoben. <br/>
-          Neu: 02.10.2020 12:00 - 13:15
-        </p>
+        <div class="d-flex">
+          <div class="green-dot"></div>
+          <p>Ihr Termin wurde verschoben. <br/>
+            Neu: {{getTimeDuration(this.allTimes[this.selectedPTime], displayData.duration)}}
+          </p>
+        </div>
         <div class="determine-button-group">
           <button
             type="button"

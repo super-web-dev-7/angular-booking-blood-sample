@@ -73,7 +73,7 @@
           </mat-expansion-panel-header>
           <div class="d-flex flex-wrap w-100">
             <mat-form-field class="mt-4 w-100">
-              <mat-label>{{f.assign.value ? '' : 'Registrierung durch Patient'}}</mat-label>
+              <mat-label>{{f.assign.value ? '' : 'Textvorlage auswählen'}}</mat-label>
               <mat-select formControlName="assign">
                 <mat-option *ngFor="let action of actions" [value]="action.name">
                   {{action.name}}

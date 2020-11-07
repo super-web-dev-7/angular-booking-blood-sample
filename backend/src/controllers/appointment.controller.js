@@ -140,7 +140,7 @@ exports.getAppointmentByNurse = async (req, res) => {
         JOIN users ON appointments.userId=users.id
         JOIN patients ON patients.user_id=users.id
         JOIN packages ON appointments.packageId=packages.id
-        WHERE calendars.nurse=${req.params.id} AND appointments.nurseStatus!="initial"
+        WHERE calendars.nurse=${req.params.id} AND appointments.nurseStatus!="initial" AND appointments.adminStatus!="canceled"
     `, {type: Sequelize.QueryTypes.SELECT});
     res.status(200).json(allAppointment);
 }
