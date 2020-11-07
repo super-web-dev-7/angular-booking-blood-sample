@@ -1,4 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import * as moment from 'moment';
@@ -6,7 +7,6 @@ import * as moment from 'moment';
 import {SharedService} from '../../../../../service/shared/shared.service';
 import {HttpService} from '../../../../../service/http/http.service';
 import {URL_JSON} from '../../../../../utils/url_json';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-anamnes-check',
@@ -33,7 +33,7 @@ export class AnamnesCheckComponent implements OnInit {
 
   ngOnInit(): void {
     this.messageForm = this.formBuilder.group({
-      message: [null, Validators.required]
+      message: [null]
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithQuestionById/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res[0];
@@ -55,9 +55,6 @@ export class AnamnesCheckComponent implements OnInit {
   }
 
   sendMessage = () => {
-    if (this.messageForm.invalid) {
-      return;
-    }
     const data = {
       questionId: this.displayData.id,
       answer: this.f.message.value,

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
@@ -28,7 +28,7 @@ export class LeftMessagePopupComponent implements OnInit {
 
   ngOnInit(): void {
     this.messageForm = this.formBuilder.group({
-      message: [null, Validators.required],
+      message: [null],
     });
   }
 
@@ -41,9 +41,6 @@ export class LeftMessagePopupComponent implements OnInit {
   }
 
   sendMessage = () => {
-    if (this.messageForm.invalid) {
-      return;
-    }
     if (this.callbackInfo.question) {
       const data = {
         questionId: this.callbackInfo.questionId,

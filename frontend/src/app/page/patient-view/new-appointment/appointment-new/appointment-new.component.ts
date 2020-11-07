@@ -39,7 +39,7 @@ export class AppointmentNewComponent implements OnInit {
       plz: [this.data?.plz, Validators.required],
       ort: [this.data?.city, Validators.required],
       payment: [null, Validators.required],
-      message: [null, Validators.required]
+      message: [null]
     });
     this.httpService.get(URL_JSON.PACKAGE + '/getWithQuery?status=Public').subscribe((res: any) => {
       this.displayData = res;

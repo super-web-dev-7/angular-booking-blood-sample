@@ -54,7 +54,6 @@ exports.getAvailablePostalCode = async (req, res) => {
             break;
         }
     }
-    console.log(value)
     if (value) {
         const calendar = await Calendar.findOne({where: {id: value.calendar_id}, raw: true});
         const districtIds = JSON.parse(calendar.district_id);
@@ -68,6 +67,10 @@ exports.getAvailablePostalCode = async (req, res) => {
     }
     res.status(200).json(response);
 }
+//
+// exports.getAvailablePostalCodeByNurse = async (req, res) => {
+//
+// }
 
 exports.delete = async (req, res) => {
     const allCalendar = await Calendar.findAll({where: {}});

@@ -1,9 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {HttpService} from '../../../../service/http/http.service';
 import * as moment from 'moment';
+
 import {URL_JSON} from '../../../../utils/url_json';
+import {HttpService} from '../../../../service/http/http.service';
 import {AuthService} from '../../../../service/auth/auth.service';
 
 @Component({
@@ -19,6 +20,7 @@ export class MoveAppointmentComponent implements OnInit {
   currentUser: any;
   addressData = null;
   success = false;
+  availableZipCode = [];
 
   constructor(
     public formBuilder: FormBuilder,
@@ -42,6 +44,9 @@ export class MoveAppointmentComponent implements OnInit {
         this.httpService.get(URL_JSON.BASE + 'booking_time/agency/' + this.displayData.agencyId).subscribe((resp: any) => {
           this.allTimes = resp;
         });
+        this.httpService.get(URL_JSON.ZIPCODE + '/available_zipcode_by_agency/' + this.displayData.agencyId).subscribe((zipcode: any) => {
+          this.availableZipCode = zipcode;
+        });
       }
     });
   }
@@ -58,15 +63,16 @@ export class MoveAppointmentComponent implements OnInit {
   }
 
   checkPostalCode = () => {
-    this.httpService.checkPostalCode(this.f.plz.value).subscribe((res: any) => {
-      if (!res) {
-        this.f.plz.setErrors(Validators.required);
-      } else {
-        this.f.plz.setErrors(null);
-        this.f.ort.setValue(res.city);
-        this.f.street.setValue(res.district);
-      }
-    });
+    const index = this.availableZipCode.findIndex(item => item.zipcode === parseInt(this.f.plz.value, 10));
+    if (index > -1) {
+      this.f.plz.setErrors(null);
+      this.f.ort.setValue(this.availableZipCode[index].city);
+      this.f.street.setValue(this.availableZipCode[index].district);
+    } else {
+      this.f.plz.setErrors(Validators.required);
+      this.f.ort.setValue(null);
+      this.f.street.setValue(null);
+    }
   }
 
   getDate = time => {
@@ -79,7 +85,8 @@ export class MoveAppointmentComponent implements OnInit {
   }
 
   submit = () => {
-    if (!this.selectedPTime) {
+    console.log(this.selectedPTime);
+    if (this.selectedPTime === null) {
       return;
     }
     if (this.f.plz.value && this.f.ort.value && this.f.street.value) {
@@ -99,6 +106,7 @@ export class MoveAppointmentComponent implements OnInit {
       time: this.allTimes[this.selectedPTime],
       address: this.addressData
     };
+    console.log(data);
     this.httpService.post(URL_JSON.PATIENT + '/shift_appointment_by_patient', data).subscribe((res: any) => {
       if (res) {
         this.success = true;

@@ -12,7 +12,7 @@
   background-color: #ffffff;
   border: none;
   cursor: pointer;
-  box-shadow: 0px 4px 16px #E3E8F4;
+  box-shadow: 0 4px 16px #E3E8F4;
   p {
     color: #272140;
     font-size: 16px;
@@ -47,4 +47,8 @@ h1 {
 }
 ::ng-deep .mat-form-field-label-wrapper {
   display: none!important;
+}
+
+.opacity-50 {
+  opacity: 0.5;
 }

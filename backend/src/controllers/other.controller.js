@@ -94,9 +94,27 @@ exports.checkPostalCodeForAppointment = async (req, res) => {
     }
 }
 
-// exports.getPostalCodeByName = async () => {
-//
-// }
+exports.getAvailableZipCodeByAgency = async (req, res) => {
+    const agencyId = req.params.agencyId;
+    const response = [];
+    const calendars = await db.sequelize.query(`
+        SELECT * FROM calendars
+        JOIN working_groups ON working_groups.calendar_id=calendars.id
+        JOIN working_group_agencies ON working_group_agencies.groupId=working_groups.id
+        WHERE working_group_agencies.agencyId=${agencyId}
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    const calendar = calendars.length > 0 ? calendars[0] : null;
+    const districtIds = JSON.parse(calendar.district_id);
+    for (const districtId of districtIds) {
+        const district = await db.district.findOne({where: {id: districtId}, raw: true});
+        const districtModels = await DistrictModel.findAll({where: {city: district.city, district: district.district}});
+        for (const districtModel of districtModels) {
+            response.push(districtModel);
+        }
+    }
+
+    res.status(200).json(response);
+}
 
 exports.sendSMS = async (req, res) => {
     const data = req.body;

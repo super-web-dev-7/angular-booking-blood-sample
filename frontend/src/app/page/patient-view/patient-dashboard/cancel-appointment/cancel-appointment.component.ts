@@ -1,7 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import * as moment from 'moment';
+
 import {HttpService} from '../../../../service/http/http.service';
 import {URL_JSON} from '../../../../utils/url_json';
 import {AuthService} from '../../../../service/auth/auth.service';
@@ -34,7 +35,7 @@ export class CancelAppointmentComponent implements OnInit {
       this.displayData = res;
     });
     this.cancelForm = this.formBuilder.group({
-      message: [null, Validators.required],
+      message: [null],
     });
   }
 
@@ -50,9 +51,6 @@ export class CancelAppointmentComponent implements OnInit {
   }
 
   submit = () => {
-    if (this.cancelForm.invalid) {
-      return;
-    }
     const data = {
       appointmentId: this.data?.appointmentId,
       userId: this.currentUser.id,

@@ -54,7 +54,7 @@
             class="mt-10-min"
             aria-label="more"
             [matMenuTriggerFor]="appointment"
-            (click)="selectedAppointment = item.id"
+            (click)="selectedAppointment = item"
           >
             <mat-icon class="p-0">more_horiz</mat-icon>
           </button>
@@ -97,7 +97,7 @@
             aria-label="more"
             class="mt-10-min"
             [matMenuTriggerFor]="appointment"
-            (click)="selectedAppointment = item.id"
+            (click)="selectedAppointment = item"
           >
             <mat-icon style="color: #ffffff">more_horiz</mat-icon>
           </button>
@@ -142,7 +142,7 @@
             aria-label="more"
             class="mt-10-min"
             [matMenuTriggerFor]="appointment"
-            (click)="selectedAppointment = item.id"
+            (click)="selectedAppointment = item"
           >
             <mat-icon class="p-0">more_horiz</mat-icon>
           </button>
@@ -189,7 +189,7 @@
             aria-label="more"
             class="mt-10-min"
             [matMenuTriggerFor]="appointment"
-            (click)="selectedAppointment = item.id"
+            (click)="selectedAppointment = item"
           >
             <mat-icon class="p-0">more_horiz</mat-icon>
           </button>
@@ -214,6 +214,7 @@
       <button
         class="panel-width"
         mat-menu-item
+        [disabled]="selectedAppointment && selectedAppointment.adminStatus === 'successful'"
         (click)="cancelAppointment()"
       >
         <span class="active-hover">Termin stornieren</span>
@@ -225,6 +226,7 @@
     <button
       mat-menu-item
       style="overflow: visible!important;"
+      [disabled]="selectedAppointment && selectedAppointment.adminStatus === 'successful'"
       (click)="moveAppointment()"
     >
       <span class="active-hover">

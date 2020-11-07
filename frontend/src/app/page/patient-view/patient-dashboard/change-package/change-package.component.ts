@@ -1,10 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import * as moment from 'moment';
+
 import {HttpService} from '../../../../service/http/http.service';
 import {AuthService} from '../../../../service/auth/auth.service';
 import {URL_JSON} from '../../../../utils/url_json';
-import * as moment from 'moment';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-change-package',
@@ -56,7 +57,7 @@ export class ChangePackageComponent implements OnInit {
     this.getUserInfo(this.currentUser.id);
     this.changePackageForm = this.formBuilder.group({
       payment: [this.paymentOptions[0].value, Validators.required],
-      message: [null, Validators.required]
+      message: [null]
     });
   }
 

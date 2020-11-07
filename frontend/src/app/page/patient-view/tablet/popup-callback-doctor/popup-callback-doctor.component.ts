@@ -42,7 +42,7 @@ export class PopupCallbackDoctorComponent implements OnInit {
     this.callbackForm = this.formBuilder.group({
       phone: [null, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{11,13}$')]],
       title: [null, [Validators.required]],
-      message: [null, Validators.required],
+      message: [null],
     });
     this.dateControl = new FormControl(new Date());
   }
@@ -98,7 +98,22 @@ export class PopupCallbackDoctorComponent implements OnInit {
   }
 
   selectTime = (event) => {
+    if (this.selectedDay === 'today' && this.getConditionFromTime(event.time)) {
+      return;
+    }
     this.selectedTime = event.time;
+  }
+
+  getConditionFromTime = time => {
+    const now = new Date();
+    const currentHour = now.getHours();
+    if (time === 'morning') {
+      return currentHour >= 12;
+    } else if (time === 'evening') {
+      return currentHour >= 16;
+    } else {
+      return currentHour >= 19;
+    }
   }
 
   close = () => {

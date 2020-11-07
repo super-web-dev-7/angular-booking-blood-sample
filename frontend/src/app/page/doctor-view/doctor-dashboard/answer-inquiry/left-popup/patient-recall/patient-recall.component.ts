@@ -21,7 +21,7 @@ export class PatientRecallComponent implements OnInit {
   ngOnInit(): void {
     this.PatientCallForm = this.formBuilder.group({
       title: [null, Validators.required],
-      message: [null, Validators.required],
+      message: [null],
       patient: [null, Validators.required]
     });
   }

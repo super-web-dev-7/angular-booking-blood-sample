@@ -44,7 +44,7 @@ export class PopupArrangeAppointmentComponent implements OnInit {
       plz: [this.addressData?.plz, Validators.required],
       ort: [this.addressData?.ort, Validators.required],
       payment: [null, Validators.required],
-      message: [null, Validators.required]
+      message: [null]
     });
     this.httpService.get(URL_JSON.PACKAGE + '/getWithQuery?status=Public').subscribe((res: any) => {
       this.packageData = res;

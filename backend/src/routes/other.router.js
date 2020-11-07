@@ -14,6 +14,7 @@ router.route('/zipcode/checkPostalCode/:code').get(otherController.checkPostalCo
 // router.route('/zipcode/getPostalCodeByName').get(otherController.getPostalCodeByName);
 router.route('/zipcode/check_postal_code_all/:code').get(otherController.checkPostalCodeAll);
 router.route('/zipcode/check_postal_code_appointment/:code').get(otherController.checkPostalCodeForAppointment);
+router.route('/zipcode/available_zipcode_by_agency/:agencyId').get(otherController.getAvailableZipCodeByAgency);
 
 router.route('/sendEmail').post(otherController.sendEmail);
 router.route('/sendSMS').post(otherController.sendSMS);

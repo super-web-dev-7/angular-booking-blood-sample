@@ -36,7 +36,10 @@
         </button>
       </div>
       <div class="mt-47">
-          <div class="time-board mt-15" *ngFor="let item of times" (click)="selectTime(item)">
+          <div class="time-board mt-15"
+               [ngClass]="{'opacity-50': selectedDay === 'today' && getConditionFromTime(item.time)}"
+               *ngFor="let item of times"
+               (click)="selectTime(item)">
             <mat-icon *ngIf="selectedTime !== item.time">radio_button_unchecked</mat-icon>
             <mat-icon style="color: #384c61" *ngIf="selectedTime === item.time">lens</mat-icon>
             <p class="ml-10">{{item.label}}</p>

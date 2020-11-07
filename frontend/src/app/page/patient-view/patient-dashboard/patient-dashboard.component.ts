@@ -106,13 +106,14 @@ export class PatientDashboardComponent implements OnInit {
   }
 
   cancelAppointment = () => {
+    console.log(this.selectedAppointment);
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     this.isMobile = this.breakpointObserver.isMatched('(max-width: 767px)');
     if (this.isTablet || this.isMobile) {
       const emitData = {
         title: 'cancel',
         data: {
-          appointmentId: this.selectedAppointment
+          appointmentId: this.selectedAppointment.id
         }
       };
       this.sharedService.patientPopup.emit(emitData);
@@ -120,7 +121,7 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(CancelAppointmentComponent, {
         width: '662px',
-        data: {appointmentId: this.selectedAppointment}
+        data: {appointmentId: this.selectedAppointment.id}
       });
       dialogRef.afterClosed().subscribe(() => {
       });
@@ -133,7 +134,7 @@ export class PatientDashboardComponent implements OnInit {
       const emitData = {
         title: 'move',
         data: {
-          appointmentId: this.selectedAppointment
+          appointmentId: this.selectedAppointment.id
         }
       };
       this.sharedService.patientPopup.emit(emitData);
@@ -141,7 +142,7 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(MoveAppointmentComponent, {
         width: '662px',
-        data: {appointmentId: this.selectedAppointment}
+        data: {appointmentId: this.selectedAppointment.id}
       });
       dialogRef.afterClosed().subscribe(() => {
       });
@@ -154,7 +155,7 @@ export class PatientDashboardComponent implements OnInit {
       const emitData = {
         title: 'edit',
         data: {
-          appointmentId: this.selectedAppointment
+          appointmentId: this.selectedAppointment.id
         }
       };
       this.sharedService.patientPopup.emit(emitData);
@@ -162,7 +163,7 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(EditAnamnesisComponent, {
         width: '1060px',
-        data: {appointmentId: this.selectedAppointment}
+        data: {appointmentId: this.selectedAppointment.id}
       });
       dialogRef.afterClosed().subscribe(res => {
         if (res) {
@@ -180,7 +181,7 @@ export class PatientDashboardComponent implements OnInit {
       const emitData = {
         title: 'package',
         data: {
-          appointmentId: this.selectedAppointment
+          appointmentId: this.selectedAppointment.id
         }
       };
       this.sharedService.patientPopup.emit(emitData);
@@ -188,7 +189,7 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(ChangePackageComponent, {
         width: '1182px',
-        data: {appointmentId: this.selectedAppointment}
+        data: {appointmentId: this.selectedAppointment.id}
       });
       dialogRef.afterClosed().subscribe(() => {
       });
@@ -210,7 +211,7 @@ export class PatientDashboardComponent implements OnInit {
       const emitData = {
         title: 'callback',
         data: {
-          appointmentId: this.selectedAppointment
+          appointmentId: this.selectedAppointment.id
         }
       };
       this.sharedService.patientPopup.emit(emitData);
@@ -218,7 +219,7 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(CallbackDoctorComponent, {
         width: '1182px',
-        data: {appointmentId: this.selectedAppointment}
+        data: {appointmentId: this.selectedAppointment.id}
       });
       dialogRef.afterClosed().subscribe(res => {
         if (res) {
@@ -236,7 +237,7 @@ export class PatientDashboardComponent implements OnInit {
       const emitData = {
         title: 'sister',
         data: {
-          appointmentId: this.selectedAppointment
+          appointmentId: this.selectedAppointment.id
         }
       };
       this.sharedService.patientPopup.emit(emitData);
@@ -244,7 +245,7 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(CallSisterComponent, {
         width: '662px',
-        data: {appointmentId: this.selectedAppointment}
+        data: {appointmentId: this.selectedAppointment.id}
       });
       dialogRef.afterClosed().subscribe(() => {
       });
@@ -257,7 +258,7 @@ export class PatientDashboardComponent implements OnInit {
       const emitData = {
         title: 'payment',
         data: {
-          appointmentId: this.selectedAppointment
+          appointmentId: this.selectedAppointment.id
         }
       };
       this.sharedService.patientPopup.emit(emitData);
@@ -265,7 +266,7 @@ export class PatientDashboardComponent implements OnInit {
       let dialogRef: MatDialogRef<any>;
       dialogRef = this.dialog.open(PaymentStatusComponent, {
         width: '662px',
-        data: {appointmentId: this.selectedAppointment}
+        data: {appointmentId: this.selectedAppointment.id}
       });
       dialogRef.afterClosed().subscribe(() => {
       });
@@ -276,21 +277,21 @@ export class PatientDashboardComponent implements OnInit {
     this.router.navigateByUrl('/patient/new_appointment');
   }
 
-  openHistory = (id) => {
-    this.selectedAppointment = id;
+  openHistory = (item) => {
+    this.selectedAppointment = item;
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
     if (this.isTablet || this.isMobile) {
       const emitData = {
         title: 'history',
         data: {
-          appointmentId: this.selectedAppointment
+          appointmentId: this.selectedAppointment.id
         }
       };
       this.sharedService.patientPopup.emit(emitData);
     } else {
       const dialogRef = this.dialog.open(AppointmentHistoryComponent, {
         width: '662px',
-        data: {appointmentId: this.selectedAppointment}
+        data: {appointmentId: this.selectedAppointment.id}
       });
       dialogRef.afterClosed().subscribe(() => {
       });

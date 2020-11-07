@@ -1,11 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {SharedService} from '../../../../service/shared/shared.service';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import {HttpService} from '../../../../service/http/http.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {URL_JSON} from '../../../../utils/url_json';
 import * as moment from 'moment';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+import {URL_JSON} from '../../../../utils/url_json';
+import {SharedService} from '../../../../service/shared/shared.service';
+import {HttpService} from '../../../../service/http/http.service';
 
 @Component({
   selector: 'app-answer-inquiry',
@@ -34,7 +35,7 @@ export class AnswerInquiryComponent implements OnInit {
 
   ngOnInit(): void {
     this.messageForm = this.formBuilder.group({
-      message: [null, Validators.required]
+      message: [null]
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentWithCallbackById/' + this.data.appointmentId).subscribe((res: any) => {
       if (res.length > 0) {
@@ -42,7 +43,7 @@ export class AnswerInquiryComponent implements OnInit {
       }
       this.allData = res;
     });
-    this.sharedService.closeHistory.subscribe(res => {
+    this.sharedService.closeHistory.subscribe(() => {
       this.isMedicalHistory = false;
       this.isContactHistory = false;
       this.isPatientCall = false;
@@ -107,13 +108,13 @@ export class AnswerInquiryComponent implements OnInit {
   }
 
   archive = () => {
-    this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData.appointmentId, {}).subscribe(res => {
+    this.httpService.update(URL_JSON.DOCTOR + '/setAppointmentToArchive/' + this.displayData.appointmentId, {}).subscribe(() => {
       this.dialogRef.close({type: 'archive', appointmentId: this.displayData.appointmentId});
     });
   }
 
   afterClosed = (dialogRef) => {
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
     });
   }
 

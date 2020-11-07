@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SharedService} from '../../../../../../service/shared/shared.service';
 import {HttpService} from '../../../../../../service/http/http.service';
 import {URL_JSON} from '../../../../../../utils/url_json';
@@ -21,7 +21,7 @@ export class CallPatientComponent implements OnInit {
   ngOnInit(): void {
     this.PatientCallForm = this.formBuilder.group({
       title: [null, Validators.required],
-      message: [null, Validators.required],
+      message: [null],
       patient: [null, Validators.required]
     });
   }

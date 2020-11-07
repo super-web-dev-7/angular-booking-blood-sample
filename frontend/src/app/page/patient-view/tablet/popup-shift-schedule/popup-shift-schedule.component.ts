@@ -21,6 +21,7 @@ export class PopupShiftScheduleComponent implements OnInit {
   currentUser: any;
   addressData = null;
   success = false;
+  availableZipCode = [];
 
   @Output() closeSide = new EventEmitter();
   constructor(
@@ -43,6 +44,9 @@ export class PopupShiftScheduleComponent implements OnInit {
         this.httpService.get(URL_JSON.BASE + 'booking_time/agency/' + this.displayData.agencyId).subscribe((resp: any) => {
           this.allTimes = resp;
         });
+        this.httpService.get(URL_JSON.ZIPCODE + '/available_zipcode_by_agency/' + this.displayData.agencyId).subscribe((zipcode: any) => {
+          this.availableZipCode = zipcode;
+        });
       }
     });
   }
@@ -59,15 +63,16 @@ export class PopupShiftScheduleComponent implements OnInit {
   }
 
   checkPostalCode = () => {
-    this.httpService.checkPostalCode(this.f.plz.value).subscribe((res: any) => {
-      if (!res) {
-        this.f.plz.setErrors(Validators.required);
-      } else {
-        this.f.plz.setErrors(null);
-        this.f.ort.setValue(res.city);
-        this.f.street.setValue(res.district);
-      }
-    });
+    const index = this.availableZipCode.findIndex(item => item.zipcode === parseInt(this.f.plz.value, 10));
+    if (index > -1) {
+      this.f.plz.setErrors(null);
+      this.f.ort.setValue(this.availableZipCode[index].city);
+      this.f.street.setValue(this.availableZipCode[index].district);
+    } else {
+      this.f.plz.setErrors(Validators.required);
+      this.f.ort.setValue(null);
+      this.f.street.setValue(null);
+    }
   }
 
   submit = () => {
@@ -101,5 +106,4 @@ export class PopupShiftScheduleComponent implements OnInit {
   close = () => {
     this.closeSide.emit(false);
   }
-
 }

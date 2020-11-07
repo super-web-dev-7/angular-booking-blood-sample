@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import * as moment from 'moment';
+
 import {HttpService} from '../../../../service/http/http.service';
 import {AuthService} from '../../../../service/auth/auth.service';
 import {URL_JSON} from '../../../../utils/url_json';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-popup-change-package',
@@ -59,7 +60,7 @@ export class PopupChangePackageComponent implements OnInit {
     this.getUserInfo(this.currentUser.id);
     this.changePackageForm = this.formBuilder.group({
       payment: [this.paymentOptions[0].value, Validators.required],
-      message: [null, Validators.required]
+      message: [null]
     });
   }
 

@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import * as moment from 'moment';
+
 import {SharedService} from '../../../../service/shared/shared.service';
 import {HttpService} from '../../../../service/http/http.service';
 import {AuthService} from '../../../../service/auth/auth.service';
 import {URL_JSON} from '../../../../utils/url_json';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-side-medical-history',

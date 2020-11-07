@@ -23,8 +23,8 @@ export class MedicalQuestionShowComponent implements OnInit {
     this.medical = this.item.medicalQuestion;
   }
 
-  openHistory = (id) => {
-    this.openHistoryEmitter.emit(id);
+  openHistory = (item) => {
+    this.openHistoryEmitter.emit(item);
   }
 
 }
