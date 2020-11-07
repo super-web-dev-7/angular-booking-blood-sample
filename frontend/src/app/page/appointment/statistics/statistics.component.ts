@@ -180,6 +180,8 @@ export class StatisticsComponent implements OnInit {
             ]
           });
         }
+
+        console.log(this.data);
       });
   }
 

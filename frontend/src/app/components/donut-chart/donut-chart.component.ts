@@ -10,17 +10,15 @@ export class DonutChartComponent implements OnInit {
   @Input() items;
   @Input() label;
   @Input() labelColor;
-
-
   public total = 0;
 
   constructor() {
   }
 
   ngOnInit(): void {
-    if (this.items.length > 0)
-    {
+    if (this.items.length > 0) {
       this.total = this.items.map(a => a.value).reduce((x, y) => x + y);
+      console.log(this.total);
     }
     // for (const item of this.data) {
     //   this.total += item.value;
@@ -41,7 +39,9 @@ export class DonutChartComponent implements OnInit {
   {
     let percent = 0;
     for (let i = 0; i < index; i++) {
-      percent += ((this.items[i].value) / this.total);
+      if (this.total) {
+        percent += ((this.items[i].value) / this.total);
+      }
     }
     const perimeter = Math.PI * 2 * radius;
     return perimeter * percent;
@@ -50,9 +50,14 @@ export class DonutChartComponent implements OnInit {
   getCx(index): number {
     let percentage = 0;
     for (let i = 0; i < index; i++) {
-      percentage += ((this.items[i].value) / this.total);
+      if (this.total) {
+        percentage += ((this.items[i].value) / this.total);
+      }
     }
-    const angle = (percentage + this.items[index].value / this.total / 2) * 2 * Math.PI;
+    let angle = 0;
+    if (this.total) {
+      angle = (percentage + this.items[index].value / this.total / 2) * 2 * Math.PI;
+    }
     return 75 + 60 * Math.cos(angle);
   }
 
@@ -61,8 +66,10 @@ export class DonutChartComponent implements OnInit {
     for (let i = 0; i < index; i++) {
       percentage += ((this.items[i].value) / this.total);
     }
-    const angle = (percentage + this.items[index].value / this.total / 2) * 2 * Math.PI;
+    let angle = 0;
+    if (this.total) {
+      angle = (percentage + this.items[index].value / this.total / 2) * 2 * Math.PI;
+    }
     return 75 - 60 * Math.sin(angle);
   }
-
 }
