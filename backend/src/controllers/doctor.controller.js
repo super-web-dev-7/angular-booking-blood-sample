@@ -76,9 +76,10 @@ exports.getContactHistory = async (req, res) => {
 
 exports.cancelAppointment = async (req, res) => {
     const id = req.params.id;
-    await Appointment.update({adminStatus: 'canceled'}, {where: {id}});
+    const message = req.body.message;
+    await Appointment.update({archive: true}, {where: {id}});
     await MedicalQuestion.update({isActive: false}, {where: {appointmentId: id}});
-    await ContactHistory.create({appointmentId: id, type: 'appointment_cancel'});
+    await ContactHistory.create({appointmentId: id, type: 'appointment_archived'});
 
     const user = await sequelize.query(`
         SELECT users.email AS email, appointments.id AS appointmentId 
@@ -90,13 +91,13 @@ exports.cancelAppointment = async (req, res) => {
     if (user.length > 0) {
         const mailData = {
             email: user[0].email,
-            subject: 'Appointment cancel',
+            subject: 'Appointment is not approved.',
             from: process.env.OWNER_EMAIL,
-            content: 'Your questionnaire is not good.'
+            content: message
         };
-        await sendMail(mailData);
+        sendMail(mailData);
     }
-    res.status(200).json({message: 'Appointment cancel'});
+    res.status(200).json({message: 'Appointment archived'});
 }
 
 exports.releaseAppointment = async (req, res) => {

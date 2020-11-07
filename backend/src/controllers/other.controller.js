@@ -1,7 +1,7 @@
+import cron from 'node-cron';
 import db from '../models';
 import {sendMail} from '../helper/email';
 import {sendSMS} from '../helper/sms';
-import cron from 'node-cron';
 
 const User = db.user;
 const WorkingGroup = db.workingGroup;
@@ -166,7 +166,6 @@ exports.appointmentNotThere = async (req, res) => {
 }
 
 cron.schedule('* * * * *', async function () {
-    console.log(new Date());
     const appointmentsAfter2H = await db.sequelize.query(`
         SELECT a.*,
             patient.firstName AS patientFirstName, patient.lastName AS patientLastName,
@@ -186,7 +185,7 @@ cron.schedule('* * * * *', async function () {
             ))
     `, {type: db.Sequelize.QueryTypes.SELECT});
     for (const appointment of appointmentsAfter2H) {
-        console.log('id >>>>>>>>>>>> ', appointment.id)
+        console.log('2h later >>>> id >>>>>>>>>>>> ', appointment.id)
         const adminIds = JSON.parse(appointment.admins);
         db.medicalQuestionReminder.create({appointmentId: appointment.id, type: '2h'});
         for (const adminId of adminIds) {
@@ -219,9 +218,8 @@ cron.schedule('* * * * *', async function () {
                 SELECT appointmentId FROM medical_question_reminders AS m WHERE m.type = '4h'
             ))
     `, {type: db.Sequelize.QueryTypes.SELECT});
-    console.log('**************** After 4h ****************');
     for (const appointment of appointmentsAfter4H) {
-        console.log('id >>>>>>>>>>>> ', appointment.id)
+        console.log(' 4h later >>>>>> id >>>>>>>>>>>> ', appointment.id)
         const adminIds = JSON.parse(appointment.admins);
         db.medicalQuestionReminder.create({appointmentId: appointment.id, type: '4h'});
         for (const adminId of adminIds) {
@@ -236,7 +234,35 @@ cron.schedule('* * * * *', async function () {
         }
     }
 
-    // const appointmentsAfter24H = await db.sequelize.query(``);
+    const appointmentsAfter24H = await db.sequelize.query(`
+        SELECT a.*,
+            patient.firstName AS patientFirstName, patient.lastName AS patientLastName,
+            working_groups.admin AS admins,
+            packages.name AS packageName
+        FROM appointments AS a
+        JOIN users AS patient ON patient.id=a.userId
+        JOIN working_group_agencies ON working_group_agencies.agencyId=a.agencyId
+        JOIN working_groups ON working_groups.id=working_group_agencies.groupId
+        JOIN packages ON packages.id=a.packageId
+        WHERE a.anamnesisStatus="open" AND 
+            a.nurseStatus="initial" AND 
+            a.adminStatus="upcoming" AND 
+            a.createdAt <= DATE_SUB(NOW(), INTERVAL 24 HOUR)
+    `, {type: db.Sequelize.QueryTypes.SELECT});
+    for (const appointment of appointmentsAfter24H) {
+        await Appointment.update({adminStatus: 'canceled'}, {where: {id: appointment.id}});
+        const adminIds = JSON.parse(appointment.admins);
+        for (const adminId of adminIds) {
+            const admin = await User.findByPk(adminId, {raw: true});
+            const data = {
+                email: admin.email,
+                subject: 'Appointment canceled',
+                content: `Appointment -> id: ${appointment.id}, packageName: ${appointment.packageName}, patient name: ${appointment.patientFirstName} ${appointment.patientLastName}`
+            };
+            console.log('4h email >>>>>>>>>>>>>> ', admin.email);
+            sendMail(data);
+        }
+    }
 })
 
 cron.schedule('* * * * *', async function () {

@@ -41,6 +41,10 @@ export class NewComponent implements OnInit {
     {
       id: 3,
       name: 'Arzt'
+    },
+    {
+      id: 4,
+      name: 'Ag-Admin'
     }
   ];
 
@@ -94,7 +98,9 @@ export class NewComponent implements OnInit {
   selectActions = () => {
     if (this.selectedReceiver && this.selectedShipment) {
       const shipment = this.selectedShipment === 1 ? 'sms' : 'email';
-      const receiver = this.selectedReceiver === 1 ? 'patient' : this.selectedReceiver === 2 ? 'nurse' : 'doctor';
+      const receiver = this.selectedReceiver === 1 ?
+        'patient' : this.selectedReceiver === 2 ?
+          'nurse' : this.selectedReceiver === 3 ? 'doctor' : 'admin';
       this.actions = this.allActions.filter(item => item[shipment] && item[receiver]);
     }
   }

@@ -18,6 +18,9 @@ module.exports = (sequelize, Sequelize) => {
         nurse: {
             type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false
         },
+        admin: {
+            type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false
+        }
 
     });
 };

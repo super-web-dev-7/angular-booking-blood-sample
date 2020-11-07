@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import * as moment from 'moment';
 
@@ -27,6 +28,7 @@ export class AnamnesCheckComponent implements OnInit {
     private dialogRef: MatDialogRef<AnamnesCheckComponent>,
     public formBuilder: FormBuilder,
     public dialog: MatDialog,
+    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
   }
@@ -77,8 +79,18 @@ export class AnamnesCheckComponent implements OnInit {
     });
   }
 
-  cancel = () => {
-    this.httpService.update(URL_JSON.DOCTOR + '/cancelAppointment/' + this.displayData?.appointmentId, {}).subscribe((res: any) => {
+  appointmentCancel = () => {
+    if (!this.f.message.value) {
+      this.snackBar.open('Bitte fügen Sie eine Nachricht als Grund für die Terminabsage hinzu', '', {
+        duration: 2000
+      });
+      return;
+    }
+    console.log(this.displayData);
+    console.log(this.f.message.value);
+    this.httpService.update(URL_JSON.DOCTOR + '/cancelAppointment/' + this.displayData?.appointmentId, {
+      message: this.f.message.value
+    }).subscribe((res: any) => {
       if (res) {
         this.dialogRef.close(false);
         this.isSent = false;

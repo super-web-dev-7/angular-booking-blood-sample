@@ -105,6 +105,7 @@
           type="button"
           class="custom-button"
           mat-stroked-button
+          (click)="close()"
         >
           Zurück ohne Änderungen
         </button>
@@ -112,7 +113,7 @@
           type="button"
           class="custom-button ml-20"
           mat-stroked-button
-          (click)="cancel()"
+          (click)="appointmentCancel()"
         >
           Termin stornieren
         </button>
