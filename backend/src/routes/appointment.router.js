@@ -6,9 +6,9 @@ const router = Router();
 router.route('/create').post(appointmentController.create);
 router.route('/create_by_patient').post(appointmentController.createByPatient);
 
-router.route('/get').get(appointmentController.get);
-router.route('/update/:id').put(appointmentController.update);
 router.route('/delete/:id').delete(appointmentController.delete);
+
+router.route('/get').get(appointmentController.get);
 router.route('/getAppointmentByNurse/:id').get(appointmentController.getAppointmentByNurse);
 router.route('/nurse_status/:id').put(appointmentController.appointmentStatusByNurse);
 

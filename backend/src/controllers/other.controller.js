@@ -135,25 +135,33 @@ exports.getSmsHistory = async (req, res) => {
 
 exports.appointmentDelay = async (req, res) => {
     const smsData = req.body.smsData;
-    const smsResult = await sendSMS(smsData);
+    const smsResult = sendSMS(smsData);
     res.status(200).json({smsResult});
 }
 
 exports.appointmentShift = async (req, res) => {
     const emailData = req.body.emailData;
     const smsData = req.body.smsData;
-    const emailResult = await sendMail(emailData);
-    const smsResult = await sendSMS(smsData);
-    res.status(200).json({emailResult, smsResult});
+    sendMail(emailData);
+    sendSMS(smsData);
+    await Appointment.update({adminStatus: 'canceled'}, {where: {id: req.body.appointmentId}});
+    await db.appointmentCancelReason.create({
+        appointmentId: req.body.appointmentId,
+        message: emailData.content,
+        type: 'nurse_shift'
+    });
+    await db.contactHistory.create({appointmentId: req.body.appointmentId, type: 'appointment_cancel'});
+    res.status(200).json({message: 'appointment shift'});
 }
 
 exports.appointmentTaken = async (req, res) => {
     const emailData = req.body.emailData;
-    const emailResult = await sendMail(emailData);
+    sendMail(emailData);
     const data = req.body.data;
-    await AppointmentResult.update({isActive: false}, {where: {appointmentId: data.appointmentId}});
+    // await AppointmentResult.update({isActive: false}, {where: {appointmentId: data.appointmentId}});
+    await Appointment.update({adminStatus: 'successful'}, {where: {id: data.appointmentId}});
     await AppointmentResult.create(data);
-    res.status(200).json({emailResult});
+    res.status(200).json({message: 'appointment taken'});
 }
 
 exports.appointmentNotThere = async (req, res) => {
@@ -162,7 +170,13 @@ exports.appointmentNotThere = async (req, res) => {
     sendMail(emailData);
     sendSMS(smsData);
     await Appointment.update({adminStatus: 'canceled'}, {where: {id: req.body.appointmentId}});
-    res.status(200).json({message: 'Appointment canceled'});
+    await db.appointmentCancelReason.create({
+        appointmentId: req.body.appointmentId,
+        message: emailData.content,
+        type: 'nurse_not_there'
+    });
+    await db.contactHistory.create({appointmentId: req.body.appointmentId, type: 'appointment_cancel'});
+    res.status(200).json({message: 'appointment canceled'});
 }
 
 cron.schedule('* * * * *', async function () {

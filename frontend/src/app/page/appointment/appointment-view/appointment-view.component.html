@@ -45,11 +45,15 @@
   <div class="item-container">
     <div class="label">Status</div>
     <div class="value">
-      Anamnesebogen freigegeben
       <span *ngIf="data.adminStatus === 'upcoming'">1</span>
-      <span *ngIf="data.adminStatus === 'confirmed'">2</span>
-      <span *ngIf="data.adminStatus === 'canceled'">3</span>
-      <span *ngIf="data.adminStatus === 'successful'">4</span>
+      <span *ngIf="data.adminStatus === 'confirmed'">Anamnesebogen freigegeben</span>
+      <span *ngIf="data.adminStatus === 'canceled'">
+        <span *ngIf="data.reason.type === 'doctor_not_approve'">Anamnesebogen storniert</span>
+        <span *ngIf="data.reason.type === 'patient_cancel'">Durch Patient storniert</span>
+        <span *ngIf="data.reason.type === 'nurse_shift'">Durch Schwester verschoben</span>
+        <span *ngIf="data.reason.type === 'nurse_not_there'">Durch Schwester verschoben</span>
+      </span>
+      <span *ngIf="data.adminStatus === 'successful'">Termin wahrgenommen</span>
     </div>
   </div>
   <div class="d-flex justify-content-end mt-5">
@@ -104,6 +108,7 @@
   <button (click)="isShowSchedule = !isShowSchedule; isShowPatient = false" *ngIf="!isShowSchedule" mat-stroked-button class="add-button detail-schedule">
     <img src="assets/images/timeicon-dark.svg" alt="dark">
   </button>
+
   <div class="detail-schedule-popup" *ngIf="isShowSchedule">
     <div class="position-relative">
       <button
@@ -117,7 +122,33 @@
       <div *ngFor="let history of contactHistoryData">
         <div class="schedule-item-container">
           <div class="label">{{getDate(history.createdAt)}}</div>
-          <div class="value">{{history.type}}</div>
+          <p class="p-14" *ngIf="history.type === 'callback_created'">
+            Arztrückruf angefragt
+          </p>
+          <p class="p-14" *ngIf="history.type === 'callback_answer'">
+            Arztrückruf erledigt
+          </p>
+          <p class="p-14" *ngIf="history.type === 'appointment_created'">
+            Terminreservierung online
+          </p>
+          <p class="p-14" *ngIf="history.type === 'appointment_cancel'">
+            Termin abgesagt
+          </p>
+          <p class="p-14" *ngIf="history.type === 'appointment_confirmed'">
+            Termin bestätigt
+          </p>
+          <p class="p-14" *ngIf="history.type === 'appointment_archived'">
+            Termin archiv
+          </p>
+          <p class="p-14" *ngIf="history.type === 'medical_question_created'">
+            Anamnese erstellt
+          </p>
+          <p class="p-14" *ngIf="history.type === 'medical_question_answer'">
+            Anamnese freigegeben
+          </p>
+          <p class="p-14" *ngIf="history.type === 'recall_created'">
+            Patienten rückruf
+          </p>
         </div>
       </div>
     </div>

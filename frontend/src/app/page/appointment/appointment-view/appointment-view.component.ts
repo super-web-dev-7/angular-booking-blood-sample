@@ -13,11 +13,11 @@ import {ModalMedicalComponent} from './modal-medical/modal-medical.component';
   styleUrls: ['./appointment-view.component.scss']
 })
 export class AppointmentViewComponent implements OnInit {
-
   isShowPatient = false;
   isShowSchedule = false;
   contactHistoryData: any;
   medicalQuestion: any;
+
   constructor(
     public dialogRef: MatDialogRef<any>,
     public router: Router,

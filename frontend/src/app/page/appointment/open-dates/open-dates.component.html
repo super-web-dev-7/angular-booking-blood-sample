@@ -79,10 +79,18 @@
               <app-order-icon columnName="status" [orderStatus]="orderStatus"></app-order-icon>
             </th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.adminStatus === 'upcoming'">1</span>
-              <span *ngIf="element.adminStatus === 'confirmed'">2</span>
-              <span *ngIf="element.adminStatus === 'canceled'">3</span>
-              <span *ngIf="element.adminStatus === 'successful'">4</span>
+              <span *ngIf="element.adminStatus === 'upcoming'">
+                <span *ngIf="element.anamnesisStatus === 'open'">Patientenrückfrage</span>
+                <span *ngIf="element.anamnesisStatus === 'close'">Buchung vorgemerkt</span>
+              </span>
+              <span *ngIf="element.adminStatus === 'confirmed'">Anamnesebogen freigegeben</span>
+              <span *ngIf="element.adminStatus === 'canceled'">
+                <span *ngIf="element.reason.type === 'doctor_not_approve'">Anamnesebogen storniert</span>
+                <span *ngIf="element.reason.type === 'patient_cancel'">Durch Patient storniert</span>
+                <span *ngIf="element.reason.type === 'nurse_shift'">Durch Schwester verschoben</span>
+                <span *ngIf="element.reason.type === 'nurse_not_there'">Durch Schwester verschoben</span>
+              </span>
+              <span *ngIf="element.adminStatus === 'successful'">Termin wahrgenommen</span>
             </td>
           </ng-container>
 

@@ -317,15 +317,16 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     const emailData = {
       email: this.customEmail ? this.customEmail : this.defaultEmail,
       content: this.customText,
-      subject: 'Appointment Moving'
+      subject: 'Appointment Shift'
     };
     const smsData = {
-      subject: 'Appointment Moving',
+      subject: 'Appointment Shift',
       receiver: this.selectedAppointment.patientId,
       phoneNumber: this.customNumber ? this.customNumber : this.defaultNumber,
       content: this.customText
     };
-    this.httpService.post(URL_JSON.BASE + '/nurse/appointment_delay', {emailData, smsData})
+    this.httpService.post(URL_JSON.BASE + '/nurse/appointment_shift',
+      {emailData, smsData, appointmentId: this.selectedAppointment.id})
       .subscribe(() => {
         this.isLoading = false;
         this.close();

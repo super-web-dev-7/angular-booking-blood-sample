@@ -89,6 +89,10 @@ exports.get = async (req, res) => {
     });
     let response = [];
     for (const appointment of allAppointment) {
+        let reason = null;
+        if (appointment.adminStatus === 'canceled') {
+            reason = await db.appointmentCancelReason.findOne({where: {appointmentId: appointment.id}, raw: true});
+        }
         const doctors_id = JSON.parse(appointment.agency.doctors_id);
         const doctors = [];
         for (const id of doctors_id) {
@@ -110,7 +114,7 @@ exports.get = async (req, res) => {
         WHERE working_group_agencies.agencyId = ${appointment.agency.id}
         `, {type: Sequelize.QueryTypes.SELECT});
         const patient = await Patient.findOne({where: {user_id: appointment.user.id}});
-        response.push({...appointment, doctors, patient, nurse: nurse[0]})
+        response.push({...appointment, doctors, patient, nurse: nurse[0], reason});
     }
     res.status(200).json(response);
 }
@@ -118,10 +122,7 @@ exports.get = async (req, res) => {
 exports.delete = async (req, res) => {
     Appointment.destroy({where: {id: req.params.id}}).then(() => {
         res.status(204).json({});
-    })
-}
-
-exports.update = async () => {
+    });
 }
 
 exports.getAppointmentByNurse = async (req, res) => {
@@ -161,7 +162,7 @@ exports.getAppointmentByPatient = async (req, res) => {
         JOIN users ON appointments.userId=users.id
         JOIN patients ON patients.user_id=users.id
         JOIN packages ON appointments.packageId=packages.id
-        WHERE appointments.userId=${req.params.id}
+        WHERE appointments.userId=${req.params.id} AND appointments.archive=0
     `, {type: Sequelize.QueryTypes.SELECT});
     const response = [];
     for (const appointment of allAppointment) {

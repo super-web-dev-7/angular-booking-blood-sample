@@ -57,7 +57,15 @@ exports.getContactHistory = async (req, res) => {
         JOIN packages ON appointments.packageId=packages.id
         WHERE appointments.id=${id}
     `, {type: db.Sequelize.QueryTypes.SELECT});
-    const contactHistory = await ContactHistory.findAll({where: {appointmentId: id}, raw: true, nest: true});
+    const contactHistory = await ContactHistory.findAll(
+        {
+            where: {appointmentId: id},
+            raw: true,
+            nest: true,
+            order: [
+                ['id', 'DESC']
+            ]
+        });
     for (const item of contactHistory) {
         if (item.type === 'callback_created') {
             item.callback = await CallbackDoctor.findByPk(item.otherId, {raw: true});
@@ -77,9 +85,14 @@ exports.getContactHistory = async (req, res) => {
 exports.cancelAppointment = async (req, res) => {
     const id = req.params.id;
     const message = req.body.message;
-    await Appointment.update({archive: true}, {where: {id}});
+    await Appointment.update({adminStatus: 'canceled', archive: true}, {where: {id}});
+    await db.appointmentCancelReason.create({
+        appointmentId: id,
+        message: message,
+        type: 'doctor_not_approve'
+    });
     await MedicalQuestion.update({isActive: false}, {where: {appointmentId: id}});
-    await ContactHistory.create({appointmentId: id, type: 'appointment_archived'});
+    await ContactHistory.create({appointmentId: id, type: 'appointment_cancel'});
 
     const user = await sequelize.query(`
         SELECT users.email AS email, appointments.id AS appointmentId 

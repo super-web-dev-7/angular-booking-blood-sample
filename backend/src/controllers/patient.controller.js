@@ -78,16 +78,23 @@ exports.cancelAppointmentByPatient = async (req, res) => {
         const cancelTemplate = await Template.findOne({where: {assign: 'Appointment Cancel By Patient'}, raw: true});
         const content = cancelTemplate ? cancelTemplate.message : 'Appointment was canceled.';
         await Appointment.update({adminStatus: 'canceled'}, {where: {id: bodyData.appointmentId}});
+        await db.appointmentCancelReason.create({
+            appointmentId: bodyData.appointmentId,
+            message: bodyData.content,
+            type: 'patient_cancel'
+        });
         await MedicalQuestion.update({isActive: false}, {where: {appointmentId: bodyData.appointmentId}});
         await ContactHistory.create({appointmentId: bodyData.appointmentId, type: 'appointment_cancel'});
         sendMail({email: appointment.patientEmail, subject: 'Appointment Cancel', content});
         sendMail({email: appointment.nurseEmail, subject: 'Appointment Cancel Requested', content: bodyData.content});
+        res.status(200).json({
+            message: 'Appointment canceled'
+        });
     } else {
         res.status(400).json({
-            message: "Bad Request"
-        })
+            message: 'Bad Request'
+        });
     }
-    // id, message
 }
 
 exports.shiftAppointmentByPatient = async (req, res) => {
@@ -124,7 +131,7 @@ exports.shiftAppointmentByPatient = async (req, res) => {
         sendMail(emailData);
         sendSMS(smsData);
 
-        await Appointment.update({time: data.time}, {where: {id: data.appointmentId}});
+        await Appointment.update({time: data.time, adminStatus: 'canceled'}, {where: {id: data.appointmentId}});
         if (data.address) {
             await Patient.update(data.address, {where: {user_id: appointment.patientId}});
         }
