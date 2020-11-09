@@ -179,7 +179,7 @@ exports.appointmentNotThere = async (req, res) => {
     res.status(200).json({message: 'appointment canceled'});
 }
 
-cron.schedule('* * * * *', async function () {
+cron.schedule('*/5 * * * *', async function () {
     let template2H = '';
     let template4H = '';
     let template24H = '';
