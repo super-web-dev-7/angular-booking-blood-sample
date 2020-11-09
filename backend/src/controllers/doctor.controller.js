@@ -115,7 +115,7 @@ exports.cancelAppointment = async (req, res) => {
 
 exports.releaseAppointment = async (req, res) => {
     const id = req.params.id;
-    await Appointment.update({adminStatus: 'confirmed', nurseStatus: 'standard'}, {where: {id}});
+    await Appointment.update({adminStatus: 'confirmed', nurseStatus: 'standard', anamnesisStatus: 'closed'}, {where: {id}});
     await MedicalQuestion.update({isActive: false}, {where: {appointmentId: id}});
     await ContactHistory.create({appointmentId: id, type: 'appointment_confirmed'});
     const user = await sequelize.query(`

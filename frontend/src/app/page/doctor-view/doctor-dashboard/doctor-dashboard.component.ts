@@ -88,21 +88,7 @@ export class DoctorDashboardComponent implements OnInit {
     this.currentUser = this.authService.currentUserValue;
     this.anamnesisDataSource.sort = this.sort;
     this.isTablet = this.breakpointObserver.isMatched('(min-width: 768px') && this.breakpointObserver.isMatched('(max-width: 1023px)');
-    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsByAnamnes').subscribe((res: any) => {
-      this.anamnesisDataSource.data = res;
-      this.allAnamnesis = res;
-      this.expandedElementA = this.anamnesisDataSource.data;
-    });
-    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithActiveCallback').subscribe((res: any) => {
-      this.activeCallbackDataSource.data = res;
-      this.allInquiry = res;
-      this.expandedElement = this.activeCallbackDataSource.data;
-    });
-    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithoutArchived').subscribe((res: any) => {
-      this.dataSourceE.data = res;
-      this.allEvents = res;
-      this.expandedElementE = this.dataSourceE.data;
-    });
+    this.init();
 
     this.httpService.get(URL_JSON.DOCTOR + '/getEditingStatus').subscribe((res: any) => {
       this.editingAppointment = res;
@@ -133,6 +119,24 @@ export class DoctorDashboardComponent implements OnInit {
         this.allAnamnesis.splice(index, 1);
         this.anamnesisDataSource = this.allAnamnesis;
       }
+    });
+  }
+
+  init = () => {
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsByAnamnes').subscribe((res: any) => {
+      this.anamnesisDataSource.data = res;
+      this.allAnamnesis = res;
+      this.expandedElementA = this.anamnesisDataSource.data;
+    });
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithActiveCallback').subscribe((res: any) => {
+      this.activeCallbackDataSource.data = res;
+      this.allInquiry = res;
+      this.expandedElement = this.activeCallbackDataSource.data;
+    });
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentsWithoutArchived').subscribe((res: any) => {
+      this.dataSourceE.data = res;
+      this.allEvents = res;
+      this.expandedElementE = this.dataSourceE.data;
     });
   }
 
@@ -356,6 +360,7 @@ export class DoctorDashboardComponent implements OnInit {
         this.sharedService.closeHistory.emit();
         this.socketService.closeEmit();
         if (res) {
+          this.init();
           if (res.type === 'submit') {
             dialogRef = this.dialog.open(SuccessDialogComponent, {
               width: '627px'
@@ -428,12 +433,13 @@ export class DoctorDashboardComponent implements OnInit {
         this.sharedService.closeHistory.emit();
         this.socketService.closeEmit();
         if (res) {
+          this.init();
           if (res.type === 'release') {
             dialogRef = this.dialog.open(SuccessDialogComponent, {
               width: '627px'
             });
           } else if (res.type === 'archive') {
-            const index = this.allAnamnesis.findIndex(item => item.id === res.appointmentId);
+            const index = this.allAnamnesis.findIndex(item => item.id === id);
             this.allAnamnesis.splice(index, 1);
             this.anamnesisDataSource = this.allAnamnesis;
           }
