@@ -24,6 +24,14 @@ export class AppointmentNewComponent implements OnInit {
     {label: 'Heidelpay', value: 'alternative'},
     {label: 'Invoice', value: 'customerStore'}
   ];
+  packageNames = [
+    'Männermedizin',
+    'Gesundheits-Check-Up',
+    'Corona',
+    'Gutes Immunsystem',
+    'Sexuelle Gesundheit',
+    'Basis'
+  ];
   constructor(
     private dialogRef: MatDialogRef<AppointmentNewComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

@@ -27,8 +27,12 @@
       >
         <div class="d-flex a-center">
           <div class="n-circle" [ngStyle]="{'background': selectedBoard === packageData[0]?.id ? '#ffffff' : '#4A90E2'}">
-            <img src="/assets/images/male.svg" alt="male" *ngIf="selectedBoard !== packageData[0]?.id">
-            <img src="/assets/images/blue-male.svg" alt="male" *ngIf="selectedBoard === packageData[0]?.id">
+            <img
+              [src]="'/assets/images/package/white/' + (packageNames.includes(packageData[0].name) ? packageData[0].name : 'Männermedizin') + '.svg'"
+              alt="male" *ngIf="selectedBoard !== packageData[0].id">
+            <img
+              [src]="'/assets/images/package/blue/' + (packageNames.includes(packageData[0].name) ? packageData[0].name : 'Männermedizin') + '.svg'"
+              alt="male" *ngIf="selectedBoard === packageData[0].id">
           </div>
           <p style="margin-left: 15px" [ngClass]="{'p-white':selectedBoard === packageData[0]?.id}">{{packageData[0]?.name}}</p>
         </div>
@@ -50,8 +54,12 @@
         >
           <div class="d-flex a-center">
             <div class="n-circle" [ngStyle]="{'background': selectedBoard === item.id ? '#ffffff' : '#4A90E2'}">
-              <img src="/assets/images/male.svg" alt="male" *ngIf="selectedBoard !== item.id">
-              <img src="/assets/images/blue-male.svg" alt="male" *ngIf="selectedBoard === item.id">
+              <img
+                [src]="'/assets/images/package/white/' + (packageNames.includes(item.name) ? item.name : 'Männermedizin') + '.svg'"
+                alt="male" *ngIf="selectedBoard !== item.id">
+              <img
+                [src]="'/assets/images/package/blue/' + (packageNames.includes(item.name) ? item.name : 'Männermedizin') + '.svg'"
+                alt="male" *ngIf="selectedBoard === item.id">
             </div>
             <p style="margin-left: 15px" [ngClass]="{'p-white':selectedBoard === item.id}">{{item.name}}</p>
           </div>

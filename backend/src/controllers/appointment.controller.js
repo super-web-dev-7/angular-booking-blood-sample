@@ -177,7 +177,7 @@ exports.getAppointmentDetail = async (req, res) => {
         SELECT appointments.id AS id, appointments.time AS startTime, appointments.nurseStatus AS nurseStatus, appointments.adminStatus AS adminStatus, appointments.agencyId AS agencyId,
             users.id AS patientId, users.firstName AS patientFirstName, users.lastName AS patientLastName, users.email AS patientEmail, users.phoneNumber AS patientNumber, 
             patients.id AS patientDetailId, patients.street AS addressStreet, patients.plz AS addressPlz, patients.ort AS addressOrt,
-            patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode, 
+            patients.differentPlace, patients.otherStreet, patients.otherCity, patients.otherPostalCode,
             packages.id AS packageId, packages.name AS packageName,
             calendars.id AS calendarId, calendars.duration_appointment AS duration
         FROM appointments

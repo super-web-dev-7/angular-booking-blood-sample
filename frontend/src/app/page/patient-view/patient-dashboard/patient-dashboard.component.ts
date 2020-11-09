@@ -42,6 +42,14 @@ export class PatientDashboardComponent implements OnInit {
   };
 
   selectedAppointment = null;
+  packageNames = [
+    'Männermedizin',
+    'Gesundheits-Check-Up',
+    'Corona',
+    'Gutes Immunsystem',
+    'Sexuelle Gesundheit',
+    'Basis'
+  ];
 
   constructor(
     public dialog: MatDialog,

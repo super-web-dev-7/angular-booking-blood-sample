@@ -46,6 +46,7 @@ export class MoveAppointmentComponent implements OnInit {
         });
         this.httpService.get(URL_JSON.ZIPCODE + '/available_zipcode_by_agency/' + this.displayData.agencyId).subscribe((zipcode: any) => {
           this.availableZipCode = zipcode;
+          console.log(this.availableZipCode);
         });
       }
     });

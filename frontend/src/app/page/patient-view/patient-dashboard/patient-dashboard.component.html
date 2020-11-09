@@ -5,7 +5,7 @@
       <div class="notify-board" *ngFor="let item of allPackages">
         <div class="d-flex a-center">
           <div class="n-circle" style="background: #4A90E2">
-            <img src="/assets/images/male.svg" alt="male">
+            <img [src]="'/assets/images/package/white/' + (packageNames.includes(item.name) ? item.name : 'Männermedizin') + '.svg'" alt="male">
           </div>
           <p style="margin-left: 15px">{{item.name}}</p>
         </div>
