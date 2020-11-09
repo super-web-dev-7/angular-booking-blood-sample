@@ -43,7 +43,6 @@ exports.getUnassigned = async (req, res) => {
 
 exports.getAvailablePostalCode = async (req, res) => {
     const adminId = parseInt(req.params.adminId);
-    console.log(adminId);
     const response = [];
     const workingGroups = await db.workingGroup.findAll({raw: true});
     let value;

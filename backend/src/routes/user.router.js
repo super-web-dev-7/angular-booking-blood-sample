@@ -8,7 +8,8 @@ router.route('/patient/create').post(userController.createPatient);
 
 router.route('/get').get(userController.get);
 router.route('/getPatients').get(userController.getPatients);
-router.route('/getPatientById/:id').get(userController.getPatientById);
+router.route('/getPatientById/:patientId').get(userController.getPatientById);
+router.route('/getPatientsByAdmin/:adminId').get(userController.getPatientsByAdmin);
 router.route('/getWorkingGroup').get(userController.getAgAdminInWorkingGroup);
 router.route('/unassignedInCalendar').get(userController.unassignedInCalendar);
 router.route('/unassignedInAgency').get(userController.unassignedInAgency);

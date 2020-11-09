@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.ENUM('Male', 'Female', 'Divers')
         },
         plz: {
-            type: Sequelize.STRING
+            type: Sequelize.INTEGER
         },
         ort: {
             type: Sequelize.STRING

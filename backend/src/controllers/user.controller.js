@@ -89,8 +89,46 @@ exports.getPatients = async (req, res) => {
 }
 
 exports.getPatientById = async (req, res) => {
-    const patient = await Patient.findAll({where: {user_id: req.params.id}});
+    const patient = await Patient.findAll({where: {user_id: req.params.patientId}});
     res.status(200).json(patient[0])
+}
+
+exports.getPatientsByAdmin = async (req, res) => {
+    const allPatients = await sequelize.query(`
+        SELECT * FROM users 
+        JOIN patients ON patients.user_id=users.id
+    `, {type: Sequelize.QueryTypes.SELECT});
+    const adminId = parseInt(req.params.adminId);
+    const availableZipCode = [];
+    const workingGroups = await db.workingGroup.findAll({raw: true});
+    let value;
+    for (const workingGroup of workingGroups) {
+        const admins = JSON.parse(workingGroup.admin);
+        if (admins.includes(adminId)) {
+            value = workingGroup;
+            break;
+        }
+    }
+    if (value) {
+        const calendar = await Calendar.findOne({where: {id: value.calendar_id}, raw: true});
+        const districtIds = JSON.parse(calendar.district_id);
+        for (const districtId of districtIds) {
+            const district = await db.district.findOne({where: {id: districtId}, raw: true});
+            const districtModels = await db.districtModel.findAll({where: {city: district.city, district: district.district}, raw: true});
+            for (const districtModel of districtModels) {
+                availableZipCode.push(districtModel);
+            }
+        }
+    }
+    let response = [];
+    for (const patient of allPatients) {
+        const zipCode = patient.differentPlace ? patient.otherPostalCode : patient.plz;
+        const index = availableZipCode.findIndex(item => item.zipcode === zipCode);
+        if (index > -1) {
+            response.push(patient);
+        }
+    }
+    res.status(200).json(response);
 }
 
 exports.getUserInfo = async (req, res) => {
