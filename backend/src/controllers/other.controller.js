@@ -270,7 +270,7 @@ cron.schedule('* * * * *', async function () {
             const admin = await User.findByPk(adminId, {raw: true});
             const data = {
                 email: admin.email,
-                subject: 'Appointment canceled',
+                subject: 'Termin storniert',
                 content: `Appointment -> id: ${appointment.id}, packageName: ${appointment.packageName}, patient name: ${appointment.patientFirstName} ${appointment.patientLastName}`
             };
             console.log('4h email >>>>>>>>>>>>>> ', admin.email);
@@ -283,8 +283,8 @@ cron.schedule('* * * * *', async function () {
     // console.log('----------------Running cron jobs ----------------');
     const now = new Date();
     const currentMillisecond = now.getTime();
-    const template1 = await Template.findOne({where: {assign: '60 minutes before Appointment'}, raw: true});
-    const template2 = await Template.findOne({where: {assign: '24 hours before Appointment'}, raw: true});
+    const template1 = await Template.findOne({where: {assign: 'Terminerinnerung 60 Minuten vorher'}, raw: true});
+    const template2 = await Template.findOne({where: {assign: 'Terminerinnerung 24 Stunden vorher'}, raw: true});
     const allAppointments = await db.sequelize.query(`
         SELECT a.id, a.name, a.time, users.id AS userId, users.phoneNumber 
         FROM appointments AS a
@@ -297,7 +297,7 @@ cron.schedule('* * * * *', async function () {
             && appointment.time - currentMillisecond < 3600 * 1000) {
             appointment60.push(appointment);
             await sendSMS({
-                subject: '60 minutes before Appointment',
+                subject: 'Terminerinnerung 60 Minuten vorher',
                 receiver: appointment.userId,
                 phoneNumber: appointment.phoneNumber,
                 content: template1.message ? template1.message : '60 min remains until appointment.'
@@ -307,7 +307,7 @@ cron.schedule('* * * * *', async function () {
             && appointment.time - currentMillisecond < 24 * 3600 * 1000) {
             appointment24.push(appointment);
             await sendSMS({
-                subject: '24 hours before Appointment',
+                subject: 'Terminerinnerung 24 Stunden vorher',
                 receiver: appointment.userId,
                 phoneNumber: appointment.phoneNumber,
                 content: template2.message ? template2.message : '24 hours remains until appointment.'

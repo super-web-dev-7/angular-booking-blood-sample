@@ -17,7 +17,7 @@
 
         <div class="d-flex-between w-90">
           <mat-form-field class="w-45">
-            <mat-label>Gender</mat-label>
+            <mat-label>Geschlecht</mat-label>
             <mat-select formControlName="gender">
               <mat-option value="Female">Weiblich</mat-option>
               <mat-option value="Male">Männlich</mat-option>
@@ -25,7 +25,7 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field class="w-45">
-            <mat-label>Age</mat-label>
+            <mat-label>Alter</mat-label>
             <mat-select formControlName="age">
               <mat-option [value]="index + 18" *ngFor="let age of ageRange; let index = index;">
                 {{index + 18}}
@@ -35,7 +35,7 @@
         </div>
         <div class="d-flex-between w-90">
           <mat-form-field class="w-45">
-            <mat-label>Height</mat-label>
+            <mat-label>Größe</mat-label>
             <mat-select formControlName="height">
               <mat-option [value]="index + 100" *ngFor="let height of heightRange; let index = index;">
                 {{index + 100}}
@@ -43,7 +43,7 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field class="w-45">
-            <mat-label>Weight</mat-label>
+            <mat-label>Gewicht</mat-label>
             <mat-select formControlName="weight">
               <mat-option [value]="index + 35" *ngFor="let weight of weightRange; let index = index;">
                 {{index + 35}}

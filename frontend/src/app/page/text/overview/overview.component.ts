@@ -27,26 +27,9 @@ export class OverviewComponent implements OnInit {
   allTemplate: any;
 
   receivers = [
-    {
-      id: 1,
-      name: 'Patient'
-    },
-    {
-      id: 2,
-      name: 'Schwester'
-    },
-    {
-      id: 3,
-      name: 'Arzt'
-    }
-  ];
-
-  assign = [
-    {value: 1, viewValue: 'Patient Prepared'},
-    {value: 2, viewValue: 'Appointment Delay'},
-    {value: 3, viewValue: 'Appointment Shift'},
-    {value: 4, viewValue: 'Appointment Taken'},
-    {value: 5, viewValue: 'Patient Not There'}
+    {id: 1, name: 'Patient'},
+    {id: 2, name: 'Schwester'},
+    {id: 3, name: 'Arzt'}
   ];
 
   orderStatus = {
@@ -131,7 +114,7 @@ export class OverviewComponent implements OnInit {
     this.dataSource.data = this.allTemplate.filter(item => {
       return item.subject.includes(this.filterValue)
         || item.type.includes(this.filterValue)
-        || this.assign[item.assign - 1].viewValue.includes(this.filterValue)
+        || item.assign.includes(this.filterValue)
         || this.receivers[item.receiver - 1].name.includes(this.filterValue)
         ;
     });

@@ -224,19 +224,19 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     this.defaultNumber = this.selectedAppointment.patientNumber;
     if (index === 0) {
       this.isPatientPreparedMenuOpen = true;
-      this.customText = this.getTemplate('Patient Prepared');
+      // this.customText = this.getTemplate('Patient Prepared');
     } else if (index === 1) {
       this.isAppointmentDelayMenuOpen = true;
-      this.customText = this.getTemplate('Appointment Delay');
+      this.customText = this.getTemplate('Termin Verspätung');
     } else if (index === 2) {
       this.isShiftScheduleMenuOpen = true;
-      this.customText = this.getTemplate('Appointment Shift');
+      this.customText = this.getTemplate('Termin verschieben');
     } else if (index === 3) {
       this.isAppointmentTakenMenuOpen = true;
-      this.customText = this.getTemplate('Appointment Taken');
+      this.customText = this.getTemplate('Termin wahrgenommen');
     } else if (index === 4) {
       this.isPatientNotThereMenuOpen = true;
-      this.customText = this.getTemplate('Patient Not There');
+      this.customText = this.getTemplate('Patient nicht angetroffen');
     }
   }
 
@@ -296,7 +296,7 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     this.isLoading = true;
 
     const smsData = {
-      subject: 'Appointment Delay',
+      subject: 'Termin Verspätung',
       receiver: this.selectedAppointment.patientId,
       phoneNumber: this.customNumber ? this.customNumber : this.defaultNumber,
       content: this.customText
@@ -317,10 +317,10 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     const emailData = {
       email: this.customEmail ? this.customEmail : this.defaultEmail,
       content: this.customText,
-      subject: 'Appointment Shift'
+      subject: 'Termin verschieben'
     };
     const smsData = {
-      subject: 'Appointment Shift',
+      subject: 'Termin verschieben',
       receiver: this.selectedAppointment.patientId,
       phoneNumber: this.customNumber ? this.customNumber : this.defaultNumber,
       content: this.customText
@@ -377,10 +377,10 @@ export class NurseDashboardComponent implements OnInit, OnDestroy {
     const emailData = {
       email: this.customEmail ? this.customEmail : this.defaultEmail,
       content: this.customText,
-      subject: 'Patient Not There'
+      subject: 'Patient nicht angetroffen'
     };
     const smsData = {
-      subject: 'Patient Not There',
+      subject: 'Patient nicht angetroffen',
       receiver: this.selectedAppointment.patientId,
       phoneNumber: this.customNumber ? this.customNumber : this.defaultNumber,
       content: this.customText

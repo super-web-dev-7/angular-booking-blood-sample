@@ -95,7 +95,9 @@
       </div>
       <div class="patient-item-container">
         <div class="label">Geschlecht</div>
-        <div class="value">{{data.patient.gender}}</div>
+        <div class="value">
+          {{data.gender === 'Male' ? 'Männlich' : data.gender === 'Female' ? 'Weiblich' : 'Divers'}}
+        </div>
       </div>
       <div class="d-flex" style="padding-bottom: 20px;">
         <div class="d-flex align-items-center">

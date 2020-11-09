@@ -75,7 +75,7 @@ exports.cancelAppointmentByPatient = async (req, res) => {
     const appointment = appointments.length > 0 ? appointments[0] : null;
 
     if (appointment) {
-        const cancelTemplate = await Template.findOne({where: {assign: 'Appointment Cancel By Patient'}, raw: true});
+        const cancelTemplate = await Template.findOne({where: {assign: 'Termin storniert vom Arzt'}, raw: true});
         const content = cancelTemplate ? cancelTemplate.message : 'Appointment was canceled.';
         await Appointment.update({adminStatus: 'canceled'}, {where: {id: bodyData.appointmentId}});
         await db.appointmentCancelReason.create({
@@ -85,8 +85,8 @@ exports.cancelAppointmentByPatient = async (req, res) => {
         });
         await MedicalQuestion.update({isActive: false}, {where: {appointmentId: bodyData.appointmentId}});
         await ContactHistory.create({appointmentId: bodyData.appointmentId, type: 'appointment_cancel'});
-        sendMail({email: appointment.patientEmail, subject: 'Appointment Cancel', content});
-        sendMail({email: appointment.nurseEmail, subject: 'Appointment Cancel Requested', content: bodyData.content});
+        sendMail({email: appointment.patientEmail, subject: 'Termin storniert', content});
+        sendMail({email: appointment.nurseEmail, subject: 'Termin storniert', content: bodyData.content});
         res.status(200).json({
             message: 'Appointment canceled'
         });

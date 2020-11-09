@@ -63,7 +63,8 @@
         </p>
         <div class="mt-47">
           <p>{{displayData?.patientFirstName}} {{displayData?.patientLastName}}</p>
-          <p>{{displayData?.gender}}, {{displayData?.age}} Jahre, {{displayData?.height/100}} m, {{displayData?.weight}} kg</p>
+          <p>{{displayData?.gender === 'Male' ? 'Männlich' : displayData?.gender === 'Female' ? 'Weiblich' : 'Divers'}},
+            {{displayData?.age}} Jahre, {{displayData?.height/100}} m, {{displayData?.weight}} kg</p>
           <p class="mt-20">Rauchen Sie?<br/>{{displayData?.smoking ? 'Ja' : 'Nein'}}</p>
           <p class="mt-20">Trinken Sie täglich Alkohol?<br/>{{displayData?.alcohol ? 'Ja' : 'Nein'}}</p>
           <p class="mt-20">Nehmen Sie regelmäßig Medikamente ein?<br/>{{displayData?.takeMedication ? 'Ja' : 'Nein'}}</p>
