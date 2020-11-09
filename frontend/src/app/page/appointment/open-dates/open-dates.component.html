@@ -81,7 +81,7 @@
             <td mat-cell *matCellDef="let element">
               <span *ngIf="element.adminStatus === 'upcoming'">
                 <span *ngIf="element.anamnesisStatus === 'open'">Patientenrückfrage</span>
-                <span *ngIf="element.anamnesisStatus === 'close'">Buchung vorgemerkt</span>
+                <span *ngIf="element.anamnesisStatus === 'closed'">Buchung vorgemerkt</span>
               </span>
               <span *ngIf="element.adminStatus === 'confirmed'">Anamnesebogen freigegeben</span>
               <span *ngIf="element.adminStatus === 'canceled'">

@@ -45,7 +45,10 @@
   <div class="item-container">
     <div class="label">Status</div>
     <div class="value">
-      <span *ngIf="data.adminStatus === 'upcoming'">1</span>
+      <span *ngIf="data.adminStatus === 'upcoming'">
+        <span *ngIf="data.anamnesisStatus === 'open'">Patientenrückfrage</span>
+        <span *ngIf="data.anamnesisStatus === 'closed'">Buchung vorgemerkt</span>
+      </span>
       <span *ngIf="data.adminStatus === 'confirmed'">Anamnesebogen freigegeben</span>
       <span *ngIf="data.adminStatus === 'canceled'">
         <span *ngIf="data.reason.type === 'doctor_not_approve'">Anamnesebogen storniert</span>
