@@ -180,6 +180,9 @@ exports.appointmentNotThere = async (req, res) => {
 }
 
 cron.schedule('* * * * *', async function () {
+    let template2H = '';
+    let template4H = '';
+    let template24H = '';
     const appointmentsAfter2H = await db.sequelize.query(`
         SELECT a.*,
             patient.firstName AS patientFirstName, patient.lastName AS patientLastName,
@@ -198,6 +201,10 @@ cron.schedule('* * * * *', async function () {
                 SELECT appointmentId FROM medical_question_reminders AS m WHERE m.type = '2h'
             ))
     `, {type: db.Sequelize.QueryTypes.SELECT});
+    if (appointmentsAfter2H.length > 0) {
+        const template = await Template.findOne({where: {assign: 'Keine Anamnesefreigabe nach 2h'}, raw: true});
+        template2H = template ? template.message : '2h after appointment was created';
+    }
     for (const appointment of appointmentsAfter2H) {
         console.log('2h later >>>> id >>>>>>>>>>>> ', appointment.id)
         const adminIds = JSON.parse(appointment.admins);
@@ -207,7 +214,8 @@ cron.schedule('* * * * *', async function () {
             const data = {
                 email: admin.email,
                 subject: '2H',
-                content: `Appointment -> id: ${appointment.id}, packageName: ${appointment.packageName}, patient name: ${appointment.patientFirstName} ${appointment.patientLastName}`
+                content: template2H
+                // content: `Appointment -> id: ${appointment.id}, packageName: ${appointment.packageName}, patient name: ${appointment.patientFirstName} ${appointment.patientLastName}`
             };
             console.log('2h email >>>>>>>>>>>>>> ', admin.email);
             sendMail(data);
@@ -232,6 +240,10 @@ cron.schedule('* * * * *', async function () {
                 SELECT appointmentId FROM medical_question_reminders AS m WHERE m.type = '4h'
             ))
     `, {type: db.Sequelize.QueryTypes.SELECT});
+    if (appointmentsAfter4H.length > 0) {
+        const template = await Template.findOne({where: {assign: 'Keine Anamnesefreigabe nach 4h'}, raw: true});
+        template4H = template ? template.message : '4h after appointment was created';
+    }
     for (const appointment of appointmentsAfter4H) {
         console.log(' 4h later >>>>>> id >>>>>>>>>>>> ', appointment.id)
         const adminIds = JSON.parse(appointment.admins);
@@ -241,7 +253,8 @@ cron.schedule('* * * * *', async function () {
             const data = {
                 email: admin.email,
                 subject: '4H',
-                content: `Appointment -> id: ${appointment.id}, packageName: ${appointment.packageName}, patient name: ${appointment.patientFirstName} ${appointment.patientLastName}`
+                content: template4H
+                // content: `Appointment -> id: ${appointment.id}, packageName: ${appointment.packageName}, patient name: ${appointment.patientFirstName} ${appointment.patientLastName}`
             };
             console.log('4h email >>>>>>>>>>>>>> ', admin.email);
             sendMail(data);
@@ -263,6 +276,10 @@ cron.schedule('* * * * *', async function () {
             a.adminStatus="upcoming" AND 
             a.createdAt <= DATE_SUB(NOW(), INTERVAL 24 HOUR)
     `, {type: db.Sequelize.QueryTypes.SELECT});
+    if (appointmentsAfter24H.length > 0) {
+        const template = await Template.findOne({where: {assign: 'Keine Anamnesefreigabe nach 24h'}, raw: true});
+        template24H = template ? template.message : '24h after appointment was created';
+    }
     for (const appointment of appointmentsAfter24H) {
         await Appointment.update({adminStatus: 'canceled'}, {where: {id: appointment.id}});
         const adminIds = JSON.parse(appointment.admins);
@@ -271,7 +288,8 @@ cron.schedule('* * * * *', async function () {
             const data = {
                 email: admin.email,
                 subject: 'Termin storniert',
-                content: `Appointment -> id: ${appointment.id}, packageName: ${appointment.packageName}, patient name: ${appointment.patientFirstName} ${appointment.patientLastName}`
+                content: template24H
+                // content: `Appointment -> id: ${appointment.id}, packageName: ${appointment.packageName}, patient name: ${appointment.patientFirstName} ${appointment.patientLastName}`
             };
             console.log('4h email >>>>>>>>>>>>>> ', admin.email);
             sendMail(data);
