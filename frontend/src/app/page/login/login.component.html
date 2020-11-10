@@ -29,14 +29,15 @@
 <!--verify code form area-->
 
 <form [formGroup]="verificationForm" (ngSubmit)="submit()" class="login-form" *ngIf="showVerifyForm">
+  <div class="welcome">Bitte geben Sie den SMS-Code ein, den wir Ihnen soeben auf Ihr Handy zur Verifizierung geschickt haben.</div>
   <mat-card style="height: 180px!important;">
     <mat-card-content>
       <mat-form-field>
-        <mat-label>Enter 6 digit code</mat-label>
+        <mat-label>SMS-Code</mat-label>
         <input matInput formControlName="code" placeholder="">
       </mat-form-field>
       <mat-error *ngIf="codeError">{{codeError}}</mat-error>
     </mat-card-content>
   </mat-card>
-  <button mat-stroked-button class="custom-button-384 mt-47">Send code</button><br/>
+  <button mat-stroked-button class="custom-button-384 mt-47">Einloggen</button><br/>
 </form>
