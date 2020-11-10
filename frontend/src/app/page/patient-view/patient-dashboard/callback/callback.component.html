@@ -77,11 +77,14 @@
                 <input formControlName="title" autocomplete="off" placeholder="Titel" matInput>
               </mat-form-field>
               <br/>
-              <div class="mt-15 width-50">
-                <mat-label>Message</mat-label>
-                <ckeditor
-                  [editor]="Editor" formControlName="message" data=""></ckeditor>
-              </div>
+              <mat-form-field appearance="outline" class="mt-15 width-50">
+                <textarea
+                  matInput
+                  formControlName="message"
+                  placeholder="message"
+                  rows="7"
+                ></textarea>
+              </mat-form-field>
             </div>
           </mat-expansion-panel>
         </mat-accordion>

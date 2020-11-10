@@ -130,7 +130,7 @@
                 <mat-option>
                   <ngx-mat-select-search [formControl]="patientSearchControl"></ngx-mat-select-search>
                 </mat-option>
-                <mat-option *ngFor="let patient of allPatient" [value]="patient.id">
+                <mat-option *ngFor="let patient of allPatient" [value]="patient.user_id">
                   {{patient.firstName}} {{patient.lastName}}
                 </mat-option>
               </mat-select>

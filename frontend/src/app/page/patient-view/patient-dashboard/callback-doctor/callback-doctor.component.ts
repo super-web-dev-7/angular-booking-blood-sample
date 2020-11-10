@@ -2,9 +2,10 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import * as moment from 'moment';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-import {HttpService} from '../../../../service/http/http.service';
 import {URL_JSON} from '../../../../utils/url_json';
+import {HttpService} from '../../../../service/http/http.service';
 
 @Component({
   selector: 'app-callback-doctor',
@@ -25,12 +26,15 @@ export class CallbackDoctorComponent implements OnInit {
   displayData: any;
   defaultPhone = null;
   dateControl: any;
+  Editor = ClassicEditor;
+
   constructor(
     public formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<CallbackDoctorComponent>,
     public httpService: HttpService,
     @Inject(MAT_DIALOG_DATA) public data: any,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.selectedDay = 'today';
@@ -74,26 +78,19 @@ export class CallbackDoctorComponent implements OnInit {
     return moment(startTime).format('DD.MM.YYYY HH:mm') + ' - ' + moment(startTime + duration * 60 * 1000).format('HH:mm');
   }
 
-  formatDate = (date) => {
-    return new Date(date.getTime() - (date.getTimezoneOffset() * 60000 ))
-      .toISOString()
-      .split('T')[0];
+  formatDate = (selectedDate) => {
+    let date = new Date();
+    if (selectedDate === 'tomorrow') {
+      date = new Date(date.getTime() + 86400 * 1000);
+    }
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
   }
 
   submit = () => {
     if (this.callbackForm.invalid) {
       return;
     }
-    let selectedDate;
-    if (this.selectedDay === 'today') {
-      const today = new Date();
-      selectedDate = this.formatDate(today);
-    } else {
-      const today = new Date();
-      const tomorrow = new Date(today);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      selectedDate = this.formatDate(tomorrow);
-    }
+    const selectedDate = this.formatDate(this.selectedDay);
     const data = {
       appointmentId: this.data.appointmentId,
       date: selectedDate,
@@ -125,3 +122,4 @@ export class CallbackDoctorComponent implements OnInit {
   }
 
 }
+

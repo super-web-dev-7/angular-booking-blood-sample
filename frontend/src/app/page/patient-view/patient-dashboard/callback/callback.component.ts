@@ -1,19 +1,17 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {HttpService} from '../../../../service/http/http.service';
-import {URL_JSON} from '../../../../utils/url_json';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import * as moment from 'moment';
 
+import {URL_JSON} from '../../../../utils/url_json';
+import {HttpService} from '../../../../service/http/http.service';
+
 @Component({
-  selector: 'app-popup-callback-doctor',
-  templateUrl: './popup-callback-doctor.component.html',
-  styleUrls: ['./popup-callback-doctor.component.scss']
+  selector: 'app-callback',
+  templateUrl: './callback.component.html',
+  styleUrls: ['./callback.component.scss']
 })
-export class PopupCallbackDoctorComponent implements OnInit {
-  @Output() closeSide = new EventEmitter();
-  @Input() isMobile;
-  @Input() isTablet;
-  @Input() appointmentId;
+export class CallbackComponent implements OnInit {
   selectedDay: any;
   times = [
     {time: 'morning', label: 'Vormittags (09:00 - 12:00)'},
@@ -25,24 +23,25 @@ export class PopupCallbackDoctorComponent implements OnInit {
   isEditPhone = false;
   callbackForm: FormGroup;
   displayData: any;
-  defaultPhone: '';
+  defaultPhone = null;
   dateControl: any;
-  isSuccess = false;
   constructor(
-    public httpService: HttpService,
     public formBuilder: FormBuilder,
+    private dialogRef: MatDialogRef<CallbackComponent>,
+    public httpService: HttpService,
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
   ngOnInit(): void {
     this.selectedDay = 'today';
-    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.appointmentId).subscribe((res: any) => {
+    this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentDetail/' + this.data.appointmentId).subscribe((res: any) => {
       this.displayData = res;
       this.defaultPhone = this.displayData.patientNumber;
       this.setPhone(res.patientNumber);
     });
     this.callbackForm = this.formBuilder.group({
       phone: [null, [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{11,13}$')]],
-      title: [null, [Validators.required]],
+      title: [null, Validators.required],
       message: [null],
     });
     this.dateControl = new FormControl(new Date());
@@ -50,6 +49,18 @@ export class PopupCallbackDoctorComponent implements OnInit {
 
   get f(): any {
     return this.callbackForm.controls;
+  }
+
+  getConditionFromTime = time => {
+    const now = new Date();
+    const currentHour = now.getHours();
+    if (time === 'morning') {
+      return currentHour >= 12;
+    } else if (time === 'evening') {
+      return currentHour >= 16;
+    } else {
+      return currentHour >= 19;
+    }
   }
 
   setPhone = (phone) => {
@@ -77,18 +88,22 @@ export class PopupCallbackDoctorComponent implements OnInit {
     }
     const selectedDate = this.formatDate(this.selectedDay);
     const data = {
-      appointmentId: this.appointmentId,
+      appointmentId: this.data.appointmentId,
       date: selectedDate,
       time: this.selectedTime,
       phoneNumber: this.f.phone.value,
-      title: this.f.title.value,
+      schedule: this.f.title.value,
       message: this.f.message.value
     };
     this.httpService.post(URL_JSON.PATIENT + '/createCallbackForDoctor', data).subscribe((res: any) => {
       if (res) {
-        this.isSuccess = true;
+        this.dialogRef.close(true);
       }
     });
+  }
+
+  close = () => {
+    this.dialogRef.close(false);
   }
 
   selectDay = (event) => {
@@ -102,19 +117,5 @@ export class PopupCallbackDoctorComponent implements OnInit {
     this.selectedTime = event.time;
   }
 
-  getConditionFromTime = time => {
-    const now = new Date();
-    const currentHour = now.getHours();
-    if (time === 'morning') {
-      return currentHour >= 12;
-    } else if (time === 'evening') {
-      return currentHour >= 16;
-    } else {
-      return currentHour >= 19;
-    }
-  }
 
-  close = () => {
-    this.closeSide.emit(false);
-  }
 }

@@ -2,6 +2,8 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
+import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 
 import {PatientViewRoutingModule} from './patient-view-routing.module';
 import {MaterialModule} from '../../material/material.module';
@@ -9,7 +11,6 @@ import {PatientDashboardComponent} from './patient-dashboard/patient-dashboard.c
 import {CancelAppointmentComponent} from './patient-dashboard/cancel-appointment/cancel-appointment.component';
 import {MoveAppointmentComponent} from './patient-dashboard/move-appointment/move-appointment.component';
 import {EditAnamnesisComponent} from './patient-dashboard/edit-anamnesis/edit-anamnesis.component';
-import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 import {ChangePackageComponent} from './patient-dashboard/change-package/change-package.component';
 import {NewAppointmentComponent} from './new-appointment/new-appointment.component';
 import {CallbackDoctorComponent} from './patient-dashboard/callback-doctor/callback-doctor.component';
@@ -30,14 +31,9 @@ import {PopupNewAppointmentComponent} from './tablet/popup-new-appointment/popup
 import {PopupArrangeAppointmentComponent} from './tablet/popup-arrange-appointment/popup-arrange-appointment.component';
 import {PopupHistoryComponent} from './tablet/popup-history/popup-history.component';
 import {DialogSuccessComponent} from './patient-dashboard/dialog-success/dialog-success.component';
-import {
-  NgxMatDatetimePickerModule,
-  NgxMatNativeDateModule,
-  NgxMatTimepickerModule
-} from '@angular-material-components/datetime-picker';
 import {BookingTimePickerComponent} from '../../components/booking-time-picker/booking-time-picker.component';
 import { MedicalQuestionShowComponent } from './patient-dashboard/medical-question-show/medical-question-show.component';
-
+import { CallbackComponent } from './patient-dashboard/callback/callback.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +62,8 @@ import { MedicalQuestionShowComponent } from './patient-dashboard/medical-questi
     PopupHistoryComponent,
     DialogSuccessComponent,
     BookingTimePickerComponent,
-    MedicalQuestionShowComponent
+    MedicalQuestionShowComponent,
+    CallbackComponent
   ],
   exports: [
     PatientSidebarComponent,
@@ -89,10 +86,10 @@ import { MedicalQuestionShowComponent } from './patient-dashboard/medical-questi
     MaterialModule,
     PatientViewRoutingModule,
     NgxMatSelectSearchModule,
-    // AppointmentModule,
-    NgxMatDatetimePickerModule,
-    NgxMatTimepickerModule,
-    NgxMatNativeDateModule,
+    CKEditorModule,
+  ],
+  entryComponents: [
+    CallbackDoctorComponent
   ]
 })
 export class PatientViewModule {

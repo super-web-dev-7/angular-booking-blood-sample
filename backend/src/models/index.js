@@ -1,5 +1,6 @@
 import config from '../config/config';
 import Sequelize from 'sequelize';
+
 import user from './user.model';
 import calendar from './calendar.model';
 import district from './district.model';
@@ -29,7 +30,6 @@ import callbackAnswer from './callback_answer.model';
 import appointmentExtraInformation from './appointment_extra_information.model';
 import medicalQuestionReminder from './medical_question_reminder.model';
 import appointmentCancelReason from './appointment_cancel_reanson.model';
-
 
 const sequelize = new Sequelize(config.mysql.database, config.mysql.user, config.mysql.password, {
     host: config.mysql.host,

@@ -219,9 +219,7 @@ export class PatientDashboardComponent implements OnInit {
     if (this.isTablet || this.isMobile) {
       const emitData = {
         title: 'callback',
-        data: {
-          appointmentId: this.selectedAppointment.id
-        }
+        data: {appointmentId: this.selectedAppointment.id}
       };
       this.sharedService.patientPopup.emit(emitData);
     } else {

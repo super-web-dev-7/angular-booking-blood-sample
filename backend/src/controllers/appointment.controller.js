@@ -1,5 +1,8 @@
-import db from '../models';
 import Sequelize from 'sequelize';
+import {v1 as UUID} from 'uuid';
+import db from '../models';
+import {call} from "../helper/laboratory";
+
 
 const Appointment = db.appointment;
 const Package = db.package;
@@ -10,11 +13,42 @@ const ContactHistory = db.contactHistory;
 const sequelize = db.sequelize;
 
 exports.create = async (req, res) => {
-    const newAppointment = req.body;
+    let newAppointment = req.body;
+    const engagementID = UUID();
+    newAppointment = {...newAppointment, engagementID };
     Appointment.create(newAppointment).then(async data => {
         await ContactHistory.create({type: 'appointment_created', appointmentId: data.id});
+        const patients = await sequelize.query(`
+            SELECT * FROM users JOIN patients ON patients.user_id=users.id WHERE users.id=${data.userId}
+        `, {type: Sequelize.QueryTypes.SELECT});
+        const patient = patients[0];
+        const workingGroupAgency = await db.workingGroupAgency.findOne({where: {agencyId: data.agencyId}, raw: true});
+        const schema = {
+            url: '/engagement',
+            method: 'PUT',
+            body: {
+                engagementID,
+                patientID: data.userId.toString(),
+                workingGroupID: workingGroupAgency.groupId.toString(),
+                profileID: 'gbb',
+                appointment: new Date(),
+                pFirstName: patient.firstName,
+                pLastName: patient.lastName,
+                pDateOfBirth: new Date(patient.age),
+                pEmail: patient.email,
+                pAddress: patient.street,
+                pPostalCode: patient.plz.toString(),
+                pCity: patient.ort,
+                pCountryCode: 'DE',
+                pGender: patient.gender === 'Male' ? 'm' : 'f',
+                pAnamnesis: {}
+            }
+        };
+        console.log(schema);
+        await call(schema);
         res.status(201).json(data);
     }).catch(e => {
+        console.log(e);
         res.status(400).send({
             message: e.errors[0].message || 'Some error occurred.'
         });
@@ -70,7 +104,9 @@ exports.createByPatient = async (req, res) => {
     `, {type: db.Sequelize.QueryTypes.SELECT});
 
     if (countByAgency.length > 0) {
+        const engagementID = UUID();
         data.agencyId = countByAgency[0].agencyId;
+        data.engagementID = engagementID;
         const newAppointment = await Appointment.create(data);
         additionalInfo.appointmentId = newAppointment.id;
         await db.appointmentExtraInformation.create(additionalInfo);

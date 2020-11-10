@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
+// import {NgxMatDatetimePickerModule} from '@angular-material-components/datetime-picker';
 import {CKEditorModule} from '@ckeditor/ckeditor5-angular';
 import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
@@ -110,7 +110,7 @@ const config: SocketIoConfig = {url: environment.BASE_URL, options: {}};
     SharedModule,
     NgxMatSelectSearchModule,
     CKEditorModule,
-    NgxMatDatetimePickerModule,
+    // NgxMatDatetimePickerModule,
     SocketIoModule.forRoot(config)
   ]
 })

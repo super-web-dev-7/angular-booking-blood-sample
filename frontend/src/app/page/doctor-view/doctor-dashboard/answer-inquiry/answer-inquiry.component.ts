@@ -61,6 +61,11 @@ export class AnswerInquiryComponent implements OnInit {
     return moment(time).format('DD.MM.YYYY HH:mm');
   }
 
+  formatDate = date => {
+    const newDate = new Date(date);
+    return moment(newDate).format('DD.MM.YYYY');
+  }
+
   get f(): any {
     return this.messageForm.controls;
   }

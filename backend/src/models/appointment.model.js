@@ -20,6 +20,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         archive: {
             type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false
+        },
+        engagementID: {
+            type: Sequelize.DataTypes.UUID
         }
     });
 };

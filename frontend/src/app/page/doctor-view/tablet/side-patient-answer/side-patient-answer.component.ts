@@ -62,6 +62,11 @@ export class SidePatientAnswerComponent implements OnInit {
     return moment(time).format('DD.MM.YYYY HH:mm');
   }
 
+  formatDate = date => {
+    const newDate = new Date(date);
+    return moment(newDate).format('DD.MM.YYYY');
+  }
+
   selectMessage = item => {
     if (!item.answeredCallbackId) {
       this.selectedMessage = item.id;

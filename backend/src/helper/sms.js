@@ -16,6 +16,10 @@ export const sendSMS = async (data) => {
         recipientAddressList: ['49' + data.phoneNumber],
         messageContent: data.content,
     };
+    if (process.env.NODE_ENV === 'development') {
+        return false;
+    }
+    console.log('dddd');
     return Axios({
         method: 'POST',
         url: 'https://api.websms.com/rest/smsmessaging/text',
