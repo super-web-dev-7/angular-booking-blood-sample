@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
+import {BreakpointObserver} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-auth',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AuthComponent implements OnInit {
 
-  constructor() { }
+  isTablet = false;
+  constructor(
+    public breakpointObserver: BreakpointObserver,
+  ) { }
 
   ngOnInit(): void {
+    this.isTablet = this.breakpointObserver.isMatched('(max-width: 1023px)');
+  }
+
+  @HostListener('window:resize', [])
+  private onResize = () => {
+    this.isTablet = this.breakpointObserver.isMatched('(max-width: 1023px)');
   }
 
 }

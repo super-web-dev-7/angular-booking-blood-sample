@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {AuthComponent} from './layout/auth/auth.component';
-import {MainLayoutComponent} from './layout/main-layout/main-layout.component';
-
-import {LoginComponent} from './page/login/login.component';
-import {RegisterComponent} from './page/register/register.component';
-
 import {AuthGuard} from './guard/auth.guard';
 import {RoleGuard} from './guard/role.guard';
+
+import {AuthComponent} from './layout/auth/auth.component';
+import {MainLayoutComponent} from './layout/main-layout/main-layout.component';
 import {DoctorLayoutComponent} from './layout/doctor-layout/doctor-layout.component';
 import {PatientLayoutComponent} from './layout/patient-layout/patient-layout.component';
-import {SmsVerificationComponent} from './page/sms-verification/sms-verification.component';
+
+import {LoginComponent} from './page/login/login.component';
 
 const routes: Routes = [
   {
@@ -26,14 +24,6 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent
-      },
-      {
-        path: 'register',
-        component: RegisterComponent
-      },
-      {
-        path: 'sms-verification',
-        component: SmsVerificationComponent
       }
     ]
   },

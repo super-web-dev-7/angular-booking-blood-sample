@@ -1,5 +1,4 @@
 :host {
-  padding: 170px 10px 55px 10px;
   display: flex;
   justify-content: center;
 }
@@ -8,7 +7,21 @@
   //height: 300px;
   align-items: center;
   justify-content: center;
+
+  button {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 }
+
+.welcome {
+  margin-bottom: 48px;
+  font-size: 16px;
+  padding-left: 50px;
+  padding-right: 50px;
+  color: var(--primary-color);
+}
+
 mat-card {
   height: 254px!important;
   border-radius: 23px;

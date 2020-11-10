@@ -1,7 +1,27 @@
 <div class="login-container">
-  <img src="/assets/images/menu.svg" alt="menu" class="menu-icon" />
-  <div class="main-login-form">
+  <div class="login-header">
     <img src="/assets/images/logo_new.png" alt="logo" class="logo" />
+    <div class="mat-nav-list" *ngIf="!isTablet">
+      <ul>
+        <li>Startseite</li>
+        <li>Über uns</li>
+        <li>Unser Ärzteteam</li>
+        <li>FAQ</li>
+        <li>Kontakt</li>
+        <li>Business</li>
+        <li>Datenschutz</li>
+        <li>AGB & Impressum</li>
+      </ul>
+    </div>
+    <div class="header-icon">
+      <img src="/assets/images/header.svg" alt="header">
+    </div>
+  </div>
+  <div class="main-login-form">
     <router-outlet></router-outlet>
+  </div>
+  <div class="login-footer">
+    <span>Prävention neu gedacht.</span>
+    Bluttests wann und wo Sie wollen, einfach & schnell!
   </div>
 </div>

@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
 import {JwtInterceptor} from './helper';
 
 import { LoginComponent } from './page/login/login.component';
-import { RegisterComponent } from './page/register/register.component';
 import { AuthComponent } from './layout/auth/auth.component';
 
 import {MaterialModule} from './material/material.module';
@@ -22,18 +21,15 @@ import { ChartComponent } from './components/chart/chart.component';
 import { SessionExpireAlertComponent } from './components/session-expire-alert/session-expire-alert.component';
 import {PatientLayoutModule} from './layout/patient-layout/patient-layout.module';
 import {DoctorLayoutModule} from './layout/doctor-layout/doctor-layout.module';
-import { SmsVerificationComponent } from './page/sms-verification/sms-verification.component';
 import {ProfileComponent} from './page/profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent,
     AuthComponent,
     ChartComponent,
     SessionExpireAlertComponent,
-    SmsVerificationComponent,
     ProfileComponent,
   ],
   imports: [

@@ -1,8 +1,9 @@
 <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form" *ngIf="!showVerifyForm">
+  <div class="welcome">Herzlich Willkommen, wir wünschen Ihnen einen erfolgreichen Tag.</div>
   <mat-card>
     <mat-card-content>
         <mat-form-field>
-          <mat-label>Email</mat-label>
+          <mat-label>E-Mail-Adresse</mat-label>
           <input matInput formControlName="email" placeholder="Email">
           <mat-error *ngIf="loginForm.get('email').hasError('email') && !loginForm.get('email').hasError('required')">
             Please enter a valid email address
@@ -12,7 +13,7 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Password</mat-label>
+          <mat-label>Passwort</mat-label>
           <input type="password" matInput formControlName="password" placeholder="Password">
           <mat-error *ngIf="loginForm.get('password').hasError('required')">
             Password is <strong>required</strong>
