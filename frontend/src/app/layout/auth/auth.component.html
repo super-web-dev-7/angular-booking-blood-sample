@@ -1,5 +1,6 @@
 <div class="login-container">
   <div class="login-header">
+    <img src="/assets/images/menu.svg" alt="menu" class="menu-icon" *ngIf="isTablet" />
     <img src="/assets/images/logo_new.png" alt="logo" class="logo" />
     <div class="mat-nav-list" *ngIf="!isTablet">
       <ul>
@@ -14,13 +15,13 @@
       </ul>
     </div>
     <div class="header-icon">
-      <img src="/assets/images/header.svg" alt="header">
+      <img *ngIf="!isTablet" src="/assets/images/header.svg" alt="header">
     </div>
   </div>
   <div class="main-login-form">
     <router-outlet></router-outlet>
   </div>
-  <div class="login-footer">
+  <div class="login-footer" *ngIf="!isTablet">
     <span>Prävention neu gedacht.</span>
     Bluttests wann und wo Sie wollen, einfach & schnell!
   </div>
