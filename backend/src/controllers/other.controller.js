@@ -88,7 +88,12 @@ exports.checkPostalCodeForAppointment = async (req, res) => {
         }
     }
     if (calendar) {
-        res.status(200).json(districtModel);
+        const workingGroup = await WorkingGroup.findOne({where: {calendar_id: calendar.id}, raw: true});
+        if (workingGroup) {
+            res.status(200).json(districtModel);
+        } else {
+            res.status(200).json(null);
+        }
     } else {
         res.status(200).json(null);
     }
