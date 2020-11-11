@@ -85,10 +85,10 @@
               </span>
               <span *ngIf="element.adminStatus === 'confirmed'">Anamnesebogen freigegeben</span>
               <span *ngIf="element.adminStatus === 'canceled'">
-                <span *ngIf="element.reason.type === 'doctor_not_approve'">Anamnesebogen storniert</span>
-                <span *ngIf="element.reason.type === 'patient_cancel'">Durch Patient storniert</span>
-                <span *ngIf="element.reason.type === 'nurse_shift'">Durch Schwester verschoben</span>
-                <span *ngIf="element.reason.type === 'nurse_not_there'">Durch Schwester verschoben</span>
+                <span *ngIf="element.reason?.type === 'doctor_not_approve'">Anamnesebogen storniert</span>
+                <span *ngIf="element.reason?.type === 'patient_cancel'">Durch Patient storniert</span>
+                <span *ngIf="element.reason?.type === 'nurse_shift'">Durch Schwester verschoben</span>
+                <span *ngIf="element.reason?.type === 'nurse_not_there'">Durch Schwester verschoben</span>
               </span>
               <span *ngIf="element.adminStatus === 'successful'">Termin wahrgenommen</span>
             </td>

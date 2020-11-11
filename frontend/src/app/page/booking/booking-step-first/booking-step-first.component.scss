@@ -1,4 +1,5 @@
 :host {
+  position: relative;
   height: 100%;
   background-color: var(--primary-color);
   border-top-left-radius: 20px;
@@ -19,9 +20,12 @@
 }
 
 .pfad-image-background {
-  width: 100% !important;
-  height: 100%;
-  background-size: 100% 500px;
-  background: url('/assets/images/booking/step1-1.svg') no-repeat top;
+  position: absolute;
+  right: 0;
+  top: 50px;
+  width: 50% !important;
+  height: 55%;
+  //background-size: 100% 500px;
+  background: transparent url('/assets/images/booking/step1-1.svg') 0 0 no-repeat padding-box;
   zoom: 60%;
 }
