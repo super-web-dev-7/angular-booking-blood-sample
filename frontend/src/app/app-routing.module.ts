@@ -10,6 +10,7 @@ import {DoctorLayoutComponent} from './layout/doctor-layout/doctor-layout.compon
 import {PatientLayoutComponent} from './layout/patient-layout/patient-layout.component';
 
 import {LoginComponent} from './page/login/login.component';
+import {BookingLayoutComponent} from './layout/booking-layout/booking-layout.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,16 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent
+      }
+    ]
+  },
+  {
+    path: '',
+    component: BookingLayoutComponent,
+    children: [
+      {
+        path: 'booking',
+        loadChildren: () => import('./page/booking/booking.module').then(m => m.BookingModule)
       }
     ]
   },

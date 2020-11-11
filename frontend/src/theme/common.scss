@@ -312,6 +312,11 @@ button {
   color: white!important;
 }
 
+.secondary {
+  background-color: var(--secondary-color) !important;
+  color: white!important;
+}
+
 .primary-button {
   border-radius: 25px !important;
 }
@@ -546,4 +551,28 @@ table thead tr th, .disable-user-select {
 
 .pre-wrap {
   white-space: pre-wrap!important;
+}
+
+.font-weight-300 {
+  font-weight: 300!important;
+}
+
+.font-size-38 {
+  font-size: 38px!important;
+}
+
+.font-size-16 {
+  font-size: 16px!important;
+}
+
+.font-size-18 {
+  font-size: 18px!important;
+}
+
+.font-size-30 {
+  font-size: 30px!important;
+}
+
+.w-99 {
+  width: 99% !important;
 }

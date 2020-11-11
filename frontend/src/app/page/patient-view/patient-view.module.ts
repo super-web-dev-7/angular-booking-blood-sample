@@ -31,9 +31,9 @@ import {PopupNewAppointmentComponent} from './tablet/popup-new-appointment/popup
 import {PopupArrangeAppointmentComponent} from './tablet/popup-arrange-appointment/popup-arrange-appointment.component';
 import {PopupHistoryComponent} from './tablet/popup-history/popup-history.component';
 import {DialogSuccessComponent} from './patient-dashboard/dialog-success/dialog-success.component';
-import {BookingTimePickerComponent} from '../../components/booking-time-picker/booking-time-picker.component';
 import { MedicalQuestionShowComponent } from './patient-dashboard/medical-question-show/medical-question-show.component';
 import { CallbackComponent } from './patient-dashboard/callback/callback.component';
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -61,23 +61,22 @@ import { CallbackComponent } from './patient-dashboard/callback/callback.compone
     PopupArrangeAppointmentComponent,
     PopupHistoryComponent,
     DialogSuccessComponent,
-    BookingTimePickerComponent,
     MedicalQuestionShowComponent,
     CallbackComponent
   ],
-  exports: [
-    PatientSidebarComponent,
-    PopupCancelAppointmentComponent,
-    PopupCallSisterComponent,
-    PopupCallbackDoctorComponent,
-    PopupChangePackageComponent,
-    PopupEditAnamnesComponent,
-    PopupPaymentStatusComponent,
-    PopupShiftScheduleComponent,
-    PopupNewAppointmentComponent,
-    PopupArrangeAppointmentComponent,
-    PopupHistoryComponent
-  ],
+    exports: [
+        PatientSidebarComponent,
+        PopupCancelAppointmentComponent,
+        PopupCallSisterComponent,
+        PopupCallbackDoctorComponent,
+        PopupChangePackageComponent,
+        PopupEditAnamnesComponent,
+        PopupPaymentStatusComponent,
+        PopupShiftScheduleComponent,
+        PopupNewAppointmentComponent,
+        PopupArrangeAppointmentComponent,
+        PopupHistoryComponent,
+    ],
   imports: [
     CommonModule,
     RouterModule,
@@ -87,6 +86,7 @@ import { CallbackComponent } from './patient-dashboard/callback/callback.compone
     PatientViewRoutingModule,
     NgxMatSelectSearchModule,
     CKEditorModule,
+    SharedModule
   ],
   entryComponents: [
     CallbackDoctorComponent

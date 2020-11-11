@@ -1,0 +1,27 @@
+:host {
+  height: 100%;
+  background-color: var(--primary-color);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  p {
+    color: white;
+  }
+}
+
+.main-content {
+  display: flex;
+  div:first-child {
+    width: 35%;
+  }
+  div:last-child {
+    width: 65%;
+  }
+}
+
+.pfad-image-background {
+  width: 100% !important;
+  height: 100%;
+  background-size: 100% 500px;
+  background: url('/assets/images/booking/step1-1.svg') no-repeat top;
+  zoom: 60%;
+}

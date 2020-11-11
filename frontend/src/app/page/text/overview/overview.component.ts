@@ -29,7 +29,8 @@ export class OverviewComponent implements OnInit {
   receivers = [
     {id: 1, name: 'Patient'},
     {id: 2, name: 'Schwester'},
-    {id: 3, name: 'Arzt'}
+    {id: 3, name: 'Arzt'},
+    {id: 4, name: 'AG-Admin'}
   ];
 
   orderStatus = {

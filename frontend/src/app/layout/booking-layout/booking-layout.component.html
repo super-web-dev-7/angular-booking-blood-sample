@@ -1,0 +1,54 @@
+<div class="booking-layout">
+  <div>
+    <div class="header-container">
+      <div class="logo-container">
+        <img src="/assets/images/logo_new.png" alt="logo" class="logo" />
+      </div>
+      <div class="navbar-container">
+        <ul>
+          <li>Startseite</li>
+          <li>Über uns</li>
+          <li>Unser Ärzteteam</li>
+          <li>FAQ</li>
+          <li>Kontakt</li>
+          <li>Business</li>
+        </ul>
+      </div>
+      <div class="login-button-container">
+        <button mat-stroked-button class="custom-button primary primary-button" [routerLink]="'/login'">Patienten-Login</button>
+        <button mat-stroked-button class="custom-button secondary primary-button" [routerLink]="'/login'">Arzt-Login</button>
+      </div>
+    </div>
+    <div class="container d-flex d-flex-between subheader">
+      <div class="subheader-container">
+        <div class="subheader-title">
+          <span>4 Schritte </span>
+          <span>zur Buchung</span>
+        </div>
+        <div class="round-border"></div>
+      </div>
+      <div class="step-button">
+        <button *ngFor="let item of [1, 2, 3, 4]"
+                (click)="currentStep = item;"
+                mat-stroked-button
+                [ngClass]="{'primary': currentStep === item, 'success': currentStep > item}"
+                class="custom-button">
+          <span *ngIf="currentStep <= item">{{item}}</span>
+          <mat-icon *ngIf="currentStep > item">done</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="container mb-30" *ngIf="currentStep === 2">
+      <p class="font-size-38 font-weight-300">Paket und Termin wählen</p>
+      <p class="font-size-16">Vielen Dank für Ihre Paket- und Terminwahl. Zur Vervollständigung der Buchung benötigen wir Ihre persönlichen Daten.</p>
+    </div>
+    <div class="container mb-30" *ngIf="currentStep === 3">
+      <p class="font-size-38 font-weight-300">Persönliche Daten abgeben</p>
+      <p class="font-size-16">Unser Service ist für Ihre Postleitzahl verfügbar. Bitte geben Sie den Ort an und wählen Sie Paket und Termin aus.</p>
+    </div>
+  </div>
+  <app-booking-step-first *ngIf="currentStep === 1"></app-booking-step-first>
+  <app-booking-step-second *ngIf="currentStep === 2"></app-booking-step-second>
+  <app-booking-step-third *ngIf="currentStep === 3"></app-booking-step-third>
+  <app-booking-step-fourth *ngIf="currentStep === 4"></app-booking-step-fourth>
+</div>

@@ -22,6 +22,8 @@ import { SessionExpireAlertComponent } from './components/session-expire-alert/s
 import {PatientLayoutModule} from './layout/patient-layout/patient-layout.module';
 import {DoctorLayoutModule} from './layout/doctor-layout/doctor-layout.module';
 import {ProfileComponent} from './page/profile/profile.component';
+import { BookingLayoutComponent } from './layout/booking-layout/booking-layout.component';
+import {BookingModule} from './page/booking/booking.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import {ProfileComponent} from './page/profile/profile.component';
     ChartComponent,
     SessionExpireAlertComponent,
     ProfileComponent,
+    BookingLayoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,6 +47,7 @@ import {ProfileComponent} from './page/profile/profile.component';
     DoctorLayoutModule,
     SharedModule,
     NgCircleProgressModule,
+    BookingModule,
   ],
   entryComponents: [SessionExpireAlertComponent],
   providers: [

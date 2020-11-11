@@ -12,7 +12,9 @@ const jwt = () => {
             '/api/test/district/insert',
             '/api/test/ping',
             '/api/test/zipcode/insert',
-            '/api/sendSMS'
+            '/api/sendSMS',
+            '/api/package/getWithQuery',
+            '/api/additional-package/get'
         ]
     });
 };

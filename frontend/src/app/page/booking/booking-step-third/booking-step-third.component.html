@@ -1,0 +1,262 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="notify-board mt-15"
+           [ngStyle]="{'background': '#4A90E2'}"
+      >
+        <div class="d-flex align-items-center">
+          <div class="n-circle" [ngStyle]="{'background': '#ffffff'}">
+            <img
+              [src]="'/assets/images/package/blue/' + (packageNames.includes(selectedPackage.name) ? selectedPackage.name : 'Männermedizin') + '.svg'"
+              alt="male">
+          </div>
+          <p style="margin-left: 15px" class="p-white">{{selectedPackage.name}}</p>
+        </div>
+        <mat-icon class="p-white">done</mat-icon>
+      </div>
+      <div class="notify-board mt-15"
+           style="background-color: #E1EAF1;"
+      >
+        <div class="d-flex align-items-center">
+          <div class="n-circle">
+            <img
+              [src]="'/assets/images/package/blue/' + (packageNames.includes(selectedPackage.name) ? selectedPackage.name : 'Männermedizin') + '.svg'"
+              alt="male">
+          </div>
+          <p style="margin-left: 15px">{{selectedPackage.name}}</p>
+        </div>
+        <mat-icon style="color: var(--primary-color)">done</mat-icon>
+      </div>
+      <div class="d-flex avatar green mt-3">
+        <div class="round">
+          <img src="/assets/images/clock_icon.svg" alt="clock">
+        </div>
+        <div>02.10.2020 12:00 - 13:15</div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <mat-card class="mb-5">
+        <mat-card-content>
+          <p class="font-size-16">Männermedizin</p>
+          <p class="font-weight-300">Im Profil Männermedizin werden männerspezifische Parameter wie Testosteron und PSA untersucht, um Aussagen über diese für den Mann und sein gesamtes Organsystem wichtigen Hormonachsen zu erhalten. Der Einfluss der männlichen Hormone geht weiter über die Libido bis zu Einfluss auf Antrieb, Psyche, Leistungsfähigkeit und Überleben hinaus.</p>
+          <div class="d-flex justify-content-end">
+            <div>
+              <p class="font-size-30">150,95&euro;</p>
+              <p>Inkl. 16% Mwst.</p>
+            </div>
+            <button mat-stroked-button class="custom-button primary-button primary ml-3">Wieder abwählen</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="mb-5">
+        <mat-card-content>
+          <p class="font-size-16">Männermedizin</p>
+          <p class="font-weight-300">Im Profil Männermedizin werden männerspezifische Parameter wie Testosteron und PSA untersucht, um Aussagen über diese für den Mann und sein gesamtes Organsystem wichtigen Hormonachsen zu erhalten. Der Einfluss der männlichen Hormone geht weiter über die Libido bis zu Einfluss auf Antrieb, Psyche, Leistungsfähigkeit und Überleben hinaus.</p>
+          <div class="d-flex justify-content-end">
+            <div>
+              <p class="font-size-30">150,95&euro;</p>
+              <p>Inkl. 16% Mwst.</p>
+            </div>
+            <button mat-stroked-button class="custom-button primary-button primary ml-3">Wieder abwählen</button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <mat-accordion>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="d-flex avatar yellow justify-content-between">
+                <div class="d-flex align-items-center">
+                  <div class="round">
+                    <mat-icon>euro_symbol</mat-icon>
+                  </div>
+                  <div>Zahlungsmittel</div>
+                </div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="d-flex flex-wrap expansion-panel-container">
+            <div class="text-center w-100">
+              <mat-form-field appearance="fill">
+                <mat-label></mat-label>
+                <mat-select>
+                  <mat-option
+                    [value]="payment.value"
+                    *ngFor="let payment of paymentOptions"
+                  >
+                    {{payment.label}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-expansion-panel>
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="d-flex avatar blue justify-content-between">
+                <div class="d-flex align-items-center">
+                  <div class="round">
+                    <mat-icon>lens</mat-icon>
+                  </div>
+                  <div>Nachricht hinzufügen</div>
+                </div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="d-flex flex-wrap expansion-panel-container">
+            <mat-form-field
+              appearance="outline"
+              style="width: 100%;margin-left:76px"
+            >
+              <mat-label></mat-label>
+              <textarea
+                matInput
+                placeholder=""
+                rows="10"
+              ></textarea>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <div class="col-md-8">
+      <div>
+        <p class="font-size-16">Ihre persönlichen Daten</p>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field class="w-99">
+              <mat-label>Vorname</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="w-99">
+              <mat-label>Nachname</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="w-99">
+              <mat-label>Straße Hausnummer</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <mat-form-field class="w-99">
+              <mat-label>PLZ</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-md-9">
+            <mat-form-field class="w-99">
+              <mat-label>Ort</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <mat-form-field class="w-99">
+              <mat-label>Geschlecht</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-md-9">
+            <mat-form-field class="w-99">
+              <mat-label>Geb.Datum</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="w-99">
+              <mat-label>Handynummer</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="w-99">
+              <mat-label>PLsssssZ</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="w-99">
+              <mat-label>Straße Hausnummer</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <mat-form-field class="w-99">
+              <mat-label>PLZ</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-md-9">
+            <mat-form-field class="w-99">
+              <mat-label>Ort</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <p class="font-size-16">Login Daten</p>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="w-99">
+              <mat-label>E-Mail-Adresse</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-md-12">
+            <mat-form-field class="w-99">
+              <mat-label>Passwort</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+          <div class="col-md-12">
+            <mat-form-field class="w-99">
+              <mat-label>Passwort wiederholen</mat-label>
+              <input autocomplete="off" matInput>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="d-flex justify-content-end">
+            <div>
+              <p class="font-size-30">150,95&euro;</p>
+              <p>Inkl. 16% Mwst.</p>
+            </div>
+            <button mat-stroked-button class="custom-button primary-button primary ml-3">Termin buchen & bezahlen</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>
+    <span class="font-size-30">Prävention neu gedacht. </span>
+    <span class="font-size-18 font-weight-300">Bluttests wann und wo Sie wollen, einfach & schnell! </span>
+    <span class="font-size-18 font-weight-300 ml-3">Datenschutz</span>
+    <span class="font-size-18 font-weight-300 ml-3">AGB & Impressum</span>
+  </p>
+</div>
