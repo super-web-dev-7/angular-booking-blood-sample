@@ -51,7 +51,7 @@ exports.createPatient = (req, res) => {
     };
     bcrypt.hash(newUser.password, saltRounds, (err, hash) => {
         newUser.password = hash;
-        User.create(newUser).then(data => {
+        User.create(newUser).then( async data => {
             const newPatientData = {
                 user_id: data.id,
                 salutation: req.body.salutation,
@@ -67,9 +67,8 @@ exports.createPatient = (req, res) => {
                 otherCity: req.body.otherCity,
                 otherPostalCode: req.body.otherPostalCode
             };
-            Patient.create(newPatientData).then(() => {
-            })
-            res.send(data);
+            const patient = await Patient.create(newPatientData)
+            res.send({user: data, patient: patient});
         }).catch(err => {
             res.status(400).send({
                 message: err.errors[0].message || 'Some error occurred.'

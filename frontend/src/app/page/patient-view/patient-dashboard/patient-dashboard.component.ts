@@ -1,6 +1,6 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import * as moment from 'moment';
 
@@ -41,7 +41,7 @@ export class PatientDashboardComponent implements OnInit {
     successful: 'Befund freigegeben'
   };
 
-  selectedAppointment = null;
+  selectedAppointment: any = {};
   packageNames = [
     'Männermedizin',
     'Gesundheits-Check-Up',
@@ -54,6 +54,7 @@ export class PatientDashboardComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public router: Router,
+    public route: ActivatedRoute,
     public breakpointObserver: BreakpointObserver,
     private sharedService: SharedService,
     public httpService: HttpService,
@@ -78,6 +79,19 @@ export class PatientDashboardComponent implements OnInit {
     });
     this.httpService.get(URL_JSON.APPOINTMENT + '/getAppointmentByPatient/' + this.currentUser.id).subscribe((res: any) => {
       this.allAppointments = [...res];
+      this.route.queryParams.subscribe(params => {
+        if (params.appointmentId) {
+          console.log('appointment id ?.>>>>>>>>>>> ', params.appointmentId);
+          const id = parseInt(params.appointmentId, 10);
+          const index = this.allAppointments.findIndex(item => item.id === id);
+          if (index > -1) {
+            this.selectedAppointment.id = parseInt(params.appointmentId, 10);
+            this.editAnamnesis();
+          }
+        } else {
+          console.log('ddddddddddddddddddd');
+        }
+      });
     });
   }
 

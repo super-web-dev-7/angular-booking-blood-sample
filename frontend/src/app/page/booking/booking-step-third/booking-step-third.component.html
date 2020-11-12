@@ -1,4 +1,4 @@
-<div class="container">
+<form [formGroup]="patientForm" class="container">
   <div class="row">
     <div class="col-md-4">
       <div class="notify-board mt-15"
@@ -7,10 +7,11 @@
         <div class="d-flex align-items-center">
           <div class="n-circle" [ngStyle]="{'background': '#ffffff'}">
             <img
-              [src]="'/assets/images/package/blue/' + (packageNames.includes(selectedPackage.name) ? selectedPackage.name : 'Männermedizin') + '.svg'"
+              [src]="'/assets/images/package/blue/' +
+               (packageNames.includes(bookingData.package.name) ? bookingData.package.name : 'Männermedizin') + '.svg'"
               alt="male">
           </div>
-          <p style="margin-left: 15px" class="p-white">{{selectedPackage.name}}</p>
+          <p style="margin-left: 15px" class="p-white">{{bookingData.package.name}}</p>
         </div>
         <mat-icon class="p-white">done</mat-icon>
       </div>
@@ -20,10 +21,11 @@
         <div class="d-flex align-items-center">
           <div class="n-circle">
             <img
-              [src]="'/assets/images/package/blue/' + (packageNames.includes(selectedPackage.name) ? selectedPackage.name : 'Männermedizin') + '.svg'"
+              [src]="'/assets/images/package/blue/' +
+               (packageNames.includes(bookingData.additionalPackage.name) ? bookingData.additionalPackage.name : 'Männermedizin') + '.svg'"
               alt="male">
           </div>
-          <p style="margin-left: 15px">{{selectedPackage.name}}</p>
+          <p style="margin-left: 15px">{{bookingData.additionalPackage.name}}</p>
         </div>
         <mat-icon style="color: var(--primary-color)">done</mat-icon>
       </div>
@@ -31,33 +33,43 @@
         <div class="round">
           <img src="/assets/images/clock_icon.svg" alt="clock">
         </div>
-        <div>02.10.2020 12:00 - 13:15</div>
+        <div>{{getTimeDuration(bookingData.time)}}</div>
       </div>
     </div>
     <div class="col-md-8">
       <mat-card class="mb-5">
         <mat-card-content>
-          <p class="font-size-16">Männermedizin</p>
-          <p class="font-weight-300">Im Profil Männermedizin werden männerspezifische Parameter wie Testosteron und PSA untersucht, um Aussagen über diese für den Mann und sein gesamtes Organsystem wichtigen Hormonachsen zu erhalten. Der Einfluss der männlichen Hormone geht weiter über die Libido bis zu Einfluss auf Antrieb, Psyche, Leistungsfähigkeit und Überleben hinaus.</p>
+          <p class="font-size-16">
+            {{bookingData.package.name}}
+          </p>
+          <p class="font-weight-300">
+            {{bookingData.package.content}}
+          </p>
           <div class="d-flex justify-content-end">
             <div>
-              <p class="font-size-30">150,95&euro;</p>
+              <p class="font-size-30">{{bookingData.package.price}}&euro;</p>
               <p>Inkl. 16% Mwst.</p>
             </div>
-            <button mat-stroked-button class="custom-button primary-button primary ml-3">Wieder abwählen</button>
+            <button
+              (click)="deselectPackage()"
+              mat-stroked-button class="custom-button primary-button primary ml-3">Wieder abwählen</button>
           </div>
         </mat-card-content>
       </mat-card>
       <mat-card class="mb-5">
         <mat-card-content>
-          <p class="font-size-16">Männermedizin</p>
-          <p class="font-weight-300">Im Profil Männermedizin werden männerspezifische Parameter wie Testosteron und PSA untersucht, um Aussagen über diese für den Mann und sein gesamtes Organsystem wichtigen Hormonachsen zu erhalten. Der Einfluss der männlichen Hormone geht weiter über die Libido bis zu Einfluss auf Antrieb, Psyche, Leistungsfähigkeit und Überleben hinaus.</p>
+          <p class="font-size-16">{{bookingData.additionalPackage.name}}</p>
+          <p class="font-weight-300">
+            {{bookingData.additionalPackage.name}}
+          </p>
           <div class="d-flex justify-content-end">
             <div>
-              <p class="font-size-30">150,95&euro;</p>
+              <p class="font-size-30">{{bookingData.additionalPackage.price}}&euro;</p>
               <p>Inkl. 16% Mwst.</p>
             </div>
-            <button mat-stroked-button class="custom-button primary-button primary ml-3">Wieder abwählen</button>
+            <button
+              (click)="deselectAdditionalPackage()"
+              mat-stroked-button class="custom-button primary-button primary ml-3">Wieder abwählen</button>
           </div>
         </mat-card-content>
       </mat-card>
@@ -83,7 +95,7 @@
             <div class="text-center w-100">
               <mat-form-field appearance="fill">
                 <mat-label></mat-label>
-                <mat-select>
+                <mat-select formControlName="payment" (valueChange)="selectPayment($event)">
                   <mat-option
                     [value]="payment.value"
                     *ngFor="let payment of paymentOptions"
@@ -118,6 +130,7 @@
                 matInput
                 placeholder=""
                 rows="10"
+                formControlName="message"
               ></textarea>
             </mat-form-field>
           </div>
@@ -131,13 +144,13 @@
           <div class="col-md-6">
             <mat-form-field class="w-99">
               <mat-label>Vorname</mat-label>
-              <input autocomplete="off" matInput>
+              <input formControlName="firstName" autocomplete="off" matInput>
             </mat-form-field>
           </div>
           <div class="col-md-6">
             <mat-form-field class="w-99">
               <mat-label>Nachname</mat-label>
-              <input autocomplete="off" matInput>
+              <input formControlName="lastName" autocomplete="off" matInput>
             </mat-form-field>
           </div>
         </div>
@@ -145,7 +158,7 @@
           <div class="col-md-12">
             <mat-form-field class="w-99">
               <mat-label>Straße Hausnummer</mat-label>
-              <input autocomplete="off" matInput>
+              <input formControlName="street" autocomplete="off" matInput>
             </mat-form-field>
           </div>
         </div>
@@ -153,13 +166,15 @@
           <div class="col-md-3">
             <mat-form-field class="w-99">
               <mat-label>PLZ</mat-label>
-              <input autocomplete="off" matInput>
+              <input formControlName="plz" autocomplete="off" matInput (keyup)="checkPostalCode('plz')">
+              <mat-icon *ngIf="f.plz.touched && !f.plz.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+              <mat-icon *ngIf="f.plz.touched && f.plz.errors" style="color: red" matSuffix>close</mat-icon>
             </mat-form-field>
           </div>
           <div class="col-md-9">
             <mat-form-field class="w-99">
               <mat-label>Ort</mat-label>
-              <input autocomplete="off" matInput>
+              <input formControlName="ort" autocomplete="off" matInput>
             </mat-form-field>
           </div>
         </div>
@@ -167,13 +182,20 @@
           <div class="col-md-3">
             <mat-form-field class="w-99">
               <mat-label>Geschlecht</mat-label>
-              <input autocomplete="off" matInput>
+              <mat-select formControlName="gender">
+                <mat-option value="Female">Weiblich</mat-option>
+                <mat-option value="Male">Männlich</mat-option>
+                <mat-option value="Divers">Divers</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
           <div class="col-md-9">
             <mat-form-field class="w-99">
               <mat-label>Geb.Datum</mat-label>
-              <input autocomplete="off" matInput>
+              <input matInput autocomplete="off" disabled formControlName="ageView" />
+              <input style="display: none;" matInput [matDatepicker]="picker" formControlName="age" autocomplete="off" (dateChange)="setDateAndAge($event)" disabled>
+              <mat-icon matSuffix (click)="picker.open()">event</mat-icon>
+              <mat-datepicker #picker disabled="false"></mat-datepicker>
             </mat-form-field>
           </div>
         </div>
@@ -181,23 +203,31 @@
           <div class="col-md-12">
             <mat-form-field class="w-99">
               <mat-label>Handynummer</mat-label>
-              <input autocomplete="off" matInput>
+              <input formControlName="phoneNumber" autocomplete="off" matInput>
+              <mat-icon *ngIf="f.phoneNumber.touched && !f.phoneNumber.errors" style="color: greenyellow" matSuffix>done
+              </mat-icon>
+              <mat-icon *ngIf="f.phoneNumber.touched && f.phoneNumber.errors" style="color: red" matSuffix>close</mat-icon>
             </mat-form-field>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <mat-form-field class="w-99">
-              <mat-label>PLsssssZ</mat-label>
-              <input autocomplete="off" matInput>
-            </mat-form-field>
+            <div class="d-flex" (click)="changeCheckboxValue()">
+              <div class="d-flex align-items-center" style="cursor: pointer;">
+                <div class="checkbox-container">
+                  <div *ngIf="f.differentPlace.value" class="check-mark"></div>
+                </div>
+                <span>Abweichender Abnahmeort</span>
+              </div>
+            </div>
+            <mat-checkbox *ngIf="false" formControlName="differentPlace">Abweichender Abnahmeort</mat-checkbox>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
             <mat-form-field class="w-99">
               <mat-label>Straße Hausnummer</mat-label>
-              <input autocomplete="off" matInput>
+              <input formControlName="otherStreet" autocomplete="off" matInput>
             </mat-form-field>
           </div>
         </div>
@@ -205,13 +235,15 @@
           <div class="col-md-3">
             <mat-form-field class="w-99">
               <mat-label>PLZ</mat-label>
-              <input autocomplete="off" matInput>
+              <input formControlName="otherPostalCode" autocomplete="off" matInput (keyup)="checkPostalCode('otherPostalCode')">
+              <mat-icon *ngIf="f.otherPostalCode.touched && !f.otherPostalCode.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+              <mat-icon *ngIf="f.otherPostalCode.touched && f.otherPostalCode.errors" style="color: red" matSuffix>close</mat-icon>
             </mat-form-field>
           </div>
           <div class="col-md-9">
             <mat-form-field class="w-99">
               <mat-label>Ort</mat-label>
-              <input autocomplete="off" matInput>
+              <input formControlName="otherCity" autocomplete="off" matInput>
             </mat-form-field>
           </div>
         </div>
@@ -222,19 +254,22 @@
           <div class="col-md-12">
             <mat-form-field class="w-99">
               <mat-label>E-Mail-Adresse</mat-label>
-              <input autocomplete="off" matInput>
+              <input formControlName="email" autocomplete="off" matInput>
+              <mat-icon *ngIf="f.email.touched && !f.email.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+              <mat-icon *ngIf="f.email.touched && f.email.errors" style="color: red" matSuffix>close</mat-icon>
             </mat-form-field>
           </div>
           <div class="col-md-12">
             <mat-form-field class="w-99">
               <mat-label>Passwort</mat-label>
-              <input autocomplete="off" matInput>
+              <input formControlName="password" autocomplete="off" matInput>
             </mat-form-field>
           </div>
           <div class="col-md-12">
             <mat-form-field class="w-99">
               <mat-label>Passwort wiederholen</mat-label>
-              <input autocomplete="off" matInput>
+              <input formControlName="confirmPassword" autocomplete="off" matInput>
+              <mat-error *ngIf="f.confirmPassword.errors?.mustMatch">Password must match.</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -244,13 +279,15 @@
               <p class="font-size-30">150,95&euro;</p>
               <p>Inkl. 16% Mwst.</p>
             </div>
-            <button mat-stroked-button class="custom-button primary-button primary ml-3">Termin buchen & bezahlen</button>
+            <button
+              (click)="submit()"
+              mat-stroked-button class="custom-button primary-button primary ml-3">Termin buchen & bezahlen</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</form>
 
 <div class="footer">
   <p>

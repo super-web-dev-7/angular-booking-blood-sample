@@ -46,9 +46,38 @@
       <p class="font-size-38 font-weight-300">Persönliche Daten abgeben</p>
       <p class="font-size-16">Unser Service ist für Ihre Postleitzahl verfügbar. Bitte geben Sie den Ort an und wählen Sie Paket und Termin aus.</p>
     </div>
+    <div class="container mb-30" *ngIf="currentStep === 4">
+      <p class="font-size-38 font-weight-300">Anamnese-Daten abgeben</p>
+      <p class="font-size-16">Herzlichen Glückwunsch, wir haben Ihre Buchung erhalten. Bitte füllen Sie nach Login Ihren Anamnese-Bogen aus.</p>
+    </div>
   </div>
-  <app-booking-step-first *ngIf="currentStep === 1"></app-booking-step-first>
-  <app-booking-step-second *ngIf="currentStep === 2"></app-booking-step-second>
-  <app-booking-step-third *ngIf="currentStep === 3"></app-booking-step-third>
-  <app-booking-step-fourth *ngIf="currentStep === 4"></app-booking-step-fourth>
+
+  <app-booking-step-first
+    [zipcode]="zipcode"
+    (setZipCode)="setZipCode($event)"
+    *ngIf="currentStep === 1"></app-booking-step-first>
+
+  <app-booking-step-second
+    [zipcodeModel]="zipcodeModel"
+    (setBookingData)="setBookingData($event)"
+    [bookingData]="{package: selectedPackage, additionalPackage: selectedAdditionalPackage, time: bookingTime}"
+    *ngIf="currentStep === 2"></app-booking-step-second>
+
+  <app-booking-step-third
+    [bookingData]="{package: selectedPackage, additionalPackage: selectedAdditionalPackage, time: bookingTime, duration: duration}"
+    (deselectEvent)="deselect($event)"
+    (setDataEvent)="setPatientData($event)"
+    *ngIf="currentStep === 3"></app-booking-step-third>
+
+  <app-booking-step-fourth
+    [data]="{
+      package: selectedPackage,
+      additionalPackage: selectedAdditionalPackage,
+      time: bookingTime,
+      duration: duration,
+      patient: patient,
+      message: message,
+      appointment: appointment
+    }"
+    *ngIf="currentStep === 4"></app-booking-step-fourth>
 </div>

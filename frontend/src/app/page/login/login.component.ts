@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {first} from 'rxjs/operators';
 import {AuthService} from '../../service/auth/auth.service';
 
@@ -17,10 +17,12 @@ export class LoginComponent implements OnInit {
   public showVerifyForm = false;
   error;
   codeError;
+  queryParams: any;
   constructor(
     public formBuilder: FormBuilder,
     public router: Router,
-    public authService: AuthService
+    public authService: AuthService,
+    public route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +36,15 @@ export class LoginComponent implements OnInit {
 
     this.verificationForm = this.formBuilder.group({
       code: [null, Validators.required]
+    });
+
+    this.route.queryParams.subscribe(params => {
+      this.queryParams = params;
+      if (params.email && params.password) {
+        this.f.email.setValue(params.email);
+        this.f.password.setValue(params.password);
+        this.login();
+      }
     });
   }
 
@@ -80,8 +91,12 @@ export class LoginComponent implements OnInit {
       password: this.f.password.value,
       code: this.vf.code.value
     };
-    this.authService.verifyCode(data).subscribe((res: any) => {
-      this.router.navigate(['/patient']);
+    this.authService.verifyCode(data).subscribe(() => {
+      this.router.navigate(['/patient'], {
+        queryParams: {
+          appointmentId: this.queryParams.appointmentId
+        }
+      });
       this.showVerifyForm = false;
     }, error => {
       console.log(error);

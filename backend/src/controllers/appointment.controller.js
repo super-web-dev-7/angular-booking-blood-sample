@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import {v1 as UUID} from 'uuid';
 import db from '../models';
-import {call} from "../helper/laboratory";
+import {call} from '../helper/laboratory';
 
 
 const Appointment = db.appointment;

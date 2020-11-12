@@ -1,16 +1,18 @@
-<div class="container d-flex flex-column justify-content-between" style="height: 100%;">
+<form [formGroup]="zipcodeForm" class="container d-flex flex-column justify-content-between" style="height: 100%;">
   <div class="pt-5 row">
     <div class="pt-5 pb-5 col-md-5">
       <p class="font-size-38">Verfügbarkeit prüfen</p>
       <p class="font-size-16 mt-4">
         Bitte geben Sie die Postleitzahl von dem Ort an, an dem der mobile Bluttest durchgeführt werden soll.
       </p>
-      <mat-form-field class="w-99">
-        <mat-label>PLZ</mat-label>
-        <input autocomplete="off">
-      </mat-form-field>
+      <div class=" mt-4 search-field-container">
+<!--        <mat-label>PLZ</mat-label>-->
+        <input formControlName="plz" placeholder="Bitte PLZ eingeben" autocomplete="off" (keyup)="checkPostalCode()">
+        <mat-icon *ngIf="!f.plz.errors" style="color: greenyellow" matSuffix>done</mat-icon>
+        <mat-icon *ngIf="f.plz.errors" style="color: red" matSuffix>close</mat-icon>
+      </div>
 <!--      <button mat-stroked-button class="custom-button mt-5">Bitte PLZ eingeben</button><br>-->
-      <button mat-stroked-button class="custom-button mt-3">Nach Terminen suchen</button>
+      <button mat-stroked-button class="custom-button mt-3" (click)="submit()">Nach Terminen suchen</button>
     </div>
     <div class="col-md-7">
 <!--      <img src="assets/images/booking/step1-1.svg" alt="step1">-->
@@ -23,7 +25,7 @@
     <span class="font-size-18 font-weight-300 ml-3">Datenschutz</span>
     <span class="font-size-18 font-weight-300 ml-3">AGB & Impressum</span>
   </p>
-</div>
+</form>
 <div>
   <div class="pfad-image-background"></div>
 </div>

@@ -13,8 +13,15 @@ const jwt = () => {
             '/api/test/ping',
             '/api/test/zipcode/insert',
             '/api/sendSMS',
+
             '/api/package/getWithQuery',
-            '/api/additional-package/get'
+            '/api/additional-package/get',
+            /^\/api\/zipcode\/check_postal_code_appointment\/.*/,
+            /^\/api\/zipcode\/check_postal_code_all\/.*/,
+            /^\/api\/zipcode\/checkPostalCode\/.*/,
+            /^\/api\/booking_time\/zipcodes\/.*/,
+            '/api/user/patient/create',
+            '/api/appointment/create_by_patient',
         ]
     });
 };

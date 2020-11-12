@@ -28,5 +28,6 @@ router.route('/nurse/appointment_not_there').post(otherController.appointmentNot
 // Get Booking Time
 router.route('/booking_time/agency/:agencyId').get(calendarController.getBookingTimeByAgency);
 router.route('/booking_time/zipcode/:zipcode').get(calendarController.getBookingTimeByZipcode);
+router.route('/booking_time/zipcodes/:zipcode').get(calendarController.getBookingTimeByZipcodeWithDuration);
 
 export default router;

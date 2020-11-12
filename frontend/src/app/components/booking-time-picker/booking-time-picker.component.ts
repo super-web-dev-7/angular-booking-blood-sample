@@ -8,16 +8,23 @@ import * as moment from 'moment';
 })
 export class BookingTimePickerComponent implements OnInit, OnChanges {
   @Input() data;
+  @Input() selectedTime;
   @Output() setSelectedTime = new EventEmitter();
   index = 0;
   constructor() { }
 
   ngOnInit(): void {
+    // this.index = this.selectedTime ? this.selectedTime : 0;
     this.setSelectedTime.emit(this.index);
   }
 
   ngOnChanges(change): void {
-    this.index = 0;
+    if (this.selectedTime) {
+      const index = this.data.findIndex(item => item === this.selectedTime);
+      if (index > 0) {
+        this.index = index;
+      }
+    }
     this.setSelectedTime.emit(this.index);
   }
 

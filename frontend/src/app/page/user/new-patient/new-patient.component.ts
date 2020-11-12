@@ -184,8 +184,8 @@ export class NewPatientComponent implements OnInit {
         this.snackBar.open('Dieser User ist bereits im System vorhanden.', '', { duration: 2000 });
       });
     } else {
-      this.httpService.create(URL_JSON.USER + '/patient', data).subscribe(res => {
-        this.dialogRef.close(res);
+      this.httpService.create(URL_JSON.USER + '/patient', data).subscribe((res: any) => {
+        this.dialogRef.close(res.user);
       }, () => {
         this.snackBar.open('Dieser User ist bereits im System vorhanden.', '', {duration: 2000});
       });

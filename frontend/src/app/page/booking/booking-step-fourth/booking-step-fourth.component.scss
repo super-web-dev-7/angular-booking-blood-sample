@@ -1,0 +1,72 @@
+:host {
+  position: relative;
+  height: 100%;
+  background-color: var(--primary-color);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  color: #FFFFFF;
+  font-weight: 300;
+  p {
+    color: white;
+  }
+}
+
+.main-content {
+  display: flex;
+  div:first-child {
+    width: 35%;
+  }
+  div:last-child {
+    width: 65%;
+  }
+}
+
+.search-field-container {
+
+}
+
+.pfad-image-background {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  width: 50% !important;
+  height: 55%;
+  //background-size: 100% 500px;
+  background: transparent url('/assets/images/booking/step1-1.svg') 0 0 no-repeat padding-box;
+  zoom: 60%;
+  .second-image {
+    position: absolute;
+    left: 0;
+    top: 40%;
+    transform: translateX(-100%);
+  }
+}
+
+.green-circle {
+  width: 24px;
+  height: 24px;
+  background-color: #89DF8C;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.cyan-circle {
+  background-color: #E87C60;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-right: 14px;
+  margin-left: 15px;
+  color: var(--primary-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.green-button {
+  margin-top: 48px;
+  background-color: #89DF8C;
+  color: var(--primary-color);
+  padding-left: 30px;
+  padding-right: 30px;
+}

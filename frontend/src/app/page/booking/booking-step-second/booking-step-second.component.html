@@ -1,15 +1,15 @@
-<div class="container pt-5">
+<form [formGroup]="secondForm" class="container pt-5">
   <div class="row">
     <div class="col-md-2">
       <mat-form-field class="w-99">
         <mat-label>PLZ</mat-label>
-        <input autocomplete="off" matInput>
+        <input disabled formControlName="plz" autocomplete="off" matInput>
       </mat-form-field>
     </div>
     <div class="col-md-10">
       <mat-form-field class="w-99">
         <mat-label>Ort</mat-label>
-        <input autocomplete="off" matInput>
+        <input disabled formControlName="ort" autocomplete="off" matInput>
       </mat-form-field>
     </div>
   </div>
@@ -19,29 +19,29 @@
         <div class="d-flex flex-column flex-wrap">
           <div class="notify-board mt-15"
                *ngFor="let item of packages"
-               (click)="selectPackage(item.id)"
-               [ngStyle]="{'background': selectedPackage === item.id ? '#4A90E2' : '#ffffff'}"
+               (click)="selectPackage(item)"
+               [ngStyle]="{'background': selectedPackage?.id === item.id ? '#4A90E2' : '#ffffff'}"
           >
             <div class="d-flex align-items-center">
-              <div class="n-circle" [ngStyle]="{'background': selectedPackage === item.id ? '#ffffff' : '#4A90E2'}">
+              <div class="n-circle" [ngStyle]="{'background': selectedPackage?.id === item.id ? '#ffffff' : '#4A90E2'}">
                 <img
                   [src]="'/assets/images/package/white/' + (packageNames.includes(item.name) ? item.name : 'Männermedizin') + '.svg'"
-                  alt="male" *ngIf="selectedPackage !== item.id">
+                  alt="male" *ngIf="selectedPackage?.id !== item.id">
                 <img
                   [src]="'/assets/images/package/blue/' + (packageNames.includes(item.name) ? item.name : 'Männermedizin') + '.svg'"
-                  alt="male" *ngIf="selectedPackage === item.id">
+                  alt="male" *ngIf="selectedPackage?.id === item.id">
               </div>
-              <p style="margin-left: 15px" [ngClass]="{'p-white':selectedPackage === item.id}">{{item.name}}</p>
+              <p style="margin-left: 15px" [ngClass]="{'p-white':selectedPackage?.id === item.id}">{{item.name}}</p>
             </div>
-            <mat-icon class="p-0" *ngIf="selectedPackage !== item.id">more_horiz</mat-icon>
-            <mat-icon class="p-white" *ngIf="selectedPackage === item.id">done</mat-icon>
+            <mat-icon class="p-0" *ngIf="selectedPackage?.id !== item.id">more_horiz</mat-icon>
+            <mat-icon class="p-white" *ngIf="selectedPackage?.id === item.id">done</mat-icon>
           </div>
         </div>
         <p class="mt-38 font-size-16 pl-3">Zusatzpakete</p>
         <div class="d-flex flex-column">
           <div class="notify-board mt-15"
                *ngFor="let item of additionalPackages"
-               (click)="selectAdditionalPackage(item.id)"
+               (click)="selectAdditionalPackage(item)"
                style="background-color: #E1EAF1;"
           >
             <div class="d-flex align-items-center">
@@ -52,36 +52,52 @@
               </div>
               <p style="margin-left: 15px">{{item.name}}</p>
             </div>
-            <mat-icon class="p-0" *ngIf="selectedAdditionalPackage !== item.id">more_horiz</mat-icon>
-            <mat-icon style="color: var(--primary-color)" *ngIf="selectedAdditionalPackage === item.id">done</mat-icon>
+            <mat-icon class="p-0" *ngIf="selectedAdditionalPackage?.id !== item.id">more_horiz</mat-icon>
+            <mat-icon style="color: var(--primary-color)" *ngIf="selectedAdditionalPackage?.id === item.id">done</mat-icon>
           </div>
         </div>
       </div>
     </div>
     <div class="col-md-8">
-      <mat-card class="mb-5">
+      <mat-card class="mb-5" *ngIf="displayedPackage">
         <mat-card-content>
-          <p class="font-size-16">Männermedizin</p>
-          <p class="font-weight-300">Im Profil Männermedizin werden männerspezifische Parameter wie Testosteron und PSA untersucht, um Aussagen über diese für den Mann und sein gesamtes Organsystem wichtigen Hormonachsen zu erhalten. Der Einfluss der männlichen Hormone geht weiter über die Libido bis zu Einfluss auf Antrieb, Psyche, Leistungsfähigkeit und Überleben hinaus.</p>
+          <p class="font-size-16">{{displayedPackage.name}}</p>
+          <p class="font-weight-300">
+            {{displayedPackage.content}}
+          </p>
           <div class="d-flex justify-content-end">
             <div>
-              <p class="font-size-30">150,95&euro;</p>
+              <p class="font-size-30">{{displayedPackage.price}}&euro;</p>
               <p>Inkl. 16% Mwst.</p>
             </div>
-            <button mat-stroked-button class="custom-button primary-button primary ml-3">Wieder abwählen</button>
+            <button
+              (click)="setPackage(displayedPackage)"
+              mat-stroked-button
+              class="custom-button primary-button primary ml-3">
+              {{selectedPackage ? 'Wieder abwählen' : 'Paket buchen'}}
+            </button>
           </div>
         </mat-card-content>
       </mat-card>
-      <mat-card class="mb-5">
+      <mat-card class="mb-5" *ngIf="displayedAdditionalPackage">
         <mat-card-content>
-          <p class="font-size-16">Männermedizin</p>
-          <p class="font-weight-300">Im Profil Männermedizin werden männerspezifische Parameter wie Testosteron und PSA untersucht, um Aussagen über diese für den Mann und sein gesamtes Organsystem wichtigen Hormonachsen zu erhalten. Der Einfluss der männlichen Hormone geht weiter über die Libido bis zu Einfluss auf Antrieb, Psyche, Leistungsfähigkeit und Überleben hinaus.</p>
+          <p class="font-size-16">
+            {{displayedAdditionalPackage.name}}
+          </p>
+          <p class="font-weight-300">
+            {{displayedAdditionalPackage.name}}
+          </p>
           <div class="d-flex justify-content-end">
             <div>
-              <p class="font-size-30">150,95&euro;</p>
+              <p class="font-size-30">{{displayedAdditionalPackage.price}}&euro;</p>
               <p>Inkl. 16% Mwst.</p>
             </div>
-            <button mat-stroked-button class="custom-button primary-button primary ml-3">Wieder abwählen</button>
+            <button
+              (click)="setAdditionalPackage(displayedAdditionalPackage)"
+              mat-stroked-button
+              class="custom-button primary-button primary ml-3">
+              {{selectedAdditionalPackage ? 'Wieder abwählen' : 'Paket buchen'}}
+            </button>
           </div>
         </mat-card-content>
       </mat-card>
@@ -104,7 +120,7 @@
           </mat-expansion-panel-header>
           <div class="d-flex flex-wrap expansion-panel-container">
             <div class="text-center w-100" style="margin-left: 76px">
-              <app-booking-time-picker [data]="allTimes" (setSelectedTime)="selectedPTime = $event"></app-booking-time-picker>
+              <app-booking-time-picker [data]="allTimes" [selectedTime]="bookingData.time" (setSelectedTime)="selectedPTime = $event"></app-booking-time-picker>
             </div>
           </div>
         </mat-expansion-panel>
@@ -116,10 +132,14 @@
   <div class="row mt-5">
     <div class="col-md-4"></div>
     <div class="col-md-8 mb-5">
-      <button mat-stroked-button class="custom-button primary primary-button">Weiter</button>
+      <button
+        [disabled]="!selectedPackage || !selectedAdditionalPackage || secondForm.invalid"
+        mat-stroked-button
+        (click)="submit()"
+        class="custom-button primary primary-button">Weiter</button>
     </div>
   </div>
-</div>
+</form>
 <div class="footer">
   <p>
     <span class="font-size-30">Prävention neu gedacht. </span>

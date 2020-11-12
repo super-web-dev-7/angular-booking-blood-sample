@@ -301,9 +301,9 @@ export class NewComponent implements OnInit {
       otherCity: this.pf.otherCity.value,
       otherPostalCode: this.pf.otherPostalCode.value
     };
-    this.httpService.create(URL_JSON.USER + '/patient', data).subscribe(res => {
-      this.allPatient$.push(res);
-      this.allPatient.push(res);
+    this.httpService.create(URL_JSON.USER + '/patient', data).subscribe((res: any) => {
+      this.allPatient$.push(res.user);
+      this.allPatient.push(res.user);
       this.showPatientPopup();
     });
   }

@@ -1,1 +1,50 @@
-<p>booking-step-fourth works!</p>
+<div class="container d-flex flex-column justify-content-between" style="height: 100%;">
+  <div class="pt-5 row">
+    <div class="pt-5 pb-5 col-md-5">
+      <p class="font-size-38 font-weight-300">{{getTimeDuration(data.time, data.duration)}}</p>
+      <p class="font-size-16 mt-4 mb-1">
+        Check-Up: {{data.package.name}}, {{data.additionalPackage.name}}
+      </p>
+      <p class="font-size-16">
+        <span *ngIf="data.patient.differentPlace">{{data.patient.otherStreet}}, {{data.patient.otherPostalCode}} {{data.patient.otherCity}}</span>
+        <span *ngIf="!data.patient.differentPlace">{{data.patient.street}}, {{data.patient.plz}} {{data.patient.ort}}</span>
+      </p>
+      <p class="font-size-16">
+        {{data.package.price + data.additionalPackage.price}}&euro;<br>
+        Zahlungsdatum: {{getPayDate()}} <br>
+        Zahlungsart: {{data.patient.alternative ? 'Heidelpay' : 'Invoice'}}
+      </p>
+      <div class="d-flex align-items-center mb-4 mt-4 w-100">
+        <div class="green-circle">
+          <span></span>
+        </div>
+        <p style="width: calc(100% - 44px); color: #89DF8C;" class="mb-0">Erfolgrech bezahlt.</p>
+      </div>
+      <div class="d-flex align-items-start">
+        <div class="cyan-circle">
+          <span>!</span>
+        </div>
+        <p style="width: calc(100% - 44px)">
+          Fast fertig! Zum Abschluss der Buchung, füllen Sie bitte den Anamnese-Bogen aus. Ohne diesen kann der Termin nicht freigegeben werden.
+        </p>
+      </div>
+      <button
+        (click)="login()"
+        mat-stroked-button class="custom-button green-button">Login & Anamnese-Bogen ausfüllen</button>
+    </div>
+    <div class="col-md-7">
+    </div>
+  </div>
+  <p class="pt-5 pb-5">
+    <span class="font-size-30">Prävention neu gedacht. </span>
+    <span class="font-size-18 font-weight-300">Bluttests wann und wo Sie wollen, einfach & schnell! </span>
+    <span class="font-size-18 font-weight-300 ml-3">Datenschutz</span>
+    <span class="font-size-18 font-weight-300 ml-3">AGB & Impressum</span>
+  </p>
+</div>
+<div>
+  <div class="pfad-image-background">
+    <img src="assets/images/booking/step4-1.svg" alt="step4">
+    <img src="assets/images/booking/step4-2.svg" alt="step4" class="second-image">
+  </div>
+</div>
