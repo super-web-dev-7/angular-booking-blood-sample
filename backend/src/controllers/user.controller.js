@@ -70,11 +70,12 @@ exports.createPatient = (req, res) => {
             const patient = await Patient.create(newPatientData)
             res.send({user: data, patient: patient});
         }).catch(err => {
-            res.status(400).send({
-                message: err.errors[0].message || 'Some error occurred.'
+            console.log(err);
+            res.status(500).send({
+                message: 'Some error occurred.'
             })
         })
-    })
+    });
 };
 
 exports.get = async (req, res) => {
